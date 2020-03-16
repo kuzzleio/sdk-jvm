@@ -1,0 +1,11 @@
+package io.kuzzle.sdk
+
+import org.junit.Assert.assertEquals
+import org.junit.Test
+
+class MainTest {
+    @Test fun testMyLanguage() {
+        assertEquals("Kotlin", Main().kotlinLanguage().name)
+        assertEquals(10, Main().kotlinLanguage().hotness)
+    }
+}
