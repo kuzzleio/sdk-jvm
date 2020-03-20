@@ -61,7 +61,7 @@ class Kuzzle(private val protocol: AbstractProtocol) {
     if (!queryMap.containsKey("volatile") || queryMap.isNull("volatile")) {
       queryMap["volatile"] = KuzzleMap()
     } else if (!queryMap.isMap("volatile")) {
-      throw KuzzleException(KuzzleExceptionCode.WRONG_VOLATILE_TYPE.toString())
+      throw Exception(KuzzleExceptionCode.WRONG_VOLATILE_TYPE.toString())
     }
 
     queryMap.getMap("volatile")!!["sdkInstanceId"] = instanceId
