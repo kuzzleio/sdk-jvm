@@ -1,5 +1,6 @@
 package io.kuzzle.sdk
 
+import io.kuzzle.sdk.coreClasses.exceptions.KuzzleException
 import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
 import io.kuzzle.sdk.coreClasses.exceptions.NotConnectedException
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
@@ -60,7 +61,7 @@ class Kuzzle(private val protocol: AbstractProtocol) {
     if (!queryMap.containsKey("volatile") || queryMap.isNull("volatile")) {
       queryMap["volatile"] = KuzzleMap()
     } else if (!queryMap.isMap("volatile")) {
-      throw Exception(KuzzleExceptionCode.WRONG_VOLATILE_TYPE.toString())
+      throw KuzzleException(KuzzleExceptionCode.WRONG_VOLATILE_TYPE.toString())
     }
 
     queryMap.getMap("volatile")!!["sdkInstanceId"] = instanceId
