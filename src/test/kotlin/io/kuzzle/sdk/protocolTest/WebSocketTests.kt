@@ -5,7 +5,6 @@ import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.features.json.GsonSerializer
 import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.websocket.DefaultClientWebSocketSession
 import io.ktor.http.ContentType
 import io.ktor.http.fullPath
 import io.ktor.http.headersOf
@@ -22,11 +21,6 @@ class WebSocketTests {
       get() = super.client
       set(value) {
         super.client = value
-      }
-    var mockedWs: DefaultClientWebSocketSession?
-      get() = super.ws
-      set(value) {
-        super.ws = value
       }
   }
 

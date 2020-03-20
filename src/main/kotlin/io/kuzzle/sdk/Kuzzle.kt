@@ -6,7 +6,6 @@ import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.protocol.AbstractProtocol
 import io.kuzzle.sdk.protocol.ProtocolState
-import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
@@ -61,7 +60,7 @@ class Kuzzle(private val protocol: AbstractProtocol) {
     if (!queryMap.containsKey("volatile") || queryMap.isNull("volatile")) {
       queryMap["volatile"] = KuzzleMap()
     } else if (!queryMap.isMap("volatile")) {
-      throw InternalException(KuzzleExceptionCode.WRONG_VOLATILE_TYPE.toString())
+      throw Exception(KuzzleExceptionCode.WRONG_VOLATILE_TYPE.toString())
     }
 
     queryMap.getMap("volatile")!!["sdkInstanceId"] = instanceId
