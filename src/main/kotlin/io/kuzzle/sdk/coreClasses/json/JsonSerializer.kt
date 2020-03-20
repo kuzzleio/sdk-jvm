@@ -1,4 +1,4 @@
-package io.kuzzle.sdk.protocolTest.coreClasses.json
+package io.kuzzle.sdk.coreClasses.json
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

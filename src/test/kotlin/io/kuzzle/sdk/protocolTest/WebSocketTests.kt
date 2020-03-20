@@ -9,8 +9,8 @@ import io.ktor.client.features.websocket.DefaultClientWebSocketSession
 import io.ktor.http.ContentType
 import io.ktor.http.fullPath
 import io.ktor.http.headersOf
-import io.kuzzle.sdk.protocolTest.protocol.ProtocolState
-import io.kuzzle.sdk.protocolTest.protocol.WebSocket
+import io.kuzzle.sdk.protocol.ProtocolState
+import io.kuzzle.sdk.protocol.WebSocket
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

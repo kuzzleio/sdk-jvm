@@ -1,8 +1,8 @@
-package io.kuzzle.sdk.protocolTest.coreClasses.responses
+package io.kuzzle.sdk.coreClasses.responses
 
-import io.kuzzle.sdk.protocolTest.coreClasses.exceptions.KuzzleExceptionCode
-import io.kuzzle.sdk.protocolTest.coreClasses.maps.KuzzleMap
-import io.kuzzle.sdk.protocolTest.coreClasses.maps.Serializable
+import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
+import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
+import io.kuzzle.sdk.coreClasses.maps.Serializable
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException
 import java.util.concurrent.ConcurrentHashMap
 

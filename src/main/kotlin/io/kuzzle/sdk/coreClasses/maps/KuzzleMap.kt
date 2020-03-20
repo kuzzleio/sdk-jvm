@@ -1,4 +1,4 @@
-package io.kuzzle.sdk.protocolTest.coreClasses.maps
+package io.kuzzle.sdk.coreClasses.maps
 
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap

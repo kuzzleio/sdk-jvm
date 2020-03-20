@@ -1,11 +1,11 @@
-package io.kuzzle.sdk.protocolTest
+package io.kuzzle.sdk
 
-import io.kuzzle.sdk.protocolTest.coreClasses.exceptions.KuzzleExceptionCode
-import io.kuzzle.sdk.protocolTest.coreClasses.exceptions.NotConnectedException
-import io.kuzzle.sdk.protocolTest.coreClasses.json.JsonSerializer
-import io.kuzzle.sdk.protocolTest.coreClasses.maps.KuzzleMap
-import io.kuzzle.sdk.protocolTest.protocol.AbstractProtocol
-import io.kuzzle.sdk.protocolTest.protocol.ProtocolState
+import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
+import io.kuzzle.sdk.coreClasses.exceptions.NotConnectedException
+import io.kuzzle.sdk.coreClasses.json.JsonSerializer
+import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
+import io.kuzzle.sdk.protocol.AbstractProtocol
+import io.kuzzle.sdk.protocol.ProtocolState
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException
 import java.util.*
 import java.util.concurrent.CompletableFuture

@@ -1,4 +1,4 @@
-package io.kuzzle.sdk.protocolTest.events
+package io.kuzzle.sdk.events
 
 open class EventManager {
   private val listeners: HashMap<String, (String) -> Unit> = HashMap()

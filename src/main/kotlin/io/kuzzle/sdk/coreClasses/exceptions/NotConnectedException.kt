@@ -1,4 +1,4 @@
-package io.kuzzle.sdk.protocolTest.coreClasses.exceptions
+package io.kuzzle.sdk.coreClasses.exceptions
 
 /**
  * Thrown when attempting to interact with the network while not connected.

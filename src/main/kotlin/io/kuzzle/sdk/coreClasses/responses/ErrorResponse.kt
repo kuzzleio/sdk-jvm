@@ -1,7 +1,7 @@
-package io.kuzzle.sdk.protocolTest.coreClasses.responses
+package io.kuzzle.sdk.coreClasses.responses
 
-import io.kuzzle.sdk.protocolTest.coreClasses.maps.KuzzleMap
-import io.kuzzle.sdk.protocolTest.coreClasses.maps.Serializable
+import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
+import io.kuzzle.sdk.coreClasses.maps.Serializable
 import java.util.concurrent.ConcurrentHashMap
 
 class ErrorResponse : Serializable {

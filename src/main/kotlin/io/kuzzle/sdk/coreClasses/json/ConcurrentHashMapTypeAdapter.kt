@@ -1,4 +1,4 @@
-package io.kuzzle.sdk.protocolTest.coreClasses.json
+package io.kuzzle.sdk.coreClasses.json
 
 import com.google.gson.JsonSyntaxException
 import com.google.gson.TypeAdapter
@@ -6,7 +6,7 @@ import com.google.gson.internal.LazilyParsedNumber
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
-import io.kuzzle.sdk.protocolTest.coreClasses.maps.KuzzleMap
+import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import java.io.IOException
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap

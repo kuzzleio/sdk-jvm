@@ -1,4 +1,4 @@
-package io.kuzzle.sdk.protocolTest.protocol
+package io.kuzzle.sdk.protocol
 
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.GsonSerializer
@@ -11,7 +11,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.readBytes
 import io.ktor.http.cio.websocket.readText
-import io.kuzzle.sdk.protocolTest.coreClasses.json.JsonSerializer
+import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.CompletableFuture
