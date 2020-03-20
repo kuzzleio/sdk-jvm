@@ -1,5 +1,4 @@
 import org.gradle.jvm.tasks.Jar
-import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     application
@@ -19,21 +18,21 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    testImplementation("junit:junit:4.12")
-    testImplementation("io.mockk:mockk:1.8.13")
     implementation("io.ktor:ktor-client-websockets:$ktorVersion")
     implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
     implementation("io.ktor:ktor-client-json:$ktorVersion")
     implementation("io.ktor:ktor-client-gson:$ktorVersion")
     implementation("io.ktor:ktor-client-serialization:$ktorVersion")
+    implementation("com.google.code.gson:gson:2.8.5")
 
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+    testImplementation("io.mockk:mockk:1.8.13")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock-jvm:$ktorVersion")
     testImplementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock-js:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock-native:$ktorVersion")
-    implementation("com.google.code.gson:gson:2.8.5")
 }
 
 // Configure existing Dokka task to output HTML to typical Javadoc directory
