@@ -3,7 +3,6 @@ package io.kuzzle.sdk.coreClasses.responses
 import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.maps.Serializable
-import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException
 import java.util.concurrent.ConcurrentHashMap
 
 class Response : Serializable {
@@ -92,7 +91,7 @@ class Response : Serializable {
     }
     requestId = kuzzleMap.getString("requestId")
     if (requestId == null) {
-      throw InternalException(KuzzleExceptionCode.MISSING_REQUESTID.message)
+      throw Exception(KuzzleExceptionCode.MISSING_REQUESTID.message)
     }
     status = kuzzleMap.optNumber("status", 0) as Int
     controller = kuzzleMap.getString("controller")
