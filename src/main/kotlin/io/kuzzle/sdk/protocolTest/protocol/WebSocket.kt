@@ -1,29 +1,38 @@
-package io.kuzzle.sdk.protocol
+package io.kuzzle.sdk.protocolTest.protocol
 
 import io.ktor.client.HttpClient
+import io.ktor.client.features.json.GsonSerializer
+import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.websocket.DefaultClientWebSocketSession
 import io.ktor.client.features.websocket.WebSockets
 import io.ktor.client.features.websocket.ws
 import io.ktor.client.features.websocket.wss
+import io.ktor.http.ContentType
 import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.readBytes
 import io.ktor.http.cio.websocket.readText
+import io.kuzzle.sdk.protocolTest.coreClasses.json.JsonSerializer
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedQueue
 import kotlin.concurrent.thread
 
-class WebSocket : AbstractProtocol {
-  private var ws: DefaultClientWebSocketSession? = null
-  private val client = HttpClient {
+open class WebSocket : AbstractProtocol {
+  protected open var ws: DefaultClientWebSocketSession? = null
+  protected open var client = HttpClient {
     install(WebSockets)
+    install(JsonFeature) {
+      serializer = GsonSerializer()
+      acceptContentTypes += ContentType("application", "json")
+    }
   }
   private val host: String
   private val port: Int
   private val isSsl: Boolean
-
   private val queue: ConcurrentLinkedQueue<String> = ConcurrentLinkedQueue()
+  override var state: ProtocolState = ProtocolState.CLOSE
 
   @JvmOverloads
   constructor(host: String, port: Int = 7512, isSsl: Boolean = false) {
@@ -38,6 +47,7 @@ class WebSocket : AbstractProtocol {
       ws = this
       // @TODO Create enums for events
       super.trigger("networkStateChange", "open")
+      state = ProtocolState.OPEN
       wait.complete(null)
       for (frame in incoming) {
         when (frame) {
@@ -80,7 +90,7 @@ class WebSocket : AbstractProtocol {
     TODO("not implemented")
   }
 
-  override fun send(payload: String) {
-    queue.add(payload)
+  override fun send(payload: ConcurrentHashMap<String?, Any?>) {
+    queue.add(JsonSerializer.serialize(payload))
   }
 }

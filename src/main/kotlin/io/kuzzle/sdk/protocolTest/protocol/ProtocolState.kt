@@ -1,4 +1,4 @@
-package io.kuzzle.sdk.protocol
+package io.kuzzle.sdk.protocolTest.protocol
 
 enum class ProtocolState {
   CLOSE,  // The network protocol does not accept requests.

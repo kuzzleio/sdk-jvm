@@ -1,0 +1,80 @@
+package io.kuzzle.sdk.protocolTest
+
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.engine.mock.respond
+import io.ktor.client.features.json.GsonSerializer
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.websocket.DefaultClientWebSocketSession
+import io.ktor.http.ContentType
+import io.ktor.http.fullPath
+import io.ktor.http.headersOf
+import io.kuzzle.sdk.protocolTest.protocol.ProtocolState
+import io.kuzzle.sdk.protocolTest.protocol.WebSocket
+import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Test
+import java.util.concurrent.ConcurrentHashMap
+
+class WebSocketTests {
+  inner class MockedSocket(host: String) : WebSocket(host) {
+    var mockedClient: HttpClient
+      get() = super.client
+      set(value) {
+        super.client = value
+      }
+    var mockedWs: DefaultClientWebSocketSession?
+      get() = super.ws
+      set(value) {
+        super.ws = value
+      }
+  }
+
+  private var socket: MockedSocket? = null
+
+  @Before
+  fun setup() {
+    socket = MockedSocket("localhost")
+    socket?.mockedClient = HttpClient(MockEngine) {
+      install(JsonFeature) {
+        serializer = GsonSerializer()
+        acceptContentTypes += ContentType("application", "json")
+      }
+      engine {
+        addHandler { request ->
+          when (request.url.toString()) {
+            "ws://localhost:7512/" -> {
+              val responseHeaders = headersOf("Content-Type" to listOf("application/json"))
+              respond("{}", headers = responseHeaders)
+            }
+            else -> error("Unhandled ${request.url.fullPath}")
+          }
+        }
+      }
+    }
+  }
+
+  @Test
+  fun constructorNotConnected() {
+    assertEquals(ProtocolState.CLOSE, socket?.state)
+  }
+
+  @Test
+  fun connectTest() {
+    assertEquals(ProtocolState.CLOSE, socket?.state)
+    socket?.connect()
+    assertEquals(ProtocolState.OPEN, socket?.state)
+  }
+
+  @Test
+  fun sendTest() {
+    val query = ConcurrentHashMap<String?, Any?>().apply {
+      put("controller", "server")
+      put("action", "now")
+    }
+
+    socket?.connect()
+    socket?.send(query)
+  }
+
+}
