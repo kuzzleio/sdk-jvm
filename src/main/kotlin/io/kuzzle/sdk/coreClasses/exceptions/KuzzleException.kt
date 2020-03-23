@@ -5,9 +5,6 @@ package io.kuzzle.sdk.coreClasses.exceptions
  */
 open class KuzzleException : Exception {
   /**
-   * @return The status code of the exception.
-   */
-  /**
    * Kuzzle API error code.
    */
   var status: Int
@@ -34,9 +31,6 @@ open class KuzzleException : Exception {
   }
 
   companion object {
-    /**
-     *
-     */
     private const val serialVersionUID = 4446507573441857492L
   }
 }
