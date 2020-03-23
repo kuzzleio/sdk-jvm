@@ -56,6 +56,7 @@ class WebSocketTests {
     assertEquals(ProtocolState.CLOSE, socket?.state)
   }
 
+  @KtorExperimentalAPI
   @Test
   fun connectTest() {
     assertEquals(ProtocolState.CLOSE, socket?.state)
@@ -65,6 +66,7 @@ class WebSocketTests {
     socket = null
   }
 
+  @KtorExperimentalAPI
   @Test
   fun sendTest() {
     val query = ConcurrentHashMap<String?, Any?>().apply {
