@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.HashMap
 
 class Kuzzle(private val protocol: AbstractProtocol) {
-  private val queries: HashMap<String, CompletableFuture<Object>> = HashMap()
+  private val queries: HashMap<String, CompletableFuture<Any>> = HashMap()
   private val instanceId: String
   private val version: String = "3"
   private val sdkName: String = "java@$version"
@@ -21,7 +21,7 @@ class Kuzzle(private val protocol: AbstractProtocol) {
 
   private fun onMessageReceived(message: String) {
     val json = JsonSerializer.deserialize(message)
-    queries[json["requestId"]]?.complete(message as Object)
+    queries[json["requestId"]]?.complete(message as Any)
     queries.remove(json["requestId"])
   }
 
@@ -35,12 +35,12 @@ class Kuzzle(private val protocol: AbstractProtocol) {
     protocol.connect()
   }
 
-  fun query(query: ConcurrentHashMap<String?, Any?>): CompletableFuture<Object> {
+  fun query(query: ConcurrentHashMap<String?, Any?>): CompletableFuture<Any> {
     if (protocol.state == ProtocolState.CLOSE) {
       throw NotConnectedException()
     }
 
-    val futureRes: CompletableFuture<Object> = CompletableFuture()
+    val futureRes: CompletableFuture<Any> = CompletableFuture()
     val requestId = UUID.randomUUID().toString()
     val queryMap = KuzzleMap.from(query)
 

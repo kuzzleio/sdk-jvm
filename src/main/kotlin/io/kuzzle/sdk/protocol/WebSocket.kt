@@ -9,10 +9,13 @@ import io.ktor.client.features.websocket.ws
 import io.ktor.client.features.websocket.wss
 import io.ktor.http.ContentType
 import io.ktor.http.cio.websocket.Frame
+import io.ktor.http.cio.websocket.close
 import io.ktor.http.cio.websocket.readBytes
 import io.ktor.http.cio.websocket.readText
+import io.ktor.util.KtorExperimentalAPI
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.receiveOrNull
 import kotlinx.coroutines.launch
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
@@ -21,6 +24,8 @@ import kotlin.concurrent.thread
 
 open class WebSocket : AbstractProtocol {
   protected open var ws: DefaultClientWebSocketSession? = null
+
+  @KtorExperimentalAPI
   protected open var client = HttpClient {
     install(WebSockets)
     install(JsonFeature) {
@@ -41,6 +46,7 @@ open class WebSocket : AbstractProtocol {
     this.isSsl = isSsl
   }
 
+  @KtorExperimentalAPI
   override fun connect() {
     val wait = CompletableFuture<Void>()
     val block: suspend DefaultClientWebSocketSession.() -> Unit = {
@@ -48,6 +54,16 @@ open class WebSocket : AbstractProtocol {
       // @TODO Create enums for events
       super.trigger("networkStateChange", "open")
       state = ProtocolState.OPEN
+      thread(start = true) {
+        while (ws != null) {
+          val payload = queue.poll()
+          if (payload != null) {
+            GlobalScope.launch {
+              ws?.send(Frame.Text(payload))
+            }
+          }
+        }
+      }
       wait.complete(null)
       for (frame in incoming) {
         when (frame) {
@@ -57,16 +73,7 @@ open class WebSocket : AbstractProtocol {
           is Frame.Binary -> super.trigger("messageReceived", frame.readBytes().toString())
         }
       }
-    }
-    thread(start = true) {
-      while (true) {
-        val payload = queue.poll()
-        if (payload != null) {
-          GlobalScope.launch {
-            ws?.send(Frame.Text(payload))
-          }
-        }
-      }
+      ws = null
     }
     GlobalScope.launch {
       if (isSsl) {
@@ -87,7 +94,11 @@ open class WebSocket : AbstractProtocol {
   }
 
   override fun disconnect() {
-    TODO("not implemented")
+    state = ProtocolState.CLOSE
+    GlobalScope.launch {
+      ws?.close()
+      ws = null
+    }
   }
 
   override fun send(payload: ConcurrentHashMap<String?, Any?>) {

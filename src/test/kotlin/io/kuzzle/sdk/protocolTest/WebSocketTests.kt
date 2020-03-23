@@ -8,6 +8,7 @@ import io.ktor.client.features.json.JsonFeature
 import io.ktor.http.ContentType
 import io.ktor.http.fullPath
 import io.ktor.http.headersOf
+import io.ktor.util.KtorExperimentalAPI
 import io.kuzzle.sdk.protocol.ProtocolState
 import io.kuzzle.sdk.protocol.WebSocket
 import org.junit.Assert.*
@@ -17,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 class WebSocketTests {
   inner class MockedSocket(host: String) : WebSocket(host) {
+    @KtorExperimentalAPI
     var mockedClient: HttpClient
       get() = super.client
       set(value) {
@@ -26,6 +28,7 @@ class WebSocketTests {
 
   private var socket: MockedSocket? = null
 
+  @KtorExperimentalAPI
   @Before
   fun setup() {
     socket = MockedSocket("localhost")
@@ -58,6 +61,8 @@ class WebSocketTests {
     assertEquals(ProtocolState.CLOSE, socket?.state)
     socket?.connect()
     assertEquals(ProtocolState.OPEN, socket?.state)
+    socket?.disconnect()
+    socket = null
   }
 
   @Test
@@ -69,6 +74,8 @@ class WebSocketTests {
 
     socket?.connect()
     socket?.send(query)
+    socket?.disconnect()
+    socket = null
   }
 
 }
