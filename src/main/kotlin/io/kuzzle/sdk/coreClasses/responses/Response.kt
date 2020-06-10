@@ -6,6 +6,9 @@ import io.kuzzle.sdk.coreClasses.maps.Serializable
 import java.util.concurrent.ConcurrentHashMap
 
 class Response : Serializable {
+  var mapResponse: ConcurrentHashMap<String?, Any?>? = null
+    private set
+
   var room: String? = null
 
   /**
@@ -81,6 +84,8 @@ class Response : Serializable {
   override fun fromMap(map: ConcurrentHashMap<String?, Any?>?) {
     if (map == null) return
 
+    mapResponse = map
+
     val kuzzleMap = KuzzleMap(map)
     room = kuzzleMap.getString("room")
     result = kuzzleMap.get("result")
@@ -93,7 +98,7 @@ class Response : Serializable {
     if (requestId == null) {
       throw Exception(KuzzleExceptionCode.MISSING_REQUESTID.message)
     }
-    status = kuzzleMap.optNumber("status", 0) as Int
+    status = (kuzzleMap.optNumber("status", 0) as com.google.gson.internal.LazilyParsedNumber).toInt()
     controller = kuzzleMap.getString("controller")
     action = kuzzleMap.getString("action")
     index = kuzzleMap.getString("index")
@@ -104,7 +109,7 @@ class Response : Serializable {
     state = kuzzleMap.getString("state")
     timestamp = when(kuzzleMap.getNumber("timestamp")) {
       null -> null
-      else -> kuzzleMap.getNumber("timestamp") as Long
+      else -> (kuzzleMap.getNumber("timestamp") as com.google.gson.internal.LazilyParsedNumber).toLong()
     }
     type = kuzzleMap.getString("type")
   }
@@ -129,5 +134,9 @@ class Response : Serializable {
     type?.let { map.put("type", it) }
 
     return map
+  }
+
+  override fun toString(): String {
+    return mapResponse.toString()
   }
 }
