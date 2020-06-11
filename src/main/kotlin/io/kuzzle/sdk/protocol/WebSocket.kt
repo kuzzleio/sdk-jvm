@@ -62,10 +62,7 @@ open class WebSocket : AbstractProtocol {
   }
 
   private fun tryToReconnect() {
-    println("$retryCount $reconnectionRetries")
-
     if (retryCount < reconnectionRetries) {
-      println("trying to reconnekt")
       retryCount++
       state = ProtocolState.RECONNECTING
       trigger("networkStateChange", state.toString())
@@ -82,7 +79,6 @@ open class WebSocket : AbstractProtocol {
     val block: suspend DefaultClientWebSocketSession.() -> Unit = {
       ws = this
       // @TODO Create enums for events
-      super.trigger("networkStateChange", "open")
       state = ProtocolState.OPEN
       trigger("networkStateChange", ProtocolState.OPEN.toString())
       thread(start = true) {

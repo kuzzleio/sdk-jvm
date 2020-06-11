@@ -14,13 +14,25 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.HashMap
 
-class Kuzzle(val protocol: AbstractProtocol) {
+class Kuzzle {
+  val protocol: AbstractProtocol
+  val autoResubscribe: Boolean
   private val queries: HashMap<String, CompletableFuture<Response>> = HashMap()
   val instanceId: String
   private val version: String = "1"
   private val sdkName: String = "jvm@$version"
   private var authenticationToken: String? = null
   val realtimeController: RealtimeController
+
+  constructor(protocol: AbstractProtocol, autoResubscribe: Boolean = true) {
+    this.protocol = protocol
+    this.autoResubscribe = autoResubscribe
+    instanceId = UUID.randomUUID().toString()
+    realtimeController = RealtimeController(this)
+    // @TODO Create enums for events
+    protocol.addListener("messageReceived", ::onMessageReceived)
+    protocol.addListener("networkStateChange", ::onNetworkStateChange)
+  }
 
   private fun onMessageReceived(message: String?) {
     val response = Response().apply {
@@ -49,11 +61,10 @@ class Kuzzle(val protocol: AbstractProtocol) {
     protocol.trigger("tokenExpired")
   }
 
-  init {
-    // @TODO Create enums for events
-    protocol.addListener("messageReceived", ::onMessageReceived)
-    instanceId = UUID.randomUUID().toString()
-    realtimeController = RealtimeController(this)
+  private fun onNetworkStateChange(state: String?) {
+    if (state == ProtocolState.OPEN.toString() && autoResubscribe) {
+      realtimeController.renewSubscriptions()
+    }
   }
 
   fun connect() {

@@ -9,12 +9,13 @@ import io.kuzzle.sdk.protocol.ProtocolState
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
+import java.util.function.Consumer
 
 class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   private inner class Subscription(
       val index: String,
       val collection: String,
-      val filter: ConcurrentHashMap<String, Any>?,
+      val filter: ConcurrentHashMap<String, Any>,
       val handler: (Response) -> Unit,
       val scope: String,
       val users: String,
@@ -51,6 +52,24 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       if (it == ProtocolState.CLOSE.toString()) {
         currentSubscriptions.clear()
       }
+    }
+  }
+
+  fun renewSubscriptions() {
+    for ((key, value) in subscriptionsCache) {
+      (value).forEach(Consumer { subscription: Subscription ->
+        subscribe(
+            subscription.index,
+            subscription.collection,
+            subscription.filter,
+            subscription.scope,
+            subscription.users,
+            subscription.subscribeToSelf,
+            subscription.volatile,
+            subscription.handler
+        )
+      })
+      subscriptionsCache[key]!!.clear()
     }
   }
 
