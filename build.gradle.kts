@@ -10,7 +10,7 @@ plugins {
 group = "io.kuzzle.sdk"
 version = "0.0.1"
 
-val ktorVersion = "1.3.1"
+val ktorVersion = "1.3.2"
 
 repositories {
     jcenter()
@@ -33,6 +33,7 @@ dependencies {
     testImplementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock-js:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock-native:$ktorVersion")
+
 }
 
 // Configure existing Dokka task to output HTML to typical Javadoc directory

@@ -4,6 +4,7 @@ import io.kuzzle.sdk.Kuzzle
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.responses.Response
+import io.kuzzle.sdk.handlers.NotificationHandler
 import io.kuzzle.sdk.protocol.ProtocolState
 import java.util.*
 import java.util.concurrent.CompletableFuture
@@ -53,7 +54,6 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     }
   }
 
-  @JvmOverloads
   fun subscribe(
       index: String?,
       collection: String?,
@@ -96,6 +96,30 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         }
   }
 
+  /**
+    For JAVA
+   */
+  @JvmOverloads
+  fun subscribe(
+      index: String?,
+      collection: String?,
+      filters: ConcurrentHashMap<String, Any>,
+      scope: String = "all",
+      users: String = "all",
+      subscribeToSelf: Boolean = true,
+      volatile: ConcurrentHashMap<String?, Any?> = ConcurrentHashMap(),
+      handler: NotificationHandler): CompletableFuture<String> {
+    return subscribe(
+        index,
+        collection,
+        filters,
+        scope,
+        users,
+        subscribeToSelf,
+        volatile) {
+      handler.run(it)
+    }
+  }
 
   private val currentSubscriptions = ConcurrentHashMap<String, ArrayList<Subscription>>()
   private val subscriptionsCache = ConcurrentHashMap<String, ArrayList<Subscription>>()
