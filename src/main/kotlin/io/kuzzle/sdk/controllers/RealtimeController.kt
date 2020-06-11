@@ -9,7 +9,7 @@ import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
 
-class RealtimeController(kuzzle: Kuzzle): BaseController(kuzzle) {
+class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   private inner class Subscription(
       val index: String,
       val collection: String,
@@ -53,6 +53,7 @@ class RealtimeController(kuzzle: Kuzzle): BaseController(kuzzle) {
     }
   }
 
+  @JvmOverloads
   fun subscribe(
       index: String?,
       collection: String?,
