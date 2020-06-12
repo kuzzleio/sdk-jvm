@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "io.kuzzle.sdk"
-version = "0.0.1"
+version = "1.0.0"
 
 val ktorVersion = "1.3.1"
 

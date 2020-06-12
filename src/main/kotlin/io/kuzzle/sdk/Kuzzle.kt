@@ -1,10 +1,10 @@
 package io.kuzzle.sdk
 
-import io.kuzzle.sdk.coreClasses.exceptions.KuzzleException
 import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
 import io.kuzzle.sdk.coreClasses.exceptions.NotConnectedException
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
+import io.kuzzle.sdk.coreClasses.responses.Response
 import io.kuzzle.sdk.protocol.AbstractProtocol
 import io.kuzzle.sdk.protocol.ProtocolState
 import java.util.*
@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.HashMap
 
 class Kuzzle(private val protocol: AbstractProtocol) {
-  private val queries: HashMap<String, CompletableFuture<Any>> = HashMap()
+  private val queries: HashMap<String, CompletableFuture<Response>> = HashMap()
   private val instanceId: String
   private val version: String = "3"
   private val sdkName: String = "java@$version"
@@ -21,7 +21,9 @@ class Kuzzle(private val protocol: AbstractProtocol) {
 
   private fun onMessageReceived(message: String) {
     val json = JsonSerializer.deserialize(message)
-    queries[json["requestId"]]?.complete(message as Any)
+    queries[json["requestId"]]?.complete(Response().apply {
+      fromMap(json as ConcurrentHashMap<String?, Any?>)
+    })
     queries.remove(json["requestId"])
   }
 
@@ -35,12 +37,16 @@ class Kuzzle(private val protocol: AbstractProtocol) {
     protocol.connect()
   }
 
-  fun query(query: ConcurrentHashMap<String?, Any?>): CompletableFuture<Any> {
+  fun disconnect() {
+    protocol.disconnect()
+  }
+
+  fun query(query: ConcurrentHashMap<String?, Any?>): CompletableFuture<Response> {
     if (protocol.state == ProtocolState.CLOSE) {
       throw NotConnectedException()
     }
 
-    val futureRes: CompletableFuture<Any> = CompletableFuture()
+    val futureRes: CompletableFuture<Response> = CompletableFuture()
     val requestId = UUID.randomUUID().toString()
     val queryMap = KuzzleMap.from(query)
 
