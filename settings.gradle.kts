@@ -1,1 +1,1 @@
-rootProject.name = "sdk-kotlin"
+rootProject.name = "sdk-jvm"

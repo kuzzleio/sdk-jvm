@@ -24,6 +24,7 @@ class Kuzzle {
   private var authenticationToken: String? = null
   val realtimeController: RealtimeController
 
+  @JvmOverloads
   constructor(protocol: AbstractProtocol, autoResubscribe: Boolean = true) {
     this.protocol = protocol
     this.autoResubscribe = autoResubscribe
@@ -69,6 +70,10 @@ class Kuzzle {
 
   fun connect() {
     protocol.connect()
+  }
+
+  fun disconnect() {
+    protocol.disconnect()
   }
 
   fun query(query: ConcurrentHashMap<String?, Any?>): CompletableFuture<Response> {
