@@ -55,6 +55,28 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     }
   }
 
+  fun count(roomId: String): CompletableFuture<Int> {
+    return kuzzle
+        .query(KuzzleMap().apply {
+          put("controller", "realtime")
+          put("action", "count")
+          put("body", KuzzleMap().put("roomId", roomId))
+        })
+        .thenApplyAsync { response -> (response.result as KuzzleMap?)!!.getNumber("count")?.toInt() }
+  }
+
+  fun publish(index: String, collection: String, message: ConcurrentHashMap<String?, Any?>): CompletableFuture<Void> {
+    return kuzzle
+        .query(KuzzleMap().apply {
+          put("controller", "realtime")
+          put("action", "publish")
+          put("index", index)
+          put("collection", collection)
+          put("body", KuzzleMap().put("message", message))
+        })
+        .thenApplyAsync { null }
+  }
+
   fun renewSubscriptions() {
     for ((key, value) in subscriptionsCache) {
       (value).forEach(Consumer { subscription: Subscription ->
@@ -138,6 +160,26 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         volatile) {
       handler.run(it)
     }
+  }
+
+  fun unsubscribe(roomId: String): CompletableFuture<Void> {
+    return kuzzle
+        .query(KuzzleMap().apply {
+          put("controller", "realtime")
+          put("action", "unsubscribe")
+          put("body", KuzzleMap().put("roomId", roomId))
+        })
+        .thenApplyAsync { _ ->
+          var subs: ArrayList<Subscription>? = currentSubscriptions[roomId]
+          if (subs != null) {
+            currentSubscriptions[roomId]!!.clear()
+          }
+          subs = subscriptionsCache[roomId]
+          if (subs != null) {
+            subscriptionsCache[roomId]!!.clear()
+          }
+          null
+        }
   }
 
   private val currentSubscriptions = ConcurrentHashMap<String, ArrayList<Subscription>>()
