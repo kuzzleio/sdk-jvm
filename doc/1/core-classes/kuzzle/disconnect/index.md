@@ -1,7 +1,7 @@
 ---
 code: true
 type: page
-title: Disconnect
+title: disconnect
 description: Disconnects the SDK from Kuzzle
 ---
 
@@ -9,7 +9,10 @@ description: Disconnects the SDK from Kuzzle
 
 Closes the current connection to Kuzzle.
 
-Disconnects the SDK from the Kuzzle server using the underlying protocol `Disconnect` method. 
+Disconnects the SDK from the Kuzzle server using the underlying protocol `disconnect` method. 
+
+:::: tabs
+::: tab Java
 
 ## Arguments
 
@@ -19,4 +22,20 @@ public void disconnect()
 
 ## Usage
 
-<<< ./snippets/disconnect.java
+<<< ./snippets/disconnect-java.java
+
+:::
+::: tab Kotlin
+
+## Arguments
+
+```kotlin
+fun disconnect()
+```
+
+## Usage
+
+<<< ./snippets/disconnect-kotlin.kt
+
+:::
+::::

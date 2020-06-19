@@ -1,0 +1,8 @@
+---
+name: java-kuzzle#constructor
+description: Creates a new Kuzzle instance
+hooks:
+  before:
+  after:
+template: without-ctor
+expected: Success

@@ -1,5 +1,5 @@
 ---
-name: kuzzle#constructor
+name: kotlin-kuzzle#constructor
 description: Creates a new Kuzzle instance
 hooks:
   before:

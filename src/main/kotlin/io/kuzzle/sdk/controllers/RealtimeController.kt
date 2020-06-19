@@ -102,7 +102,7 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       scope: String = "all",
       users: String = "all",
       subscribeToSelf: Boolean = true,
-      volatile: ConcurrentHashMap<String?, Any?> = ConcurrentHashMap(),
+      volatiles: ConcurrentHashMap<String?, Any?> = ConcurrentHashMap(),
       handler: (Response) -> Unit): CompletableFuture<String> {
     val query: KuzzleMap = KuzzleMap().apply {
       put("controller", "realtime")
@@ -110,6 +110,7 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       put("index", index)
       put("collection", collection)
       put("body", filters)
+      put("volatile", volatiles)
     }
     return kuzzle
         .query(query)
@@ -123,7 +124,7 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
               scope,
               users,
               subscribeToSelf,
-              volatile)
+              volatiles)
           if (currentSubscriptions[channel] == null) {
             val item = ArrayList<Subscription>()
             item.add(subscription)
@@ -148,7 +149,7 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       scope: String = "all",
       users: String = "all",
       subscribeToSelf: Boolean = true,
-      volatile: ConcurrentHashMap<String?, Any?> = ConcurrentHashMap(),
+      volatiles: ConcurrentHashMap<String?, Any?> = ConcurrentHashMap(),
       handler: NotificationHandler): CompletableFuture<String> {
     return subscribe(
         index,
@@ -157,7 +158,7 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         scope,
         users,
         subscribeToSelf,
-        volatile) {
+        volatiles) {
       handler.run(it)
     }
   }

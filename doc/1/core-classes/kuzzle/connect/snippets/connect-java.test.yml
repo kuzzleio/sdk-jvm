@@ -1,5 +1,5 @@
 ---
-name: kuzzle#Connect
+name: java-kuzzle#Connect
 description: Connects the SDK to Kuzzle
 hooks:
   before:

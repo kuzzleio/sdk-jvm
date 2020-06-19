@@ -21,7 +21,7 @@ public void connect() throws Exception;
 
 ## Usage
 
-<<< ./snippets/connect.java
+<<< ./snippets/connect-java.java
 :::
 ::: tab Kotlin
 ## Arguments
@@ -32,6 +32,6 @@ fun connect()
 
 ## Usage
 
-<<< ./snippets/connect.kt
+<<< ./snippets/connect-kotlin.kt
 :::
 ::::

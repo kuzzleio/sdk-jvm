@@ -11,12 +11,18 @@ order: 100
 Use this constructor to create a new instance of the SDK.
 Each instance represents a different connection to a Kuzzle server with specific options.
 
+:::: tabs
+::: tab Java
 ## Arguments
 
 ```java
 public Kuzzle(
   AbstractProtocol networkProtocol,
-  KuzzleOptions options
+  bool subscribeToSelf
+) throws IllegalArgumentException
+
+public Kuzzle(
+  AbstractProtocol networkProtocol
 ) throws IllegalArgumentException
 ```
 
@@ -25,7 +31,7 @@ public Kuzzle(
 | Argument   | Type                | Description                       |
 | ---------- | ------------------- | --------------------------------- |
 | `networkProtocol` | <pre>AbstractProtocol</pre> | Protocol used by the SDK instance |
-| `options` | <pre>KuzzleOptions</pre> | Class which contains options |
+| `autoResubscribe` | <pre>boolean</pre><br>(`true`) | Class which contains options |
 
 ## networkProtocol
 
@@ -33,11 +39,6 @@ The protocol used to connect to the Kuzzle instance.
 It can be one of the following available protocols:
 
 - [WebSocket](/sdk/java/3/protocols/websocket)
-
-## options
-
-The options used to connect to the Kuzzle instance.
-[KuzzleOptions](/sdk/java/3/core-classes/kuzzle-options)
 
 ## Return
 
@@ -49,4 +50,38 @@ Can throw an [IllegalArgumentException](/sdk/java/3/exceptions/illegal-argument-
 
 ## Usage
 
-<<< ./snippets/constructor.java
+<<< ./snippets/constructor-java.java
+
+:::
+::: tab Kotlin
+
+## Arguments
+
+```kotlin
+fun Kuzzle(protocol: AbstractProtocol, autoResubscribe: Boolean = true)
+```
+
+<br/>
+
+| Argument   | Type                | Description                       |
+| ---------- | ------------------- | --------------------------------- |
+| `networkProtocol` | <pre>AbstractProtocol</pre> | Protocol used by the SDK instance |
+| `autoResubscribe` | <pre>Boolean</pre><br>(`true`) | Class which contains options |
+
+## networkProtocol
+
+The protocol used to connect to the Kuzzle instance.
+It can be one of the following available protocols:
+
+- [WebSocket](/sdk/jvm/1/protocols/websocket)
+
+## Return
+
+The `Kuzzle` SDK instance.
+
+## Usage
+
+<<< ./snippets/constructor-kotlin.kt
+
+:::
+::::
