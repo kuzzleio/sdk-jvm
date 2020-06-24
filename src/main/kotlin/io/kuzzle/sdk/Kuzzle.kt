@@ -1,5 +1,6 @@
 package io.kuzzle.sdk
 
+import io.kuzzle.sdk.controllers.AuthController
 import io.kuzzle.sdk.controllers.RealtimeController
 import io.kuzzle.sdk.coreClasses.exceptions.ApiErrorException
 import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
@@ -21,8 +22,9 @@ class Kuzzle {
   val instanceId: String
   private val version: String = "1"
   private val sdkName: String = "jvm@$version"
-  private var authenticationToken: String? = null
+  var authenticationToken: String? = null
   val realtimeController: RealtimeController
+  val authController: AuthController
 
   @JvmOverloads
   constructor(protocol: AbstractProtocol, autoResubscribe: Boolean = true) {
@@ -30,6 +32,7 @@ class Kuzzle {
     this.autoResubscribe = autoResubscribe
     instanceId = UUID.randomUUID().toString()
     realtimeController = RealtimeController(this)
+    authController = AuthController(this)
     // @TODO Create enums for events
     protocol.addListener("messageReceived", ::onMessageReceived)
     protocol.addListener("networkStateChange", ::onNetworkStateChange)
@@ -51,9 +54,8 @@ class Kuzzle {
       return
     }
 
-    val error = JsonSerializer.deserialize(response.error.toString())
-    if (error["id"] == null
-        || error["id"]!! != "security.token.expired") {
+    if (response.error?.id == null
+        || response.error?.id != "security.token.expired") {
       queries[response.requestId]?.completeExceptionally(ApiErrorException(response))
       queries.remove(response.requestId)
       return
