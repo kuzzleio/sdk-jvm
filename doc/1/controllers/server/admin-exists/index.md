@@ -12,8 +12,6 @@ Checks that an administrator account exists.
 :::: tabs
 ::: tab Java
 
-## Arguments
-
 ```java
 CompletableFuture<Boolean> adminExists()
 ```
@@ -28,8 +26,6 @@ A boolean indicating whether an admin user exists or not.
 
 :::: tabs
 ::: tab Kotlin
-
-## Arguments
 
 ```kotlin
 fun adminExists(): CompletableFuture<Boolean>

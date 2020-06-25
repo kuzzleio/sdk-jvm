@@ -21,4 +21,40 @@ class ServerController(kuzzle: Kuzzle) : BaseController(kuzzle) {
               .getBoolean("exists")
         }
   }
+
+  fun getAllStats(): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    val query = KuzzleMap().apply {
+      put("controller", "server")
+      put("action", "getAllStats")
+    }
+    return kuzzle
+        .query(query)
+        .thenApplyAsync { response ->
+          response.result as ConcurrentHashMap<String, Any?>
+        }
+  }
+
+  fun getConfig(): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    val query = KuzzleMap().apply {
+      put("controller", "server")
+      put("action", "getConfig")
+    }
+    return kuzzle
+        .query(query)
+        .thenApplyAsync { response ->
+          response.result as ConcurrentHashMap<String, Any?>
+        }
+  }
+
+  fun getLastStats(): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    val query = KuzzleMap().apply {
+      put("controller", "server")
+      put("action", "getLastStats")
+    }
+    return kuzzle
+        .query(query)
+        .thenApplyAsync { response ->
+          response.result as ConcurrentHashMap<String, Any?>
+        }
+  }
 }
