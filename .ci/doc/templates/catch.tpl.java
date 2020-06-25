@@ -1,9 +1,8 @@
 import io.kuzzle.sdk.Kuzzle;
-import io.kuzzle.sdk.Protocol.WebSocket;
-import io.kuzzle.sdk.Options.Protocol.WebSocketOptions;
-import io.kuzzle.sdk.Options.KuzzleOptions;
+import java.util.ArrayList;
+import io.kuzzle.sdk.protocol.WebSocket;
 import java.util.concurrent.ConcurrentHashMap;
-import io.kuzzle.sdk.CoreClasses.Responses.Response;
+import io.kuzzle.sdk.coreClasses.responses.Response;
 
 public class SnippetTest {
   private static Kuzzle kuzzle;
@@ -15,7 +14,7 @@ public class SnippetTest {
       [snippet-code]
       System.out.println("Error");
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      e.printStackTrace();
     } finally {
       if (kuzzle != null) {
         kuzzle.disconnect();
