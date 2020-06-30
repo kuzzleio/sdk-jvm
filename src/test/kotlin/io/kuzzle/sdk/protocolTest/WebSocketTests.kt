@@ -61,7 +61,7 @@ class WebSocketTests {
   fun connectTest() {
     assertEquals(ProtocolState.CLOSE, socket?.state)
     socket?.connect()
-    assertEquals(ProtocolState.OPEN, socket?.state)
+    assertNotEquals(ProtocolState.CLOSE, socket?.state)
     socket?.disconnect()
     socket = null
   }
