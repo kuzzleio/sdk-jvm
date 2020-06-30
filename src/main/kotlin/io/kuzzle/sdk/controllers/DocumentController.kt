@@ -69,6 +69,60 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
   }
 
+  @JvmOverloads
+  fun delete(
+      index: String,
+      collection: String,
+      id: String?,
+      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    val query = KuzzleMap().apply {
+      put("index", index)
+      put("collection", collection)
+      put("controller", "document")
+      put("action", "delete")
+      put("_id", id)
+      put("waitForRefresh", waitForRefresh)
+    }
+
+    return kuzzle
+        .query(query)
+        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+  }
+
+  @JvmOverloads
+  fun deleteByQuery(
+      index: String,
+      collection: String,
+      searchQuery: ConcurrentHashMap<String, Any?>,
+      waitForRefresh: Boolean? = null): CompletableFuture<ArrayList<String>> {
+    val query = KuzzleMap().apply {
+      put("index", index)
+      put("collection", collection)
+      put("controller", "document")
+      put("action", "deleteByQuery")
+      put("body", searchQuery)
+      put("waitForRefresh", waitForRefresh)
+    }
+    return kuzzle
+        .query(query)
+        .thenApplyAsync { response -> (response.result as ConcurrentHashMap<String?, Any?>)["ids"] as ArrayList<String> }
+  }
+
+  fun exists(
+      index: String,
+      collection: String,
+      id: String): CompletableFuture<Boolean> {
+    val query = KuzzleMap().apply {
+      put("index", index)
+      put("collection", collection)
+      put("controller", "document")
+      put("action", "exists")
+      put("_id", id)
+    }
+    return kuzzle
+        .query(query)
+        .thenApplyAsync { response -> response.result as Boolean }
+  }
 
   @JvmOverloads
   fun mCreateOrReplace(
@@ -152,26 +206,6 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
   }
 
-  @JvmOverloads
-  fun delete(
-      index: String,
-      collection: String,
-      id: String?,
-      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
-    val query = KuzzleMap().apply {
-      put("index", index)
-      put("collection", collection)
-      put("controller", "document")
-      put("action", "delete")
-      put("_id", id)
-      put("waitForRefresh", waitForRefresh)
-    }
-
-    return kuzzle
-        .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
-  }
-
   fun mGet(
       index: String,
       collection: String,
@@ -206,22 +240,6 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     return kuzzle
         .query(query)
         .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, ArrayList<Any>?> }
-  }
-
-  fun exists(
-      index: String,
-      collection: String,
-      id: String): CompletableFuture<Boolean> {
-    val query = KuzzleMap().apply {
-      put("index", index)
-      put("collection", collection)
-      put("controller", "document")
-      put("action", "exists")
-      put("_id", id)
-    }
-    return kuzzle
-        .query(query)
-        .thenApplyAsync { response -> response.result as Boolean }
   }
 
   @JvmOverloads
@@ -284,25 +302,6 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     return kuzzle
         .query(query)
         .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
-  }
-
-  @JvmOverloads
-  fun deleteByQuery(
-      index: String,
-      collection: String,
-      searchQuery: ConcurrentHashMap<String, Any?>,
-      waitForRefresh: Boolean? = null): CompletableFuture<ArrayList<String>> {
-    val query = KuzzleMap().apply {
-      put("index", index)
-      put("collection", collection)
-      put("controller", "document")
-      put("action", "deleteByQuery")
-      put("body", searchQuery)
-      put("waitForRefresh", waitForRefresh)
-    }
-    return kuzzle
-        .query(query)
-        .thenApplyAsync { response -> (response.result as ConcurrentHashMap<String?, Any?>)["ids"] as ArrayList<String> }
   }
 
   fun validate(
