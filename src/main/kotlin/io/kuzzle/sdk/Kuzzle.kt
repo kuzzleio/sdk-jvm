@@ -1,5 +1,6 @@
 package io.kuzzle.sdk
 
+import io.kuzzle.sdk.controllers.IndexController
 import io.kuzzle.sdk.controllers.AuthController
 import io.kuzzle.sdk.controllers.RealtimeController
 import io.kuzzle.sdk.coreClasses.exceptions.ApiErrorException
@@ -24,6 +25,7 @@ class Kuzzle {
   private val sdkName: String = "jvm@$version"
   var authenticationToken: String? = null
   val realtimeController: RealtimeController
+  val indexController: IndexController
   val authController: AuthController
 
   @JvmOverloads
@@ -32,6 +34,7 @@ class Kuzzle {
     this.autoResubscribe = autoResubscribe
     instanceId = UUID.randomUUID().toString()
     realtimeController = RealtimeController(this)
+    indexController = IndexController(this)
     authController = AuthController(this)
     // @TODO Create enums for events
     protocol.addListener("messageReceived", ::onMessageReceived)
