@@ -70,7 +70,7 @@ public CompletableFuture<String> subscribe(
 | `scope`    | <pre>String</pre><br>(`all`) | Subscribes to document entering or leaving the scope<br>Possible values: all, in, out, none |
 | `users`    | <pre>String</pre><br>(`none`) | Subscribes to users entering or leaving the room<br>Possible values: all, in, out, none |
 | `subscribeToSelf`    | <pre>boolean</pre><br>(`true`) | Subscribes to notifications fired by our own queries |
-| `volatile`    | <pre>ConcurrentHashMap<String, Object></pre><br>(`{}}`) | ConcurrentHashMap representing subscription information, used in user join/leave notifications |
+| `volatile`    | <pre>ConcurrentHashMap<String, Object></pre><br>(`{}`) | ConcurrentHashMap representing subscription information, used in user join/leave notifications |
 
 ### handler
 

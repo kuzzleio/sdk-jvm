@@ -6,7 +6,6 @@ import io.kuzzle.sdk.coreClasses.responses.Response
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.ExecutionException
 import java.util.function.Function
 
 class SearchResult {
@@ -38,14 +37,14 @@ class SearchResult {
     this.from = from
     this.size = size
     this.request = request
-    aggregations = (_response["result"] as ConcurrentHashMap<String?, Any?>)["aggregations"] as ConcurrentHashMap<String, Any>?
-    hits = (_response["result"] as ConcurrentHashMap<String?, Any?>)["hits"] as ArrayList<ConcurrentHashMap<String, Any>>?
-    total = ((_response["result"] as ConcurrentHashMap<String?, Any?>)["total"] as LazilyParsedNumber?)!!.toInt()
+    aggregations = (_response["result"] as ConcurrentHashMap<*, *>)["aggregations"] as ConcurrentHashMap<String, Any>?
+    hits = (_response["result"] as ConcurrentHashMap<*, *>)["hits"] as ArrayList<ConcurrentHashMap<String, Any>>?
+    total = ((_response["result"] as ConcurrentHashMap<*, *>)["total"] as LazilyParsedNumber?)!!.toInt()
     fetched = hits!!.size
     if (previouslyFetched != null) {
       fetched += previouslyFetched
     }
-    scrollId = (_response["result"] as ConcurrentHashMap<String?, Any?>)["scrollId"] as String?
+    scrollId = (_response["result"] as ConcurrentHashMap<*, *>)["scrollId"] as String?
   }
 
   private fun getScrollRequest(): ConcurrentHashMap<String?, Any?>? {
@@ -60,14 +59,14 @@ class SearchResult {
     val nextRequest = request
     val lastItem = hits!![hits!!.size]
     val searchAfter = ArrayList<Any?>()
-    val sort = (request!!["body"] as ConcurrentHashMap<String?, Any?>?)!!["sort"] as ArrayList<Any>?
-    (request!!["body"] as ConcurrentHashMap<String?, Any?>?)!!["search_after"] = searchAfter
+    val sort = (request!!["body"] as ConcurrentHashMap<*, *>)["sort"] as ArrayList<Any>?
+    (request!!["body"] as ConcurrentHashMap<String?, Any?>)["search_after"] = searchAfter
     for (value in sort!!) {
-      var key: String = (value as? String)?.toString() ?: (value as ConcurrentHashMap<String?, Any>)["First"].toString()
+      var key: String = (value as? String)?.toString() ?: (value as ConcurrentHashMap<*, *>)["First"].toString()
       if (key == "_uid") {
         searchAfter.add(request!!["collection"].toString() + "#" + lastItem["_id"].toString())
       } else {
-        val _source = lastItem["_source"] as ConcurrentHashMap<String, Any>?
+        val _source = lastItem["_source"] as ConcurrentHashMap<*, *>?
         searchAfter.add(_source!![key])
       }
     }
@@ -80,7 +79,7 @@ class SearchResult {
     if (scrollId != null) {
       nextRequest = getScrollRequest()
     } else if (size != null
-        && (request!!["body"] as ConcurrentHashMap<String?, Any?>?)!!["sort"] != null) {
+        && (request!!["body"] as ConcurrentHashMap<*, *>)["sort"] != null) {
       nextRequest = getSearchAfterRequest()
     } else if (size != null) {
       if (from != null && from > total) {

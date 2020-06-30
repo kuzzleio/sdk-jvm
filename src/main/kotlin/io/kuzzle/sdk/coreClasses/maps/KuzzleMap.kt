@@ -32,8 +32,6 @@ class KuzzleMap : ConcurrentHashMap<String?, Any?> {
   fun put(s: String, o: Any?): KuzzleMap? {
     if (o != null) {
       super.put(s, o)
-    } else {
-      super.put(s, Null())
     }
     return this
   }

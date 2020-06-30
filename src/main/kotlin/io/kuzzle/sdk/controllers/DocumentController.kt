@@ -11,6 +11,86 @@ import java.util.concurrent.ConcurrentHashMap
 class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
   @JvmOverloads
+  fun count(
+      index: String,
+      collection: String,
+      searchQuery: ConcurrentHashMap<String, Any?> = ConcurrentHashMap<String, Any?>()): CompletableFuture<Int> {
+    val query = KuzzleMap().apply {
+      put("index", index)
+      put("collection", collection)
+      put("controller", "document")
+      put("body", KuzzleMap().put("query", searchQuery))
+      put("action", "count")
+    }
+    return kuzzle
+        .query(query)
+        .thenApplyAsync { response -> ((response.result as ConcurrentHashMap<String, Any?>)["count"] as LazilyParsedNumber).toInt() }
+  }
+
+  @JvmOverloads
+  fun create(
+      index: String,
+      collection: String,
+      document: ConcurrentHashMap<String, Any?>,
+      id: String? = null,
+      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    val query = KuzzleMap().apply {
+      put("index", index)
+      put("collection", collection)
+      put("controller", "document")
+      put("action", "create")
+      put("body", document)
+      put("_id", id)
+      put("waitForRefresh", waitForRefresh)
+    }
+    return kuzzle
+        .query(query)
+        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+  }
+
+  @JvmOverloads
+  fun createOrReplace(
+      index: String,
+      collection: String,
+      id: String,
+      document: ConcurrentHashMap<String, Any?>,
+      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    val query = KuzzleMap().apply {
+      put("index", index)
+      put("collection", collection)
+      put("controller", "document")
+      put("action", "createOrReplace")
+      put("body", document)
+      put("_id", id)
+      put("waitForRefresh", waitForRefresh)
+    }
+    return kuzzle
+        .query(query)
+        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+  }
+
+
+  @JvmOverloads
+  fun mCreateOrReplace(
+      index: String,
+      collection: String,
+      documents: ArrayList<ConcurrentHashMap<String, Any?>>,
+      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any>?>> {
+    val query = KuzzleMap().apply {
+      put("index", index)
+      put("collection", collection)
+      put("controller", "document")
+      put("action", "mCreateOrReplace")
+      put("body", KuzzleMap().put("documents", documents))
+      put("waitForRefresh", waitForRefresh)
+    }
+    return kuzzle
+        .query(query)
+        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, ArrayList<Any>?> }
+  }
+
+
+  @JvmOverloads
   fun mCreate(
       index: String,
       collection: String,
@@ -166,48 +246,6 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   }
 
   @JvmOverloads
-  fun mCreateOrReplace(
-      index: String,
-      collection: String,
-      documents: ArrayList<ConcurrentHashMap<String, Any?>>,
-      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any>?>> {
-    val query = KuzzleMap().apply {
-      put("index", index)
-      put("collection", collection)
-      put("controller", "document")
-      put("action", "mCreateOrReplace")
-      put("body", KuzzleMap().put("documents", documents))
-      put("waitForRefresh", waitForRefresh)
-    }
-    return kuzzle
-        .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, ArrayList<Any>?> }
-  }
-
-  @JvmOverloads
-  fun create(
-      index: String,
-      collection: String,
-      document: ConcurrentHashMap<String, Any?>,
-      id: String? = null,
-      waitForRefresh: Boolean? = null,
-      retryOnConflict: Int? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
-    val query = KuzzleMap().apply {
-      put("index", index)
-      put("collection", collection)
-      put("controller", "document")
-      put("action", "create")
-      put("body", document)
-      put("_id", id)
-      put("retryOnConflict", retryOnConflict)
-      put("waitForRefresh", waitForRefresh)
-    }
-    return kuzzle
-        .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
-  }
-
-  @JvmOverloads
   fun update(
       index: String,
       collection: String,
@@ -249,27 +287,6 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   }
 
   @JvmOverloads
-  fun createOrReplace(
-      index: String,
-      collection: String,
-      id: String,
-      document: ConcurrentHashMap<String, Any?>,
-      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
-    val query = KuzzleMap().apply {
-      put("index", index)
-      put("collection", collection)
-      put("controller", "document")
-      put("action", "createOrReplace")
-      put("body", document)
-      put("_id", id)
-      put("waitForRefresh", waitForRefresh)
-    }
-    return kuzzle
-        .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
-  }
-
-  @JvmOverloads
   fun deleteByQuery(
       index: String,
       collection: String,
@@ -302,22 +319,6 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     return kuzzle
         .query(query)
         .thenApplyAsync { response -> (response.result as ConcurrentHashMap<*, *>)["valid"] as Boolean }
-  }
-
-  fun count(
-      index: String,
-      collection: String,
-      searchQuery: ConcurrentHashMap<String, Any?>): CompletableFuture<Int> {
-    val query = KuzzleMap().apply {
-      put("index", index)
-      put("collection", collection)
-      put("controller", "document")
-      put("body", KuzzleMap().put("query", searchQuery))
-      put("action", "count")
-    }
-    return kuzzle
-        .query(query)
-        .thenApplyAsync { response -> ((response.result as ConcurrentHashMap<*, *>)["count"] as LazilyParsedNumber).toInt() }
   }
 
   @JvmOverloads
