@@ -1,5 +1,6 @@
 import io.kuzzle.sdk.Kuzzle;
 import io.kuzzle.sdk.protocol.WebSocket;
+import java.sql.*;
 import io.kuzzle.sdk.coreClasses.responses.Response;
 
 import java.util.concurrent.ConcurrentHashMap;
