@@ -22,15 +22,15 @@ These statistics include:
 
 ```java
 CompletableFuture<ConcurrentHashMap<String, Object>> getStats(
-      Timestamp startTime, Timestamp stopTime)
+      Date startTime, Date stopTime)
 ```
 
 <br/>
 
 | Arguments   | Type                      | Description                                                     |
 | ----------- | ------------------------- | --------------------------------------------------------------- |
-| `startTime` | <pre>Timestamp</pre> | Beginning of statistics frame set |
-| `stopTime`  | <pre>Timestamp</pre> | End of statistics frame set |
+| `startTime` | <pre>Date</pre> | Beginning of statistics frame set |
+| `stopTime`  | <pre>Date</pre> | End of statistics frame set |
 
 ## Return
 
@@ -43,15 +43,15 @@ Returns a `ConcurrentHashMap<String, Object>` containing statistics snapshots wi
 ::: tab Kotlin
 
 ```kotlin
-fun getStats(startTime: Timestamp, stopTime: Timestamp): CompletableFuture<ConcurrentHashMap<String, Any?>>
+fun getStats(startTime: Date, stopTime: Date): CompletableFuture<ConcurrentHashMap<String, Any?>>
 ```
 
 <br/>
 
 | Arguments   | Type                      | Description                                                     |
 | ----------- | ------------------------- | --------------------------------------------------------------- |
-| `startTime` | <pre>Timestamp</pre> | Beginning of statistics frame set |
-| `stopTime`  | <pre>Timestamp</pre> | End of statistics frame set |
+| `startTime` | <pre>Date</pre> | Beginning of statistics frame set |
+| `stopTime`  | <pre>Date</pre> | End of statistics frame set |
 
 ## Return
 

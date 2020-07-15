@@ -2,23 +2,23 @@
 code: true
 type: page
 title: now
-description: Returns the current server timestamp, in Epoch-millis format.
+description: Returns the current server timestamp.
 ---
 
 # now
 
-Returns the current server timestamp, in Epoch-millis format.
+Returns the current server timestamp.
 
 :::: tabs
 ::: tab Java
 
 ```java
-CompletableFuture<Timestamp> now()
+CompletableFuture<Date> now()
 ```
 
 ## Return
 
-Returns a `Timetamps` representing the current server timestamp.
+Returns a `Date` representing the current server timestamp.
 
 ## Usage
 
@@ -27,12 +27,12 @@ Returns a `Timetamps` representing the current server timestamp.
 ::: tab Kotlin
 
 ```kotlin
-fun now(): CompletableFuture<Timestamp>
+fun now(): CompletableFuture<Date>
 ```
 
 ## Return
 
-Returns a `Timestamp` representing the current server timestamp.
+Returns a `Date` representing the current server timestamp.
 
 ## Usage
 

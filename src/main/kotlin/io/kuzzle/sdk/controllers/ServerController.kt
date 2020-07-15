@@ -2,7 +2,7 @@ package io.kuzzle.sdk.controllers
 
 import io.kuzzle.sdk.Kuzzle
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
-import java.sql.Timestamp
+import java.util.Date
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
 
@@ -59,7 +59,7 @@ class ServerController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         }
   }
 
-  fun getStats(startTime: Timestamp, stopTime: Timestamp): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+  fun getStats(startTime: Date, stopTime: Date): CompletableFuture<ConcurrentHashMap<String, Any?>> {
     val query = KuzzleMap().apply {
       put("controller", "server")
       put("action", "getStats")
@@ -85,7 +85,7 @@ class ServerController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         }
   }
 
-  fun now(): CompletableFuture<Timestamp> {
+  fun now(): CompletableFuture<Date> {
 
     return kuzzle
         .query(KuzzleMap().apply {
@@ -93,8 +93,8 @@ class ServerController(kuzzle: Kuzzle) : BaseController(kuzzle) {
           put("action", "now")
         })
         .thenApplyAsync { response ->
-          val date = (response.result as ConcurrentHashMap<*, *>)["now"].toString().toLong()
-          Timestamp(date)
+          val date = ((response.result as ConcurrentHashMap<String, Any>)["now"]).toString().toLong()
+          Date(date)
       }
   }
 }

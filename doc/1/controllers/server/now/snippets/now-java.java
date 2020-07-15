@@ -1,4 +1,4 @@
-Timestamp result = kuzzle
+Date result = kuzzle
     .getServerController()
     .now()
     .get();

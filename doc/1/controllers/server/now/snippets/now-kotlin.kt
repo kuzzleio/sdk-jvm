@@ -1,4 +1,4 @@
-val result: Timestamp = kuzzle
+val result: Date = kuzzle
     .serverController
     .now()
     .get()
