@@ -11,15 +11,17 @@ Checks if a document exists.
 
 ---
 
+:::: tabs
+::: tab Java
+
 ## Arguments
 
 ```java
 public CompletableFuture<Boolean> exists(
-      final String index,
-      final String collection,
-      final String id)
+      String index,
+      String collection,
+      String id)
 throws NotConnectedException, InternalException
-
 ```
 
 ---
@@ -39,4 +41,38 @@ Returns a boolean.
 
 ## Usage
 
-<<< ./snippets/exists.java
+<<< ./snippets/exists-java.java
+
+:::
+::: tab Kotlin
+
+## Arguments
+
+```kotlin
+fun exists(
+      index: String,
+      collection: String,
+      id: String): CompletableFuture<Boolean>
+```
+
+---
+
+| Arguments          | Type                                         | Description                       |
+| ------------------ | -------------------------------------------- | --------------------------------- |
+| `index`            | <pre>String</pre>                            | Index                             |
+| `collection`       | <pre>String</pre>                            | Collection                        |
+| `id      `         | <pre>String</pre>                            | Document ID |
+
+
+---
+
+## Return
+
+Returns a boolean.
+
+## Usage
+
+<<< ./snippets/exists-kotlin.kt
+
+:::
+::::

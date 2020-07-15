@@ -18,18 +18,18 @@ Creates a new document in the persistent data storage, or replaces its content i
 
 ```java
 public CompletableFuture<ConcurrentHashMap<String, Object>> createOrReplace(
-      final String index,
-      final String collection,
-      final String id,
-      final ConcurrentHashMap<String, Object> document)
+      String index,
+      String collection,
+      String id,
+      ConcurrentHashMap<String, Object> document)
 throws NotConnectedException, InternalException
 
 public CompletableFuture<ConcurrentHashMap<String, Object>> createOrReplace(
-      final String index,
-      final String collection,
-      final String id,
-      final ConcurrentHashMap<String, Object> document,
-      final Boolean waitForRefresh)
+      String index,
+      String collection,
+      String id,
+      ConcurrentHashMap<String, Object> document,
+      Boolean waitForRefresh)
 throws NotConnectedException, InternalException
 ```
 

@@ -18,16 +18,16 @@ Deletes a document.
 
 ```java
 public CompletableFuture<ConcurrentHashMap<String, Object>> delete(
-      final String index,
-      final String collection,
-      final String id)
+      String index,
+      String collection,
+      String id)
 throws NotConnectedException, InternalException
 
 public CompletableFuture<ConcurrentHashMap<String, Object>> delete(
-      final String index,
-      final String collection,
-      final String id,
-      final Boolean waitForRefresh)
+      String index,
+      String collection,
+      String id,
+      Boolean waitForRefresh)
 throws NotConnectedException, InternalException
 ```
 

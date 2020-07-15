@@ -1,4 +1,4 @@
-name: document#exists
+name: kotlin-document#exists
 description: Check if document exists
 hooks:
   before: |

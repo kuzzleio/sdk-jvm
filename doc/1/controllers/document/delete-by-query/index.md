@@ -20,15 +20,15 @@ An empty or null query will match all documents in the collection.
 
 ```java
   public CompletableFuture<ArrayList<String>> deleteByQuery(
-      final String index,
-      final String collection,
-      final ConcurrentHashMap<String, Object> searchQuery) throws NotConnectedException, InternalException
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery) throws NotConnectedException, InternalException
 
   public CompletableFuture<ArrayList<String>> deleteByQuery(
-      final String index,
-      final String collection,
-      final ConcurrentHashMap<String, Object> searchQuery,
-      final Boolean waitForRefresh) throws NotConnectedException, InternalException
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery,
+      Boolean waitForRefresh) throws NotConnectedException, InternalException
 ```
 
 | Argument           | Type                                         | Description     |
