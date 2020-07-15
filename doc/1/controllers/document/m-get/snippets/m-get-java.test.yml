@@ -1,4 +1,4 @@
-name: document#mGet
+name: java-document#mGet
 description: Get multiple documents
 hooks:
   before: |

@@ -1,4 +1,4 @@
-name: document#mGet
+name: kotlin-document#mGet
 description: Get multiple documents
 hooks:
   before: |
