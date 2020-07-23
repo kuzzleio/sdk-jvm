@@ -1,4 +1,4 @@
-val document1 : ConcurrentHashMap<String, Any?> = 
+val document1: ConcurrentHashMap<String, Any?> = 
   ConcurrentHashMap<String, Any?>().apply {
     put("_id", "some-id")
     put("body", ConcurrentHashMap<String, Any?>().apply {
@@ -6,7 +6,7 @@ val document1 : ConcurrentHashMap<String, Any?> =
     })
   }
 
-val document2 : ConcurrentHashMap<String, Any?> = 
+val document2: ConcurrentHashMap<String, Any?> = 
   ConcurrentHashMap<String, Any?>().apply {
     put("_id", "some-id2")
     put("body", ConcurrentHashMap<String, Any?>().apply {
@@ -15,12 +15,13 @@ val document2 : ConcurrentHashMap<String, Any?> =
   }
 
 val documents: ArrayList<ConcurrentHashMap<String, Any?>> =
-    ArrayList<ConcurrentHashMap<String, Any?>>()
+    ArrayList<ConcurrentHashMap<String, Any?>>().apply {
+      add(document1)
+      add(document2)
+    }
 
-documents.add(document1);
-documents.add(document2);
 
-val result: ConcurrentHashMap<String, ArrayList<Any>> =
+val result: ConcurrentHashMap<String, ArrayList<Any>?> =
   kuzzle
   .documentController
   .mReplace("nyc-open-data", "yellow-taxi", documents)

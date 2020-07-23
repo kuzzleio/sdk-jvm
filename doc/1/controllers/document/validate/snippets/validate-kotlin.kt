@@ -4,7 +4,7 @@ val document: ConcurrentHashMap<String, Any?> =
   }
 
 
-val result: ConcurrentHashMap<String, ArrayList<Any>> =
+val result: Boolean =
   kuzzle
   .documentController
   .validate("nyc-open-data", "yellow-taxi", document)

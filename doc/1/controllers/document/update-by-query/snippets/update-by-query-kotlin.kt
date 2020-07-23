@@ -14,7 +14,7 @@ val changes: ConcurrentHashMap<String, Any?> =
   }
 
 
-val result: ConcurrentHashMap<String, ArrayList<Any>> =
+val result: ConcurrentHashMap<String, ArrayList<Any?>> =
   kuzzle
   .documentController
   .updateByQuery("nyc-open-data", "yellow-taxi", searchQuery, changes)

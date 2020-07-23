@@ -15,13 +15,13 @@ val document2: ConcurrentHashMap<String, Any?> =
     }
 
 val documents: ArrayList<ConcurrentHashMap<String, Any?>> =
-    ArrayList<ConcurrentHashMap<String, Any?>>()
-
-documents.add(document1)
-documents.add(document2)
+    ArrayList<ConcurrentHashMap<String, Any?>>().apply {
+      add(document1)
+      add(document2)
+    }
 
 val result: ConcurrentHashMap<String, ArrayList<Any>> =
-  kuzzle
-  .documentController
-  .mCreate("nyc-open-data", "yellow-taxi", documents)
-  .get()
+    kuzzle
+        .documentController
+        .mCreateOrReplace("nyc-open-data", "yellow-taxi", documents)
+        .get()

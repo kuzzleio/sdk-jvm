@@ -283,7 +283,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       index: String,
       collection: String,
       id: String?,
-      document: ConcurrentHashMap<String?, Any?>?,
+      document: ConcurrentHashMap<String, Any?>,
       waitForRefresh: Boolean? = null,
       retryOnConflict: Int? = null,
       source: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
@@ -351,7 +351,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   fun search(
       index: String,
       collection: String,
-      searchQuery: ConcurrentHashMap<String?, Any?>?,
+      searchQuery: ConcurrentHashMap<String, Any?>,
       scroll: String? = null,
       from: Int = 0,
       size: Int? = null): CompletableFuture<SearchResult> {

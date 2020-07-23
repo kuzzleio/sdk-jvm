@@ -3,7 +3,7 @@ val document: ConcurrentHashMap<String, Any?> =
     put("firstname", "John")
   }
 
-val result: ConcurrentHashMap<String, ArrayList<Any>> =
+val result: ConcurrentHashMap<String, Any?> =
   kuzzle
   .documentController
   .replace("nyc-open-data", "yellow-taxi", "some-id", document)

@@ -10,5 +10,5 @@ hooks:
   after:
 template: print-result-array
 expected:
-  - "id=some-id, _version=1"
-  - "id=some-id2, _version=1"
+  - "_id=some-id(.*)_version=1"
+  - "_id=some-id2(.*)_version=1"

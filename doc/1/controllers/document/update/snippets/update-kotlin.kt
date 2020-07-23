@@ -1,11 +1,10 @@
-val content: ConcurrentHashMap<String, Any?> =
+val document: ConcurrentHashMap<String, Any?> =
   ConcurrentHashMap<String, Any?>().apply {
     put("name", "Johny")
   }
 
-
-val result: ConcurrentHashMap<String, ArrayList<Any>> =
+val result: ConcurrentHashMap<String, Any?> =
   kuzzle
   .documentController
-  .update("nyc-open-data", "yellow-taxi", "some-id", content)
+  .update("nyc-open-data", "yellow-taxi", "some-id", document)
   .get()
