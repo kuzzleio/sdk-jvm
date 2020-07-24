@@ -1,0 +1,7 @@
+name: kotlin-Server#AdminExistsAsync
+description: Checks that an administrator account exists.
+hooks:
+  before: 
+  after:
+template: print-result
+expected: false

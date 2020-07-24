@@ -1,0 +1,7 @@
+name: kotlin-server#getConfig
+description: Returns the current Kuzzle configuration.
+hooks:
+  before:
+  after:
+template: print-result
+expected: ^{server={.*}$

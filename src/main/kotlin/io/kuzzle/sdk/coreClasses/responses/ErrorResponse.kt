@@ -28,7 +28,7 @@ class ErrorResponse : Serializable {
   override fun fromMap(map: ConcurrentHashMap<String?, Any?>?) {
     if (map == null) return
     val kuzzleMap: KuzzleMap? = KuzzleMap?.from(map)
-    status = kuzzleMap?.optNumber("status", 0) as Int
+    status = kuzzleMap?.optNumber("status", 0)!!.toInt()
     message = kuzzleMap?.getString("message")
     stack = kuzzleMap?.getString("stack")
     id = kuzzleMap?.getString("id")
