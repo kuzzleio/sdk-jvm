@@ -217,28 +217,6 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   }
 
   @JvmOverloads
-  fun replace(
-      index: String,
-      collection: String,
-      id: String?,
-      document: ConcurrentHashMap<String, Any?>,
-      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
-    val query = KuzzleMap().apply {
-      put("index", index)
-      put("collection", collection)
-      put("controller", "document")
-      put("action", "replace")
-      put("body", document)
-      put("_id", id)
-      put("waitForRefresh", waitForRefresh)
-    }
-
-    return kuzzle
-        .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
-  }
-
-  @JvmOverloads
   fun mReplace(
       index: String,
       collection: String,
@@ -279,6 +257,54 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   }
 
   @JvmOverloads
+  fun replace(
+      index: String,
+      collection: String,
+      id: String?,
+      document: ConcurrentHashMap<String, Any?>,
+      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    val query = KuzzleMap().apply {
+      put("index", index)
+      put("collection", collection)
+      put("controller", "document")
+      put("action", "replace")
+      put("body", document)
+      put("_id", id)
+      put("waitForRefresh", waitForRefresh)
+    }
+
+    return kuzzle
+        .query(query)
+        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+  }
+
+  @JvmOverloads
+  fun search(
+      index: String,
+      collection: String,
+      searchQuery: ConcurrentHashMap<String, Any?>,
+      scroll: String? = null,
+      from: Int = 0,
+      size: Int? = null): CompletableFuture<SearchResult> {
+    val query = KuzzleMap().apply {
+      put("index", index)
+      put("collection", collection)
+      put("controller", "document")
+      put("action", "search")
+      put("body", searchQuery)
+      put("from", from)
+      put("size", size)
+    }
+    if (scroll != null) {
+      query["scroll"] = scroll
+    }
+
+    return kuzzle
+        .query(query)
+        .thenApplyAsync { response -> SearchResult(kuzzle, query, scroll, from, size, response) }
+  }
+
+  @JvmOverloads
   fun update(
       index: String,
       collection: String,
@@ -301,22 +327,6 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     return kuzzle
         .query(query)
         .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
-  }
-
-  fun validate(
-      index: String,
-      collection: String,
-      document: ConcurrentHashMap<String, Any?>): CompletableFuture<Boolean> {
-    val query = KuzzleMap().apply {
-      put("index", index)
-      put("collection", collection)
-      put("controller", "document")
-      put("action", "validate")
-      put("body", document)
-    }
-    return kuzzle
-        .query(query)
-        .thenApplyAsync { response -> (response.result as ConcurrentHashMap<*, *>)["valid"] as Boolean }
   }
 
   @JvmOverloads
@@ -347,29 +357,19 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, ArrayList<Any?>> }
   }
 
-  @JvmOverloads
-  fun search(
+  fun validate(
       index: String,
       collection: String,
-      searchQuery: ConcurrentHashMap<String, Any?>,
-      scroll: String? = null,
-      from: Int = 0,
-      size: Int? = null): CompletableFuture<SearchResult> {
+      document: ConcurrentHashMap<String, Any?>): CompletableFuture<Boolean> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
       put("controller", "document")
-      put("action", "search")
-      put("body", searchQuery)
-      put("from", from)
-      put("size", size)
+      put("action", "validate")
+      put("body", document)
     }
-    if (scroll != null) {
-      query["scroll"] = scroll
-    }
-
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> SearchResult(kuzzle, query, scroll, from, size, response) }
+        .thenApplyAsync { response -> (response.result as ConcurrentHashMap<*, *>)["valid"] as Boolean }
   }
 }
