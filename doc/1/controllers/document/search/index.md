@@ -37,11 +37,31 @@ You can restrict the scroll session maximum duration under the `services.storage
  
 ```java
 public CompletableFuture<SearchResult> search(
-      final String index,
-      final String collection,
-      final ConcurrentHashMap<String, Object> searchQuery,
-      final SearchOptions options) throws NotConnectedException, InternalException
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery,
+      String scroll,
+      Integer from,
+      Integer size) throws NotConnectedException, InternalException
 
+public CompletableFuture<SearchResult> search(
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery,
+      String scroll,
+      Integer from) throws NotConnectedException, InternalException
+
+public CompletableFuture<SearchResult> search(
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery,
+      String scroll) throws NotConnectedException, InternalException
+
+public CompletableFuture<SearchResult> search(
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery)
+throws NotConnectedException, InternalException
 ```
  
 | Arguments          | Type                                         | Description                       |
@@ -49,7 +69,9 @@ public CompletableFuture<SearchResult> search(
 | `index`            | <pre>String</pre>                            | Index                             |
 | `collection`       | <pre>String</pre>                            | Collection                        |
 | `searchQuery`      | <pre>ConcurrentHashMap</pre>                 | Search query                      |
-| `options`          | <pre>SearchOptions</pre>                     | Query options                     |
+| `from`     | <pre>Integer</pre><br/>(`0`)    | Offset of the first document to fetch                                                                                                                                                                             |
+| `size`     | <pre>Integer</pre><br/>(`10`)   | Maximum number of documents to retrieve per page                                                                                                                                                                  |
+| `scroll`   | <pre>String</pre><br/>(`""`)    | When set, gets a forward-only cursor having its ttl set to the given value (ie `1s`; cf [elasticsearch time limits](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#time-units)) |
 ---
 
 ### searchQuery body properties:
@@ -59,18 +81,6 @@ public CompletableFuture<SearchResult> search(
 - `sort`: contains a list of fields, used to [sort search results](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/search-request-sort.html), in order of importance.
 
 An empty body matches all documents in the queried collection.
-
-### options
-
-A [SearchOptions](/sdk/java/3/core-classes/search-options) object.
-
-The following options can be set:
-
-| Options    | Type<br/>(default)              | Description                                                                                                                                                                                                       |
-| ---------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `from`     | <pre>Integer</pre><br/>(`0`)    | Offset of the first document to fetch                                                                                                                                                                             |
-| `size`     | <pre>Integer</pre><br/>(`10`)   | Maximum number of documents to retrieve per page                                                                                                                                                                  |
-| `scroll`   | <pre>String</pre><br/>(`""`)    | When set, gets a forward-only cursor having its ttl set to the given value (ie `1s`; cf [elasticsearch time limits](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#time-units)) |
 
 ## Return
 
@@ -90,7 +100,7 @@ Returns a [SearchResult](/sdk/java/3/core-classes/search-result) object.
   fun search(
       index: String,
       collection: String,
-      searchQuery: ConcurrentHashMap<String?, Any?>?,
+      searchQuery: ConcurrentHashMap<String?, Any?>,
       scroll: String? = null,
       from: Int = 0,
       size: Int? = null): CompletableFuture<SearchResult>
@@ -101,7 +111,9 @@ Returns a [SearchResult](/sdk/java/3/core-classes/search-result) object.
 | `index`            | <pre>String</pre>                            | Index                             |
 | `collection`       | <pre>String</pre>                            | Collection                        |
 | `searchQuery`      | <pre>ConcurrentHashMap</pre>                 | Search query                      |
-| `options`          | <pre>SearchOptions</pre>                     | Query options                     |
+| `from`     | <pre>Int</pre><br/>(`0`)    | Offset of the first document to fetch                                                                                                                                                                             |
+| `size`     | <pre>Int</pre><br/>(`10`)   | Maximum number of documents to retrieve per page                                                                                                                                                                  |
+| `scroll`   | <pre>String</pre><br/>(`""`)    | When set, gets a forward-only cursor having its ttl set to the given value (ie `1s`; cf [elasticsearch time limits](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#time-units)) |
 ---
 
 ### searchQuery body properties:
@@ -111,18 +123,6 @@ Returns a [SearchResult](/sdk/java/3/core-classes/search-result) object.
 - `sort`: contains a list of fields, used to [sort search results](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/search-request-sort.html), in order of importance.
 
 An empty body matches all documents in the queried collection.
-
-### options
-
-A [SearchOptions](/sdk/java/3/core-classes/search-options) object.
-
-The following options can be set:
-
-| Options    | Type<br/>(default)              | Description                                                                                                                                                                                                       |
-| ---------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `from`     | <pre>Integer</pre><br/>(`0`)    | Offset of the first document to fetch                                                                                                                                                                             |
-| `size`     | <pre>Integer</pre><br/>(`10`)   | Maximum number of documents to retrieve per page                                                                                                                                                                  |
-| `scroll`   | <pre>String</pre><br/>(`""`)    | When set, gets a forward-only cursor having its ttl set to the given value (ie `1s`; cf [elasticsearch time limits](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#time-units)) |
 
 ## Return
 

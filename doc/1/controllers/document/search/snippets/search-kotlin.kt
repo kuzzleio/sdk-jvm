@@ -14,5 +14,3 @@ val searchQuery: ConcurrentHashMap<String, Any?> =
 val results = kuzzle
   .documentController
   .search("nyc-open-data", "yellow-taxi", searchQuery).get();
-
-System.out.println("Successfully retrieved " + results.total + " documents");

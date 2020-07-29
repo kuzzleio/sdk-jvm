@@ -14,4 +14,4 @@ hooks:
     curl -XPOST kuzzle:7512/nyc-open-data/yellow-taxi/_refresh
   after:
 template: default
-expected: Successfully retrieved 5 documents
+expected: ^Success

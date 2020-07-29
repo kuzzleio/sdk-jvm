@@ -18,18 +18,18 @@ Replaces the content of an existing document.
 
 ```java
 public CompletableFuture<ConcurrentHashMap<String, Object>> replace(
-      final String index,
-      final String collection,
-      final String id,
-      final ConcurrentHashMap<String, Object> document)
+      String index,
+      String collection,
+      String id,
+      ConcurrentHashMap<String, Object> document)
 throws NotConnectedException, InternalException
 
 public CompletableFuture<ConcurrentHashMap<String, Object>> replace(
-      final String index,
-      final String collection,
-      final String id,
-      final ConcurrentHashMap<String, Object> document,
-      final Boolean waitForRefresh)
+      String index,
+      String collection,
+      String id,
+      ConcurrentHashMap<String, Object> document,
+      Boolean waitForRefresh)
 throws NotConnectedException, InternalException
 ```
 
@@ -89,7 +89,7 @@ A `ConcurrentHashMap` which has the following properties:
 |------------- |----------------------------- |--------------------------------- |
 | `_source`    | <pre>ConcurrentHashMap</pre> | Document content                 |
 | `_id`        | <pre>String</pre>            | ID of the document                       |
-| `_version`   | <pre>Integer</pre>           | Version of the document in the persistent data storage |
+| `_version`   | <pre>Int</pre>           | Version of the document in the persistent data storage |
 
 ## Usage
 

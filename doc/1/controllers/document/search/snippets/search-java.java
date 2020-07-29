@@ -9,7 +9,6 @@
         .getDocumentController()
         .search("nyc-open-data", "yellow-taxi", searchQuery).get();
 
-    System.out.println("Successfully retrieved " + results.getTotal() + " documents");
 
   /*
     {
