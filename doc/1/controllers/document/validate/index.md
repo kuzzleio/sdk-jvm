@@ -20,9 +20,9 @@ This request does **not** store or publish the document.
 
 ```java
 public CompletableFuture<Boolean> validate(
-      final String index,
-      final String collection,
-      final ConcurrentHashMap<String, Object> document)
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> document)
 throws NotConnectedException, InternalException
 ```
 

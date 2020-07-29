@@ -18,16 +18,16 @@ Updates multiple documents.
 
 ```java
 public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> mUpdate(
-      final String index,
-      final String collection,
-      final ArrayList<ConcurrentHashMap<String, Object>> documents)
+      String index,
+      String collection,
+      ArrayList<ConcurrentHashMap<String, Object>> documents)
 throws NotConnectedException, InternalException
 
 public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> mUpdate(
-      final String index,
-      final String collection,
-      final ArrayList<ConcurrentHashMap<String, Object>> documents,
-      final UpdateOptions options)
+      String index,
+      String collection,
+      ArrayList<ConcurrentHashMap<String, Object>> documents,
+      UpdateOptions options)
 throws NotConnectedException, InternalException
 ```
 
@@ -36,7 +36,8 @@ throws NotConnectedException, InternalException
 | `index`            | <pre>String</pre>                                       | Index                             |
 | `collection`       | <pre>String</pre>                                       | Collection                        |
 | `documents`        | <pre>ArrayList<ConcurrentHashMap<String, Object>></pre> | ArrayList containing the documents to update |
-| `options`          | <pre>UpdateOptions</pre><br>(`null`)                    | Query options |
+| `retryOnConflict`  | <pre>Integer</pre> (optional)                | The number of times the database layer should retry in case of version conflict |
+| `waitForRefresh`   | <pre>Boolean</pre> (optional)                | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing |
 
 ---
 
@@ -48,17 +49,6 @@ Each document has the following properties:
 | ------------------ | -------------------------------------------- | --------------------------------- |
 | `_id`              | <pre>String</pre>                            | Document ID             |
 | `body`             | <pre>ConcurrentHashMap<String, Object></pre> | Document body |
-
-### options
-
-An [UpdateOptions](/sdk/java/3/core-classes/update-options) object.
-
-The `mUpdate` method takes into account those following arguments:
-
-| Arguments          | Type                                         | Description                       |
-| ------------------ | -------------------------------------------- | --------------------------------- |
-| `retryOnConflict`  | <pre>Integer</pre> (optional)                | The number of times the database layer should retry in case of version conflict |
-| `waitForRefresh`   | <pre>Boolean</pre> (optional)                | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing |
 
 
 ## Return
@@ -104,7 +94,8 @@ Each errored document is an object of the `errors` array with the following prop
 | `index`            | <pre>String</pre>                                       | Index                             |
 | `collection`       | <pre>String</pre>                                       | Collection                        |
 | `documents`        | <pre>ArrayList<ConcurrentHashMap<String, Any?>></pre> | ArrayList containing the documents to update |
-| `options`          | <pre>UpdateOptions</pre><br>(`null`)                    | Query options |
+| `retryOnConflict`  | <pre>Int</pre> (optional)                | The number of times the database layer should retry in case of version conflict |
+| `waitForRefresh`   | <pre>Boolean</pre> (optional)                | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing |
 
 ---
 
@@ -117,17 +108,6 @@ Each document has the following properties:
 | `_id`              | <pre>String</pre>                            | Document ID             |
 | `body`             | <pre>ConcurrentHashMap<String, Any?></pre> | Document body |
 
-### options
-
-An [UpdateOptions](/sdk/java/3/core-classes/update-options) object.
-
-The `mUpdate` method takes into account those following arguments:
-
-| Arguments          | Type                                         | Description                       |
-| ------------------ | -------------------------------------------- | --------------------------------- |
-| `retryOnConflict`  | <pre>Integer</pre> (optional)                | The number of times the database layer should retry in case of version conflict |
-| `waitForRefresh`   | <pre>Boolean</pre> (optional)                | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing |
-
 
 ## Return
 
@@ -138,14 +118,14 @@ Each created document is an object of the `successes` array with the following p
 |------------- |--------------------------------------------- |--------------------------------- |
 | `_source`    | <pre>ConcurrentHashMap<String, Any?></pre> | Updated document                 |
 | `_id`        | <pre>String</pre>                            | ID of the updated document       |
-| `_version`   | <pre>Integer</pre>                           | Version of the document in the persistent data storage |
+| `_version`   | <pre>Int</pre>                           | Version of the document in the persistent data storage |
 
 Each errored document is an object of the `errors` array with the following properties:
 
 | Property     | Type                                         | Description                      |
 |------------- |--------------------------------------------- |--------------------------------- |
 | `document`   | <pre>ConcurrentHashMap<String, Any?></pre> | Document that causes the error   |
-| `status`     | <pre>Integer</pre>                           | HTTP error status                |
+| `status`     | <pre>Int</pre>                           | HTTP error status                |
 | `reason`     | <pre>String</pre>                            | Human readable reason |
 
 ## Usage

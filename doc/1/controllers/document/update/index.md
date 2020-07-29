@@ -18,18 +18,37 @@ Updates a document.
  
 ```java
 public CompletableFuture<ConcurrentHashMap<String, Object>> update(
-      final String index,
-      final String collection,
-      final String id,
-      final ConcurrentHashMap<String, Object> document)
+      String index,
+      String collection,
+      String id,
+      ConcurrentHashMap<String, Object> document,
+      Boolean waitForRefresh,
+      Integer retryOnConflict,
+      Boolean source)
 throws NotConnectedException, InternalException
 
 public CompletableFuture<ConcurrentHashMap<String, Object>> update(
-      final String index,
-      final String collection,
-      final String id,
-      final ConcurrentHashMap<String, Object> document,
-      final UpdateOptions options)
+      String index,
+      String collection,
+      String id,
+      ConcurrentHashMap<String, Object> document,
+      Boolean waitForRefresh,
+      Integer retryOnConflict)
+throws NotConnectedException, InternalException
+
+public CompletableFuture<ConcurrentHashMap<String, Object>> update(
+      String index,
+      String collection,
+      String id,
+      ConcurrentHashMap<String, Object> document,
+      Boolean waitForRefresh)
+throws NotConnectedException, InternalException
+
+public CompletableFuture<ConcurrentHashMap<String, Object>> update(
+      String index,
+      String collection,
+      String id,
+      ConcurrentHashMap<String, Object> document)
 throws NotConnectedException, InternalException
 ```
 
@@ -39,21 +58,11 @@ throws NotConnectedException, InternalException
 | `collection`       | <pre>String</pre>                            | Collection                        |
 | `id        `       | <pre>String</pre>                            | Document ID                        |
 | `document`         | <pre>ConcurrentHashMap<String, Object></pre> | Partial document content |
-| `options`          | <pre>UpdateOptions</pre><br>(`null`)         | Optional parameters               |
-
----
-
-### options
-
-A [UpdateOptions](/sdk/java/3/core-classes/update-options) object.
-
-The following options can be set:
-
-| Arguments          | Type                                         | Description                       |
-| ------------------ | -------------------------------------------- | --------------------------------- |           |
 | `waitForRefresh`   | <pre>Boolean</pre>                           | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
 | `retryOnConflict`  | <pre>Integer</pre>                           | The number of times the database layer should retry in case of version conflict |
 | `source`           | <pre>Boolean</pre>                           | If true, returns the updated document inside the response |
+
+---
 
 ## Return
 
@@ -91,21 +100,11 @@ A `ConcurrentHashMap` which has the following properties:
 | `collection`       | <pre>String</pre>                            | Collection                        |
 | `id        `       | <pre>String</pre>                            | Document ID                        |
 | `document`         | <pre>ConcurrentHashMap<String, Any?></pre> | Partial document content |
-| `options`          | <pre>UpdateOptions</pre><br>(`null`)         | Optional parameters               |
+| `waitForRefresh`   | <pre>Boolean</pre>                           | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
+| `retryOnConflict`  | <pre>Int</pre>                           | The number of times the database layer should retry in case of version conflict |
+| `source`           | <pre>Boolean</pre>                           | If true, returns the updated document inside the response |
 
 ---
-
-### options
-
-A [UpdateOptions](/sdk/java/3/core-classes/update-options) object.
-
-The following options can be set:
-
-| Arguments          | Type                                         | Description                       |
-| ------------------ | -------------------------------------------- | --------------------------------- |           |
-| `waitForRefresh`   | <pre>Boolean</pre>                           | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
-| `retryOnConflict`  | <pre>Integer</pre>                           | The number of times the database layer should retry in case of version conflict |
-| `source`           | <pre>Boolean</pre>                           | If true, returns the updated document inside the response |
 
 ## Return
 
@@ -115,7 +114,7 @@ A `ConcurrentHashMap` which has the following properties:
 |------------- |----------------------------- |--------------------------------------------------------------- |
 | `_source`    | <pre>ConcurrentHashMap</pre> | Updated document (If source option set to true)                |
 | `_id`        | <pre>String</pre>            | ID of the updated document                                     |
-| `_version`   | <pre>Integer</pre>           | Version of the document in the persistent data storage         |
+| `_version`   | <pre>Int</pre>           | Version of the document in the persistent data storage         |
 
 ## Usage
 

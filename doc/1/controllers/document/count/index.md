@@ -63,7 +63,7 @@ fun count(
 | ------------------ | -------------------------------------------- | --------------- |
 | `index`            | <pre>String</pre>                            | Index name      |
 | `collection`       | <pre>String</pre>                            | Collection name |
-| `searchQuery`      | <pre>ConcurrentHashMap<String, Object></pre><br>(`{}`) | Query to match  |
+| `searchQuery`      | <pre>ConcurrentHashMap<String, Any?></pre><br>(`{}`) | Query to match  |
 
 ---
 

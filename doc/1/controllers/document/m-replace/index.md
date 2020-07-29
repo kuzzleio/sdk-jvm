@@ -18,16 +18,16 @@ Replaces multiple documents.
 
 ```java
 public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> mReplace(
-      final String index,
-      final String collection,
-      final ArrayList<ConcurrentHashMap<String, Object>> documents)
+      String index,
+      String collection,
+      ArrayList<ConcurrentHashMap<String, Object>> documents)
 throws NotConnectedException, InternalException
 
 public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> mReplace(
-      final String index,
-      final String collection,
-      final ArrayList<ConcurrentHashMap<String, Object>> documents,
-      final Boolean waitForRefresh)
+      String index,
+      String collection,
+      ArrayList<ConcurrentHashMap<String, Object>> documents,
+      Boolean waitForRefresh)
 throws NotConnectedException, InternalException
 ```
 
@@ -112,14 +112,14 @@ Each created document is an object of the `successes` array with the following p
 |------------- |--------------------------------------------- |--------------------------------- |
 | `_source`    | <pre>ConcurrentHashMap<String, Any?></pre> | Created document                 |
 | `_id`        | <pre>String</pre>                            | ID of the replaced document      |
-| `_version`   | <pre>Integer</pre>                           | Version of the document in the persistent data storage |
+| `_version`   | <pre>Int</pre>                           | Version of the document in the persistent data storage |
 
 Each errored document is an object of the `errors` array with the following properties:
 
 | Property     | Type                                         | Description                      |
 |------------- |--------------------------------------------- |--------------------------------- |
 | `document`   | <pre>ConcurrentHashMap<String, Any?></pre> | Document that causes the error   |
-| `status`     | <pre>Integer</pre>                           | HTTP error status                |
+| `status`     | <pre>Int</pre>                           | HTTP error status                |
 | `reason`     | <pre>String</pre>                            | Human readable reason |
 
 ## Usage

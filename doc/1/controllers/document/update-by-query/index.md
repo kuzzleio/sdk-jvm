@@ -21,17 +21,17 @@ An empty or null query will match all documents in the collection.
 
 ```java
   public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
-      final String index,
-      final String collection,
-      final ConcurrentHashMap<String, Object> searchQuery,
-      final ConcurrentHashMap<String, Object> changes) throws NotConnectedException, InternalException
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery,
+      ConcurrentHashMap<String, Object> changes) throws NotConnectedException, InternalException
 
   public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
-      final String index,
-      final String collection,
-      final ConcurrentHashMap<String, Object> searchQuery,
-      final ConcurrentHashMap<String, Object> changes,
-      final UpdateOptions options) throws NotConnectedException, InternalException
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery,
+      ConcurrentHashMap<String, Object> changes,
+      UpdateOptions options) throws NotConnectedException, InternalException
 ```
 
 | Argument           | Type                                         | Description     |
@@ -40,20 +40,10 @@ An empty or null query will match all documents in the collection.
 | `collection`       | <pre>String</pre>                            | Collection name |
 | `searchQuery`      | <pre>ConcurrentHashMap<String, Object></pre> | Query to match  |
 | `changes`          | <pre>ConcurrentHashMap<String, Object></pre> | Partial changes to apply to the documents |
-| `options`          | <pre>UpdateOptions</pre><br>(`null`)         | Optional parameters               |
-
----
-
-### options
-
-A [UpdateOptions](/sdk/java/3/core-classes/update-options) object.
-
-The following options can be set:
-
-| Arguments          | Type                                         | Description                       |
-| ------------------ | -------------------------------------------- | --------------------------------- |
 | `waitForRefresh`   | <pre>Boolean</pre>                           | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
 | `source`           | <pre>Boolean</pre>                           | If true, returns the updated document inside the response |
+
+---
 
 ## Returns
 
@@ -99,20 +89,10 @@ fun updateByQuery(
 | `collection`       | <pre>String</pre>                            | Collection name |
 | `searchQuery`      | <pre>ConcurrentHashMap<String, Any?></pre> | Query to match  |
 | `changes`          | <pre>ConcurrentHashMap<String, Any?></pre> | Partial changes to apply to the documents |
-| `options`          | <pre>UpdateOptions</pre><br>(`null`)         | Optional parameters               |
-
----
-
-### options
-
-A [UpdateOptions](/sdk/java/3/core-classes/update-options) object.
-
-The following options can be set:
-
-| Arguments          | Type                                         | Description                       |
-| ------------------ | -------------------------------------------- | --------------------------------- |
 | `waitForRefresh`   | <pre>Boolean</pre>                           | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
 | `source`           | <pre>Boolean</pre>                           | If true, returns the updated document inside the response |
+
+---
 
 ## Returns
 
@@ -123,15 +103,15 @@ Each updated document is an object of the `successes` array with the following p
 |------------- |--------------------------------------------- |--------------------------------- |
 | `_source`    | <pre>ConcurrentHashMap<String, Any?></pre> | Updated document (if `source` option set to true)  |
 | `_id`        | <pre>String</pre>                            | ID of the udated document                   |
-| `_version`   | <pre>Integer</pre>                           | Version of the document in the persistent data storage |
-| `status`     | <pre>Integer</pre>                           | HTTP status code |
+| `_version`   | <pre>Int</pre>                           | Version of the document in the persistent data storage |
+| `status`     | <pre>Int</pre>                           | HTTP status code |
 
 Each errored document is an object of the `errors` array with the following properties:
 
 | Property     | Type                                         | Description                      |
 |------------- |--------------------------------------------- |--------------------------------- |
 | `document`   | <pre>ConcurrentHashMap<String, Any?></pre> | Document that causes the error   |
-| `status`     | <pre>Integer</pre>                           | HTTP error status                |
+| `status`     | <pre>Int</pre>                           | HTTP error status                |
 | `reason`     | <pre>String</pre>                            | Human readable reason |
 
 ## Usage

@@ -112,7 +112,7 @@ Each created document is an object of the `successes` array with the following p
 |------------- |--------------------------------------------- |--------------------------------- |
 | `_source`    | <pre>ConcurrentHashMap<String, Any?></pre> | Created document                 |
 | `_id`        | <pre>String</pre>                            | ID of the newly created document                       |
-| `_version`   | <pre>Integer</pre>                           | Version of the document in the persistent data storage |
+| `_version`   | <pre>Int</pre>                           | Version of the document in the persistent data storage |
 
 Each errored document is an object of the `errors` array with the following properties:
 
