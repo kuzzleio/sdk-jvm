@@ -15,7 +15,7 @@ That limit is by default set at 10000 documents, and you can't get over it even 
 :::
 
 ::: info
-When processing a large number of documents (i.e. more than 1000), it is advised to paginate the results using [SearchResult.next](/sdk/java/3/core-classes/search-result/next) rather than increasing the size parameter.
+When processing a large number of documents (i.e. more than 1000), it is advised to paginate the results using [SearchResult.next](/sdk/jvm/1/core-classes/search-result/next) rather than increasing the size parameter.
 :::
 
 ::: warning
@@ -84,7 +84,7 @@ An empty body matches all documents in the queried collection.
 
 ## Return
 
-Returns a [SearchResult](/sdk/java/3/core-classes/search-result) object.
+Returns a [SearchResult](/sdk/jvm/1/core-classes/search-result) object.
 
 ## Usage
 
@@ -126,7 +126,7 @@ An empty body matches all documents in the queried collection.
 
 ## Return
 
-Returns a [SearchResult](/sdk/java/3/core-classes/search-result) object.
+Returns a [SearchResult](/sdk/jvm/1/core-classes/search-result) object.
 
 ## Usage
 

@@ -17,7 +17,7 @@ class SearchResult {
   private var kuzzle: Kuzzle? = null
 
   var aggregations: ConcurrentHashMap<String, Any>? = null
-  var hits: ArrayList<ConcurrentHashMap<String, Any>>? = null
+  var hits: ArrayList<ConcurrentHashMap<String, Any>> = ArrayList<ConcurrentHashMap<String, Any>>()
   var total: Int = 0
   var fetched: Int = 0
   var scrollId: String? = null
@@ -38,7 +38,7 @@ class SearchResult {
     this.size = size
     this.request = request
     aggregations = (_response["result"] as ConcurrentHashMap<*, *>)["aggregations"] as ConcurrentHashMap<String, Any>?
-    hits = (_response["result"] as ConcurrentHashMap<*, *>)["hits"] as ArrayList<ConcurrentHashMap<String, Any>>?
+    hits = (_response["result"] as ConcurrentHashMap<*, *>)["hits"] as ArrayList<ConcurrentHashMap<String, Any>>
     total = ((_response["result"] as ConcurrentHashMap<*, *>)["total"] as LazilyParsedNumber?)!!.toInt()
     fetched = hits!!.size
     if (previouslyFetched != null) {
