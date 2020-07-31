@@ -1,22 +1,3 @@
-    ArrayList<ConcurrentHashMap<String, Object>> documents = new ArrayList<>();
-    ConcurrentHashMap<String, Object> body = new ConcurrentHashMap<>();
-
-    body.put("category", "suv");
-    for (int i = 0; i < 100; i++) {
-      ConcurrentHashMap<String, Object> document = new ConcurrentHashMap<>();
-      document.put("_id", "suv_no" + i);
-      document.put("body", body);
-      documents.add(document);
-    }
-
-    kuzzle
-      .getDocumentController()
-      .mCreate("nyc-open-data", "yellow-taxi", documents, true).get();
-
-    SearchOptions options = new SearchOptions();
-    options.setFrom(1);
-    options.setSize(5);
-
     ConcurrentHashMap<String, Object> searchQuery = new ConcurrentHashMap<>();
     ConcurrentHashMap<String, Object> query = new ConcurrentHashMap<>();
     ConcurrentHashMap<String, Object> match = new ConcurrentHashMap<>();
@@ -27,13 +8,13 @@
     SearchResult results = kuzzle.getDocumentController().search(
       "nyc-open-data",
       "yellow-taxi",
-      searchQuery, options).get();
+      searchQuery, null, 1, 5).get();
 
     // Fetch the matched items by advancing through the result pages
     ArrayList<ConcurrentHashMap<String, Object>> matched = new ArrayList<>();
 
     while (results != null) {
-      matched.addAll(results.hits);
+      matched.addAll(results.getHits());
       results = results.next().get();
     }
 
@@ -48,4 +29,3 @@
             createdAt=1570093133057 },
          category="suv" } }
   */
-    System.out.println("Successfully retrieved " + matched.size() + " documents");

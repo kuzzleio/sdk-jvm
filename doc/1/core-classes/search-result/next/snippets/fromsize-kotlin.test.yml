@@ -1,15 +1,16 @@
-name: kotli-searchresult#fromsize
+name: kotlin-searchresult#fromsize
 description: Next method with from/size
 hooks:
   before: |
     curl -XDELETE kuzzle:7512/nyc-open-data
     curl -XPOST kuzzle:7512/nyc-open-data/_create
     curl -XPUT kuzzle:7512/nyc-open-data/yellow-taxi
-    for i in {1..100}; do
+    for i in $(seq 1 100);
+    do
       curl -H "Content-type: application/json" -d '{"category": "suv"}' kuzzle:7512/nyc-open-data/yellow-taxi/suv_no$i/_create
     done
     curl -XPOST kuzzle:7512/nyc-open-data/yellow-taxi/_refresh
   after: |
     curl -XDELETE kuzzle:7512/nyc-open-data
-template: default
+template: print-search-result
 expected: Successfully retrieved 100 documents

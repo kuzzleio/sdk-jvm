@@ -73,16 +73,16 @@ class SearchResult {
     return nextRequest
   }
 
-  operator fun next(): CompletableFuture<SearchResult> {
+  operator fun next(): CompletableFuture<SearchResult?> {
     if (fetched >= total) return CompletableFuture.completedFuture(null)
-    var nextRequest: ConcurrentHashMap<String?, Any?>? = ConcurrentHashMap()
+    var nextRequest: ConcurrentHashMap<String?, Any?>? = null
     if (scrollId != null) {
       nextRequest = getScrollRequest()
     } else if (size != null
         && (request!!["body"] as ConcurrentHashMap<*, *>)["sort"] != null) {
       nextRequest = getSearchAfterRequest()
     } else if (size != null) {
-      if (from != null && from > total) {
+      if (from != null && from >= total) {
         return CompletableFuture.completedFuture(null)
       }
       from = fetched
