@@ -1,7 +1,9 @@
-name: java-Auth#CheckToken
-description: Checks an authentication token's validity.
+name: java-Auth#Write
+description: Creates or replaces a document directly into the storage engine.
 hooks:
-  before: curl -X POST kuzzle:7512/users/foo/_create -H "Content-Type:application/json" --data '{"content":{"profileIds":["default"]},"credentials":{"local":{"username":"foo","password":"bar"}}}'
-  after: curl -X DELETE kuzzle:7512/users/foo
-template: default
-expected: Success
+  before: |
+    curl -X POST kuzzle:7512/nyc-open-data/_create
+    curl -X PUT kuzzle:7512/nyc-open-data/yellow-taxi
+  after: curl -X DELETE kuzzle:7512/nyc-open-data
+template: print-result
+expected: ^{_source={_kuzzle_info={.*}}, _id=.+, _version=[0-9]+}$

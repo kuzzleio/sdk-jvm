@@ -1,5 +1,5 @@
-name: java-Auth#MWrite
-description: Creates or replaces multiple documents directly into the storage engine.
+name: kotlin-Bulk#ImportData
+description: Creates, updates or deletes large amounts of documents as fast as possible.
 hooks:
   before: |
     curl -X POST kuzzle:7512/nyc-open-data/_create

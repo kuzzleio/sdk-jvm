@@ -1,8 +1,9 @@
-ConcurrentHashMap<String, Object> credentials = new ConcurrentHashMap<>();
-credentials.put("username", "foo");
-credentials.put("password", "bar");
+ConcurrentHashMap<String, Object> content = new ConcurrentHashMap<String, Object>();
+ConcurrentHashMap<String, Object> kuzzleInfo = new ConcurrentHashMap<String, Object>();
+kuzzleInfo.put("author", "<kuid>");
+kuzzleInfo.put("createdAd", "1481816934209");
 
-ConcurrentHashMap<String, Object> response =
-  kuzzle.getAuthController().login("local", credentials).get();
-ConcurrentHashMap<String, Object> responseToken =
-  kuzzle.getAuthController().checkToken(response.get("jwt").toString()).get();
+content.put("_kuzzle_info", kuzzleInfo);
+
+ConcurrentHashMap<String, Object> result = 
+kuzzle.getBulkController().write("nyc-open-data", "yellow-taxi", content).get();

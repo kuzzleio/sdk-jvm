@@ -1,7 +1,9 @@
-val response = kuzzle.authController.login("local", ConcurrentHashMap<String, Any?>().apply {
-  put("username", "foo")
-  put("password", "bar")
-}).get()
+val documents: ArrayList<ConcurrentHashMap<String, Any?>> = ArrayList<ConcurrentHashMap<String, Any?>>().apply {
+  add(ConcurrentHashMap<String, Any?>().apply {
+    put("_id", "foo")
+    put("body", ConcurrentHashMap<String, Any?>())
+  })
+};
 
-val responseToken: ConcurrentHashMap<String, Any?> =
-  kuzzle.authController.checkToken(response["jwt"].toString()).get()
+val result: ConcurrentHashMap<String, Any?> = 
+kuzzle.bulkController.mWrite("nyc-open-data", "yellow-taxi", documents).get();

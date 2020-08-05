@@ -1,7 +1,20 @@
-name: kotlin-Auth#CheckToken
-description: Checks an authentication token's validity.
+name: kotlin-Bulk#DeleteByQuery
+description: Delete documents matching query.
 hooks:
-  before: curl -X POST kuzzle:7512/users/foo/_create -H "Content-Type:application/json" --data '{"content":{"profileIds":["default"]},"credentials":{"local":{"username":"foo","password":"bar"}}}'
-  after: curl -X DELETE kuzzle:7512/users/foo
-template: default
-expected: Success
+  before: |
+    curl -XPOST kuzzle:7512/nyc-open-data/_create
+    curl -XPUT kuzzle:7512/nyc-open-data/yellow-taxi
+
+    for i in  1 2 3 4 5; do
+      curl -H "Content-type: application/json" -d '{"capacity": 4}' kuzzle:7512/nyc-open-data/yellow-taxi/_create
+    done
+
+    for i in  1 2 3 4 5; do
+      curl -H "Content-type: application/json" -d '{"capacity": 7}' kuzzle:7512/nyc-open-data/yellow-taxi/_create
+    done
+
+    curl -XPOST kuzzle:7512/nyc-open-data/yellow-taxi/_refresh
+  after: |
+    curl -XDELETE kuzzle:7512/nyc-open-data
+template: print-result
+expected: 5
