@@ -2,7 +2,7 @@
 
 snippets:
   mount: /mnt
-  path: 'doc/**/snippets/delete-by-query-kotlin.test.yml'
+  path: 'doc/**/bulk/**/snippets/*.test.yml'
   templates: /mnt/.ci/doc/templates
 
 runners:

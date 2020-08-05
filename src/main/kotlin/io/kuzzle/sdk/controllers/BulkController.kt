@@ -6,15 +6,16 @@ import io.kuzzle.sdk.coreClasses.responses.Response
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
+import com.google.gson.internal.LazilyParsedNumber
 
 class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
 @JvmOverloads
   fun deleteByQuery(
-      index: String,
-      collection: String,
-      query: ConcurrentHashMap<String, Any?>,
-      waitForRefresh: Boolean? = null): Int {
+    index: String,
+    collection: String,
+    query: ConcurrentHashMap<String, Any?>,
+    waitForRefresh: Boolean? = null): CompletableFuture<Int> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -28,6 +29,7 @@ class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     return kuzzle
         .query(query)
         .thenApplyAsync { response -> (response.result as ConcurrentHashMap<String?, Any?>)["deleted"] as Int}
+        // .thenApplyAsync { response -> (response.result as KuzzleMap?)!!.getNumber("deleted")?.toInt() }
   }
 
   fun importData(

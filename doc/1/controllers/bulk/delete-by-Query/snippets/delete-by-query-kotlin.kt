@@ -1,4 +1,4 @@
-val bulkData: ConcurrentHashMap<String, Any?> = ConcurrentHashMap<String, Any?>().apply {
+val searchQuery: ConcurrentHashMap<String, Any?> = ConcurrentHashMap<String, Any?>().apply {
   put("query", ConcurrentHashMap<String, Any?>().apply {
     put("term", ConcurrentHashMap<String, Any?>().apply {
       put("capacity", 7)
@@ -6,4 +6,4 @@ val bulkData: ConcurrentHashMap<String, Any?> = ConcurrentHashMap<String, Any?>(
   })
 }
 
-val result: Int = kuzzle.bulkController.deleteByQuery("nyc-open-data", "yellow-taxi", bulkData)
+val result: Int = kuzzle.bulkController.deleteByQuery("nyc-open-data", "yellow-taxi", searchQuery).get()
