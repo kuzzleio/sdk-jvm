@@ -14,7 +14,7 @@ class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   fun deleteByQuery(
     index: String,
     collection: String,
-    query: ConcurrentHashMap<String, Any?>,
+    searchQuery: ConcurrentHashMap<String, Any?>,
     waitForRefresh: Boolean? = null): CompletableFuture<Int> {
     val query = KuzzleMap().apply {
       put("index", index)
@@ -22,14 +22,13 @@ class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       put("controller", "bulk")
       put("action", "deleteByQuery")
       put("body", ConcurrentHashMap<String, Any?>().apply {
-        put("query", query)
+        put("query", searchQuery)
       })
       put("waitForRefresh", waitForRefresh)
     }
     return kuzzle
         .query(query)
         .thenApplyAsync { response -> (response.result as ConcurrentHashMap<String?, Any?>)["deleted"] as Int}
-        // .thenApplyAsync { response -> (response.result as KuzzleMap?)!!.getNumber("deleted")?.toInt() }
   }
 
   fun importData(

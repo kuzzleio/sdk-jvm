@@ -1,13 +1,15 @@
 ---
 code: true
 type: page
-title: CheckToken
-description: Checks an authentication Token's validity.
+title: DeleteByQuery
+description: Deletes documents matching query.
 ---
 
-# CheckToken
+# DeleteByQueryAsync
 
-Checks an authentication token's validity.
+Deletes documents matching the provided search query.
+
+Kuzzle uses the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/5.6/query-dsl.html) syntax.
 
 :::: tabs
 ::: tab Java
@@ -15,27 +17,41 @@ Checks an authentication token's validity.
 ## Arguments
 
 ```java
-public CompletableFuture<ConcurrentHashMap<String, Object>> checkToken(String token)
-  throws NotConnectedException, InternalException
+public CompletableFuture<Int> deleteByQuery(
+  String index,
+  String collection,
+  ConcurrentHashMap<String, Object> searchQuery,
+  Boolean waitForRefresh
+) throws NotConnectedException, InternalException
+
+public CompletableFuture<Int> deleteByQuery(
+  String index,
+  String collection,
+  ConcurrentHashMap<String, Object> searchQuery
+) throws NotConnectedException, InternalException
 ```
 
-| Argument | Type              | Description |
-|----------|-------------------|-------------|
-| `token`  | <pre>String</pre> | Authentication token   |
+<br/>
+
+| Argument     | Type                                 | Description                             |
+| ------------ | ------------------------------------ | --------------------------------------- |
+| `index`      | <pre>String</pre>        | Index name                              |
+| `collection` | <pre>String</pre>        | Collection name                         |
+| `searchQuery`      | <pre>ConcurrentHashMap<String, Any?></pre>        | JSON representing the query to match |
+| `waitForRefresh` | <pre>Bool</pre><br>(`false`)  | If set to true, Kuzzle will not respond until the delete documents are indexed |
+
 
 ## Return
 
-A ConcurrentHashMap which has the following properties:
+An Int containing the number of deleted documents.
 
-| Property     | Type              | Description                      |
-|--------------|-------------------|----------------------------------|
-| `valid`      | <pre>Boolean</pre>   | Token validity                   |
-| `state`      | <pre>String</pre> | Explain why the token is invalid |
-| `expiresAt` | <pre>int</pre>  | Token expiration timestamp       |
+## Exceptions
+
+Throws a `KuzzleException` if there is an error. See how to [handle errors](/sdk/csharp/2/essentials/error-handling).
 
 ## Usage
 
-<<< ./snippets/check-token-java.java
+<<< ./snippets/delete-by-query-java.java
 
 :::
 ::: tab Kotlin
@@ -43,26 +59,35 @@ A ConcurrentHashMap which has the following properties:
 ## Arguments
 
 ```kotlin
-fun checkToken(token: String): CompletableFuture<ConcurrentHashMap<String, Any?>>
+fun deleteByQuery(
+  index: String,
+  collection: String,
+  searchQuery: ConcurrentHashMap<String, Any?>,
+  waitForRefresh: Boolean? = null
+): CompletableFuture<Int>
 ```
 
-| Argument | Type              | Description |
-|----------|-------------------|-------------|
-| `token`  | <pre>String</pre> | Authentication token   |
+<br/>
+
+| Argument     | Type                                 | Description                             |
+| ------------ | ------------------------------------ | --------------------------------------- |
+| `index`      | <pre>String</pre>        | Index name                              |
+| `collection` | <pre>String</pre>        | Collection name                         |
+| `searchQuery`      | <pre>ConcurrentHashMap<String, Any?></pre>        | JSON representing the query to match |
+| `waitForRefresh` | <pre>Boolean</pre><br>(`false`)  | If set to true, Kuzzle will not respond until the delete documents are indexed |
+
 
 ## Return
 
-A ConcurrentHashMap which has the following properties:
+An Int containing the number of deleted documents.
 
-| Property     | Type              | Description                      |
-|--------------|-------------------|----------------------------------|
-| `valid`      | <pre>Boolean</pre>   | Token validity                   |
-| `state`      | <pre>String</pre> | Explain why the token is invalid |
-| `expiresAt` | <pre>Int</pre>  | Token expiration timestamp       |
+## Exceptions
+
+Throws a `KuzzleException` if there is an error. See how to [handle errors](/sdk/csharp/2/essentials/error-handling).
 
 ## Usage
 
-<<< ./snippets/check-token-kotlin.kt
+<<< ./snippets/delete-by-query-kotlin.kt
 
 :::
 ::::
