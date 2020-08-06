@@ -14,9 +14,6 @@ Create or replace a document directly into the storage engine.
 
 ## Arguments
 
-
-## Arguments
-
 ```java
 public CompletableFuture<ConcurrentHashMap<String, Object>> write(
   String index,

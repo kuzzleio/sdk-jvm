@@ -18,7 +18,7 @@ This is a low level route intended to bypass Kuzzle actions on document creation
 ## Arguments
 
 ```java
-public CompletableFuture<ConcurrentHashMap<String, Any?>> importData (
+public CompletableFuture<ConcurrentHashMap<String, Object>> importData (
   String index,
   String collection,
   ArrayList<ConcurrentHashMap<String, Object>> bulkData
