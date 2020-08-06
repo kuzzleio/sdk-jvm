@@ -1,11 +1,11 @@
 ---
 code: true
 type: page
-title: MWrite
+title: mWrite
 description: Creates or replaces multiple documents directly into the storage engine.
 ---
 
-# MWrite
+# mWrite
 
 This is a low level route intended to bypass Kuzzle actions on document creation, notably:
   - check [document validity](/core/2/guides/essentials/data-validation),
