@@ -1,11 +1,11 @@
 ---
 code: true
 type: page
-title: Write
+title: write
 description: Creates or replaces a document directly into the storage engine.
 ---
 
-# Write
+# write
 
 Create or replace a document directly into the storage engine.
 
