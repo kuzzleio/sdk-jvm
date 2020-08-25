@@ -1,5 +1,6 @@
 package io.kuzzle.sdk
 
+import io.kuzzle.sdk.controllers.DocumentController
 import io.kuzzle.sdk.controllers.IndexController
 import io.kuzzle.sdk.controllers.AuthController
 import io.kuzzle.sdk.controllers.RealtimeController
@@ -27,6 +28,7 @@ class Kuzzle {
   private val sdkName: String = "jvm@$version"
   var authenticationToken: String? = null
   val realtimeController: RealtimeController
+  val documentController: DocumentController
   val indexController: IndexController
   val authController: AuthController
   val serverController: ServerController
@@ -38,6 +40,7 @@ class Kuzzle {
     this.autoResubscribe = autoResubscribe
     instanceId = UUID.randomUUID().toString()
     realtimeController = RealtimeController(this)
+    documentController = DocumentController(this)
     indexController = IndexController(this)
     authController = AuthController(this)
     serverController = ServerController(this)
