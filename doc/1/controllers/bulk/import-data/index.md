@@ -1,11 +1,11 @@
 ---
 code: true
 type: page
-title: ImportData
+title: importData
 description: Creates, updates or deletes large amounts of documents as fast as possible.
 ---
 
-# ImportData
+# importData
 
 Creates, updates or deletes large amounts of documents as fast as possible.
 

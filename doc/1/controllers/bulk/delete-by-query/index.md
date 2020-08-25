@@ -45,10 +45,6 @@ public CompletableFuture<Int> deleteByQuery(
 
 An Int containing the number of deleted documents.
 
-## Exceptions
-
-Throws a `KuzzleException` if there is an error. See how to [handle errors](/sdk/csharp/2/essentials/error-handling).
-
 ## Usage
 
 <<< ./snippets/delete-by-query-java.java
@@ -80,10 +76,6 @@ fun deleteByQuery(
 ## Return
 
 An Int containing the number of deleted documents.
-
-## Exceptions
-
-Throws a `KuzzleException` if there is an error. See how to [handle errors](/sdk/csharp/2/essentials/error-handling).
 
 ## Usage
 
