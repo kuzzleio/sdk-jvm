@@ -1,10 +1,12 @@
 package io.kuzzle.sdk
 
+import io.kuzzle.sdk.controllers.DocumentController
 import io.kuzzle.sdk.controllers.IndexController
 import io.kuzzle.sdk.controllers.AuthController
 import io.kuzzle.sdk.controllers.RealtimeController
 import io.kuzzle.sdk.controllers.ServerController
 import io.kuzzle.sdk.controllers.CollectionController
+import io.kuzzle.sdk.controllers.BulkController
 import io.kuzzle.sdk.coreClasses.exceptions.ApiErrorException
 import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
 import io.kuzzle.sdk.coreClasses.exceptions.NotConnectedException
@@ -27,10 +29,12 @@ class Kuzzle {
   private val sdkName: String = "jvm@$version"
   var authenticationToken: String? = null
   val realtimeController: RealtimeController
+  val documentController: DocumentController
   val indexController: IndexController
   val authController: AuthController
   val serverController: ServerController
   val collectionController: CollectionController
+  val bulkController: BulkController
 
   @JvmOverloads
   constructor(protocol: AbstractProtocol, autoResubscribe: Boolean = true) {
@@ -38,10 +42,12 @@ class Kuzzle {
     this.autoResubscribe = autoResubscribe
     instanceId = UUID.randomUUID().toString()
     realtimeController = RealtimeController(this)
+    documentController = DocumentController(this)
     indexController = IndexController(this)
     authController = AuthController(this)
     serverController = ServerController(this)
     collectionController = CollectionController(this)
+    bulkController = BulkController(this)
     // @TODO Create enums for events
     protocol.addListener("messageReceived", ::onMessageReceived)
     protocol.addListener("networkStateChange", ::onNetworkStateChange)
