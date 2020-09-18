@@ -16,4 +16,4 @@ src/main/kotlin/Main.kt
 .ci/doc/java-project/libs/sdk-jvm-1.0.0.jar
 .ci/doc/java-project/src/main/java/SnippetTest.java
 .ci/doc/kotlin-project/src/main/java/SnippetTest.kt 
-.ci/doc/kotlin-project/libs/sdk-jvm-1.0.0.jar
+.ci/doc/kotlin-project/libs/sdk-jvm-1.0.0.jar 
