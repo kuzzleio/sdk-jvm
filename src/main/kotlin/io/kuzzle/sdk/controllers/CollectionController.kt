@@ -11,8 +11,7 @@ class CollectionController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   fun create(
       index: String,
       collection: String,
-      mapping: ConcurrentHashMap<String, Any?>? = null,
-      settings: ConcurrentHashMap<String, Any?>? = null,
+      mapping: ConcurrentHashMap<String, Any>?
     ): CompletableFuture<Boolean> {
     return kuzzle
       .query(KuzzleMap().apply {
@@ -21,7 +20,6 @@ class CollectionController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         put("index", index)
         put("collection", collection)
         put("mapping", mapping)
-        put("settings", settings)
       })
       .thenApplyAsync { response -> (response.result as ConcurrentHashMap<String, Any?>)["acknowledged"] as Boolean}
   }
@@ -40,14 +38,14 @@ class CollectionController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       .thenApplyAsync { null }
   }
 
-  fun deleteSpecification(
+  fun deleteSpecifications(
       index: String,
       collection: String
     ): CompletableFuture<Void> {
     return kuzzle
       .query(KuzzleMap().apply {
         put("controller", "collection")
-        put("action", "deleteSpecification")
+        put("action", "deleteSpecifications")
         put("index", index)
         put("collection", collection)
       })
@@ -96,43 +94,41 @@ fun getSpecifications(
     .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
 }
 
-  fun list(): CompletableFuture<ArrayList<String>> {
+  fun list(index: String): CompletableFuture<ConcurrentHashMap<String, Any?>> {
     return kuzzle
         .query(KuzzleMap().apply {
           put("controller", "collection")
           put("action", "list")
+          put("index", index)
         })
-        .thenApplyAsync { response -> (response.result as KuzzleMap).getArrayList("collections") as ArrayList<String> }
+        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
   }
-
-
-
-
-
-
-
 
   fun refresh(
     index: String,
     collection: String
-  ): CompletableFuture<Void> {
+   ): CompletableFuture<Void> {
     return kuzzle
         .query(KuzzleMap().apply {
           put("controller", "collection")
-          put("action", "refresh"),
+          put("action", "refresh")
           put("index", index)
           put("collection", collection)
         })
         .thenApplyAsync { null }
   }
-  fun searchSpecifications(): CompletableFuture<ArrayList<String>> {
-    return kuzzle
-        .query(KuzzleMap().apply {
-          put("controller", "collection")
-          put("action", "searchSpecifications")
-        })
-        .thenApplyAsync { response -> (response.result as KuzzleMap).getArrayList("indexes") as ArrayList<String> }
-  }
+
+  // fun searchSpecifications(searchQuery: ConcurrentHashMap<String, Any>?): CompletableFuture<ArrayList<String>> {
+  //   return kuzzle
+  //       .query(KuzzleMap().apply {
+  //         put("controller", "collection")
+  //         put("action", "searchSpecifications")
+  //         put("body", searchQuery)
+
+  //       })
+  //       .thenApplyAsync { response -> (response.result as KuzzleMap).getArrayList("indexes") as ArrayList<String> }
+  // }
+
   fun truncate(
     index: String,
     collection: String
@@ -159,35 +155,38 @@ fun getSpecifications(
         })
         .thenApplyAsync { response -> (response.result as KuzzleMap).getArrayList("indexes") as ArrayList<String> }
   }
-  fun updateMapping(
-    index: String,
-    collection: String
-  ): CompletableFuture<ArrayList<String>> {
-    return kuzzle
-        .query(KuzzleMap().apply {
-          put("controller", "collection")
-          put("action", "updateMapping")
-          put("index", index)
-          put("collection", collection)
-        })
-        .thenApplyAsync { response -> (response.result as KuzzleMap).getArrayList("indexes") as ArrayList<String> }
-  }
-  fun updateSpecifications(
-    index: String,
-    collection: String
-  ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
-    return kuzzle
-        .query(KuzzleMap().apply {
-          put("controller", "collection")
-          put("action", "updateSpecifications")
-          put("index", index)
-          put("collection", collection)
-        })
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
-  }
+  // fun updateMapping(
+  //   index: String,
+  //   collection: String
+  // ): CompletableFuture<ArrayList<String>> {
+  //   return kuzzle
+  //       .query(KuzzleMap().apply {
+  //         put("controller", "collection")
+  //         put("action", "updateMapping")
+  //         put("index", index)
+  //         put("collection", collection)
+  //       })
+  //       .thenApplyAsync { response -> (response.result as KuzzleMap).getArrayList("indexes") as ArrayList<String> }
+  // }
+
+  // fun updateSpecifications(
+  //   index: String,
+  //   collection: String
+  // ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+  //   return kuzzle
+  //       .query(KuzzleMap().apply {
+  //         put("controller", "collection")
+  //         put("action", "updateSpecifications")
+  //         put("index", index)
+  //         put("collection", collection)
+  //       })
+  //       .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+  // }
+
   fun validateSpecifications(
     index: String,
-    collection: String
+    collection: String,
+    specifications: ConcurrentHashMap<String, Any>?
   ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
     return kuzzle
         .query(KuzzleMap().apply {
@@ -195,6 +194,7 @@ fun getSpecifications(
           put("action", "validateSpecifications")
           put("index", index)
           put("collection", collection)
+          put("body", specifications)
         })
         .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
   }

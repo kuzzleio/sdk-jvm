@@ -4,6 +4,7 @@ import io.kuzzle.sdk.controllers.IndexController
 import io.kuzzle.sdk.controllers.AuthController
 import io.kuzzle.sdk.controllers.RealtimeController
 import io.kuzzle.sdk.controllers.ServerController
+import io.kuzzle.sdk.controllers.CollectionController
 import io.kuzzle.sdk.coreClasses.exceptions.ApiErrorException
 import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
 import io.kuzzle.sdk.coreClasses.exceptions.NotConnectedException
@@ -29,6 +30,7 @@ class Kuzzle {
   val indexController: IndexController
   val authController: AuthController
   val serverController: ServerController
+  val collectionController: CollectionController
 
   @JvmOverloads
   constructor(protocol: AbstractProtocol, autoResubscribe: Boolean = true) {
@@ -39,6 +41,7 @@ class Kuzzle {
     indexController = IndexController(this)
     authController = AuthController(this)
     serverController = ServerController(this)
+    collectionController = CollectionController(this)
     // @TODO Create enums for events
     protocol.addListener("messageReceived", ::onMessageReceived)
     protocol.addListener("networkStateChange", ::onNetworkStateChange)
