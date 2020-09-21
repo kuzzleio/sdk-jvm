@@ -29,7 +29,7 @@ throws NotConnectedException, InternalException
 | ------------------ | ------------------------------------------------------- | --------------------------------- |
 | `index`            | <pre>String</pre>                                       | Index name                        |
 | `collection`       | <pre>String</pre>                                       | Collection name                   |
-| `ids`              | <pre>ArrayList<String></pre>                            | Document IDs                      |
+| `ids`              | `ArrayList<String>`                            | Document IDs                      |
 ---
 
 ## Return
@@ -65,7 +65,7 @@ fun mGet(
 | ------------------ | ------------------------------------------------------- | --------------------------------- |
 | `index`            | <pre>String</pre>                                       | Index name                        |
 | `collection`       | <pre>String</pre>                                       | Collection name                   |
-| `ids`              | <pre>ArrayList<String></pre>                            | Document IDs                      |
+| `ids`              | `ArrayList<String>`                            | Document IDs                      |
 ---
 
 ## Return
