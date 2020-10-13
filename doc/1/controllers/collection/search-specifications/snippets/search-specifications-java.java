@@ -6,14 +6,9 @@ ConcurrentHashMap<String, Object> args = new ConcurrentHashMap<>();
 filters.put("match_all", args);
 searchQuery.put("query", filters);
 
-SearchOptions options = new SearchOptions();
-options.setSize(50);
-options.setFrom(0);
-options.setScroll("10s");
-
 SearchResult result = kuzzle
     .getCollectionController()
-    .searchSpecifications(searchQuery, options).get();
+    .searchSpecifications(searchQuery, "10s", 0, 50).get();
 
 System.out.println("fetched: " + result.fetched);
   /*
