@@ -14,20 +14,21 @@ You can define the collection [dynamic mapping policy](/core/2/guides/essentials
 You can define [collection additional metadata](/core/2/guides/essentials/database-mappings#collection-metadata) within the `_meta` root field.
 
 <SinceBadge version="Kuzzle 2.2.0" />
-<SinceBadge version="7.4.0" />
 
 You can also provide Elasticsearch [index settings](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/index-modules.html#index-modules-settings) when creating a new collection.
 
 <br/>
-
 :::: tabs
 ::: tab Java
+
+## Arguments
 
 ```java
 public CompletableFuture<ConcurrentHashMap<String, Object>> update(
       final String index,
       final String collection,
       final ConcurrentHashMap<String, Object> definition)
+
 ```
 
 <br/>
@@ -38,63 +39,84 @@ public CompletableFuture<ConcurrentHashMap<String, Object>> update(
 | `collection` | <pre>String</pre> | Collection name                                             |
 | `definition` | <pre>ConcurrentHashMap<String, Object></pre> | Describes the collection mappings and the ES index settings |
 
-<SinceBadge version="7.4.0">
-
 ### definition
 
-A ConcurrentHashMap containing:
+An object containing:
  - [collection mappings](/core/2/guides/essentials/database-mappings).
  - Elasticsearch [index settings](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/index-modules.html#index-modules-settings)
 
 
 ```java
-definition={
-  mappings={
-    properties={
-      field1={ type='text' },
-      field2={
-        properties={
-          nestedField={ type='keyword' }
+{
+  "mappings"={
+    "properties"={
+      "field1"={ "type"="text" },
+      "field2"={
+        "properties"={
+          "nestedField"={ "type": "keyword" }
         }
       }
     }    
   },
-  settings: {
+  "settings"={
     // index settings (e.g. analyzers)
   }
 };
 ```
 
-</SinceBadge>
+## Usage
+
+<<< ./snippets/update-java.java
+
+:::
+::: tab Kotlin
+
+## Arguments
+
+```kotlin
+fun update(
+    index: String,
+    collection: String,
+    definition: ConcurrentHashMap<String, Any?>
+  ): CompletableFuture<Void>
+```
+
+<br/>
+
+| Arguments    | Type              | Description                                                 |
+|--------------|-------------------|-------------------------------------------------------------|
+| `index`      | <pre>String</pre> | Index name                                                  |
+| `collection` | <pre>String</pre> | Collection name                                             |
+| `definition` | <pre>ConcurrentHashMap<String, Any?></pre> | Describes the collection mappings and the ES index settings |
 
 ### definition
 
-An object representing the data mappings of the collection.
+An object containing:
+ - [collection mappings](/core/2/guides/essentials/database-mappings).
+ - Elasticsearch [index settings](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/index-modules.html#index-modules-settings)
 
-The mappings must have a root field `properties` that contain the mappings properties definition:
 
-```js
-const mappings = {
-  properties: {
-    field1: { type: 'text' },
-    field2: {
-      properties: {
-        nestedField: { type: 'keyword' }
+```kotlin
+{
+  "mappings"={
+    "properties"={
+      "field1"={ "type"="text" },
+      "field2"={
+        "properties"={
+          "nestedField"={ "type": "keyword" }
+        }
       }
-    }
+    }    
+  },
+  "settings"={
+    // index settings (e.g. analyzers)
   }
 };
 ```
 
-More informations about database mappings [here](/core/2/guides/essentials/database-mappings).
-
-## Resolves
-
-Resolve if the collection is successfully updated.
-
 ## Usage
 
-<<< ./snippets/update.js
+<<< ./snippets/update-kotlin.kt
 
 :::
-::: tab Kotlin
+::::

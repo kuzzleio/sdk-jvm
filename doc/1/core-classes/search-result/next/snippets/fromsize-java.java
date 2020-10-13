@@ -14,7 +14,7 @@
     ArrayList<ConcurrentHashMap<String, Object>> matched = new ArrayList<>();
 
     while (results != null) {
-      matched.addAll(results.getHits());
+      matched.addAll(results.hits);
       results = results.next().get();
     }
 

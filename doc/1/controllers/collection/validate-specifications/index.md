@@ -53,14 +53,50 @@ It contains the following properties:
 
 ## Usage
 
-<<< ./snippets/validate-specifications.java
+<<< ./snippets/validate-specifications-java.java
 
 :::
 ::: tab Kotlin
 
 ## Arguments
 
+```kotlin
+fun validateSpecifications(
+    index: String,
+    collection: String,
+    specifications: ConcurrentHashMap<String, Any>?
+  ): CompletableFuture<ConcurrentHashMap<String, Any?>>
+```
+
+<br/>
+
+| Arguments        | Type                                         | Description                |
+| ---------------- | -------------------------------------------- | -------------------------- |
+| `index`          | <pre>String</pre>                            | Index name                 |
+| `collection`     | <pre>String</pre>                            | Collection name            |
+| `specifications` | <pre>ConcurrentHashMap<String, Any?></pre> | Specifications to validate |
+
+### specifications
+
+A `ConcurrentHashMap<String, Any?>` representing the specifications.
+
+This object must follow the [Specification Structure](/core/2/guides/cookbooks/datavalidation).
+
+## Returns
+
+Returns a `ConcurrentHashMap<String, Any?>` which contains information about the specifications validity.
+
+It contains the following properties:
+
+| Property      | Type                         | Description                  |
+| ------------- | ---------------------------- | ---------------------------- |
+| `valid`       | <pre>Boolean</pre>           | Specifications validity      |
+| `details`     | <pre>ArrayList<String></pre> | Specifications errors        |
+| `description` | <pre>String</pre>            | Global description of errors
+
 ## Usage
+
+<<< ./snippets/validate-specifications-kotlin.kt
 
 :::
 ::::

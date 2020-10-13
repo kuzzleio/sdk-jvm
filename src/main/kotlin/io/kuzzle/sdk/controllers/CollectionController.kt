@@ -119,6 +119,7 @@ fun getSpecifications(
         .thenApplyAsync { null }
   }
 
+  @JvmOverloads
   fun searchSpecifications(
     searchQuery: ConcurrentHashMap<String, Any?>,
     scroll: String? = null,
@@ -150,19 +151,6 @@ fun getSpecifications(
           put("collection", collection)
         })
         .thenApplyAsync { null }
-  }
-  fun update(
-    index: String,
-    collection: String
-  ): CompletableFuture<ArrayList<String>> {
-    return kuzzle
-        .query(KuzzleMap().apply {
-          put("controller", "collection")
-          put("action", "update")
-          put("index", index)
-          put("collection", collection)
-        })
-        .thenApplyAsync { response -> (response.result as KuzzleMap).getArrayList("indexes") as ArrayList<String> }
   }
   
   fun update(

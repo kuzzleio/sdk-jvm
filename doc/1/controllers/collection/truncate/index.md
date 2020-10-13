@@ -31,14 +31,30 @@ public CompletableFuture<Void> truncate(
 
 ## Usage
 
-<<< ./snippets/truncate.java
+<<< ./snippets/truncate-java.java
 
 :::
 ::: tab Kotlin
 
 ## Arguments
 
+```kotlin
+fun truncate(
+    index: String,
+    collection: String
+  ): CompletableFuture<Void>
+```
+
+<br/>
+
+| Arguments    | Type              | Description     |
+| ------------ | ----------------- | --------------- |
+| `index`      | <pre>String</pre> | Index name      |
+| `collection` | <pre>String</pre> | Collection name |
+
 ## Usage
+
+<<< ./snippets/truncate-kotlin.kt
 
 :::
 ::::

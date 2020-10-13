@@ -38,14 +38,27 @@ Returns a `CompletableFuture<Void>`.
 
 ## Usage
 
-<<< ./snippets/refresh.java
+<<< ./snippets/refresh-java.java
 
 :::
 ::: tab Kotlin
 
 ## Arguments
 
+```kotlin
+fun refresh(
+    index: String,
+    collection: String
+   ): CompletableFuture<Void>
+```
+
+## Returns
+
+Returns a `CompletableFuture<Void>`.
+
 ## Usage
+
+<<< ./snippets/refresh-kotlin.kt
 
 :::
 ::::

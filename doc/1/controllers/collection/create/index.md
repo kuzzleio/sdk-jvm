@@ -62,12 +62,27 @@ More information about database mappings [here](/core/2/guides/essentials/databa
 
 ## Usage
 
-<<< ./snippets/create.java
+<<< ./snippets/create-java.java
 
 :::
 ::: tab Kotlin
 
 ## Arguments
+
+```kotlin
+fun create(
+      index: String,
+      collection: String,
+      mapping: ConcurrentHashMap<String, Any>?
+    ): CompletableFuture<Boolean>
+```
+| Arguments          | Type                                         | Description                       |
+| ------------------ | -------------------------------------------- | --------------------------------- |
+| `index`            | <pre>String</pre>                            | Index                             |
+| `collection`       | <pre>String</pre>                            | Collection                        |
+| `mapping`          | <pre>ConcurrentHashMap<String, Any>?</pre> | Describes the data mapping to associate to the new collection, using Elasticsearch [mapping format](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/mapping.html) |
+
+---
 
 ## Usage
 

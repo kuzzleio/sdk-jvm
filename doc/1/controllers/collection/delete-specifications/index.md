@@ -35,14 +35,32 @@ Returns a `CompletableFuture<Void>`.
 
 ## Usage
 
-<<< ./snippets/delete-specifications.java
+<<< ./snippets/delete-specifications-java.java
 
 :::
 ::: tab Kotlin
 
 ## Arguments
 
+```kotlin
+fun deleteSpecifications(
+      index: String,
+      collection: String
+    ): CompletableFuture<Void>
+```
+
+| Arguments    | Type              | Description     |
+| ------------ | ----------------- | --------------- |
+| `index`      | <pre>String</pre> | Index name      |
+| `collection` | <pre>String</pre> | Collection name |
+
+## Returns
+
+Returns a `CompletableFuture<Void>`.
+
 ## Usage
+
+<<< ./snippets/delete-specifications-kotlin.kt
 
 :::
 ::::

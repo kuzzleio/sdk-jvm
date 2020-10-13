@@ -35,14 +35,33 @@ Returns a `ConcurrentHashMap<String, Object>` representing the collection mappin
 
 ## Usage
 
-<<< ./snippets/get-mapping.java
+<<< ./snippets/get-mapping-java.java
 
 :::
 ::: tab Kotlin
 
 ## Arguments
 
+```kotlin
+fun getMapping(
+    index: String,
+    collection: String
+  ): CompletableFuture<ConcurrentHashMap<String, Any?>>
+```
+
+| Arguments    | Type              | Description     |
+| ------------ | ----------------- | --------------- |
+| `index`      | <pre>String</pre> | Index name      |
+| `collection` | <pre>String</pre> | Collection name |
+
+
+## Returns
+
+Returns a `ConcurrentHashMap<String, Any?>` representing the collection mapping.
+
 ## Usage
+
+<<< ./snippets/get-mapping-kotlin.kt
 
 :::
 ::::

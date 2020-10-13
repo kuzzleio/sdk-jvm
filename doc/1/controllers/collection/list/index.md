@@ -47,14 +47,43 @@ Each object in the `collections` array contains the following properties:
 
 ## Usage
 
-<<< ./snippets/list.java
+<<< ./snippets/list-java.java
 
 :::
 ::: tab Kotlin
 
 ## Arguments
 
+```kotlin
+fun list(index: String): CompletableFuture<ConcurrentHashMap<String, Any?>>
+```
+
+
+| Arguments | Type                   | Description   |
+| --------- | ---------------------- | ------------- |
+| `index`   | <pre>String</pre>      | Index name    |
+
+## Returns
+
+Returns a `ConcurrentHashMap<String, Any?>` containing the following properties:
+
+| Property      | Type                | Description                                                        |
+| ------------- | ------------------- | ------------------------------------------------------------------ |
+| `type`        | <pre>String</pre>   | Types of returned collections <br/>(`all`, `realtime` or `stored`) |
+| `collections` | <pre>ArrayList<Object></pre> | List of collections                                                |
+| `from`        | <pre>Int</pre>   | Offset of the first result                                         |
+| `size`        | <pre>Int</pre>   | Maximum number of returned results                                 |
+
+Each object in the `collections` array contains the following properties:
+
+| Property | Type              | Description                              |
+| -------- | ----------------- | ---------------------------------------- |
+| `name`   | <pre>String</pre> | Collection name                          |
+| `type`   | <pre>String</pre> | Collection type (`realtime` or `stored`) |
+
 ## Usage
+
+<<< ./snippets/list-kotlin.kt
 
 :::
 ::::

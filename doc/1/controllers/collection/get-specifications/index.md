@@ -35,14 +35,32 @@ Returns a `ConcurrentHashMap<String, Object>` representing the collection specif
 
 ## Usage
 
-<<< ./snippets/get-specifications.java
+<<< ./snippets/get-specifications-java.java
 
 :::
 ::: tab Kotlin
 
 ## Arguments
 
+```kotlin
+fun getSpecifications(
+    index: String,
+    collection: String
+  ): CompletableFuture<ConcurrentHashMap<String, Any?>>
+```
+
+| Arguments    | Type              | Description     |
+| ------------ | ----------------- | --------------- |
+| `index`      | <pre>String</pre> | Index name      |
+| `collection` | <pre>String</pre> | Collection name |
+
+## Returns
+
+Returns a `ConcurrentHashMap<String, Any?>` representing the collection specifications.
+
 ## Usage
+
+<<< ./snippets/get-specifications-kotlin.kt
 
 :::
 ::::

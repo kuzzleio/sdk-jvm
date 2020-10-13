@@ -37,14 +37,32 @@ Returns a boolean.
 
 ## Usage
 
-<<< ./snippets/exists.java
+<<< ./snippets/exists-java.java
 
 :::
 ::: tab Kotlin
 
 ## Arguments
 
+```kotlin
+  fun exists(
+      index: String,
+      collection: String
+    ): CompletableFuture<Boolean>
+```
+
+| Arguments          | Type                                         | Description                       |
+| ------------------ | -------------------------------------------- | --------------------------------- |
+| `index`            | <pre>String</pre>                            | Index                             |
+| `collection`       | <pre>String</pre>                            | Collection                        |
+
+## Return
+
+Returns a boolean.
+
 ## Usage
+
+<<< ./snippets/exists-kotlin.kt
 
 :::
 ::::
