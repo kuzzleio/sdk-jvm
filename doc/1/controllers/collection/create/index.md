@@ -51,17 +51,17 @@ The mappings must have a root field `properties` that contain the mapping defini
 
 ```java
 {
-  "mappings": {
-    "properties": {
-      "field1": { "type": "text" },
-      "field2": {
-        "properties": {
-          "nestedField": { "type": "keyword" }
+  "mappings"= {
+    "properties"= {
+      "field1"= { "type"= "text" },
+      "field2"= {
+        "properties"= {
+          "nestedField"= { "type"= "keyword" }
         }
       }
     }    
   },
-  "settings": {
+  "settings"= {
 
   }
 };
