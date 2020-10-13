@@ -42,23 +42,30 @@ throws NotConnectedException, InternalException
 
 ---
 
-### mapping
+### definition
 
-A `ConcurrentHashMap<String, Object>` representing the data mappings of the collection.
-
-The mappings must have a root field `properties` that contain the mappings definition:
+An object containings:
+ - [collection mappings](/core/2/guides/essentials/database-mappings).
+ - Elasticsearch [index settings](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/index-modules.html#index-modules-settings)
+The mapping must have a root field `properties` that contain the mapping definition:
 
 ```java
-  ConcurrentHashMap<String, Object> definition = new ConcurrentHashMap<>();
-  ConcurrentHashMap<String, Object> properties = new ConcurrentHashMap<>();
-  ConcurrentHashMap<String, Object> field = new ConcurrentHashMap<>();
+{
+  "mappings": {
+    "properties": {
+      "field1": { "type": "text" },
+      "field2": {
+        "properties": {
+          "nestedField": { "type": "keyword" }
+        }
+      }
+    }    
+  },
+  "settings": {
 
-  field.put("type", "keyword");
-  properties.put("field", field);
-  definition.put("properties", properties);
+  }
+};
 ```
-
-More information about database mappings [here](/core/2/guides/essentials/database-mappings).
 
 ## Usage
 

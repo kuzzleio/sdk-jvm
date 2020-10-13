@@ -4,10 +4,12 @@ val type: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>().appl
 val license: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>().apply {
   put("license", type)
 }
-val definition: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>().apply {
+val mappings: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>().apply {
   put("properties", license)
 }
-
+val definition: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>().apply {
+  put("mappings", mappings)
+}
 kuzzle.collectionController.create(
   "nyc-open-data",
   "yellow-taxi",
