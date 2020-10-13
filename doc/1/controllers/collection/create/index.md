@@ -47,7 +47,7 @@ throws NotConnectedException, InternalException
 An object containings:
  - [collection mappings](/core/2/guides/essentials/database-mappings).
  - Elasticsearch [index settings](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/index-modules.html#index-modules-settings)
-The mapping must have a root field `properties` that contain the mapping definition:
+The mappings must have a root field `properties` that contain the mapping definition:
 
 ```java
 {
