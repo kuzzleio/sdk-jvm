@@ -12,17 +12,17 @@ class CollectionController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   fun create(
       index: String,
       collection: String,
-      mapping: ConcurrentHashMap<String, Any>?
-    ): CompletableFuture<Boolean> {
+      definition: ConcurrentHashMap<String, Any>?
+    ): CompletableFuture<Void> {
     return kuzzle
       .query(KuzzleMap().apply {
         put("controller", "collection")
         put("action", "create")
         put("index", index)
         put("collection", collection)
-        put("mapping", mapping)
+        put("mapping", definition)
       })
-      .thenApplyAsync { response -> (response.result as ConcurrentHashMap<String, Any?>)["acknowledged"] as Boolean}
+      .thenApplyAsync { null }
   }
 
   fun delete(

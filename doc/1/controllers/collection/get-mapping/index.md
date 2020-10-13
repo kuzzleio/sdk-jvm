@@ -31,7 +31,7 @@ public CompletableFuture<ConcurrentHashMap<String, Object>> getMapping(
 
 ## Returns
 
-Returns a `ConcurrentHashMap<String, Object>` representing the collection mapping.
+Returns a `ConcurrentHashMap<String, Object>` representing the collection mappings.
 
 ## Usage
 
@@ -57,7 +57,7 @@ fun getMapping(
 
 ## Returns
 
-Returns a `ConcurrentHashMap<String, Any?>` representing the collection mapping.
+Returns a `ConcurrentHashMap<String, Any?>` representing the collection mappings.
 
 ## Usage
 
