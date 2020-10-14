@@ -81,7 +81,7 @@ fun create(
       index: String,
       collection: String,
       definition: ConcurrentHashMap<String, Any>?
-    ): CompletableFuture<Boolean>
+    ): CompletableFuture<Void>
 ```
 | Arguments          | Type                                         | Description                       |
 | ------------------ | -------------------------------------------- | --------------------------------- |
