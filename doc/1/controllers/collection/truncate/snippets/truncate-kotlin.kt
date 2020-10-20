@@ -1,0 +1,1 @@
+    kuzzle.collectionController.truncate("nyc-open-data", "yellow-taxi").get();

@@ -294,6 +294,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       put("body", searchQuery)
       put("from", from)
       put("size", size)
+      put("scroll", scroll)
     }
     if (scroll != null) {
       query["scroll"] = scroll

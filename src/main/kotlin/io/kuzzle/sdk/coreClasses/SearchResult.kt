@@ -17,9 +17,12 @@ class SearchResult {
   private var kuzzle: Kuzzle? = null
 
   var aggregations: ConcurrentHashMap<String, Any>? = null
-  var hits: ArrayList<ConcurrentHashMap<String, Any>> = ArrayList<ConcurrentHashMap<String, Any>>()
-  var total: Int = 0
-  var fetched: Int = 0
+  @JvmField
+  public var hits: ArrayList<ConcurrentHashMap<String, Any>> = ArrayList<ConcurrentHashMap<String, Any>>()
+  @JvmField
+  public var total: Int = 0
+  @JvmField
+  public var fetched: Int = 0
   var scrollId: String? = null
 
   @JvmOverloads
@@ -37,12 +40,12 @@ class SearchResult {
     this.from = from
     this.size = size
     this.request = request
-    aggregations = (_response["result"] as ConcurrentHashMap<*, *>)["aggregations"] as ConcurrentHashMap<String, Any>?
-    hits = (_response["result"] as ConcurrentHashMap<*, *>)["hits"] as ArrayList<ConcurrentHashMap<String, Any>>
-    total = ((_response["result"] as ConcurrentHashMap<*, *>)["total"] as LazilyParsedNumber?)!!.toInt()
-    fetched = hits!!.size
+    this.aggregations = (_response["result"] as ConcurrentHashMap<*, *>)["aggregations"] as ConcurrentHashMap<String, Any>?
+    this.hits = (_response["result"] as ConcurrentHashMap<*, *>)["hits"] as ArrayList<ConcurrentHashMap<String, Any>>
+    this.total = ((_response["result"] as ConcurrentHashMap<*, *>)["total"] as LazilyParsedNumber?)!!.toInt()
+    this.fetched = hits!!.size
     if (previouslyFetched != null) {
-      fetched += previouslyFetched
+      this.fetched += previouslyFetched
     }
     scrollId = (_response["result"] as ConcurrentHashMap<*, *>)["scrollId"] as String?
   }
