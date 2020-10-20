@@ -69,7 +69,7 @@ fun updateSpecifications(
 
 ### specifications
 
-A `ConcurrentHashMap<String, Object>` representing the specifications.
+A `ConcurrentHashMap<String, Any?>` object representing the specifications.
 
 It must follow the [Specification Structure](/core/2/guides/essentials/data-validation).
 
