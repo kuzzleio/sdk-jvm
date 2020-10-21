@@ -65,7 +65,7 @@ A ConcurrentHashMap representing the updated credentials with the following prop
 
 ## Usage
 
-<<< ./snippets/update-my-credentials.java
+<<< ./snippets/update-my-credentials-kotlin.kt
 
 :::
 ::::

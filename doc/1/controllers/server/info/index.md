@@ -22,7 +22,7 @@ Returns a `Map<String, dynamic>` containing server information.
 
 ## Usage
 
-<<< ./snippets/info-java.dart
+<<< ./snippets/info-java.java
 
 ::: tab Kotlin
 
@@ -36,4 +36,4 @@ Returns a `ConcurrentHashMap<String, Object>` containing server information.
 
 ## Usage
 
-<<< ./snippets/info-kotlin.dart
+<<< ./snippets/info-kotlin.kt
