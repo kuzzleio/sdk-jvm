@@ -42,7 +42,7 @@ fun delete(index: String): CompletableFuture<Void>
 
 ## Usage
 
-<<< ./snippets/delete-kotlin.kotlin
+<<< ./snippets/delete-kotlin.kt
 
 :::
 ::::

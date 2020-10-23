@@ -52,7 +52,7 @@ It can lead to memory leaks if ascroll duration too great is provided, or if too
 You can restrict the scroll session maximum duration under the `services.storage.maxScrollDuration` configuration key.
 :::
 
-<<< ./snippets/scroll.java
+<<< ./snippets/scroll-java.java
 
 ### Strategy: sort / size
 
@@ -73,7 +73,7 @@ Because this method does not freeze the search results between two calls, there 
 It's the fastest pagination method available, but also the less consistent, and it is not possible to retrieve more than 10000 items using it.  
 Above that limit, any call to `next` throws an Exception.
 
-<<< ./snippets/fromsize.java
+<<< ./snippets/fromsize-java.java
 
 
 :::
@@ -119,7 +119,7 @@ It can lead to memory leaks if ascroll duration too great is provided, or if too
 You can restrict the scroll session maximum duration under the `services.storage.maxScrollDuration` configuration key.
 :::
 
-<<< ./snippets/scroll.kt
+<<< ./snippets/scroll-kotlin.kt
 
 ### Strategy: sort / size
 
@@ -140,7 +140,7 @@ Because this method does not freeze the search results between two calls, there 
 It's the fastest pagination method available, but also the less consistent, and it is not possible to retrieve more than 10000 items using it.  
 Above that limit, any call to `next` throws an Exception.
 
-<<< ./snippets/fromsize.kt
+<<< ./snippets/fromsize-kotlin.kt
 
 :::
 :::.

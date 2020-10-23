@@ -6,4 +6,4 @@ title: Jvm SDK v1.x
 description: Jvm SDK v1.x
 ---
 
-<RedirectToFirstChild />
+<redirect-bis :to="`${$site.base}core-classes/kuzzle/constructor/`" />

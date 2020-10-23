@@ -1,7 +1,7 @@
 ---
 code: true
 type: branch
-title: server
+title: Server
 description: Server Controller
 ---
 

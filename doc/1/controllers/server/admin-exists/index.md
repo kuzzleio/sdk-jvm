@@ -22,7 +22,7 @@ A boolean indicating whether an admin user exists or not.
 
 ## Usage
 
-<<< ./snippets/adminExists-java.java
+<<< ./snippets/admin-exists-java.java
 
 :::: tabs
 ::: tab Kotlin
@@ -37,4 +37,4 @@ A boolean indicating whether an admin user exists or not.
 
 ## Usage
 
-<<< ./snippets/adminExists-kotlin.kotlin
+<<< ./snippets/admin-exists-kotlin.kt

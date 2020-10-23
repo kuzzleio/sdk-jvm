@@ -42,7 +42,7 @@ Returns an `ArrayList<String>` containing the list of index names handled by Kuz
 
 ## Usage
 
-<<< ./snippets/list-kotlin.kotlin
+<<< ./snippets/list-kotlin.kt
 
 :::
 ::::
