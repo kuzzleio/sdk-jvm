@@ -6,16 +6,16 @@ job:
       jdk: openjdk8
       sudo: false
       before_cache:
-      - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-      - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
       cache:
         directories:
-        - "$HOME/.gradle/caches/"
-        - "$HOME/.gradle/wrapper/"
+          - "$HOME/.gradle/caches/"
+          - "$HOME/.gradle/wrapper/"
       install:
-      - cd $TRAVIS_BUILD_DIR/
+        - cd $TRAVIS_BUILD_DIR/
       script:
-      - "./gradlew test"
+        - "./gradlew test"
     - stage: Tests
       name: Dead link check
       if: type = pull_request OR type = push AND branch =~ /^master|[0-9]+-(dev|stable)$/
@@ -23,13 +23,13 @@ job:
       language: node_js
       node_js: 12
       before_script:
-      - npm ci
-      - npm run doc-prepare
-      - "$(npm bin)/kuzdoc iterate-repos:install --repos_path doc/framework/.repos/"
-      - "$(npm bin)/kuzdoc framework:link -d /sdk/java/3/ -v 3"
+        - npm ci
+        - npm run doc-prepare
+        - "$(npm bin)/kuzdoc iterate-repos:install --repos_path doc/framework/.repos/"
+        - "$(npm bin)/kuzdoc framework:link -d /sdk/java/3/ -v 3"
       script:
-      - gem install typhoeus
-      - cd doc/framework/ && HYDRA_MAX_CONCURRENCY=20 ruby .ci/dead-links.rb -p src/sdk/java/3/
+        - gem install typhoeus
+        - cd doc/framework/ && HYDRA_MAX_CONCURRENCY=20 ruby .ci/dead-links.rb -p src/sdk/java/3/
     - stage: Tests
       name: Documentation Snippets
       if: type = pull_request OR type = push AND branch =~ /^master|[0-9]+-dev$/ OR
@@ -43,68 +43,68 @@ job:
       language: node_js
       node_js: 12
       env:
-      - BRANCH=dev
-      - NODE_ENV=production
-      - S3_BUCKET=docs-next.kuzzle.io
-      - CLOUDFRONT_DISTRIBUTION_ID=E2ZCCEK9GRB49U
-      - AWS_DEFAULT_REGION=us-west-2
+        - BRANCH=dev
+        - NODE_ENV=production
+        - S3_BUCKET=docs-next.kuzzle.io
+        - CLOUDFRONT_DISTRIBUTION_ID=E2ZCCEK9GRB49U
+        - AWS_DEFAULT_REGION=us-west-2
       addons:
         apt:
           update: true
           packages:
-          - python
-          - python-pip
+            - python
+            - python-pip
       install:
-      - pip install awscli --upgrade --user
-      - npm ci
+        - pip install awscli --upgrade --user
+        - npm ci
       script:
-      - npm run doc-prepare
-      - npm run doc-build
+        - npm run doc-prepare
+        - npm run doc-build
       deploy:
         provider: script
         script:
-        - npm run doc-upload
+          - npm run doc-upload
         skip_cleanup: true
         on:
           all_branches: true
       after_deploy:
-      - npm run doc-cloudfront
+        - npm run doc-cloudfront
     - stage: Deployments
       name: Deploy documentation to docs.kuzzle.io
       if: type = push AND branch =~ /^master|[0-9]+-stable$/
       language: node_js
       node_js: 12
       env:
-      - NODE_ENV=production
-      - S3_BUCKET=docs.kuzzle.io
-      - CLOUDFRONT_DISTRIBUTION_ID=E3D6RP0POLCJMM
-      - AWS_DEFAULT_REGION=us-west-2
+        - NODE_ENV=production
+        - S3_BUCKET=docs.kuzzle.io
+        - CLOUDFRONT_DISTRIBUTION_ID=E3D6RP0POLCJMM
+        - AWS_DEFAULT_REGION=us-west-2
       addons:
         apt:
           packages:
-          - python
-          - python-pip
+            - python
+            - python-pip
       install:
-      - pip install awscli --upgrade --user
-      - npm ci
+        - pip install awscli --upgrade --user
+        - npm ci
       script:
-      - npm run doc-prepare
-      - npm run doc-build
+        - npm run doc-prepare
+        - npm run doc-build
       deploy:
         provider: script
         script:
-        - npm run doc-upload
+          - npm run doc-upload
         skip_cleanup: true
         on:
           all_branches: true
       after_deploy:
-      - npm run doc-cloudfront
+        - npm run doc-cloudfront
     - stage: Deployments
       name: Deploy to Bintray
       if: branch = master AND type = push
       language: java
       jdk:
-      - openjdk8
+        - openjdk8
       deploy:
         provider: script
         script: "./gradlew bintrayUpload"
