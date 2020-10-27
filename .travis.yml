@@ -16,24 +16,27 @@ job:
         - cd $TRAVIS_BUILD_DIR/
       script:
         - "./gradlew test"
+
     - stage: Tests
       name: Dead link check
-      if: type = pull_request OR type = push AND branch =~ /^master|[0-9]+-(dev|stable)$/
+      if:
+        type = pull_request OR type = push AND branch =~ /^master|[0-9]+-(dev|stable)$/
         OR type = cron
       language: node_js
       node_js: 12
       before_script:
         - npm ci
         - npm run doc-prepare
-        - "$(npm bin)/kuzdoc iterate-repos:install --repos_path doc/framework/.repos/"
-        - "$(npm bin)/kuzdoc framework:link -d /sdk/java/3/ -v 3"
+        - $(npm bin)/kuzdoc iterate-repos:install --repos_path doc/framework/.repos/
+        - $(npm bin)/kuzdoc framework:link -d /sdk/java/3/ -v 3
+      
       script:
         - gem install typhoeus
         - cd doc/framework/ && HYDRA_MAX_CONCURRENCY=20 ruby .ci/dead-links.rb -p src/sdk/java/3/
+    
     - stage: Tests
       name: Documentation Snippets
-      if: type = pull_request OR type = push AND branch =~ /^master|[0-9]+-dev$/ OR
-        type = cron
+      if: type = pull_request OR type = push AND branch =~ /^master|[0-9]+-dev$/ OR type = cron
       language: node_js
       node_js: 12
       script: docker-compose -f .ci/doc/docker-compose.yml run doc-tests index
@@ -48,6 +51,7 @@ job:
         - S3_BUCKET=docs-next.kuzzle.io
         - CLOUDFRONT_DISTRIBUTION_ID=E2ZCCEK9GRB49U
         - AWS_DEFAULT_REGION=us-west-2
+
       addons:
         apt:
           update: true
@@ -118,6 +122,7 @@ stages:
     if: type =~ /(cron|push|pull_request)/ AND branch =~ /^master|[0-9]+-(dev|stable)$/
   - name: Deployments
     if: type =~ /(cron|push|pull_request)/ AND branch =~ /^master|[0-9]+-stable$/
+
 env:
   global:
     # BINTRAY USER
