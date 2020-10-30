@@ -12,10 +12,10 @@ plugins {
     `maven-publish`
     kotlin("jvm") version "1.3.61"
     id("org.jetbrains.dokka") version "0.10.0"
-    id("com.jfrog.bintray") version "1.8.4"
+    id("com.jfrog.bintray") version "1.8.5"
 }
 
-val artifactName = project.name
+val artifactName = "sdk-jvm"
 val artifactGroup = "io.kuzzle"
 val artifactVersion = "1.0.0"
 
@@ -33,7 +33,6 @@ val pomLicenseDist = "repo"
 
 val pomDeveloperId = "kuzzleio"
 val pomDeveloperName = "kuzzle"
-
 
 publishing {
     publications {
@@ -77,7 +76,6 @@ bintray {
         repo = "maven"
         name = artifactName
         userOrg = "kuzzle"
-        githubRepo = "kuzzleio/sdk-jvm"
         vcsUrl = pomScmUrl
         description = "Kuzzle JVM SDK"
         setLabels("kuzzle", "java", "kotlin", "scala", "jvm", "sdk")
@@ -85,7 +83,6 @@ bintray {
         desc = description
         websiteUrl = pomUrl
         issueTrackerUrl = pomIssueUrl
-        githubReleaseNotesFile = githubReadme
 
         version.apply {
             name = artifactVersion
