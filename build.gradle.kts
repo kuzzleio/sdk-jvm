@@ -17,7 +17,7 @@ plugins {
 
 val artifactName = project.name
 val artifactGroup = "io.kuzzle"
-val artifactVersion = project.version.toString()
+val artifactVersion = "1.0.0"
 
 val pomUrl = "https://github.com/kuzzleio/sdk-jvm"
 val pomScmUrl = "https://github.com/kuzzleio/sdk-jvm"
@@ -77,7 +77,7 @@ bintray {
         repo = "maven"
         name = artifactName
         userOrg = "kuzzle"
-        githubRepo = githubRepo
+        githubRepo = "kuzzleio/sdk-jvm"
         vcsUrl = pomScmUrl
         description = "Kuzzle JVM SDK"
         setLabels("kuzzle", "java", "kotlin", "scala", "jvm", "sdk")
@@ -90,7 +90,7 @@ bintray {
         version.apply {
             name = artifactVersion
             desc = pomDesc
-            released = LocalDateTime.now().toString()
+            // released = LocalDateTime.now().toString()
             vcsTag = artifactVersion
         }
     }
