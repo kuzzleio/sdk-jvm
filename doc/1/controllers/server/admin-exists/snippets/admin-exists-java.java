@@ -1,0 +1,1 @@
+Boolean result = kuzzle.getServerController().adminExists().get();

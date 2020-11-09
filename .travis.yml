@@ -1,0 +1,131 @@
+job:
+  include:
+    - stage: Tests
+      name: Unit tests SDK Kotlin
+      language: kotlin
+      jdk: openjdk8
+      sudo: false
+      before_cache:
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+      cache:
+        directories:
+          - "$HOME/.gradle/caches/"
+          - "$HOME/.gradle/wrapper/"
+      install:
+        - cd $TRAVIS_BUILD_DIR/
+      script:
+        - ./gradlew test
+
+    - stage: Tests
+      name: Dead link check
+      if:
+        type = pull_request OR type = push AND branch =~ /^master|[0-9]+-(dev|stable)$/
+        OR type = cron
+      language: node_js
+      node_js: 12
+      before_script:
+        - npm ci
+        - npm run doc-prepare
+        - $(npm bin)/kuzdoc iterate-repos:install --repos_path doc/framework/.repos/
+        - $(npm bin)/kuzdoc framework:link -d /sdk/java/3/ -v 3
+
+      script:
+        - gem install typhoeus
+        - cd doc/framework/ && HYDRA_MAX_CONCURRENCY=20 ruby .ci/dead-links.rb -p src/sdk/java/3/
+
+    - stage: Tests
+      name: Documentation Snippets
+      if: type = pull_request OR type = push AND branch =~ /^master|[0-9]+-dev$/ OR type = cron
+      language: node_js
+      node_js: 12
+      script: docker-compose -f .ci/doc/docker-compose.yml run doc-tests index
+    - stage: Deployments
+      name: Deploy documentation to next-docs.kuzzle.io
+      if: type = push AND branch =~ /^[0-9]+-dev$/
+      language: node_js
+      node_js: 12
+      env:
+        - BRANCH=dev
+        - NODE_ENV=production
+        - S3_BUCKET=docs-next.kuzzle.io
+        - CLOUDFRONT_DISTRIBUTION_ID=E2ZCCEK9GRB49U
+        - AWS_DEFAULT_REGION=us-west-2
+
+      addons:
+        apt:
+          update: true
+          packages:
+            - python
+            - python-pip
+      install:
+        - pip install awscli --upgrade --user
+        - npm ci
+      script:
+        - npm run doc-prepare
+        - npm run doc-build
+      deploy:
+        provider: script
+        script:
+          - npm run doc-upload
+        skip_cleanup: true
+        on:
+          all_branches: true
+      after_deploy:
+        - npm run doc-cloudfront
+    - stage: Deployments
+      name: Deploy documentation to docs.kuzzle.io
+      if: type = push AND branch =~ /^master|[0-9]+-stable$/
+      language: node_js
+      node_js: 12
+      env:
+        - NODE_ENV=production
+        - S3_BUCKET=docs.kuzzle.io
+        - CLOUDFRONT_DISTRIBUTION_ID=E3D6RP0POLCJMM
+        - AWS_DEFAULT_REGION=us-west-2
+      addons:
+        apt:
+          packages:
+            - python
+            - python-pip
+      install:
+        - pip install awscli --upgrade --user
+        - npm ci
+      script:
+        - npm run doc-prepare
+        - npm run doc-build
+      deploy:
+        provider: script
+        script:
+          - npm run doc-upload
+        skip_cleanup: true
+        on:
+          all_branches: true
+      after_deploy:
+        - npm run doc-cloudfront
+    - stage: Deployments
+      name: Deploy to Bintray
+      if: branch = master AND type = push
+      language: java
+      jdk:
+        - openjdk8
+      deploy:
+        provider: script
+        script: "./gradlew bintrayUpload"
+        skip_cleanup: true
+        on:
+          condition: "$TRAVIS_BRANCH = master"
+stages:
+  - name: Tests
+    if: type =~ /(cron|push|pull_request)/ AND branch =~ /^master|[0-9]+-(dev|stable)$/
+  - name: Builds
+    if: type =~ /(cron|push|pull_request)/ AND branch =~ /^master|[0-9]+-(dev|stable)$/
+  - name: Deployments
+    if: type =~ /(cron|push|pull_request)/ AND branch =~ /^master|[0-9]+-stable$/
+
+env:
+  global:
+    # BINTRAY USER
+  - secure: PoPcUT59DAny2w5WcTxDU0a7MWSjtX5q2aMujmLcoDM/pOFL/pMGSzWttnncGNweZaHjCNezxj41OrMVzDImW5lNBK5tTK8vL8JjSGKcmb/aRTruiOU9AU5PzftVYtsdq3mOHEstP0umw6b3PQ80Xlrq6jOzTAxKUlu2hMEc9nuVMLtiUncC6f0GdZ0wGkc+4aqVAIw0hFyz0bfWV9rQgA9tYuXgoDuByhG+obBzJpdVuFrhMmq3/0TZigaO4mh1q/Q2yBUbmOEzQKqKcAeN2ze7nB19Bdoj6UqC7YMSdh8TATkpjgHdEApvi3ynotAxOqfUzk9GjL9CXdF1qR/RdlMYBOe3VIGX/Svtkz7sqVfH+XDA6GicNLI1pLqI5Q+MWkHPwaNu/kEZ6L77TVIQVQutm51TEiBTeeoYKiv7zX86gwvBC/WFqIu44fkhdmVjEiS5h9XHtdWz1U5Z16mcucKIJMcmUTwVrBUAQ0lqHgs+Z9oan4jS45+q1+o+v84lbc29rVHDLR2hsYJLMyx9BGKyllT98tOinpvOrlpL+yv9MtMtI4lGn5A2ORZpQ91I7yD/S1/tO7kcCWSF13ZWZ5TT9hjInZle5a0TrqJq1xAmxbTdWDijchvp5QeiP3X/0UggwLwt1KaSC2mxfdkwGk0RTyoH0Q46FyGN1qomcqE=
+    # BINTRAY KEY
+  - secure: 2KDksurVQOZvptuLvqfOIC/pkcKdJKTcumOxnLq8Ih5otYO0wjQwLg8CraLOZqZ2WDERIr+kp7xD9u4CRN7ZryX4BsHGihaVtPC77tAu1dG8wu/qBH9O8Q/BzNDSHjn441djmjjbPm8EcWzEwDO0vdNyyGa7Ko9lfPp+q5JNMknXwyhyceEzLAZicbM3uxjyLQ9sM50p6Jpozy6VF1JzYnPZf+5tp6hbv40Rznyxr2faBSwGEXA8SjzSFZoN38BU1rtaNfj8/InM6eW1rWdXPfHoFx3vT4qzcjcFWY6iAlhqkty6jTlvkp1M0xlMD+jaFejX9bWLHVMf3HB0+E7Fh04xecq1oasuGMYBsQ89h8d7D2r7oW76EIE2m7Or+2BMEqhyXMOvMmr5y1WpY1d9O5RQ/JuYhNquESiTT7tF3ho4Ly5lo5PmvOvDtoXX0PsC3o11Mz7xVoZsBaNc2IBVt5v52dZtbCwn9Al7YLqbSOhYj1BRHdCJ3n8ehIp6yatt4TxLtfGo+ADP4Y0S55JlD2FImCJN12UsSkXnjbT18ti4pzvCeKkGI5jYj0i7okryQIAjQGF1teSWR+GqPsE2hVInkuhSw7Ep+xbj3yjqk5H4kGm2NbBqpka4sZ0XAyy95bqfyK1B/5UTHSMzdbESLvS0HHOyRRvFxrG3SLYgxkI=
