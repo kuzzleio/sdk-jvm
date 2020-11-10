@@ -121,7 +121,7 @@ stages:
   - name: Builds
     if: type =~ /(cron|push|pull_request)/ AND branch =~ /^master|[0-9]+-(dev|stable)$/
   - name: Deployments
-    if: type =~ /(cron|push|pull_request)/ AND branch =~ /^master|[0-9]+-stable$/
+    if: type =~ /(cron|push|pull_request)/ AND branch =~ /^master|[0-9]+-(dev|stable)$/
 
 env:
   global:
