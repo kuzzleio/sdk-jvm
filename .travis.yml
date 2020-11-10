@@ -2,7 +2,6 @@ job:
   include:
     - stage: Tests
       name: Unit tests SDK Kotlin
-      language: kotlin
       jdk: openjdk8
       sudo: false
       before_cache:
