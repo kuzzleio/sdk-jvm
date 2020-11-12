@@ -31,7 +31,7 @@ fun main() {
     kuzzle
         .realtimeController
         .subscribe("nyc-open-data", "yellow-taxi", filters) { notification ->
-          val content: ConcurrentHashMap<String, Any?> = notification.getResult()
+          val content: ConcurrentHashMap<String, Any?> = notification.result as ConcurrentHashMap<String, Any?>
           println("New created document notification: " + content)
         }.get();
     println("Successfully subscribed!")

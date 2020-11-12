@@ -1,4 +1,4 @@
-name: gettingstarted#storage
+name: kotlin-gettingstarted#storage
 description: Data manipulation
 hooks:
   before: curl -X POST kuzzle:7512/nyc-open-data/_create ; curl -X PUT kuzzle:7512/nyc-open-data/yellow-taxi/; curl -X DELETE kuzzle:7512/nyc-open-data/yellow-taxi/some-id
