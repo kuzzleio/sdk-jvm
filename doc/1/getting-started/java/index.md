@@ -37,7 +37,30 @@ If you're using Eclipse, IntelliJ or another Java IDE, you need to add the SDK a
 
 In your app build.gradle add the following line and sync.
 
-  `implementation "io.kuzzle:kuzzle-sdk-jvm:1.0.0"`
+### Maven:
+
+```xml
+<dependency>
+  <groupId>io.kuzzle</groupId>
+  <artifactId>sdk-jvm</artifactId>
+  <version>1.0.0</version>
+  <type>pom</type>
+</dependency>
+```
+
+### Gradle:
+
+```groovy
+implementation 'io.kuzzle:sdk-jvm:1.0.0'
+```
+
+### Ivy:
+
+```html
+<dependency org='io.kuzzle' name='sdk-jvm' rev='1.0.0'>
+  <artifact name='sdk-jvm' ext='pom' ></artifact>
+</dependency>
+```
 
 ## First connection
 
