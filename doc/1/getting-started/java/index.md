@@ -26,7 +26,7 @@ Having trouble? Get in touch with us on [Discord](http://join.discord.kuzzle.io)
 
 ## Installation
 
-You can find the SDK JARs directly on [bintray](https://bintray.com/kuzzle/maven/kuzzle-sdk-jvm). Download and add it to your classpath.
+You can find the SDK JARs directly on [bintray](https://bintray.com/kuzzle/maven/sdk-jvm). Download and add it to your classpath.
 
 ::: info
 The following examples are made to be executed without any IDE.
