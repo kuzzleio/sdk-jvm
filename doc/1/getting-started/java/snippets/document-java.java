@@ -11,7 +11,7 @@ public class SnippetTest {
     try {
       // Creates a WebSocket connection.
       // Replace "kuzzle" with
-      // your Kuzzle hostname like "localhost"
+      // your Kuzzle host name (e.g. "localhost")
 
       WebSocket ws = new WebSocket("kuzzle");
 
