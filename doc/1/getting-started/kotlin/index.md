@@ -8,7 +8,7 @@ order: 99
 
 # Getting Started
 
-In this tutorial you will learn how to install the Kuzzle **Jvm SDK**.
+In this tutorial you will learn how to install and use the **JVM SDK** for Kuzzle.
 This page shows examples of scripts that **store** documents in Kuzzle, and of scripts that subcribe to real-time **notifications** for each new document created.
 
 ::: success
@@ -26,18 +26,18 @@ Having trouble? Get in touch with us on [Discord](http://join.discord.kuzzle.io)
 
 ## Installation
 
-You can find the SDK JARs directly on [bintray](https://bintray.com/kuzzle/maven/sdk-jvm). Download and add it to your classpath.
+You can find the SDK JARs directly on [bintray](https://bintray.com/kuzzle/maven/sdk-jvm). Download and add them to your classpath.
 
 ::: info
 The following examples are made to be executed without any IDE.
 If you're using Eclipse, IntelliJ or another Java IDE, you need to add the SDK as a project dependency in your classpath.
 :::
 
-### Installing on Android using gradle
+### Installing for Android projects using gradle
 
-In your app build.gradle add the following line and sync.
+In your app build.gradle add the following lines and synchronize your project:
 
-### Maven:
+### Maven
 
 ```xml
 <dependency>
@@ -48,13 +48,13 @@ In your app build.gradle add the following line and sync.
 </dependency>
 ```
 
-### Gradle:
+### Gradle
 
 ```groovy
 implementation 'io.kuzzle:sdk-jvm:1.0.0'
 ```
 
-### Ivy:
+### Ivy
 
 ```html
 <dependency org='io.kuzzle' name='sdk-jvm' rev='1.0.0'>
@@ -67,7 +67,7 @@ Initialize a new Java project, create a `GettingStartedFirstConnection.kt` file 
 
 <<< ./snippets/firstconnection.kt
 
-This program initializes the Kuzzle Server storage by creating a index, and a collection inside it
+This program initializes the Kuzzle Server storage by creating an index and a collection.
 Run the program with the following command:
 
 ```bash
@@ -81,19 +81,20 @@ Collection yellow-taxi created!
 Congratulations, you performed your first connection to Kuzzle Server via a Kotlin program.
 You now know how to:
 
-- Instantiate Kuzzle SDK and connect to Kuzzle Server using a specific protocol (here `websocket`)
-- Create a index
+- Instantiate the Kuzzle SDK and connect to a Kuzzle Server using a specific network protocol (here `websocket`)
+- Create an index
 - Create a collection within an existing index
 
 ## Create your first document
 
-Now that you successfully connected to your Kuzzle Server instance, and created an index and a collection, it's time to manipulate some data.
+Now that you successfully connected to your Kuzzle Server instance, and created an index and a collection, it's time to manipulate documents.
 
 Here is how Kuzzle structures its storage space:
 
 - indexes contain collections
 - collections contain documents
-  Create a `GettingStartedStorage.kt` file in the playground and add this code:
+
+Create a `GettingStartedStorage.kt` file in the playground and add this code:
 
 <<< ./snippets/document.kt
 
@@ -103,18 +104,18 @@ As you did before, build and run your program:
 $ javac -classpath ./path/to/the/sdk.jar  GettingStartedStorage.kt
 $ java -classpath .:./path/to/the/sdk.jar GettingStartedStorage
 Connected!
-New document added to yellow-taxi collection!
+New document added to the yellow-taxi collection!
 ```
 
 You can perform other actions such as [delete](/sdk/jvm/1/controllers/document/delete), [replace](/sdk/jvm/1/controllers/document/replace) or [search](/sdk/jvm/1/controllers/document/search) documents. There are also other ways to interact with Kuzzle like our [Admin Console](/core/2/guides/essentials/admin-console), the [Kuzzle HTTP API](/core/2/api/essentials/connecting-to-kuzzle) or by using your [own protocol](/core/2/protocols/essentials/getting-started).
 
 Now you know how to:
 
-- Store documents in a Kuzzle Server, and access those
+- Store documents in a Kuzzle Server, and access to those
 
 ## Subscribe to realtime document notifications (pub/sub)
 
-Time to use realtime with Kuzzle. Create a new file `GettingStartedRealtime.kt` with the following code:
+Time to use Kuzzle's realtime capabilities. Create a new file `GettingStartedRealtime.kt` with the following code:
 
 <<< ./snippets/realtime.kt
 
@@ -131,7 +132,7 @@ New document added to yellow-taxi collection!
 New created document notification: [Document content as ConcurrentHashMap]
 ```
 
-You should see document content as a `ConcurrentHashMap`.
+You should see the document content as a `ConcurrentHashMap`.
 
 Now, you know how to:
 
@@ -140,7 +141,7 @@ Now, you know how to:
 
 ## Where do we go from here?
 
-Now that you're more familiar with the Jvm SDK, you can dive even deeper to learn how to leverage its full capabilities:
+Now that you're more familiar with the JVM SDK, you can dive even deeper to learn how to leverage its full capabilities:
 
 - discover what this SDK has to offer by browsing other sections of this documentation
 - learn how to use [Koncorde](/core/2/guides/cookbooks/realtime-api) to create incredibly fine-grained and blazing-fast subscriptions
