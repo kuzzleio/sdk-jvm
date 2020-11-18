@@ -82,7 +82,7 @@ Collection yellow-taxi created!
 Congratulations, you performed your first connection to Kuzzle Server via a Java program.
 You now know how to:
 
-- Instantiate Kuzzle SDK and connect to Kuzzle Server using a specific protocol (here `websocket`)
+- Instantiate the Kuzzle SDK and connect to a Kuzzle Server using a specific network protocol (here `websocket`)
 - Create an index
 - Create a collection within an existing index
 
