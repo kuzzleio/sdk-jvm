@@ -134,7 +134,21 @@ $ java -classpath .:./path/to/the/sdk.jar GettingStartedRealtime
 Connected!
 Successfully subscribing!
 New document added to yellow-taxi collection!
-New created document notification: [Document content as ConcurrentHashMap]
+New created document notification: 
+
+{
+  _source={
+    birthday=1995-11-27,
+    license=B,
+    name=John,
+    _kuzzle_info={
+      createdAt=1605694059151,author=-1
+      }
+    },
+    _id=9PDS2nUBeGNr7nwl8j2Q,
+    _version=1
+  }
+
 ```
 
 You should see the document content as a `ConcurrentHashMap`.
@@ -149,6 +163,5 @@ Now, you know how to:
 Now that you're more familiar with the JVM SDK, you can dive even deeper to learn how to leverage its full capabilities:
 
 - discover what this SDK has to offer by browsing other sections of this documentation
-- learn how to use [Koncorde](/core/2/guides/cookbooks/realtime-api) to create incredibly fine-grained and blazing-fast subscriptions
-- follow our guide to learn how to perform [basic authentication](/core/2/guides/essentials/user-authentication#local-strategy)
-- follow our guide to learn how to [manage users and how to set up fine-grained access control](/core/2/guides/essentials/security)
+- learn how to use [pagination strategies](/sdk/jvm/1/core-classes/search-result/next/#pagination-strategies) with the [document:search](/sdk/jvm/1/controllers/document/search/) API action.
+- discover others [Kuzzle guides](core/2/guides/essentials/introduction/)
