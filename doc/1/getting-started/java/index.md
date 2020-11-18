@@ -48,7 +48,7 @@ In your app build.gradle add the following lines and synchronize your project:
 </dependency>
 ```
 
-### Gradle:
+### Gradle
 
 ```groovy
 implementation 'io.kuzzle:sdk-jvm:1.0.0'
