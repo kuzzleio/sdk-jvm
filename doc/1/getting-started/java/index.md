@@ -133,7 +133,7 @@ New document added to yellow-taxi collection!
 New created document notification: [Document content as ConcurrentHashMap]
 ```
 
-You should see document content as a `ConcurrentHashMap`.
+You should see the document content as a `ConcurrentHashMap`.
 
 Now, you know how to:
 
