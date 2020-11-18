@@ -94,7 +94,8 @@ Here is how Kuzzle structures its storage space:
 
 - indexes contain collections
 - collections contain documents
-  Create a `GettingStartedStorage.java` file in the playground and add this code:
+
+Create a `GettingStartedStorage.java` file in the playground and add this code:
 
 <<< ./snippets/document.java
 
