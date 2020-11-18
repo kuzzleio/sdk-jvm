@@ -141,7 +141,7 @@ Now, you know how to:
 
 ## Where do we go from here?
 
-Now that you're more familiar with the Jvm SDK, you can dive even deeper to learn how to leverage its full capabilities:
+Now that you're more familiar with the JVM SDK, you can dive even deeper to learn how to leverage its full capabilities:
 
 - discover what this SDK has to offer by browsing other sections of this documentation
 - learn how to use [Koncorde](/core/2/guides/cookbooks/realtime-api) to create incredibly fine-grained and blazing-fast subscriptions
