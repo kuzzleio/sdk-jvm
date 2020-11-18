@@ -8,7 +8,7 @@ order: 99
 
 # Getting Started
 
-In this tutorial you will learn how to install the Kuzzle **Jvm SDK**.
+In this tutorial you will learn how to install and use the **JVM SDK** for Kuzzle.
 This page shows examples of scripts that **store** documents in Kuzzle, and of scripts that subcribe to real-time **notifications** for each new document created.
 
 ::: success
