@@ -83,7 +83,7 @@ Congratulations, you performed your first connection to Kuzzle Server via a Java
 You now know how to:
 
 - Instantiate Kuzzle SDK and connect to Kuzzle Server using a specific protocol (here `websocket`)
-- Create a index
+- Create an index
 - Create a collection within an existing index
 
 ## Create your first document
