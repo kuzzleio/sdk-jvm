@@ -112,7 +112,7 @@ You can perform other actions such as [delete](/sdk/jvm/1/controllers/document/d
 
 Now you know how to:
 
-- Store documents in a Kuzzle Server, and access those
+- Store documents in a Kuzzle Server, and access to those
 
 ## Subscribe to realtime document notifications (pub/sub)
 
