@@ -33,7 +33,7 @@ The following examples are made to be executed without any IDE.
 If you're using Eclipse, IntelliJ or another Java IDE, you need to add the SDK as a project dependency in your classpath.
 :::
 
-### Installing on Android using gradle
+### Installing for Android projects using gradle
 
 In your app build.gradle add the following lines and synchronize your project:
 
