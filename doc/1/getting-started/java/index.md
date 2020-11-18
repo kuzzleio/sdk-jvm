@@ -37,7 +37,7 @@ If you're using Eclipse, IntelliJ or another Java IDE, you need to add the SDK a
 
 In your app build.gradle add the following lines and synchronize your project:
 
-### Maven:
+### Maven
 
 ```xml
 <dependency>
