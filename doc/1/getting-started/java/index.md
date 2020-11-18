@@ -116,7 +116,7 @@ Now you know how to:
 
 ## Subscribe to realtime document notifications (pub/sub)
 
-Time to use realtime with Kuzzle. Create a new file `GettingStartedRealtime.java` with the following code:
+Time to use Kuzzle's realtime capabilities. Create a new file `GettingStartedRealtime.java` with the following code:
 
 <<< ./snippets/realtime.java
 
