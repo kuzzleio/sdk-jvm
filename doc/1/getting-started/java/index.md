@@ -68,7 +68,7 @@ Initialize a new Java project, create a `GettingStartedFirstConnection.java` fil
 
 <<< ./snippets/firstconnection.java
 
-This program initializes the Kuzzle Server storage by creating a index, and a collection inside it
+This program initializes the Kuzzle Server storage by creating an index and a collection.
 Run the program with the following command:
 
 ```bash
