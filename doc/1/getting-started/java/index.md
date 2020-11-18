@@ -112,7 +112,7 @@ Connected!
 New document added to the yellow-taxi collection!
 ```
 
-You can perform other actions such as [delete](/sdk/jvm/1/controllers/document/delete), [replace](/sdk/jvm/1/controllers/document/replace) or [search](/sdk/jvm/1/controllers/document/search) documents. There are also other ways to interact with Kuzzle like our [Admin Console](/core/2/guides/essentials/admin-console), the [Kuzzle HTTP API](/core/2/api/essentials/connecting-to-kuzzle) or by using your [own protocol](/core/2/protocols/essentials/getting-started).
+Many other actions are available to manipulate stored documents. You can check the exhaustive list in the [Document Controller documentation](https://docs.kuzzle.io/sdk/jvm/1/controllers/document).
 
 Now you know how to:
 
