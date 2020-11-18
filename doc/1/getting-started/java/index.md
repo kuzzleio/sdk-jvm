@@ -83,7 +83,6 @@ Index nyc-open-data created!
 Collection yellow-taxi created!
 ```
 
-Congratulations, you performed your first connection to Kuzzle Server via a Java program.
 You now know how to:
 
 - Instantiate the Kuzzle SDK and connect to a Kuzzle Server using a specific network protocol (here `websocket`)
