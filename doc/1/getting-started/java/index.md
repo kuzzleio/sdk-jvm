@@ -66,7 +66,11 @@ implementation 'io.kuzzle:sdk-jvm:1.0.0'
 
 Initialize a new Java project, create a `GettingStartedFirstConnection.java` file and start by adding the code below:
 
-<<< ./snippets/firstconnection.java
+<<< ./snippets/firstconnection-java.java
+
+::: info
+If you're not yet familiar with how Kuzzle structures its storage, check our [detailed guide][https://docs.kuzzle.io/core/2/guides/essentials/store-access-data/)
+:::
 
 This program initializes the Kuzzle Server storage by creating an index and a collection.
 Run the program with the following command:
@@ -97,7 +101,7 @@ Here is how Kuzzle structures its storage space:
 
 Create a `GettingStartedStorage.java` file in the playground and add this code:
 
-<<< ./snippets/document.java
+<<< ./snippets/document-java.java
 
 As you did before, build and run your program:
 
@@ -118,7 +122,7 @@ Now you know how to:
 
 Time to use Kuzzle's realtime capabilities. Create a new file `GettingStartedRealtime.java` with the following code:
 
-<<< ./snippets/realtime.java
+<<< ./snippets/realtime-java.java
 
 This program subscribes to changes made to documents with a `license` field set to `B`, within the `yellow-taxi` collection. Whenever a document matching the provided filters changes, a new notification is received from Kuzzle.
 

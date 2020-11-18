@@ -33,6 +33,20 @@ fun main() {
         .subscribe("nyc-open-data", "yellow-taxi", filters) { notification ->
           val content: ConcurrentHashMap<String, Any?> = notification.result as ConcurrentHashMap<String, Any?>
           println("New created document notification: " + content)
+          /*
+            {
+            _source={
+              birthday=1995-11-27,
+              license=B,
+              name=John,
+              _kuzzle_info={
+                createdAt=1605694059151,author=-1
+                }
+              },
+              _id=9PDS2nUBeGNr7nwl8j2Q,
+              _version=1
+            }
+          */
         }.get();
     println("Successfully subscribed!")
 

@@ -65,7 +65,11 @@ implementation 'io.kuzzle:sdk-jvm:1.0.0'
 
 Initialize a new Java project, create a `GettingStartedFirstConnection.kt` file and start by adding the code below:
 
-<<< ./snippets/firstconnection.kt
+<<< ./snippets/firstconnection-kotlin.kt
+
+::: info
+If you're not yet familiar with how Kuzzle structures its storage, check our [detailed guide][https://docs.kuzzle.io/core/2/guides/essentials/store-access-data/)
+:::
 
 This program initializes the Kuzzle Server storage by creating an index and a collection.
 Run the program with the following command:
@@ -89,14 +93,9 @@ You now know how to:
 
 Now that you successfully connected to your Kuzzle Server instance, and created an index and a collection, it's time to manipulate documents.
 
-Here is how Kuzzle structures its storage space:
-
-- indexes contain collections
-- collections contain documents
-
 Create a `GettingStartedStorage.kt` file in the playground and add this code:
 
-<<< ./snippets/document.kt
+<<< ./snippets/document-kotlin.kt
 
 As you did before, build and run your program:
 
@@ -117,7 +116,7 @@ Now you know how to:
 
 Time to use Kuzzle's realtime capabilities. Create a new file `GettingStartedRealtime.kt` with the following code:
 
-<<< ./snippets/realtime.kt
+<<< ./snippets/realtime-kotlin.kt
 
 This program subscribes to changes made to documents with a `license` field set to `B`, within the `yellow-taxi` collection. Whenever a document matching the provided filters changes, a new notification is received from Kuzzle.
 
@@ -129,7 +128,22 @@ $ java -classpath .:./path/to/the/sdk.jar GettingStartedRealtime
 Connected!
 Successfully subscribing!
 New document added to yellow-taxi collection!
-New created document notification: [Document content as ConcurrentHashMap]
+New created document notification:
+
+```
+{
+  _source={
+    birthday=1995-11-27,
+    license=B,
+    name=John,
+    _kuzzle_info={
+      createdAt=1605694059151,author=-1
+      }
+    },
+    _id=9PDS2nUBeGNr7nwl8j2Q,
+    _version=1
+  }
+```
 ```
 
 You should see the document content as a `ConcurrentHashMap`.

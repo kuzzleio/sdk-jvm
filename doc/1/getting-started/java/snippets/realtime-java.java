@@ -37,6 +37,20 @@ public class SnippetTest {
           .subscribe("nyc-open-data", "yellow-taxi", filters, notification -> {
             ConcurrentHashMap<String, Object> content = ((ConcurrentHashMap<String, Object>)(notification.getResult()));
             System.out.println("New created document notification: " + content);
+            /*
+            {
+            _source={
+              birthday=1995-11-27,
+              license=B,
+              name=John,
+              _kuzzle_info={
+                createdAt=1605694059151,author=-1
+                }
+              },
+              _id=9PDS2nUBeGNr7nwl8j2Q,
+              _version=1
+            }
+            */
           }).get();
       System.out.println("Successfully subscribed!");
     } catch (Exception e) {
