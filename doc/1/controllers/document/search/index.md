@@ -59,7 +59,7 @@ public CompletableFuture<SearchResult> search(
       String collection,
       ConcurrentHashMap<String, Object> searchQuery
       Integer size,
-      Integer from,)
+      Integer from)
 throws NotConnectedException, InternalException
 ```
  
