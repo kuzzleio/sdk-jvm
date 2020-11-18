@@ -54,7 +54,7 @@ In your app build.gradle add the following lines and synchronize your project:
 implementation 'io.kuzzle:sdk-jvm:1.0.0'
 ```
 
-### Ivy:
+### Ivy
 
 ```html
 <dependency org='io.kuzzle' name='sdk-jvm' rev='1.0.0'>
