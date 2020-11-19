@@ -51,7 +51,7 @@ In your app build.gradle add the following lines and synchronize your project:
 ### Gradle
 
 ```groovy
-implementation 'io.kuzzle:sdk-jvm:1.0.0'
+compile 'io.kuzzle:sdk-jvm:1.0.0'
 ```
 
 ### Ivy
