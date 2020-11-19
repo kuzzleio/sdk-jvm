@@ -35,7 +35,7 @@ If you're using Eclipse, IntelliJ or another Java IDE, you need to add the SDK a
 
 ### Installing for Android projects using gradle
 
-In your app build.gradle add the following lines and synchronize your project:
+To build the project, add the following lines:
 
 ### Maven
 
@@ -51,7 +51,14 @@ In your app build.gradle add the following lines and synchronize your project:
 ### Gradle
 
 ```groovy
-compile 'io.kuzzle:sdk-jvm:1.0.0'
+repositories {
+    maven() {
+        url  "https://dl.bintray.com/kuzzle/maven" 
+    }
+}
+dependencies {
+  compile 'io.kuzzle:sdk-jvm:1.0.0'
+}
 ```
 
 ### Ivy
