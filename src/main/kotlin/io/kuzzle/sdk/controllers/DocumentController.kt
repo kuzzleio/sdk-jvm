@@ -311,19 +311,8 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       searchQuery: ConcurrentHashMap<String, Any?>,
       size: Int? = null,
       from: Int = 0): CompletableFuture<SearchResult> {
-    val query = KuzzleMap().apply {
-      put("index", index)
-      put("collection", collection)
-      put("controller", "document")
-      put("action", "search")
-      put("body", searchQuery)
-      put("from", from)
-      put("size", size)
-    }
 
-    return kuzzle
-        .query(query)
-        .thenApplyAsync { response -> SearchResult(kuzzle, query, from = from, size = size, response = response) }
+    return search(index, collection, searchQuery, null, size, from);
   }
 
   @JvmOverloads
