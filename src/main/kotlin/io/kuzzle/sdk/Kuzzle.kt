@@ -75,7 +75,8 @@ class Kuzzle {
       queries.remove(response.requestId)
       return
     }
-
+    
+    queries[response.requestId]?.completeExceptionally(ApiErrorException(response))
     protocol.trigger("tokenExpired")
   }
 
