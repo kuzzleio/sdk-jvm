@@ -100,11 +100,6 @@ You now know how to:
 
 Now that you successfully connected to your Kuzzle Server instance, and created an index and a collection, it's time to manipulate documents.
 
-Here is how Kuzzle structures its storage space:
-
-- indexes contain collections
-- collections contain documents
-
 Create a `GettingStartedStorage.java` file in the playground and add this code:
 
 <<< ./snippets/document-java.java
