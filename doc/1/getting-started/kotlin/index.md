@@ -82,7 +82,7 @@ This program initializes the Kuzzle Server storage by creating an index and a co
 Run the program with the following command:
 
 ```bash
-$ javac -classpath ./path/to/the/sdk.jar GettingStartedFirstConnection.kt
+$ kotlinc -classpath ./path/to/the/sdk.jar GettingStartedFirstConnection.kt
 $ java -classpath .:./path/to/the/sdk.jar GettingStartedFirstConnection
 Connected!
 Index nyc-open-data created!
@@ -106,7 +106,7 @@ Create a `GettingStartedStorage.kt` file in the playground and add this code:
 As you did before, build and run your program:
 
 ```bash
-$ javac -classpath ./path/to/the/sdk.jar  GettingStartedStorage.kt
+$ kotlinc -classpath ./path/to/the/sdk.jar  GettingStartedStorage.kt
 $ java -classpath .:./path/to/the/sdk.jar GettingStartedStorage
 Connected!
 New document added to the yellow-taxi collection!
@@ -129,7 +129,7 @@ This program subscribes to changes made to documents with a `license` field set 
 Build and run your program:
 
 ```bash
-$ javac -classpath ./path/to/the/sdk.jar GettingStartedRealtime.kt
+$ kotlinc -classpath ./path/to/the/sdk.jar GettingStartedRealtime.kt
 $ java -classpath .:./path/to/the/sdk.jar GettingStartedRealtime
 Connected!
 Successfully subscribing!
