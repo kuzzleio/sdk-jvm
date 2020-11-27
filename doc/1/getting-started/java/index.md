@@ -165,4 +165,4 @@ Now that you're more familiar with the JVM SDK, you can dive even deeper to lear
 
 - discover what this SDK has to offer by browsing other sections of this documentation
 - learn how to use [pagination strategies](/sdk/jvm/1/core-classes/search-result/next/#pagination-strategies) with the [document:search](/sdk/jvm/1/controllers/document/search/) API action.
-- discover others [Kuzzle guides](core/2/guides/essentials/introduction/)
+- discover other [Kuzzle guides](core/2/guides/essentials/introduction/)
