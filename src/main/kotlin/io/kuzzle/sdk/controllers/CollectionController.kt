@@ -9,10 +9,11 @@ import java.util.concurrent.ConcurrentHashMap
 
 class CollectionController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
+  @JvmOverloads
   fun create(
       index: String,
       collection: String,
-      definition: ConcurrentHashMap<String, Any>?
+      definition: ConcurrentHashMap<String, Any>? = null
     ): CompletableFuture<Void> {
     return kuzzle
       .query(KuzzleMap().apply {

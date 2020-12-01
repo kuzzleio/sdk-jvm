@@ -284,8 +284,8 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       collection: String,
       searchQuery: ConcurrentHashMap<String, Any?>,
       scroll: String? = null,
-      from: Int = 0,
-      size: Int? = null): CompletableFuture<SearchResult> {
+      size: Int? = null,
+      from: Int = 0): CompletableFuture<SearchResult> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -303,6 +303,16 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     return kuzzle
         .query(query)
         .thenApplyAsync { response -> SearchResult(kuzzle, query, scroll, from, size, response) }
+  }
+
+  fun search(
+      index: String,
+      collection: String,
+      searchQuery: ConcurrentHashMap<String, Any?>,
+      size: Int? = null,
+      from: Int = 0): CompletableFuture<SearchResult> {
+
+    return search(index, collection, searchQuery, null, size, from);
   }
 
   @JvmOverloads

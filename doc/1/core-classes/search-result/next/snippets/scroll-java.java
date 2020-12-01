@@ -8,7 +8,7 @@
     SearchResult results = kuzzle.getDocumentController().search(
       "nyc-open-data",
       "yellow-taxi",
-      searchQuery, "1s", 0, 10).get();
+      searchQuery, "1s", 10).get();
 
     // Fetch the matched items by advancing through the result pages
     ArrayList<ConcurrentHashMap<String, Object>> matched = new ArrayList<>();
