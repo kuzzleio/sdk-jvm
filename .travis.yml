@@ -54,6 +54,7 @@ job:
     env:
     - BRANCH=dev
     - NODE_ENV=production
+    - FRAMEWORK_BRANCH=develop
     - S3_BUCKET=docs-next.kuzzle.io
     - CLOUDFRONT_DISTRIBUTION_ID=E2ZCCEK9GRB49U
     - AWS_DEFAULT_REGION=us-west-2
@@ -85,6 +86,7 @@ job:
     node_js: 12
     env:
     - NODE_ENV=production
+    - FRAMEWORK_BRANCH=master
     - S3_BUCKET=docs.kuzzle.io
     - CLOUDFRONT_DISTRIBUTION_ID=E3D6RP0POLCJMM
     - AWS_DEFAULT_REGION=us-west-2
