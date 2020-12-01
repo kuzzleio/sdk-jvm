@@ -8,6 +8,7 @@ fun main() {
   // Replace "kuzzle" with
   // your Kuzzle hostname like "localhost"
   val ws = WebSocket("kuzzle");
+  
   // Instantiates a Kuzzle client
   val kuzzle = Kuzzle(ws).apply {
     // Connects to the server.
