@@ -12,7 +12,7 @@ fun main() {
 
   // Instantiates a Kuzzle client
   val kuzzle = Kuzzle(ws).apply {
-  // Connects to the server.
+    // Connects to the server.
     connect()
   };
   println("Connected!")
