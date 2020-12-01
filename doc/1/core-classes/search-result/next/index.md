@@ -75,7 +75,6 @@ Above that limit, any call to `next` throws an Exception.
 
 <<< ./snippets/fromsize-java.java
 
-
 :::
 ::: tab Kotlin
 

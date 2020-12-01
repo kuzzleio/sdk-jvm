@@ -30,7 +30,7 @@ class SearchResult {
       kuzzle: Kuzzle?,
       request: ConcurrentHashMap<String?, Any?>?,
       scroll: String? = null,
-      from: Int,
+      from: Int = 0,
       size: Int? = null,
       response: Response,
       previouslyFetched: Int? = null) {

@@ -12,8 +12,8 @@ ConcurrentHashMap<String, Any?>().apply {
   put("query", query)
 }
 var result: SearchResult? = kuzzle
-.documentController
-.search("nyc-open-data", "yellow-taxi", searchQuery, "1s", 0, 10).get();
+  .documentController
+  .search("nyc-open-data", "yellow-taxi", searchQuery, "1s", 10).get();
 
     // Fetch the matched items by advancing through the result pages
     val matched: ArrayList<ConcurrentHashMap<String, Any>> = ArrayList<ConcurrentHashMap<String, Any>>();
