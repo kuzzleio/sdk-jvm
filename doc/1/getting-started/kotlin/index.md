@@ -75,7 +75,7 @@ Initialize a new Java project, create a `GettingStartedFirstConnection.kt` file 
 <<< ./snippets/firstconnection-kotlin.kt
 
 ::: info
-If you're not yet familiar with how Kuzzle structures its storage, check our [detailed guide][https://docs.kuzzle.io/core/2/guides/essentials/store-access-data/)
+If you're not yet familiar with how Kuzzle structures its storage, check our [detailed guide](https://docs.kuzzle.io/core/2/guides/essentials/store-access-data/)
 :::
 
 This program initializes the Kuzzle Server storage by creating an index and a collection.
