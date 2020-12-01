@@ -4,7 +4,6 @@ import io.kuzzle.sdk.protocol.WebSocket;
 import java.util.concurrent.ConcurrentHashMap;
 
 fun main() {
-
   // Creates a WebSocket connection.
   // Replace "kuzzle" with
   // your Kuzzle hostname like "localhost"
