@@ -13,10 +13,8 @@ public class SnippetTest {
       // Replace "kuzzle" with
       // your Kuzzle hostname like "localhost"
       WebSocket ws = new WebSocket("kuzzle");
-
       // Instantiates a Kuzzle client
       kuzzle = new Kuzzle(ws);
-
       // Connects to the server.
       kuzzle.connect();
       System.out.println("Connected!");

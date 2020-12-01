@@ -4,12 +4,10 @@ import io.kuzzle.sdk.protocol.WebSocket;
 import java.util.concurrent.ConcurrentHashMap;
 
 fun main() {
-
   // Creates a WebSocket connection.
   // Replace "kuzzle" with
   // your Kuzzle hostname like "localhost"
   val ws = WebSocket("kuzzle");
-
   // Instantiates a Kuzzle client
   val kuzzle = Kuzzle(ws).apply {
     // Connects to the server.
@@ -31,7 +29,7 @@ fun main() {
         .realtimeController
         .subscribe("nyc-open-data", "yellow-taxi", filters) { notification ->
           val content: ConcurrentHashMap<String, Any?> = notification.result as ConcurrentHashMap<String, Any?>
-          println("New created document notification: " + content)
+          println("New created document notification: " + content)  
           /*
             {
             _source={
