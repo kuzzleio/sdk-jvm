@@ -36,7 +36,7 @@ public CompletableFuture<ConcurrentHashMap<String, Object>> updateSpecifications
 
 A `ConcurrentHashMap<String, Object>` representing the specifications.
 
-It must follow the [Specification Structure](/core/2/guides/essentials/data-validation).
+It must follow the [Specification Structure](/core/2/guides/advanced/data-validation).
 
 ## Returns
 
@@ -71,7 +71,7 @@ fun updateSpecifications(
 
 A `ConcurrentHashMap<String, Any?>` object representing the specifications.
 
-It must follow the [Specification Structure](/core/2/guides/essentials/data-validation).
+It must follow the [Specification Structure](/core/2/guides/advanced/data-validation).
 
 ## Returns
 

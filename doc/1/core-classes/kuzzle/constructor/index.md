@@ -73,7 +73,7 @@ fun Kuzzle(protocol: AbstractProtocol, autoResubscribe: Boolean = true)
 The protocol used to connect to the Kuzzle instance.
 It can be one of the following available protocols:
 
-- [WebSocket](/sdk/jvm/1/protocols/websocket)
+- WebSocket
 
 ## Return
 
