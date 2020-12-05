@@ -35,7 +35,7 @@ job:
     - npm ci
     - npm run doc-prepare
     - "$(npm bin)/kuzdoc iterate-repos:install --repos_path doc/framework/.repos/"
-    - "$(npm bin)/kuzdoc framework:link -d /sdk/java/3/ -v 3"
+    - "$(npm bin)/kuzdoc framework:link -d /sdk/jvm/1/ -v 1"
     script:
     - gem install typhoeus
     - cd doc/framework/ && HYDRA_MAX_CONCURRENCY=20 ruby .ci/dead-links.rb -p src/sdk/jvm/1/
