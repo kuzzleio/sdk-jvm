@@ -7,7 +7,7 @@ description: Subscribes to real-time notifications.
 
 # Subscribe
 
-Subscribes by providing a set of filters: messages, document changes and, optionally, user events matching the provided filters will generate [real-time notifications](/core/2/api/essentials/notifications), sent to you in real-time by Kuzzle.
+Subscribes by providing a set of filters: messages, document changes and, optionally, user events matching the provided filters will generate [real-time notifications](/core/2/api/payloads/notifications), sent to you in real-time by Kuzzle.
 
 :::: tabs
 ::: tab Java
@@ -65,7 +65,7 @@ public CompletableFuture<String> subscribe(
 |--------------|-----------------------------------------|----------------------------------------------------------------------------------------------------------------|
 | `index`      | <pre>String</pre>                       | Index name                                                                                                     |
 | `collection` | <pre>String</pre>                       | Collection name                                                                                                |
-| `filters`    | <pre>ConcurrentHashMap<String, Object></pre>                      | ConcurrentHashMap representing a set of filters following [Koncorde syntax](/core/2/guides/cookbooks/realtime-api/terms) |
+| `filters`    | <pre>ConcurrentHashMap<String, Object></pre>                      | ConcurrentHashMap representing a set of filters following [Koncorde syntax](/core/2/api/koncorde-filters-syntax) |
 | `handler`   | <pre>NotificationHandler</pre>          | Handler function to handle notifications                                                                      |
 | `scope`    | <pre>String</pre><br>(`all`) | Subscribes to document entering or leaving the scope<br>Possible values: all, in, out, none |
 | `users`    | <pre>String</pre><br>(`none`) | Subscribes to users entering or leaving the room<br>Possible values: all, in, out, none |
@@ -112,7 +112,7 @@ fun subscribe(
 |--------------|-----------------------------------------|----------------------------------------------------------------------------------------------------------------|
 | `index`      | <pre>String</pre>                       | Index name                                                                                                     |
 | `collection` | <pre>String</pre>                       | Collection name                                                                                                |
-| `filters`    | <pre>ConcurrentHashMap<String, Object></pre>                      | ConcurrentHashMap representing a set of filters following [Koncorde syntax](/core/2/guides/cookbooks/realtime-api/terms) |
+| `filters`    | <pre>ConcurrentHashMap<String, Object></pre>                      | ConcurrentHashMap representing a set of filters following [Koncorde syntax](/core/2/api/koncorde-filters-syntax) |
 | `handler`   | <pre>NotificationHandler</pre>          | Handler function to handle notifications                                                                      |
 | `scope`    | <pre>String</pre><br>(`all`) | Subscribes to document entering or leaving the scope<br>Possible values: all, in, out, none |
 | `users`    | <pre>String</pre><br>(`none`) | Subscribes to users entering or leaving the room<br>Possible values: all, in, out, none |

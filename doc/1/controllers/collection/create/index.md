@@ -7,7 +7,7 @@ description: Creates a new collection
 
 # create
 
-Creates a new [collection](/core/2/guides/essentials/store-access-data) in Kuzzle via the persistence engine, in the provided index.
+Creates a new [collection](/core/2/guides/main-concepts/data-storage) in Kuzzle via the persistence engine, in the provided index.
 
 You can also provide optional data mappings that allow you to exploit the full capabilities of our
 persistent data storage layer, [ElasticSearch](https://www.elastic.co/elastic-stack) (check here the [mappings capabilities of ElasticSearch](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/mapping.html)).
@@ -45,7 +45,7 @@ throws NotConnectedException, InternalException
 ### definition
 
 An object containing:
- - [collection mappings](/core/2/guides/essentials/database-mappings).
+ - [collection mappings](/core/2/guides/main-concepts/data-storage).
  - Elasticsearch [index settings](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/index-modules.html#index-modules-settings)
 The mappings must have a root field `properties` that contain the mapping definition:
 

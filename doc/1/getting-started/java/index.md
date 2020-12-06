@@ -15,7 +15,7 @@ This page shows examples of scripts that **store** documents in Kuzzle, and of s
 Before proceeding, please make sure your system meets the following requirements:
 
 - **Oracle JDK or OpenJDK** version 8 or higher ([OpenJDK installation instructions](https://openjdk.java.net/install/))
-- A running Kuzzle Server ([Kuzzle installation guide](/core/2/guides/essentials/installing-kuzzle))
+- A running Kuzzle Server ([Kuzzle installation guide](/core/2/guides/getting-started/run-kuzzle))
 
 :::
 
@@ -76,7 +76,7 @@ Initialize a new Java project, create a `GettingStartedFirstConnection.java` fil
 <<< ./snippets/firstconnection-java.java
 
 ::: info
-If you're not yet familiar with how Kuzzle structures its storage, check our [detailed guide](https://docs.kuzzle.io/core/2/guides/essentials/store-access-data/)
+If you're not yet familiar with how Kuzzle structures its storage, check our [detailed guide](/core/2/guides/main-concepts/data-storage)
 :::
 
 This program initializes the Kuzzle Server storage by creating an index and a collection.
@@ -165,4 +165,4 @@ Now that you're more familiar with the JVM SDK, you can dive even deeper to lear
 
 - discover what this SDK has to offer by browsing other sections of this documentation
 - learn how to use [pagination strategies](/sdk/jvm/1/core-classes/search-result/next/#pagination-strategies) with the [document:search](/sdk/jvm/1/controllers/document/search/) API action.
-- discover other [Kuzzle guides](core/2/guides/essentials/introduction/)
+- discover other [Kuzzle guides](core/2/guides/introduction/what-is-kuzzle/)
