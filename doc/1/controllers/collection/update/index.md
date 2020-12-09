@@ -9,9 +9,9 @@ description: Update the collection mapping
 
 <SinceBadge version="Kuzzle 2.1.0" />
 
-You can define the collection [dynamic mappings policy](/core/2/guides/essentials/database-mappings#dynamic-mapping-policy) by setting the `dynamic` field to the desired value.
+You can define the collection [dynamic mappings policy](/core/2/guides/main-concepts/data-storage#mappings-dynamic-policy) by setting the `dynamic` field to the desired value.
 
-You can define [collection additional metadata](/core/2/guides/essentials/database-mappings#collection-metadata) within the `_meta` root field.
+You can define [collection additional metadata](/core/2/guides/main-concepts/data-storage#mappings-metadata) within the `_meta` root field.
 
 <SinceBadge version="Kuzzle 2.2.0" />
 
@@ -42,7 +42,7 @@ public CompletableFuture<ConcurrentHashMap<String, Object>> update(
 ### definition
 
 An object containing:
- - [collection mappings](/core/2/guides/essentials/database-mappings).
+ - [collection mappings](/core/2/guides/main-concepts/data-storage).
  - Elasticsearch [index settings](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/index-modules.html#index-modules-settings)
 
 
@@ -92,7 +92,7 @@ fun update(
 ### definition
 
 An object containing:
- - [collection mappings](/core/2/guides/essentials/database-mappings).
+ - [collection mappings](/core/2/guides/main-concepts/data-storage).
  - Elasticsearch [index settings](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/index-modules.html#index-modules-settings)
 
 
