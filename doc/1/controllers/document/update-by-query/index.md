@@ -11,6 +11,15 @@ Updates documents matching the provided search query.
 
 Kuzzle uses the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/query-dsl.html) syntax.
 
+<SinceBadge version="change-me"/>
+
+This method also supports the [Koncorde Filters DSL](/core/2/guides/cookbooks/realtime-api) to match documents by passing the `lang` argument with the value `koncorde`.  
+Koncorde filters will be translated into an Elasticsearch query.  
+
+::: warning
+Koncorde `bool` operator and `regexp` clause are not supported for search queries.
+:::
+
 An empty or null query will match all documents in the collection.
 
 <br/>
@@ -20,18 +29,45 @@ An empty or null query will match all documents in the collection.
 
 
 ```java
-  public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
+    public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
       String index,
       String collection,
       ConcurrentHashMap<String, Object> searchQuery,
       ConcurrentHashMap<String, Object> changes) throws NotConnectedException, InternalException
 
-  public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
+    public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
       String index,
       String collection,
       ConcurrentHashMap<String, Object> searchQuery,
       ConcurrentHashMap<String, Object> changes,
-      UpdateOptions options) throws NotConnectedException, InternalException
+      Boolean waitForRefresh) throws NotConnectedException, InternalException
+    
+    public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery,
+      ConcurrentHashMap<String, Object> changes,
+      Boolean waitForRefresh,
+      Integer retryOnConflict) throws NotConnectedException, InternalException
+
+    public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery,
+      ConcurrentHashMap<String, Object> changes,
+      Boolean waitForRefresh,
+      Integer retryOnConflict,
+      Boolean source) throws NotConnectedException, InternalException
+
+    public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery,
+      ConcurrentHashMap<String, Object> changes,
+      Boolean waitForRefresh,
+      Integer retryOnConflict,
+      Boolean source,
+      String lang) throws NotConnectedException, InternalException
 ```
 
 | Argument           | Type                                         | Description     |
@@ -40,8 +76,10 @@ An empty or null query will match all documents in the collection.
 | `collection`       | <pre>String</pre>                            | Collection name |
 | `searchQuery`      | <pre>ConcurrentHashMap<String, Object></pre> | Query to match  |
 | `changes`          | <pre>ConcurrentHashMap<String, Object></pre> | Partial changes to apply to the documents |
-| `waitForRefresh`   | <pre>Boolean</pre>                           | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
+| `waitForRefresh`   | <pre>Boolean</pre>                           | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing |
+| `retryOnConflict`  | <pre>Integer</pre> (optional)                | The number of times the database layer should retry in case of version conflict |
 | `source`           | <pre>Boolean</pre>                           | If true, returns the updated document inside the response |
+| `lang`     | <pre>String</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
 
 ---
 
@@ -80,7 +118,8 @@ fun updateByQuery(
       changes: ConcurrentHashMap<String, Any?>,
       waitForRefresh: Boolean? = null,
       retryOnConflict: Int? = null,
-      source: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any?>>>
+      source: Boolean? = null,
+      lang: String? = null): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any?>>>
 ```
 
 | Argument           | Type                                         | Description     |
@@ -90,7 +129,9 @@ fun updateByQuery(
 | `searchQuery`      | <pre>ConcurrentHashMap<String, Any?></pre> | Query to match  |
 | `changes`          | <pre>ConcurrentHashMap<String, Any?></pre> | Partial changes to apply to the documents |
 | `waitForRefresh`   | <pre>Boolean</pre>                           | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
+| `retryOnConflict`  | <pre>Int</pre> (optional)                | The number of times the database layer should retry in case of version conflict |
 | `source`           | <pre>Boolean</pre>                           | If true, returns the updated document inside the response |
+| `lang`     | <pre>String</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
 
 ---
 
