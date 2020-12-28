@@ -1,4 +1,4 @@
-name: auth#checkRights-kotlin
+name: kotlin-auth#checkRights
 description: Checks if an API action can be executed by the current user
 hooks:
   before: curl -X POST kuzzle:7512/users/foo/_create -H "Content-Type:application/json" --data '{"content":{"profileIds":["default"]},"credentials":{"local":{"username":"foo","password":"bar"}}}'
