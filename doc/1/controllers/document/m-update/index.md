@@ -27,7 +27,15 @@ public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> mUpdate(
       String index,
       String collection,
       ArrayList<ConcurrentHashMap<String, Object>> documents,
-      UpdateOptions options)
+      Boolean waitForRefresh)
+throws NotConnectedException, InternalException
+
+public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> mUpdate(
+      String index,
+      String collection,
+      ArrayList<ConcurrentHashMap<String, Object>> documents,
+      Boolean waitForRefresh,
+      Integer retryOnConflict)
 throws NotConnectedException, InternalException
 ```
 

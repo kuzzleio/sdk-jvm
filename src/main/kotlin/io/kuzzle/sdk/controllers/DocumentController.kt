@@ -341,6 +341,32 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   }
 
   @JvmOverloads
+  fun upsert(
+      index: String,
+      collection: String,
+      id: String,
+      body: ConcurrentHashMap<String, Any?>,
+      waitForRefresh: Boolean? = null,
+      retryOnConflict: Int? = null,
+      source: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    val query = KuzzleMap().apply {
+      put("index", index)
+      put("collection", collection)
+      put("controller", "document")
+      put("action", "upsert")
+      put("body", body)
+      put("_id", id)
+      put("source", source)
+      put("retryOnConflict", retryOnConflict)
+      put("waitForRefresh", waitForRefresh)
+    }
+
+    return kuzzle
+        .query(query)
+        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+  }
+
+  @JvmOverloads
   fun updateByQuery(
       index: String,
       collection: String,

@@ -20,18 +20,35 @@ An empty or null query will match all documents in the collection.
 
 
 ```java
-  public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
-      String index,
-      String collection,
-      ConcurrentHashMap<String, Object> searchQuery,
-      ConcurrentHashMap<String, Object> changes) throws NotConnectedException, InternalException
+    public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
+        String index,
+        String collection,
+        ConcurrentHashMap<String, Object> searchQuery,
+        ConcurrentHashMap<String, Object> changes) throws NotConnectedException, InternalException
 
-  public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
+    public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
+    String index,
+    String collection,
+    ConcurrentHashMap<String, Object> searchQuery,
+    ConcurrentHashMap<String, Object> changes,
+    Boolean waitForRefresh) throws NotConnectedException, InternalException
+    
+    public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
       String index,
       String collection,
       ConcurrentHashMap<String, Object> searchQuery,
       ConcurrentHashMap<String, Object> changes,
-      UpdateOptions options) throws NotConnectedException, InternalException
+      Boolean waitForRefresh,
+      Integer retryOnConflict) throws NotConnectedException, InternalException
+    
+    public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery,
+      ConcurrentHashMap<String, Object> changes,
+      Boolean waitForRefresh,
+      Integer retryOnConflict,
+      Boolean source) throws NotConnectedException, InternalException
 ```
 
 | Argument           | Type                                         | Description     |
