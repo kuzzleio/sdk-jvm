@@ -9,4 +9,4 @@ requestPayload.put("collection", "yellow-taxi");
 requestPayload.put("body", body);
 
 ConcurrentHashMap<String, Object> result =
-  kuzzle.getAuthController().checkRights("foo", requestPayload).get();
+  kuzzle.getAuthController().checkRights(requestPayload).get();

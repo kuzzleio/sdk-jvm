@@ -10,4 +10,4 @@ val requestPayload = ConcurrentHashMap<String, Any?>().apply {
   put("body", body)
 }
 
-val result = kuzzle.authController.checkRights("foo", requestPayload).get()
+val result = kuzzle.authController.checkRights(requestPayload).get()
