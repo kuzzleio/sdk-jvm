@@ -18,25 +18,34 @@ Applies partial changes to a document. If the document doesn't already exist, a 
   public CompletableFuture<ConcurrentHashMap<String, Object>> upsert(
     String index,
     String collection,
-    ConcurrentHashMap<String, Object> body) throws NotConnectedException, InternalException
+    ConcurrentHashMap<String, Object> changes) throws NotConnectedException, InternalException
 
   public CompletableFuture<ConcurrentHashMap<String, Object>> upsert(
     String index,
     String collection,
-    ConcurrentHashMap<String, Object> body,
+    ConcurrentHashMap<String, Object> changes,
+    ConcurrentHashMap<String, Object> defaults) throws NotConnectedException, InternalException
+
+  public CompletableFuture<ConcurrentHashMap<String, Object>> upsert(
+    String index,
+    String collection,
+    ConcurrentHashMap<String, Object> changes,
+    ConcurrentHashMap<String, Object> defaults,
     Boolean waitForRefresh) throws NotConnectedException, InternalException
   
   public CompletableFuture<ConcurrentHashMap<String, Object>> upsert(
     String index,
     String collection,
-    ConcurrentHashMap<String, Object> body,
+    ConcurrentHashMap<String, Object> changes,
+    ConcurrentHashMap<String, Object> defaults,
     Boolean waitForRefresh,
     Integer retryOnConflict) throws NotConnectedException, InternalException
   
   public CompletableFuture<ConcurrentHashMap<String, Object>> upsert(
     String index,
     String collection,
-    ConcurrentHashMap<String, Object> body,
+    ConcurrentHashMap<String, Object> changes,
+    ConcurrentHashMap<String, Object> defaults,
     Boolean waitForRefresh,
     Integer retryOnConflict,
     Boolean source) throws NotConnectedException, InternalException
@@ -47,15 +56,7 @@ Applies partial changes to a document. If the document doesn't already exist, a 
 | `index`      | <pre>String</pre> | Index name                                |
 | `collection` | <pre>String</pre> | Collection name                           |
 | `id`         | <pre>String</pre> | Document ID                               |
-| `body`       | <pre>ConcurrentHashMap<String, Object></pre> | Partial content of the document to update and fields to add to the document if it gets created |
-
-### Body properties
-
-
-| Argument           | Type<br/>(default)              | Description                                                                        |
-| ----------------- | ------------------------------- | ---------------------------------------------------------------------------------- |
-| `changes`         | <pre>ConcurrentHashMap<String, Object></pre>    | partial changes to apply to the document |
-| `defaults` | <pre>ConcurrentHashMap<String, Object><br/>(`{}`)        | (optional) fields to add to the document if it gets created    |
+| `changes`       | <pre>ConcurrentHashMap<String, Object></pre> | Partial content of the document to update |
 
 ### Options
 
@@ -63,6 +64,7 @@ Additional query options
 
 | Options           | Type<br/>(default)              | Description                                                                        |
 | ----------------- | ------------------------------- | ---------------------------------------------------------------------------------- |
+| `defaults` | <pre>ConcurrentHashMap<String, Object><br/>(`{}`)        | (optional) fields to add to the document if it gets created    |
 | `waitForRefresh`         | <pre>Boolean</pre><br/>(`""`)    | If set to `true`, waits for the change to be reflected for `search` (up to 1s) |
 | `retryOnConflict` | <pre>Integer</pre><br/>(`10`)        | The number of times the database layer should retry in case of version conflict    |
 | `source`          | <pre>Boolean</pre><br/>(`false`)| If true, returns the updated document inside the response
@@ -91,7 +93,8 @@ fun upsert(
       index: String,
       collection: String,
       id: String,
-      body: ConcurrentHashMap<String, Any?>,
+      changes: ConcurrentHashMap<String, Any?>,
+      defaults: ConcurrentHashMap<String, Any?>,
       waitForRefresh: Boolean? = null,
       retryOnConflict: Int? = null,
       source: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>>
@@ -102,15 +105,7 @@ fun upsert(
 | `index`      | <pre>String</pre> | Index name                                |
 | `collection` | <pre>String</pre> | Collection name                           |
 | `id`         | <pre>String</pre> | Document ID                               |
-| `body`       | <pre>ConcurrentHashMap<String, Any?></pre> | Partial content of the document to update and fields to add to the document if it gets created |
-
-### Body properties
-
-
-| Argument           | Type<br/>(default)              | Description                                                                        |
-| ----------------- | ------------------------------- | ---------------------------------------------------------------------------------- |
-| `changes`         | <pre>ConcurrentHashMap<String, Any?></pre>    | partial changes to apply to the document |
-| `defaults` | <pre>ConcurrentHashMap<String, Any?><br/>(`{}`)        | (optional) fields to add to the document if it gets created    |
+| `changes`       | <pre>ConcurrentHashMap<String, Any?></pre> | Partial content of the document to update |
 
 ### Options
 
@@ -118,6 +113,7 @@ Additional query options
 
 | Options           | Type<br/>(default)              | Description                                                                        |
 | ----------------- | ------------------------------- | ---------------------------------------------------------------------------------- |
+| `defaults` | <pre>ConcurrentHashMap<String, Any?><br/>(`{}`)        | (optional) fields to add to the document if it gets created    |
 | `waitForRefresh`         | <pre>Boolean</pre><br/>(`""`)    | If set to `true`, waits for the change to be reflected for `search` (up to 1s) |
 | `retryOnConflict` | <pre>Integer</pre><br/>(`10`)        | The number of times the database layer should retry in case of version conflict    |
 | `source`          | <pre>Boolean</pre><br/>(`false`)| If true, returns the updated document inside the response

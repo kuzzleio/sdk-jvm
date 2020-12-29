@@ -345,7 +345,8 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       index: String,
       collection: String,
       id: String,
-      body: ConcurrentHashMap<String, Any?>,
+      changes: ConcurrentHashMap<String, Any?>,
+      defaults: ConcurrentHashMap<String, Any?>,
       waitForRefresh: Boolean? = null,
       retryOnConflict: Int? = null,
       source: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
@@ -357,6 +358,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       put("body", body)
       put("_id", id)
       put("source", source)
+      put("defaults", defaults)
       put("retryOnConflict", retryOnConflict)
       put("waitForRefresh", waitForRefresh)
     }
