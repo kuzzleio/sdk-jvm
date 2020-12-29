@@ -54,7 +54,7 @@ Returns a boolean telling whether the provided request would have been allowed o
 
 ## `requestPayload`
 
-The [RequestPayload](/core/2/api/payloads/request) must contains at least the following properties:ties:
+The [RequestPayload](/core/2/api/payloads/request) must contains at least the following properties:
 
 - `controller`: API controller
 - `action`: API action
