@@ -45,7 +45,7 @@ Returns a boolean telling whether the provided request would have been allowed o
 
 ```kotlin
  fun checkRights(
-      requestPayload: ConcurrentHashMap<String, Any?>): CompletableFuture<ConcurrentHashMap<String, Any?>>
+      requestPayload: ConcurrentHashMap<String, Any?>): CompletableFuture<Boolean>
 ```
 
 | Property | Type | Description |
