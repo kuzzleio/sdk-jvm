@@ -1,11 +1,11 @@
 ConcurrentHashMap<String, Object> category = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> body = new ConcurrentHashMap<>();
+ConcurrentHashMap<String, Object> changes = new ConcurrentHashMap<>();
 category.put("category", "suv");
-body.put("changes", category);
+changes.put("changes", category);
 
 ConcurrentHashMap<String, Object> result = kuzzle
     .getDocumentController()
-    .upsert("nyc-open-data", "yellow-taxi", "some-id", body)
+    .upsert("nyc-open-data", "yellow-taxi", "some-id", changes)
     .get();
 
 /*

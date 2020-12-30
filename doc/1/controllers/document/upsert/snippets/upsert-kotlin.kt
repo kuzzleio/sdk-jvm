@@ -3,7 +3,7 @@ val category: ConcurrentHashMap<String, Any?> =
     put("category", "suv")
   }
 
-val body: ConcurrentHashMap<String, Any?> =
+val changes: ConcurrentHashMap<String, Any?> =
   ConcurrentHashMap<String, Any?>().apply {
     put("changes", category)  
   }
@@ -11,5 +11,5 @@ val body: ConcurrentHashMap<String, Any?> =
 val result: ConcurrentHashMap<String, Any?> =
   kuzzle
   .documentController
-  .upsert("nyc-open-data", "yellow-taxi", "some-id", body)
+  .upsert("nyc-open-data", "yellow-taxi", "some-id", changes)
   .get()
