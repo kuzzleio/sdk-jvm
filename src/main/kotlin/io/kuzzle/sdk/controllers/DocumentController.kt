@@ -361,7 +361,6 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       )
       put("_id", id)
       put("source", source)
-      put("defaults", defaults)
       put("retryOnConflict", retryOnConflict)
       put("waitForRefresh", waitForRefresh)
     }
