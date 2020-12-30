@@ -8,5 +8,5 @@ requestPayload.put("index", "nyc-open-data");
 requestPayload.put("collection", "yellow-taxi");
 requestPayload.put("body", body);
 
-ConcurrentHashMap<String, Object> result =
+Boolean result =
   kuzzle.getAuthController().checkRights(requestPayload).get();

@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap
 class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
   fun checkRights(
-      requestPayload: ConcurrentHashMap<String, Any?>): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+      requestPayload: ConcurrentHashMap<String, Any?>): CompletableFuture<Boolean> {
     val query = KuzzleMap().apply {
       put("controller", "auth")
       put("action", "checkRights")
@@ -18,7 +18,10 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     }
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> response.result.allowed as Boolean }
+        .thenApplyAsync { response -> KuzzleMap
+          .from(response.result as ConcurrentHashMap<String?, Any?>)
+          .getBoolean("allowed") as Boolean
+          }
   }
 
   fun checkToken(
