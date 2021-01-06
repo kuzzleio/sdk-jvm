@@ -2,7 +2,7 @@
 code: true
 type: page
 title: searchApiKeys
-description: Searches API keys for the currently loggued user.
+description: Searches API keys for the currently logged user.
 ---
 
 # searchApiKeys
