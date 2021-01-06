@@ -121,7 +121,7 @@ Additional query options
 
 ## Returns
 
-A `ConcurrentHashMap<String, Any?>` with the following properties:
+A `ConcurrentHashMap<String, Any?>` object, with the following properties:
 
 | Property     | Type                                         | Description                      |
 |------------- |--------------------------------------------- |--------------------------------- |
