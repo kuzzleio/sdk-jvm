@@ -70,8 +70,8 @@ fun searchApiKeys(
 | Property | Type | Description |
 | --- | --- | --- |
 | `query` | <pre>ConcurrentHashMap<String, Any?></pre> | Search query |
-| `from`     | <pre>Int</pre><br/>(`0`)     | (optionnal) Offset of the first document to fetch   |
-| `size`     | <pre>Int</pre>    | (optionnal) Maximum number of documents to retrieve per page     |
+| `from`     | <pre>Int</pre><br/>(`0`)     | (optional) Offset of the first document to fetch   |
+| `size`     | <pre>Int</pre>    | (optional) Maximum number of documents to retrieve per page     |
 
 ### query
 
