@@ -126,7 +126,7 @@ A `ConcurrentHashMap<String, Any?>` object, with the following properties:
 | Property     | Type                                         | Description                      |
 |------------- |--------------------------------------------- |--------------------------------- |
 | `_source`    | <pre>ConcurrentHashMap<String, Any?></pre> | Updated document (if `source` option set to true)  |
-| `_id`        | <pre>String</pre>                            | ID of the udated document                   |
+| `_id`        | <pre>String</pre>                            | ID of the updated document                   |
 | `_version`   | <pre>Integer</pre>                           | Version of the document in the persistent data storage |
 | `created`     | <pre>Boolean</pre>    
 
