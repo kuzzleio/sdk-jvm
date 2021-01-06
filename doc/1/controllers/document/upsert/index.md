@@ -113,7 +113,7 @@ Additional query options
 
 | Options           | Type<br/>(default)              | Description                                                                        |
 | ----------------- | ------------------------------- | ---------------------------------------------------------------------------------- |
-| `defaults` | <pre>ConcurrentHashMap<String, Any?><br/>(`{}`)        | (optional) fields to add to the document if it gets created    |
+| `defaults` | <pre>ConcurrentHashMap<String, Any?><br/>(`{}`)        | Fields to add to the document if it gets created    |
 | `waitForRefresh`         | <pre>Boolean</pre><br/>(`""`)    | If set to `true`, waits for the change to be reflected for `search` (up to 1s) |
 | `retryOnConflict` | <pre>Integer</pre><br/>(`10`)        | The number of times the database layer should retry in case of version conflict    |
 | `source`          | <pre>Boolean</pre><br/>(`false`)| If true, returns the updated document inside the response
