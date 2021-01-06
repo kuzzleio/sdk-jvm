@@ -75,9 +75,9 @@ fun searchApiKeys(
 
 ### query
 
-The search query to apply to API keys content, using [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/query-dsl.html) syntax.
+The search query to apply to API keys content, using the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/query-dsl.html) syntax.
 
-If left empty, the result will return all available API keys of the currently loggued user.
+If left empty, the result will return all available API keys of the currently logged user.
 
 ## Return
 
