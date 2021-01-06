@@ -7,7 +7,7 @@ description: Searches API keys for the currently logged user.
 
 # searchApiKeys
 
-<SinceBadge version="7.1.0" />
+<SinceBadge version="auto-version" />
 
 <SinceBadge version="Kuzzle 2.1.0" />
 
