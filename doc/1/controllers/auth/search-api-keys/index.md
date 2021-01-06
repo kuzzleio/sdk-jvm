@@ -36,8 +36,8 @@ public CompletableFuture<SearchResult> searchApiKeys(
 | Property | Type | Description |
 | --- | --- | --- |
 | `query` | <pre>ConcurrentHashMap<String, Object></pre> | Search query |
-| `from`     | <pre>Integer</pre><br/>(`0`)     | (optionnal) Offset of the first document to fetch   |
-| `size`     | <pre>Integer</pre>    | (optionnal) Maximum number of documents to retrieve per page     |
+| `from`     | <pre>Integer</pre><br/>(`0`)     | (optional) Offset of the first document to fetch   |
+| `size`     | <pre>Integer</pre>    | (optional) Maximum number of documents to retrieve per page     |
 
 ### query
 
