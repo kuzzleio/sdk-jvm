@@ -11,7 +11,7 @@ description: Searches API keys for the currently logged user.
 
 <SinceBadge version="Kuzzle 2.1.0" />
 
-Searches API keys for the currently loggued user.
+Searches API keys for the currently logged user.
 
 :::: tabs
 ::: tab Java
