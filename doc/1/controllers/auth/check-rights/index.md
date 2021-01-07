@@ -10,7 +10,7 @@ description: Checks if the provided API request can be executed by this network 
 <SinceBadge version="Kuzzle 2.8.0"/>
 <SinceBadge version="auto-version"/>
 
-Checks if the provided API request can be executed by this network connection, using the current authentication information.
+Using the current authentication information, verify if the network connection can execute the required API request.
 
 :::: tabs
 ::: tab Java
