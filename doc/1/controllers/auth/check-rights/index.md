@@ -64,7 +64,7 @@ The [RequestPayload](/core/2/api/payloads/request) must contain at least the fol
 
 ## Returns
 
-Returns a boolean telling whether the provided request would have been allowed or not
+Returns a boolean indicating whether the provided request would have been allowed or not
 
 ## Usage
 
