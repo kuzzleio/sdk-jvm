@@ -19,3 +19,21 @@ val result: ConcurrentHashMap<String, ArrayList<Any?>> =
   .documentController
   .updateByQuery("nyc-open-data", "yellow-taxi", searchQuery, changes)
   .get()
+
+/*
+{
+  successes=[
+              {
+                _id=<document-id>,
+                _source=<updated document> // if source set to true
+                status=200
+              },
+              {
+                _id=<document id>,
+                _source=<updated document> // if source set to true
+                status=200
+              }
+            ],
+    errors=[]
+}
+*/
