@@ -2,7 +2,7 @@
 code: true
 type: page
 title: checkRights
-description: Checks if the provided API request can be executed by this network connection, using the current authentication information.
+description: Using the current authentication information, verify if the network connection can execute the required API request.
 ---
 
 # checkRights
