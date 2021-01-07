@@ -55,7 +55,7 @@ Returns a boolean indicating whether the provided request would have been allowe
 
 ## `requestPayload`
 
-The [RequestPayload](/core/2/api/payloads/request) must contains at least the following properties:
+The [RequestPayload](/core/2/api/payloads/request) must contain at least the following properties:
 
 - `controller`: API controller
 - `action`: API action
