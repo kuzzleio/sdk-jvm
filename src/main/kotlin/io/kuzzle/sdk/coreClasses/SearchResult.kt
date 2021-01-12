@@ -12,7 +12,7 @@ class SearchResult {
   private var scroll: String? = null
   private var from: Int = 0
   private var size: Int? = null
-  private var lang: String? = null
+  private var lang: String? = "elasticsearch"
   private var request: ConcurrentHashMap<String?, Any?>? = null
   private val scrollAction = "scroll"
   private var kuzzle: Kuzzle? = null

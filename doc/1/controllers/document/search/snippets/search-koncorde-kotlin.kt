@@ -11,6 +11,7 @@ val searchQuery: ConcurrentHashMap<String, Any?> =
   ConcurrentHashMap<String, Any?>().apply {
     put("query", query)
   }
+
 val results = kuzzle
   .documentController
-  .search("nyc-open-data", "yellow-taxi", searchQuery, "koncorde").get();
+  .search("nyc-open-data", "yellow-taxi", searchQuery, lang = Lang.KONCORDE).get();

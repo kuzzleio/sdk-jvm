@@ -4,6 +4,7 @@ import com.google.gson.internal.LazilyParsedNumber
 import io.kuzzle.sdk.Kuzzle
 import io.kuzzle.sdk.coreClasses.SearchResult
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
+import io.kuzzle.sdk.coreClasses.lang.Lang
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
@@ -288,7 +289,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       scroll: String? = null,
       size: Int? = null,
       from: Int = 0,
-      lang: String? = null): CompletableFuture<SearchResult> {
+      lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<SearchResult> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -298,15 +299,16 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       put("from", from)
       put("size", size)
       put("scroll", scroll)
-      put("lang", lang)
+      put("lang", lang.lang)
     }
+
     if (scroll != null) {
       query["scroll"] = scroll
     }
 
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> SearchResult(kuzzle, query, scroll, from, size, response) }
+        .thenApplyAsync { response -> SearchResult(kuzzle, query, scroll, from, size, lang.lang, response) }
   }
 
   fun search(
@@ -315,9 +317,18 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       searchQuery: ConcurrentHashMap<String, Any?>,
       size: Int? = null,
       from: Int = 0,
-      lang: String? = null): CompletableFuture<SearchResult> {
+      lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<SearchResult> {
 
     return search(index, collection, searchQuery, null, size, from, lang);
+  }
+
+  fun search(
+      index: String,
+      collection: String,
+      searchQuery: ConcurrentHashMap<String, Any?>,
+      lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<SearchResult> {
+
+    return search(index, collection, searchQuery, null, null, 0, lang);
   }
 
   @JvmOverloads
