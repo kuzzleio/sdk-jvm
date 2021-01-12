@@ -355,14 +355,18 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       put("collection", collection)
       put("controller", "document")
       put("action", "upsert")
-      put("body", KuzzleMap()
-        .put("changes", changes)
-        .put("defaults", defaults)
-      )
+      put("body", KuzzleMap().apply {
+        put("changes", changes)
+        put("defaults", defaults)
+      })
       put("_id", id)
       put("source", source)
       put("retryOnConflict", retryOnConflict)
       put("waitForRefresh", waitForRefresh)
+    }
+
+    if (defaults != null) {
+
     }
 
     return kuzzle
