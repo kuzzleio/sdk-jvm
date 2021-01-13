@@ -374,7 +374,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       waitForRefresh: Boolean? = null,
       retryOnConflict: Int? = null,
       source: Boolean? = null,
-      lang: String? = null): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any?>>> {
+      lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any?>>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -387,12 +387,22 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       put("source", source)
       put("retryOnConflict", retryOnConflict)
       put("waitForRefresh", waitForRefresh)
-      put("lang", lang)
+      put("lang", lang.lang)
     }
 
     return kuzzle
         .query(query)
         .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, ArrayList<Any?>> }
+  }
+
+  fun updateByQuery(
+      index: String,
+      collection: String,
+      searchQuery: ConcurrentHashMap<String, Any?>,
+      changes: ConcurrentHashMap<String, Any?>,
+      lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any?>>> {
+    
+    return updateByQuery(index, collection, searchQuery, changes, null, null, null, lang)
   }
 
   fun validate(
