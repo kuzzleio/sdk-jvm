@@ -60,14 +60,14 @@ public CompletableFuture<SearchResult> search(
       String index,
       String collection,
       ConcurrentHashMap<String, Object> searchQuery,
-      String lang) throws NotConnectedException, InternalException
+      Lang lang) throws NotConnectedException, InternalException
 
 public CompletableFuture<SearchResult> search(
       String index,
       String collection,
       ConcurrentHashMap<String, Object> searchQuery,
       String scroll,
-      String lang) throws NotConnectedException, InternalException
+      Lang lang) throws NotConnectedException, InternalException
 
 public CompletableFuture<SearchResult> search(
       String index,
@@ -75,7 +75,7 @@ public CompletableFuture<SearchResult> search(
       ConcurrentHashMap<String, Object> searchQuery,
       String scroll,
       Integer size,
-      String lang) throws NotConnectedException, InternalException
+      Lang lang) throws NotConnectedException, InternalException
 
 public CompletableFuture<SearchResult> search(
       String index,
@@ -83,7 +83,7 @@ public CompletableFuture<SearchResult> search(
       ConcurrentHashMap<String, Object> searchQuery
       Integer size,
       Integer from,
-      String lang)
+      Lang lang)
 throws NotConnectedException, InternalException
 ```
  
@@ -95,7 +95,7 @@ throws NotConnectedException, InternalException
 | `from`     | <pre>Integer</pre><br/>(`0`)    | Offset of the first document to fetch                                                                                                                                                                             |
 | `size`     | <pre>Integer</pre><br/>(`10`)   | Maximum number of documents to retrieve per page                                                                                                                                                                  |
 | `scroll`   | <pre>String</pre><br/>(`""`)    | When set, gets a forward-only cursor having its ttl set to the given value (ie `1s`; cf [elasticsearch time limits](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#time-units)) |
-| `lang`     | <pre>String</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
 ---
 
 ### searchQuery body properties:
@@ -112,7 +112,14 @@ Returns a [SearchResult](/sdk/jvm/1/core-classes/search-result) object.
 
 ## Usage
 
-<<< ./snippets/search-java.java
+With the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/query-dsl.html) syntax.
+
+<<< ./snippets/search-es-java.java
+
+With the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
+
+
+<<< ./snippets/search-koncorde-java.java
 
 :::
 ::: tab Kotlin
@@ -128,7 +135,7 @@ Returns a [SearchResult](/sdk/jvm/1/core-classes/search-result) object.
       scroll: String? = null,
       size: Int? = null,
       from: Int = 0,
-      land: String? = null): CompletableFuture<SearchResult>
+      land: Lang = Lang.ELASTICSEARCH): CompletableFuture<SearchResult>
 ```
  
 | Arguments          | Type                                         | Description                       |
@@ -139,7 +146,7 @@ Returns a [SearchResult](/sdk/jvm/1/core-classes/search-result) object.
 | `from`     | <pre>Int</pre><br/>(`0`)    | Offset of the first document to fetch                                                                                                                                                                             |
 | `size`     | <pre>Int</pre><br/>(`10`)   | Maximum number of documents to retrieve per page                                                                                                                                                                  |
 | `scroll`   | <pre>String</pre><br/>(`""`)    | When set, gets a forward-only cursor having its ttl set to the given value (ie `1s`; cf [elasticsearch time limits](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#time-units)) |
-| `lang`     | <pre>String</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
 ---
 
 ### searchQuery body properties:
@@ -156,7 +163,14 @@ Returns a [SearchResult](/sdk/jvm/1/core-classes/search-result) object.
 
 ## Usage
 
-<<< ./snippets/search-kotlin.kt
+With the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/query-dsl.html) syntax.
+
+<<< ./snippets/search-es-kotlin.kt
+
+With the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
+
+
+<<< ./snippets/search-koncorde-kotlin.kt
 
 :::
 ::::

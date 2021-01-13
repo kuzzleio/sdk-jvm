@@ -37,6 +37,12 @@ An empty or null query will match all documents in the collection.
       String index,
       String collection,
       ConcurrentHashMap<String, Object> searchQuery,
+      Lang lang) throws NotConnectedException, InternalException
+
+  public CompletableFuture<ArrayList<String>> deleteByQuery(
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery,
       Boolean waitForRefresh) throws NotConnectedException, InternalException
 
   public CompletableFuture<ArrayList<String>> deleteByQuery(
@@ -44,7 +50,7 @@ An empty or null query will match all documents in the collection.
       String collection,
       ConcurrentHashMap<String, Object> searchQuery,
       Boolean waitForRefresh,
-      String lang) throws NotConnectedException, InternalException
+      Lang lang) throws NotConnectedException, InternalException
 ```
 
 | Argument           | Type                                         | Description     |
@@ -53,7 +59,7 @@ An empty or null query will match all documents in the collection.
 | `collection`       | <pre>String</pre>                            | Collection name |
 | `searchQuery`      | <pre>ConcurrentHashMap<String, Object></pre> | Query to match  |
 | `waitForRefresh`   | <pre>Boolean</pre> (optional)                | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing |
-| `lang`     | <pre>String</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
 
 ---
 
@@ -63,7 +69,14 @@ Returns an `ArrayList<String>` containing the deleted document ids.
 
 ## Usage
 
-<<< ./snippets/delete-by-query-java.java
+With the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/query-dsl.html) syntax.
+
+<<< ./snippets/delete-by-query-es-java.java
+
+With the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
+
+
+<<< ./snippets/delete-by-query-koncorde-java.java
 
 :::
 ::: tab Kotlin
@@ -76,7 +89,7 @@ fun deleteByQuery(
       collection: String,
       searchQuery: ConcurrentHashMap<String, Any?>,
       waitForRefresh: Boolean? = null,
-      lang: String? = null): CompletableFuture<ArrayList<String>>
+      lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<ArrayList<String>>
 ```
 
 | Argument           | Type                                         | Description     |
@@ -85,7 +98,7 @@ fun deleteByQuery(
 | `collection`       | <pre>String</pre>                            | Collection name |
 | `searchQuery`      | <pre>ConcurrentHashMap<String, Any?></pre> | Query to match  |
 | `waitForRefresh`   | <pre>Boolean</pre> (optional)                | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing |
-| `lang`     | <pre>String</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
 
 ---
 
@@ -95,7 +108,14 @@ Returns an `ArrayList<String>` containing the deleted document ids.
 
 ## Usage
 
-<<< ./snippets/delete-by-query-kotlin.kt
+With the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/query-dsl.html) syntax.
+
+<<< ./snippets/delete-by-query-es-kotlin.kt
+
+With the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
+
+
+<<< ./snippets/delete-by-query-koncorde-kotlin.kt
 
 :::
 ::::
