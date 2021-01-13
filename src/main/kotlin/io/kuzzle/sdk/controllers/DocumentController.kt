@@ -335,6 +335,16 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       index: String,
       collection: String,
       searchQuery: ConcurrentHashMap<String, Any?>,
+      size: Int? = null,
+      from: Int = 0): CompletableFuture<SearchResult> {
+
+    return search(index, collection, searchQuery, null, size, from, Lang.ELASTICSEARCH);
+  }
+
+  fun search(
+      index: String,
+      collection: String,
+      searchQuery: ConcurrentHashMap<String, Any?>,
       lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<SearchResult> {
 
     return search(index, collection, searchQuery, null, null, 0, lang);
