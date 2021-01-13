@@ -1,4 +1,4 @@
-name: kotlin-document#deleteByQuery
+name: kotlin-document#deleteByQuery-es
 description: Delete documents matching query
 hooks:
   before: |

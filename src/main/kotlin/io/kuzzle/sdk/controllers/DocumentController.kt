@@ -96,7 +96,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       collection: String,
       searchQuery: ConcurrentHashMap<String, Any?>,
       waitForRefresh: Boolean? = null,
-      lang: String? = null): CompletableFuture<ArrayList<String>> {
+      lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<ArrayList<String>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -104,11 +104,20 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       put("action", "deleteByQuery")
       put("body", searchQuery)
       put("waitForRefresh", waitForRefresh)
-      put("lang", lang)
+      put("lang", lang.lang)
     }
     return kuzzle
         .query(query)
         .thenApplyAsync { response -> (response.result as ConcurrentHashMap<String?, Any?>)["ids"] as ArrayList<String> }
+  }
+
+  fun deleteByQuery(
+      index: String,
+      collection: String,
+      searchQuery: ConcurrentHashMap<String, Any?>,
+      lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<ArrayList<String>> {
+    
+    return deleteByQuery(index, collection, searchQuery, null, lang)
   }
 
   fun exists(

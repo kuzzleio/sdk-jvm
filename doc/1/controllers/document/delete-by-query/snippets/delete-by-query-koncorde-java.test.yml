@@ -1,4 +1,4 @@
-name: java-document#deleteByQuery
+name: java-document#deleteByQuery-koncorde
 description: Delete documents matching query
 hooks:
   before: |
