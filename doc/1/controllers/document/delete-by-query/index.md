@@ -17,7 +17,7 @@ This method also supports the [Koncorde Filters DSL](/core/2/api/koncorde-filter
 Koncorde filters will be translated into an Elasticsearch query.  
 
 ::: warning
-Koncorde `bool` operator and `regexp` clause are not supported for search queries.
+Koncorde `bool` operator and `regexp` clauses are not supported for search queries.
 :::
 
 An empty or null query will match all documents in the collection.
