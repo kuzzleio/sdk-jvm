@@ -17,6 +17,7 @@ import io.kuzzle.sdk.protocol.AbstractProtocol
 import io.kuzzle.sdk.protocol.ProtocolState
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
+import java.util.UUID
 import kotlin.collections.HashMap
 
 class Kuzzle {
