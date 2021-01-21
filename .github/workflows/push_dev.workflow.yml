@@ -6,20 +6,32 @@ on:
       - 1-dev
 
 jobs:
-  unit-tests:
-    name: unit-tests
+  lint:
+    name: Lint
     runs-on: ubuntu-18.04
     timeout-minutes: 30
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-java@v1
-      with:
-        java-version: '8.0.0'
-        architecture: x64
-    - uses: ./.github/actions/unit-tests
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "8"
+          architecture: x64
+      - uses: ./.github/actions/lint
 
-  snippets-tests:
-    name: Snippets Tests
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-18.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "8"
+          architecture: x64
+      - uses: ./.github/actions/unit-tests
+
+  documentation-snippets-tests:
+    name: Documentation - Snippets Tests
     runs-on: ubuntu-18.04
     timeout-minutes: 30
     steps:
@@ -40,11 +52,34 @@ jobs:
           node-version: "12"
       - uses: ./.github/actions/snippets-tests
 
-  doc-dev:
-     name: Deployment Doc Dev
+  documentation-dead-links:
+    name: Documentation - Dead links check
+    runs-on: ubuntu-18.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - uses: actions/setup-node@v1.4.4
+        with:
+          node-version: "12"
+      - uses: ./.github/actions/dead-links
+
+
+  documentation-staging:
+     name: Documentation - Deploy to staging
      runs-on: ubuntu-18.04
      timeout-minutes: 30
-     needs: [unit-tests, snippets-tests]
+     needs: [lint, unit-tests, documentation-dead-links, documentation-snippets-tests]
      steps:
        - uses: actions/checkout@v2
        - name: Cache node modules

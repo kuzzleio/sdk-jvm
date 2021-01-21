@@ -1,0 +1,13 @@
+name: Lint
+description: Run KTLint
+runs:
+  using: "composite"
+  steps:
+    - name: Get ktlint
+      run: |
+        curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.40.0/ktlint
+        chmod a+x ktlint
+      shell: bash
+    - name: Run ktlint
+      run: ./ktlint "src/**/*.kt"
+      shell: bash
