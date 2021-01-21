@@ -1,13 +1,13 @@
 package io.kuzzle.sdk.events
 
 open class EventManager {
-  private val listeners: HashMap<String, (String?) -> Unit> = HashMap()
+    private val listeners: HashMap<String, (String?) -> Unit> = HashMap()
 
-  fun addListener(event: String, listener: (String?) -> Unit) {
-    listeners[event] = listener
-  }
+    fun addListener(event: String, listener: (String?) -> Unit) {
+        listeners[event] = listener
+    }
 
-  fun trigger(event: String, message: String? = null) {
-    listeners[event]?.invoke(message)
-  }
+    fun trigger(event: String, message: String? = null) {
+        listeners[event]?.invoke(message)
+    }
 }
