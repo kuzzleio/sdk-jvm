@@ -91,14 +91,14 @@ A `ConcurrentHashMap<String, Object>` with the following properties:
 
 ```kotlin
 fun upsert(
-      index: String,
-      collection: String,
-      id: String,
-      changes: ConcurrentHashMap<String, Any?>,
-      defaults: ConcurrentHashMap<String, Any?>,
-      waitForRefresh: Boolean? = null,
-      retryOnConflict: Int? = null,
-      source: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>>
+  index: String,
+  collection: String,
+  id: String,
+  changes: ConcurrentHashMap<String, Any?>,
+  defaults: ConcurrentHashMap<String, Any?>,
+  waitForRefresh: Boolean? = null,
+  retryOnConflict: Int? = null,
+  source: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>>
 ```
 
 | Argument     | Type              | Description                               |

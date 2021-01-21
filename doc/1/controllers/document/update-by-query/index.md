@@ -20,35 +20,35 @@ An empty or null query will match all documents in the collection.
 
 
 ```java
-    public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
-        String index,
-        String collection,
-        ConcurrentHashMap<String, Object> searchQuery,
-        ConcurrentHashMap<String, Object> changes) throws NotConnectedException, InternalException
+public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
+  String index,
+  String collection,
+  ConcurrentHashMap<String, Object> searchQuery,
+  ConcurrentHashMap<String, Object> changes) throws NotConnectedException, InternalException
 
-    public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
-    String index,
-    String collection,
-    ConcurrentHashMap<String, Object> searchQuery,
-    ConcurrentHashMap<String, Object> changes,
-    Boolean waitForRefresh) throws NotConnectedException, InternalException
-    
-    public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
-      String index,
-      String collection,
-      ConcurrentHashMap<String, Object> searchQuery,
-      ConcurrentHashMap<String, Object> changes,
-      Boolean waitForRefresh,
-      Integer retryOnConflict) throws NotConnectedException, InternalException
-    
-    public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
-      String index,
-      String collection,
-      ConcurrentHashMap<String, Object> searchQuery,
-      ConcurrentHashMap<String, Object> changes,
-      Boolean waitForRefresh,
-      Integer retryOnConflict,
-      Boolean source) throws NotConnectedException, InternalException
+public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
+  String index,
+  String collection,
+  ConcurrentHashMap<String, Object> searchQuery,
+  ConcurrentHashMap<String, Object> changes,
+  Boolean waitForRefresh) throws NotConnectedException, InternalException
+
+public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
+  String index,
+  String collection,
+  ConcurrentHashMap<String, Object> searchQuery,
+  ConcurrentHashMap<String, Object> changes,
+  Boolean waitForRefresh,
+  Integer retryOnConflict) throws NotConnectedException, InternalException
+
+public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQuery(
+  String index,
+  String collection,
+  ConcurrentHashMap<String, Object> searchQuery,
+  ConcurrentHashMap<String, Object> changes,
+  Boolean waitForRefresh,
+  Integer retryOnConflict,
+  Boolean source) throws NotConnectedException, InternalException
 ```
 
 | Argument           | Type                                         | Description     |
@@ -91,13 +91,13 @@ Each errored document is an object of the `errors` array with the following prop
 
 ```kotlin
 fun updateByQuery(
-      index: String,
-      collection: String,
-      searchQuery: ConcurrentHashMap<String, Any?>,
-      changes: ConcurrentHashMap<String, Any?>,
-      waitForRefresh: Boolean? = null,
-      retryOnConflict: Int? = null,
-      source: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any?>>>
+  index: String,
+  collection: String,
+  searchQuery: ConcurrentHashMap<String, Any?>,
+  changes: ConcurrentHashMap<String, Any?>,
+  waitForRefresh: Boolean? = null,
+  retryOnConflict: Int? = null,
+  source: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any?>>>
 ```
 
 | Argument           | Type                                         | Description     |

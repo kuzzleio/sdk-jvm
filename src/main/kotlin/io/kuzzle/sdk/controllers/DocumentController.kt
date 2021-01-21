@@ -365,10 +365,6 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       put("waitForRefresh", waitForRefresh)
     }
 
-    if (defaults != null) {
-
-    }
-
     return kuzzle
         .query(query)
         .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }

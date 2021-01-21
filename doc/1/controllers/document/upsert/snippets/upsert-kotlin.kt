@@ -10,6 +10,6 @@ val changes: ConcurrentHashMap<String, Any?> =
 
 val result: ConcurrentHashMap<String, Any?> =
   kuzzle
-  .documentController
-  .upsert("nyc-open-data", "yellow-taxi", "some-id", changes)
-  .get()
+    .documentController
+    .upsert("nyc-open-data", "yellow-taxi", "some-id", changes)
+    .get()
