@@ -14,7 +14,7 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     ): CompletableFuture<Boolean> {
         val query = KuzzleMap().apply {
             put("controller", "auth")
-          put("action", "checkRights")
+            put("action", "checkRights")
             put("body", requestPayload)
         }
         return kuzzle
