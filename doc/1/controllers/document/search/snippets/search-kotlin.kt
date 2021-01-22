@@ -1,19 +1,19 @@
 val match: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
-    put("category", "suv")
-  }
+    ConcurrentHashMap<String, Any?>().apply {
+        put("category", "suv")
+    }
 val query: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
-    put("match", match)
-  }
+    ConcurrentHashMap<String, Any?>().apply {
+        put("match", match)
+    }
 
 val searchQuery: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
-    put("query", query)
-  }
+    ConcurrentHashMap<String, Any?>().apply {
+        put("query", query)
+    }
 val results = kuzzle
-  .documentController
-  .search("nyc-open-data", "yellow-taxi", searchQuery).get();
+    .documentController
+    .search("nyc-open-data", "yellow-taxi", searchQuery).get()
 
 /*
 {

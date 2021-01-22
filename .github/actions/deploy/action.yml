@@ -1,0 +1,20 @@
+name: Deploy package
+description: Run Deploy package
+
+inputs:
+  BINTRAY_KEY:
+    description: BINTRAY_KEY
+    required: true
+  BINTRAY_USER:
+    description: BINTRAY_USER
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Deploy to bintray
+      run: ./gradlew bintrayUpload
+      env:
+        BINTRAY_KEY: ${{ inputs.BINTRAY_KEY }}
+        BINTRAY_USER: ${{ inputs.BINTRAY_USER }}
+      shell: bash

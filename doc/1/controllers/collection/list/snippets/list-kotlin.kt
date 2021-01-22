@@ -1,7 +1,7 @@
 val result = kuzzle
     .collectionController
     .list("nyc-open-data")
-    .get();
+    .get()
 
 /*
     {
