@@ -111,6 +111,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         .thenApplyAsync { response -> (response.result as ConcurrentHashMap<String?, Any?>)["ids"] as ArrayList<String> }
   }
 
+  @JvmOverloads
   fun deleteByQuery(
       index: String,
       collection: String,
