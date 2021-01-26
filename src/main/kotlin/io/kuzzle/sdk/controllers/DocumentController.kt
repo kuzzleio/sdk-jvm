@@ -406,6 +406,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, ArrayList<Any?>> }
   }
 
+  @JvmOverloads
   fun updateByQuery(
       index: String,
       collection: String,
