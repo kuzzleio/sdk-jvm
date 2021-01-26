@@ -7,5 +7,5 @@ import io.kuzzle.sdk.coreClasses.responses.Response
  * to make it more usable in JAVA
  */
 interface NotificationHandler {
-  fun run(notification: Response)
+    fun run(notification: Response)
 }
