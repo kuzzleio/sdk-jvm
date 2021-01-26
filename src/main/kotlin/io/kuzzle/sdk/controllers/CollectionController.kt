@@ -150,10 +150,10 @@ class CollectionController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             put("size", size)
             put("scroll", scroll)
         }
-    return kuzzle
-      .query(query)
-      .thenApplyAsync { response -> SearchResult(kuzzle, query, scroll, from, size, null, response) }
-  }
+        return kuzzle
+            .query(query)
+            .thenApplyAsync { response -> SearchResult(kuzzle, query, scroll, from, size, null, response) }
+    }
 
     fun truncate(
         index: String,
