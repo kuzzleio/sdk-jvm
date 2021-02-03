@@ -1,10 +1,10 @@
-val args: Map<String, Any?> = Map<String, Any?>()
+val args: Map<String, Any?> = HashMap<String, Any?>()
 val filters: Map<String, Any?> =
-Map<String, Any?>().apply {
+HashMap<String, Any?>().apply {
   put("match_all", args)
 }
 val searchQuery: Map<String, Any?> =
-Map<String, Any?>().apply {
+HashMap<String, Any?>().apply {
   put("query", filters)
 }
 

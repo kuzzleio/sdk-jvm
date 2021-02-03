@@ -16,7 +16,7 @@ fun main() {
 
   try {
     // Subscribes to notifications for drivers having a "B" driver license.
-    val equals: Map<String, Any?> = Map<String, Any?>().apply {
+    val equals: Map<String, Any?> = HashMap<String, Any?>().apply {
       put("license", "B")
     }
     val filters: Map<String, Any> = Map<String, Any>().apply {
@@ -48,7 +48,7 @@ fun main() {
 
     // Writes a new document. This triggers a notification
     // sent to our subscription.
-    val content: Map<String, Any?> = Map<String, Any?>().apply {
+    val content: Map<String, Any?> = HashMap<String, Any?>().apply {
       put("name", "John")
       put("birthday", "1995-11-27")
       put("license", "B")

@@ -104,7 +104,7 @@ fun subscribe(
   scope: String = "all",
   users: String = "all",
   subscribeToSelf: Boolean = true,
-  volatiles: Map<String?, Any?> = Map(),
+  volatiles: Map<String?, Any?> = HashMap(),
   handler: (Response) -> Unit): CompletableFuture<String>
 ```
 

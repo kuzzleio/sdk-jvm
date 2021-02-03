@@ -16,7 +16,7 @@ fun main() {
 
   try {
     // New document content
-    val content: Map<String, Any?> = Map<String, Any?>().apply {
+    val content: Map<String, Any?> = HashMap<String, Any?>().apply {
       put("name", "John")
       put("birthday", "1995-11-27")
       put("license", "B")

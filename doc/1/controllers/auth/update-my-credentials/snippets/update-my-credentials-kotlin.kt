@@ -1,4 +1,4 @@
-val credentials = Map<String, Any?>().apply {
+val credentials = HashMap<String, Any?>().apply {
   put("username", "foo")
   put("password", "bar")
 }

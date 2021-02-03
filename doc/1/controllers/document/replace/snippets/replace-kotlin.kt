@@ -1,5 +1,5 @@
 val document: Map<String, Any?> =
-  Map<String, Any?>().apply {
+  HashMap<String, Any?>().apply {
     put("firstname", "John")
   }
 

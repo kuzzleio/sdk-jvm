@@ -1,15 +1,15 @@
 val document1: Map<String, Any?> = 
-  Map<String, Any?>().apply {
+  HashMap<String, Any?>().apply {
     put("_id", "some-id")
-    put("body", Map<String, Any?>().apply {
+    put("body", HashMap<String, Any?>().apply {
       put("name", "Smith")
     })
   }
 
 val document2: Map<String, Any?> = 
-  Map<String, Any?>().apply {
+  HashMap<String, Any?>().apply {
     put("_id", "some-id2")
-    put("body", Map<String, Any?>().apply {
+    put("body", HashMap<String, Any?>().apply {
       put("name", "Freeman")
     })
   }

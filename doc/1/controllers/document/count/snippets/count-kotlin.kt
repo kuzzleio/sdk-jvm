@@ -1,6 +1,6 @@
 val searchQuery : Map<String, Any?> =
-    Map<String, Any?>().apply {
-      put("match", Map<String, Any?>().apply {
+    HashMap<String, Any?>().apply {
+      put("match", HashMap<String, Any?>().apply {
         put("Hello", "Clarisse")
       })
     }

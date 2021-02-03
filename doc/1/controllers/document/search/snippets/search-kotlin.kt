@@ -1,14 +1,14 @@
 val match: Map<String, Any?> =
-  Map<String, Any?>().apply {
+  HashMap<String, Any?>().apply {
     put("category", "suv")
   }
 val query: Map<String, Any?> =
-  Map<String, Any?>().apply {
+  HashMap<String, Any?>().apply {
     put("match", match)
   }
 
 val searchQuery: Map<String, Any?> =
-  Map<String, Any?>().apply {
+  HashMap<String, Any?>().apply {
     put("query", query)
   }
 val results = kuzzle

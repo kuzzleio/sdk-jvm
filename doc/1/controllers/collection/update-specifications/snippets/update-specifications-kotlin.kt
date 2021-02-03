@@ -1,15 +1,15 @@
 
 val license: Map<String, Any?> =
-Map<String, Any?>().apply {
+HashMap<String, Any?>().apply {
   put("mandatory", true);
   put("type", "string");
 };
 val fields: Map<String, Any?> =
-Map<String, Any?>().apply {
+HashMap<String, Any?>().apply {
   put("license", license);
 };
 val specifications: Map<String, Any?> =
-Map<String, Any?>().apply{
+HashMap<String, Any?>().apply{
   put("strict", false);
   put("fields", fields);
 };

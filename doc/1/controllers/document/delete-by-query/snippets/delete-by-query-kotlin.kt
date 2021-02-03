@@ -1,6 +1,6 @@
-val searchQuery: Map<String, Any?> = Map<String, Any?>().apply {
-  put("query", Map<String, Any?>().apply {
-    put("match", Map<String, Any?>().apply {
+val searchQuery: Map<String, Any?> = HashMap<String, Any?>().apply {
+  put("query", HashMap<String, Any?>().apply {
+    put("match", HashMap<String, Any?>().apply {
       put("capacity", 4)
     })
   })

@@ -1,20 +1,20 @@
 val plate: Map<String, Any?> =
-Map<String, Any?>().apply{
+HashMap<String, Any?>().apply{
   put("type", "keyword")
 }
 
 val _meta: Map<String, Any?> =
-Map<String, Any?>().apply{
+HashMap<String, Any?>().apply{
   put("area", "Panipokhari")
 }
 
 val properties: Map<String, Any?> =
-Map<String, Any?>().apply{
+HashMap<String, Any?>().apply{
   put("plate", plate)
 }
 
 val definition: Map<String, Any?> =
-Map<String, Any?>().apply{
+HashMap<String, Any?>().apply{
   put("dynamic", false)
   put("_meta", _meta)
   put("properties", properties)

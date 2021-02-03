@@ -1,15 +1,15 @@
 val match: Map<String, Any?> =
-  Map<String, Any?>().apply {
+  HashMap<String, Any?>().apply {
     put("capacity", 4)
   }
 
 val searchQuery: Map<String, Any?> =
-  Map<String, Any?>().apply {
+  HashMap<String, Any?>().apply {
     put("match", match)  
   }
 
 val changes: Map<String, Any?> =
-  Map<String, Any?>().apply {
+  HashMap<String, Any?>().apply {
     put("capacity", 42)
   }
 
