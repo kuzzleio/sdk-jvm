@@ -1,10 +1,10 @@
-val args: ConcurrentHashMap<String, Any?> = ConcurrentHashMap<String, Any?>()
-val filters: ConcurrentHashMap<String, Any?> =
-ConcurrentHashMap<String, Any?>().apply {
+val args: Map<String, Any?> = Map<String, Any?>()
+val filters: Map<String, Any?> =
+Map<String, Any?>().apply {
   put("match_all", args)
 }
-val searchQuery: ConcurrentHashMap<String, Any?> =
-ConcurrentHashMap<String, Any?>().apply {
+val searchQuery: Map<String, Any?> =
+Map<String, Any?>().apply {
   put("query", filters)
 }
 

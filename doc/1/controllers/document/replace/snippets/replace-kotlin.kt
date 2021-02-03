@@ -1,9 +1,9 @@
-val document: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
+val document: Map<String, Any?> =
+  Map<String, Any?>().apply {
     put("firstname", "John")
   }
 
-val result: ConcurrentHashMap<String, Any?> =
+val result: Map<String, Any?> =
   kuzzle
   .documentController
   .replace("nyc-open-data", "yellow-taxi", "some-id", document)

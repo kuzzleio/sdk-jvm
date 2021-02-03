@@ -2,16 +2,16 @@ package io.kuzzle.sdk.coreClasses.json
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import java.util.concurrent.ConcurrentHashMap
+
 
 object JsonSerializer {
   private var gson: Gson? = null
-  fun deserialize(rawJson: String?): ConcurrentHashMap<*, *> {
-    return gson!!.fromJson(rawJson, ConcurrentHashMap::class.java)
+  fun deserialize(rawJson: String?): Map<*, *> {
+    return gson!!.fromJson(rawJson, Map::class.java)
   }
 
-  fun serialize(map: ConcurrentHashMap<String?, Any?>?): String {
-    return gson!!.toJson(map, ConcurrentHashMap::class.java)
+  fun serialize(map: Map<String?, Any?>?): String {
+    return gson!!.toJson(map, Map::class.java)
   }
 
   init {
@@ -19,8 +19,8 @@ object JsonSerializer {
         .disableHtmlEscaping()
         .disableInnerClassSerialization()
         .serializeNulls()
-        .registerTypeAdapter(ConcurrentHashMap::class.java,
-            ConcurrentHashMapTypeAdapter())
+        .registerTypeAdapter(Map::class.java,
+            MapTypeAdapter())
         .create()
   }
 }

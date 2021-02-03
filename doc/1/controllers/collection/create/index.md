@@ -25,7 +25,7 @@ This method will only update the mappings and/or the settings if the collection 
 public CompletableFuture<Void> create(
       final String index,
       final String collection,
-      final ConcurrentHashMap<String, Object> definition)
+      final Map<String, Object> definition)
 throws NotConnectedException, InternalException
 
 public CompletableFuture<Void> create(
@@ -38,7 +38,7 @@ throws NotConnectedException, InternalException
 | ------------------ | -------------------------------------------- | --------------------------------- |
 | `index`            | <pre>String</pre>                            | Index                             |
 | `collection`       | <pre>String</pre>                            | Collection                        |
-| `definition`          | <pre>ConcurrentHashMap<String, Object></pre> | Describes the collection mappings and the ES index settings |
+| `definition`          | <pre>Map<String, Object></pre> | Describes the collection mappings and the ES index settings |
 
 ---
 
@@ -80,14 +80,14 @@ The mappings must have a root field `properties` that contain the mapping defini
 fun create(
       index: String,
       collection: String,
-      definition: ConcurrentHashMap<String, Any>?
+      definition: Map<String, Any>?
     ): CompletableFuture<Void>
 ```
 | Arguments          | Type                                         | Description                       |
 | ------------------ | -------------------------------------------- | --------------------------------- |
 | `index`            | <pre>String</pre>                            | Index                             |
 | `collection`       | <pre>String</pre>                            | Collection                        |
-| `definition`       | <pre>ConcurrentHashMap<String, Any>?</pre>   | Describes the collection mappings and the ES index settings |
+| `definition`       | <pre>Map<String, Any>?</pre>   | Describes the collection mappings and the ES index settings |
 
 ---
 

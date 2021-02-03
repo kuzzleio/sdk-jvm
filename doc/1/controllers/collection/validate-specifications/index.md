@@ -19,10 +19,10 @@ When the validation specification is not formatted correctly, a detailed error m
 ## Arguments
 
 ```java
-  public CompletableFuture<ConcurrentHashMap<String, Object>> validateSpecifications(
+  public CompletableFuture<Map<String, Object>> validateSpecifications(
       final String index,
       final String collection,
-      final ConcurrentHashMap<String, Object> specifications)
+      final Map<String, Object> specifications)
 ```
 
 <br/>
@@ -31,17 +31,17 @@ When the validation specification is not formatted correctly, a detailed error m
 | ---------------- | -------------------------------------------- | -------------------------- |
 | `index`          | <pre>String</pre>                            | Index name                 |
 | `collection`     | <pre>String</pre>                            | Collection name            |
-| `specifications` | <pre>ConcurrentHashMap<String, Object></pre> | Specifications to validate |
+| `specifications` | <pre>Map<String, Object></pre> | Specifications to validate |
 
 ### specifications
 
-A `ConcurrentHashMap<String, Object>` representing the specifications.
+A `Map<String, Object>` representing the specifications.
 
 This object must follow the [Specification Structure](/core/2/guides/advanced/data-validation).
 
 ## Returns
 
-Returns a `ConcurrentHashMap<String, Object>` which contains information about the specifications validity.
+Returns a `Map<String, Object>` which contains information about the specifications validity.
 
 It contains the following properties:
 
@@ -64,8 +64,8 @@ It contains the following properties:
 fun validateSpecifications(
     index: String,
     collection: String,
-    specifications: ConcurrentHashMap<String, Any>?
-  ): CompletableFuture<ConcurrentHashMap<String, Any?>>
+    specifications: Map<String, Any>?
+  ): CompletableFuture<Map<String, Any?>>
 ```
 
 <br/>
@@ -74,17 +74,17 @@ fun validateSpecifications(
 | ---------------- | -------------------------------------------- | -------------------------- |
 | `index`          | <pre>String</pre>                            | Index name                 |
 | `collection`     | <pre>String</pre>                            | Collection name            |
-| `specifications` | <pre>ConcurrentHashMap<String, Any?></pre> | Specifications to validate |
+| `specifications` | <pre>Map<String, Any?></pre> | Specifications to validate |
 
 ### specifications
 
-A `ConcurrentHashMap<String, Any?>` representing the specifications.
+A `Map<String, Any?>` representing the specifications.
 
 This object must follow the [Specification Structure](/core/2/guides/advanced/data-validation).
 
 ## Returns
 
-Returns a `ConcurrentHashMap<String, Any?>` which contains information about the specifications validity.
+Returns a `Map<String, Any?>` which contains information about the specifications validity.
 
 It contains the following properties:
 

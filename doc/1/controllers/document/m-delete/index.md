@@ -17,13 +17,13 @@ Deletes multiple documents.
 ## Arguments 
 
 ```java
-public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> mDelete(
+public CompletableFuture<Map<String, ArrayList<Object>>> mDelete(
       String index,
       String collection,
       ArrayList<String> ids)
 throws NotConnectedException, InternalException
 
-public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> mDelete(
+public CompletableFuture<Map<String, ArrayList<Object>>> mDelete(
       String index,
       String collection,
       ArrayList<String> ids,
@@ -42,7 +42,7 @@ throws NotConnectedException, InternalException
 
 ## Return
 
-A `ConcurrentHashMap<String, ArrayList<Object>>` which has a `successes` and `errors` `ArrayList<Object>`:
+A `Map<String, ArrayList<Object>>` which has a `successes` and `errors` `ArrayList<Object>`:
 The `successes` array contains the successfully deleted document IDs.
 
 Each deletion error is an object of the errors array with the following properties:
@@ -66,7 +66,7 @@ fun mDelete(
       index: String,
       collection: String,
       ids: ArrayList<String>,
-      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any>>>
+      waitForRefresh: Boolean? = null): CompletableFuture<Map<String, ArrayList<Any>>>
 ```
 
 | Arguments          | Type                                                    | Description                       |
@@ -80,7 +80,7 @@ fun mDelete(
 
 ## Return
 
-A `ConcurrentHashMap<String, ArrayList<Any>>` which has a `successes` and `errors` `ArrayList<Any>`:
+A `Map<String, ArrayList<Any>>` which has a `successes` and `errors` `ArrayList<Any>`:
 The `successes` array contains the successfully deleted document IDs.
 
 Each deletion error is an object of the errors array with the following properties:

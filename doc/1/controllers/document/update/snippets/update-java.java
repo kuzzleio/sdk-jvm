@@ -1,7 +1,7 @@
-    ConcurrentHashMap<String, Object> content = new ConcurrentHashMap<>();
+    Map<String, Object> content = new HashMap<>();
     content.put("name", "Johny");
 
-    ConcurrentHashMap<String, Object> result =
+    Map<String, Object> result =
     kuzzle.getDocumentController().update("nyc-open-data", "yellow-taxi", "some-id", content)
     .get();
 

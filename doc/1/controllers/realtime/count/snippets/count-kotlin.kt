@@ -1,4 +1,4 @@
-val filters: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>().apply {
+val filters: Map<String, Any> = Map<String, Any>().apply {
   put("exists", "name")
 }
 

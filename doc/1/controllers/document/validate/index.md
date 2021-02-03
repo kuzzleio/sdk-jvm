@@ -22,7 +22,7 @@ This request does **not** store or publish the document.
 public CompletableFuture<Boolean> validate(
       String index,
       String collection,
-      ConcurrentHashMap<String, Object> document)
+      Map<String, Object> document)
 throws NotConnectedException, InternalException
 ```
 
@@ -30,7 +30,7 @@ throws NotConnectedException, InternalException
 | ------------ | -------------------------------------------- | -------------------- |
 | `index`      | <pre>String</pre>                            | Index name           |
 | `collection` | <pre>String</pre>                            | Collection name      |
-| `document`   | <pre>ConcurrentHashMap<String, Object></pre> | Document to validate |
+| `document`   | <pre>Map<String, Object></pre> | Document to validate |
 
 ## Returns
 
@@ -47,14 +47,14 @@ Returns a boolean value set to true if the document is valid and false otherwise
   fun validate(
       index: String,
       collection: String,
-      document: ConcurrentHashMap<String, Any?>): CompletableFuture<Boolean>
+      document: Map<String, Any?>): CompletableFuture<Boolean>
 ```
 
 | Argument     | Type                                         | Description          |
 | ------------ | -------------------------------------------- | -------------------- |
 | `index`      | <pre>String</pre>                            | Index name           |
 | `collection` | <pre>String</pre>                            | Collection name      |
-| `document`   | <pre>ConcurrentHashMap<String, Any?></pre> | Document to validate |
+| `document`   | <pre>Map<String, Any?></pre> | Document to validate |
 
 ## Returns
 

@@ -1,7 +1,7 @@
 import io.kuzzle.sdk.*;
 import io.kuzzle.sdk.protocol.WebSocket;
 
-import java.util.concurrent.ConcurrentHashMap;
+;
 
 public class SnippetTest {
   private static Kuzzle kuzzle;

@@ -1,9 +1,9 @@
-val content: ConcurrentHashMap<String, Any?> = ConcurrentHashMap<String, Any?>().apply {
-  put("_kuzzle_info", ConcurrentHashMap<String, Any?>().apply {
+val content: Map<String, Any?> = Map<String, Any?>().apply {
+  put("_kuzzle_info", Map<String, Any?>().apply {
     put("author", "<kuid>")
     put("createdAd", "1481816934209")
   });
 }
 
-val result: ConcurrentHashMap<String, Any?> = 
+val result: Map<String, Any?> =
 kuzzle.bulkController.write("nyc-open-data", "yellow-taxi", content).get();

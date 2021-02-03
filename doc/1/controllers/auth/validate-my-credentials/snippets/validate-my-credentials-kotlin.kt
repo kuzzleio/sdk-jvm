@@ -1,4 +1,4 @@
-val credentials = ConcurrentHashMap<String, Any?>().apply {
+val credentials = Map<String, Any?>().apply {
   put("username", "foo")
   put("password", "bar")
 }

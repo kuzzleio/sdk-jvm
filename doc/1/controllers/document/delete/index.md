@@ -17,13 +17,13 @@ Deletes a document.
 ## Arguments
 
 ```java
-public CompletableFuture<ConcurrentHashMap<String, Object>> delete(
+public CompletableFuture<Map<String, Object>> delete(
       String index,
       String collection,
       String id)
 throws NotConnectedException, InternalException
 
-public CompletableFuture<ConcurrentHashMap<String, Object>> delete(
+public CompletableFuture<Map<String, Object>> delete(
       String index,
       String collection,
       String id,
@@ -42,7 +42,7 @@ throws NotConnectedException, InternalException
 
 ## Return
 
-A `ConcurrentHashMap` which has the following property:
+A `Map` which has the following property:
 
 | Property     | Type                         | Description                      |
 |------------- |----------------------------- |--------------------------------- |
@@ -62,7 +62,7 @@ fun delete(
       index: String,
       collection: String,
       id: String?,
-      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>>
+      waitForRefresh: Boolean? = null): CompletableFuture<Map<String, Any?>>
 ```
 
 | Arguments          | Type                                         | Description                       |
@@ -76,7 +76,7 @@ fun delete(
 
 ## Return
 
-A `ConcurrentHashMap` which has the following property:
+A `Map` which has the following property:
 
 | Property     | Type                         | Description                      |
 |------------- |----------------------------- |--------------------------------- |

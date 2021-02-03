@@ -1,11 +1,11 @@
-val license: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>().apply {
+val license: Map<String, Any> = Map<String, Any>().apply {
   put("type", "symbol")
   put("mandatory", true)
 }
-val fields: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>().apply {
+val fields: Map<String, Any> = Map<String, Any>().apply {
   put("license", license)
 }
-val specifications: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>().apply {
+val specifications: Map<String, Any> = Map<String, Any>().apply {
   put("strict", false)
   put("fields", fields)
 }

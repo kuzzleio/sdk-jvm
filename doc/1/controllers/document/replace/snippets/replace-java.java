@@ -1,8 +1,8 @@
 
-  ConcurrentHashMap<String, Object> document = new ConcurrentHashMap<>();
+  Map<String, Object> document = new HashMap<>();
   document.put("firstname", "John");
 
-  ConcurrentHashMap<String, Object> result = kuzzle.getDocumentController().replace("nyc-open-data", "yellow-taxi", "some-id", document)
+  Map<String, Object> result = kuzzle.getDocumentController().replace("nyc-open-data", "yellow-taxi", "some-id", document)
   .get();
 
   /*

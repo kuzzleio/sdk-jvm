@@ -1,5 +1,5 @@
-val document: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
+val document: Map<String, Any?> =
+  Map<String, Any?>().apply {
     put("key", "value")
   }
 

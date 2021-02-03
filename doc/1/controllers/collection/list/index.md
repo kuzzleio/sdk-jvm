@@ -18,7 +18,7 @@ The returned list is sorted in alphanumerical order.
 ## Arguments
 
 ```java
-public CompletableFuture<ConcurrentHashMap<String, Object>> list(
+public CompletableFuture<Map<String, Object>> list(
       final String index) throws NotConnectedException, InternalException
 ```
 
@@ -29,7 +29,7 @@ public CompletableFuture<ConcurrentHashMap<String, Object>> list(
 
 ## Returns
 
-Returns a `ConcurrentHashMap<String, Object>` containing the following properties:
+Returns a `Map<String, Object>` containing the following properties:
 
 | Property      | Type                | Description                                                        |
 | ------------- | ------------------- | ------------------------------------------------------------------ |
@@ -55,7 +55,7 @@ Each object in the `collections` array contains the following properties:
 ## Arguments
 
 ```kotlin
-fun list(index: String): CompletableFuture<ConcurrentHashMap<String, Any?>>
+fun list(index: String): CompletableFuture<Map<String, Any?>>
 ```
 
 
@@ -65,7 +65,7 @@ fun list(index: String): CompletableFuture<ConcurrentHashMap<String, Any?>>
 
 ## Returns
 
-Returns a `ConcurrentHashMap<String, Any?>` containing the following properties:
+Returns a `Map<String, Any?>` containing the following properties:
 
 | Property      | Type                | Description                                                        |
 | ------------- | ------------------- | ------------------------------------------------------------------ |

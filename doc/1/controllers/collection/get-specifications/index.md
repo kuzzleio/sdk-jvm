@@ -17,7 +17,7 @@ Returns the validation specifications associated to the given index and collecti
 ## Arguments
 
 ```java
-  public CompletableFuture<ConcurrentHashMap<String, Object>> getSpecifications(
+  public CompletableFuture<Map<String, Object>> getSpecifications(
       final String index,
       final String collection)
 ```
@@ -31,7 +31,7 @@ Returns the validation specifications associated to the given index and collecti
 
 ## Returns
 
-Returns a `ConcurrentHashMap<String, Object>` representing the collection specifications.
+Returns a `Map<String, Object>` representing the collection specifications.
 
 ## Usage
 
@@ -46,7 +46,7 @@ Returns a `ConcurrentHashMap<String, Object>` representing the collection specif
 fun getSpecifications(
     index: String,
     collection: String
-  ): CompletableFuture<ConcurrentHashMap<String, Any?>>
+  ): CompletableFuture<Map<String, Any?>>
 ```
 
 | Arguments    | Type              | Description     |
@@ -56,7 +56,7 @@ fun getSpecifications(
 
 ## Returns
 
-Returns a `ConcurrentHashMap<String, Any?>` representing the collection specifications.
+Returns a `Map<String, Any?>` representing the collection specifications.
 
 ## Usage
 

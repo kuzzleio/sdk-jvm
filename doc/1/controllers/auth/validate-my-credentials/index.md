@@ -16,14 +16,14 @@ Validates the current user's credentials for the specified strategy. This method
 
 ```java
 CompletableFuture<Boolean> validateMyCredentials(final String strategy,
-  final ConcurrentHashMap<String, Object> credentials)
+  final Map<String, Object> credentials)
   throws NotConnectedException, InternalException
 ```
 
 | Argument      | Type               | Description                          |
 |---------------|--------------------|--------------------------------------|
 | `strategy`    | <pre>String</pre>  | Strategy to use                      |
-| `credentials` | <pre>ConcurrentHashMap<String, Object></pre> | A Hashmap representing the credentials |
+| `credentials` | <pre>Map<String, Object></pre> | A Hashmap representing the credentials |
 
 ## Return
 
@@ -40,13 +40,13 @@ A Boolean indicating if the credentials are valid.
 
 ```kotlin
 fun validateMyCredentials(strategy: String,
-  credentials: ConcurrentHashMap<String, Any?>): CompletableFuture<Boolean>
+  credentials: Map<String, Any?>): CompletableFuture<Boolean>
 ```
 
 | Argument      | Type               | Description                          |
 |---------------|--------------------|--------------------------------------|
 | `strategy`    | <pre>String</pre>  | Strategy to use                      |
-| `credentials` | <pre>ConcurrentHashMap<String, Any?></pre> | A Hashmap representing the credentials |
+| `credentials` | <pre>Map<String, Any?></pre> | A Hashmap representing the credentials |
 
 ## Return
 

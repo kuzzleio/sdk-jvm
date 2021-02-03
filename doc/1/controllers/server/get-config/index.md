@@ -17,12 +17,12 @@ This route should only be accessible to administrators, as it might return sensi
 ::: tab Java
 
 ```java
-CompletableFuture<ConcurrentHashMap<String, Object>> getConfig()
+CompletableFuture<Map<String, Object>> getConfig()
 ```
 
 ## Return
 
-Returns a `ConcurrentHashMap<String, Object>` containing server configuration.
+Returns a `Map<String, Object>` containing server configuration.
 
 ## Usage
 
@@ -31,12 +31,12 @@ Returns a `ConcurrentHashMap<String, Object>` containing server configuration.
 ::: tab Kotlin
 
 ```kotlin
-fun getConfig(): CompletableFuture<ConcurrentHashMap<String, Any?>>
+fun getConfig(): CompletableFuture<Map<String, Any?>>
 ```
 
 ## Return
 
-Returns a `ConcurrentHashMap<String, Any?>` containing server configuration.
+Returns a `Map<String, Any?>` containing server configuration.
 
 ## Usage
 

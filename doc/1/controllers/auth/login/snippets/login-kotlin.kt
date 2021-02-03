@@ -1,5 +1,5 @@
-val result: ConcurrentHashMap<String, Any?> =
-    kuzzle.authController.login("local", ConcurrentHashMap<String, Any?>().apply {
+val result: Map<String, Any?> =
+    kuzzle.authController.login("local", Map<String, Any?>().apply {
       put("username", "foo")
       put("password", "bar")
     }).get()

@@ -20,14 +20,14 @@ Kuzzle uses the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasti
 public CompletableFuture<Int> deleteByQuery(
   String index,
   String collection,
-  ConcurrentHashMap<String, Object> searchQuery,
+  Map<String, Object> searchQuery,
   Boolean waitForRefresh
 ) throws NotConnectedException, InternalException
 
 public CompletableFuture<Int> deleteByQuery(
   String index,
   String collection,
-  ConcurrentHashMap<String, Object> searchQuery
+  Map<String, Object> searchQuery
 ) throws NotConnectedException, InternalException
 ```
 
@@ -37,7 +37,7 @@ public CompletableFuture<Int> deleteByQuery(
 | ------------ | ------------------------------------ | --------------------------------------- |
 | `index`      | <pre>String</pre>        | Index name                              |
 | `collection` | <pre>String</pre>        | Collection name                         |
-| `searchQuery`      | <pre>ConcurrentHashMap<String, Any?></pre>        | JSON representing the query to match |
+| `searchQuery`      | <pre>Map<String, Any?></pre>        | JSON representing the query to match |
 | `waitForRefresh` | <pre>Bool</pre><br>(`false`)  | If set to true, Kuzzle will not respond until the delete documents are indexed |
 
 
@@ -58,7 +58,7 @@ An Int containing the number of deleted documents.
 fun deleteByQuery(
   index: String,
   collection: String,
-  searchQuery: ConcurrentHashMap<String, Any?>,
+  searchQuery: Map<String, Any?>,
   waitForRefresh: Boolean? = null
 ): CompletableFuture<Int>
 ```
@@ -69,7 +69,7 @@ fun deleteByQuery(
 | ------------ | ------------------------------------ | --------------------------------------- |
 | `index`      | <pre>String</pre>        | Index name                              |
 | `collection` | <pre>String</pre>        | Collection name                         |
-| `searchQuery`      | <pre>ConcurrentHashMap<String, Any?></pre>        | JSON representing the query to match |
+| `searchQuery`      | <pre>Map<String, Any?></pre>        | JSON representing the query to match |
 | `waitForRefresh` | <pre>Boolean</pre><br>(`false`)  | If set to true, Kuzzle will not respond until the delete documents are indexed |
 
 

@@ -1,7 +1,7 @@
 import io.kuzzle.sdk.*;
 import io.kuzzle.sdk.protocol.WebSocket;
 
-import java.util.concurrent.ConcurrentHashMap;
+;
 
 fun main() {
   // Creates a WebSocket connection.
@@ -18,10 +18,10 @@ fun main() {
 
   try {
     // Subscribes to notifications for drivers having a "B" driver license.
-    val equals: ConcurrentHashMap<String, Any?> = ConcurrentHashMap<String, Any?>().apply {
+    val equals: Map<String, Any?> = Map<String, Any?>().apply {
       put("license", "B")
     }
-    val filters: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>().apply {
+    val filters: Map<String, Any> = Map<String, Any>().apply {
       put("equals", equals)
     }
 
@@ -29,7 +29,7 @@ fun main() {
     kuzzle
         .realtimeController
         .subscribe("nyc-open-data", "yellow-taxi", filters) { notification ->
-          val content: ConcurrentHashMap<String, Any?> = notification.result as ConcurrentHashMap<String, Any?>
+          val content: Map<String, Any?> = notification.result as Map<String, Any?>
           println("New created document notification: " + content)  
           /*
             {
@@ -50,7 +50,7 @@ fun main() {
 
     // Writes a new document. This triggers a notification
     // sent to our subscription.
-    val content: ConcurrentHashMap<String, Any?> = ConcurrentHashMap<String, Any?>().apply {
+    val content: Map<String, Any?> = Map<String, Any?>().apply {
       put("name", "John")
       put("birthday", "1995-11-27")
       put("license", "B")

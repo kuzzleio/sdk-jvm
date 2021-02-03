@@ -39,25 +39,25 @@ You can restrict the scroll session maximum duration under the `services.storage
 public CompletableFuture<SearchResult> search(
       String index,
       String collection,
-      ConcurrentHashMap<String, Object> searchQuery) throws NotConnectedException, InternalException
+      Map<String, Object> searchQuery) throws NotConnectedException, InternalException
 
 public CompletableFuture<SearchResult> search(
       String index,
       String collection,
-      ConcurrentHashMap<String, Object> searchQuery,
+      Map<String, Object> searchQuery,
       String scroll) throws NotConnectedException, InternalException
 
 public CompletableFuture<SearchResult> search(
       String index,
       String collection,
-      ConcurrentHashMap<String, Object> searchQuery,
+      Map<String, Object> searchQuery,
       String scroll,
       Integer size) throws NotConnectedException, InternalException
 
 public CompletableFuture<SearchResult> search(
       String index,
       String collection,
-      ConcurrentHashMap<String, Object> searchQuery
+      Map<String, Object> searchQuery
       Integer size,
       Integer from)
 throws NotConnectedException, InternalException
@@ -67,7 +67,7 @@ throws NotConnectedException, InternalException
 | ------------------ | -------------------------------------------- | --------------------------------- |
 | `index`            | <pre>String</pre>                            | Index                             |
 | `collection`       | <pre>String</pre>                            | Collection                        |
-| `searchQuery`      | <pre>ConcurrentHashMap</pre>                 | Search query                      |
+| `searchQuery`      | <pre>Map</pre>                 | Search query                      |
 | `from`     | <pre>Integer</pre><br/>(`0`)    | Offset of the first document to fetch                                                                                                                                                                             |
 | `size`     | <pre>Integer</pre><br/>(`10`)   | Maximum number of documents to retrieve per page                                                                                                                                                                  |
 | `scroll`   | <pre>String</pre><br/>(`""`)    | When set, gets a forward-only cursor having its ttl set to the given value (ie `1s`; cf [elasticsearch time limits](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#time-units)) |
@@ -99,7 +99,7 @@ Returns a [SearchResult](/sdk/jvm/1/core-classes/search-result) object.
   fun search(
       index: String,
       collection: String,
-      searchQuery: ConcurrentHashMap<String?, Any?>,
+      searchQuery: Map<String?, Any?>,
       scroll: String? = null,
       size: Int? = null,
       from: Int = 0): CompletableFuture<SearchResult>
@@ -109,7 +109,7 @@ Returns a [SearchResult](/sdk/jvm/1/core-classes/search-result) object.
 | ------------------ | -------------------------------------------- | --------------------------------- |
 | `index`            | <pre>String</pre>                            | Index                             |
 | `collection`       | <pre>String</pre>                            | Collection                        |
-| `searchQuery`      | <pre>ConcurrentHashMap</pre>                 | Search query                      |
+| `searchQuery`      | <pre>Map</pre>                 | Search query                      |
 | `from`     | <pre>Int</pre><br/>(`0`)    | Offset of the first document to fetch                                                                                                                                                                             |
 | `size`     | <pre>Int</pre><br/>(`10`)   | Maximum number of documents to retrieve per page                                                                                                                                                                  |
 | `scroll`   | <pre>String</pre><br/>(`""`)    | When set, gets a forward-only cursor having its ttl set to the given value (ie `1s`; cf [elasticsearch time limits](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#time-units)) |
