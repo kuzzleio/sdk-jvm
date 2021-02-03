@@ -69,7 +69,7 @@ class WebSocketTests {
   @KtorExperimentalAPI
   @Test
   fun sendTest() {
-    val query = Map<String?, Any?>().apply {
+    val query = HashMap<String?, Any?>().apply {
       put("controller", "server")
       put("action", "now")
     }
