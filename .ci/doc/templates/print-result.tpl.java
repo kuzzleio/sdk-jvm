@@ -2,8 +2,6 @@ import io.kuzzle.sdk.Kuzzle;
 import io.kuzzle.sdk.protocol.WebSocket;
 import java.util.Date;
 import io.kuzzle.sdk.coreClasses.responses.Response;
-
-;
 import java.util.ArrayList;
 
 public class SnippetTest {
