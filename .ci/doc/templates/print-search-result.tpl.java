@@ -1,5 +1,5 @@
 import io.kuzzle.sdk.Kuzzle;
-import java.util.ArrayList;
+import java.util.*;
 import io.kuzzle.sdk.protocol.WebSocket;
 import io.kuzzle.sdk.coreClasses.responses.Response;
 import io.kuzzle.sdk.coreClasses.SearchResult;

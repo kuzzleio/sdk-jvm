@@ -2,6 +2,7 @@ import io.kuzzle.sdk.Kuzzle;
 import java.util.ArrayList;
 import io.kuzzle.sdk.protocol.WebSocket;
 import io.kuzzle.sdk.coreClasses.responses.Response;
+import java.util.*;
 
 public class SnippetTest {
   private static Kuzzle kuzzle;
