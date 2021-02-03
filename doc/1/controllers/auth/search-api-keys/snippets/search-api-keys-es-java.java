@@ -32,7 +32,8 @@ match.put("description", "LoRa");
 ConcurrentHashMap<String, Object> squery = new ConcurrentHashMap<>();
 squery.put("match", match);
 
-SearchResult results = kuzzle.getAuthController()
+SearchResult results = kuzzle
+  .getAuthController()
   .searchApiKeys(squery).get();
 
 String output = String.format("Found %d API keys matching 'LoRa'", results.total);

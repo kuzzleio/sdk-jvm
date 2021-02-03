@@ -1,4 +1,4 @@
-name: java-document#search
+name: java-document#search-koncorde
 description: Search for documents
 hooks:
   before: |

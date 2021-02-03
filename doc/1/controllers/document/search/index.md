@@ -28,6 +28,15 @@ It can lead to memory leaks if a scroll duration too great is provided, or if to
 You can restrict the scroll session maximum duration under the `services.storage.maxScrollDuration` configuration key.
 :::
 
+<SinceBadge version="change-me"/>
+
+This method also supports the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) to match documents by passing the `lang` argument with the value `koncorde`.  
+Koncorde filters will be translated into an Elasticsearch query.  
+
+::: warning
+Koncorde `bool` operator and `regexp` clauses are not supported for search queries.
+:::
+
 ---
 
 :::: tabs
@@ -51,15 +60,30 @@ public CompletableFuture<SearchResult> search(
       String index,
       String collection,
       ConcurrentHashMap<String, Object> searchQuery,
+      Lang lang) throws NotConnectedException, InternalException
+
+public CompletableFuture<SearchResult> search(
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery,
       String scroll,
-      Integer size) throws NotConnectedException, InternalException
+      Lang lang) throws NotConnectedException, InternalException
+
+public CompletableFuture<SearchResult> search(
+      String index,
+      String collection,
+      ConcurrentHashMap<String, Object> searchQuery,
+      String scroll,
+      Integer size,
+      Lang lang) throws NotConnectedException, InternalException
 
 public CompletableFuture<SearchResult> search(
       String index,
       String collection,
       ConcurrentHashMap<String, Object> searchQuery
       Integer size,
-      Integer from)
+      Integer from,
+      Lang lang)
 throws NotConnectedException, InternalException
 ```
  
@@ -71,11 +95,12 @@ throws NotConnectedException, InternalException
 | `from`     | <pre>Integer</pre><br/>(`0`)    | Offset of the first document to fetch                                                                                                                                                                             |
 | `size`     | <pre>Integer</pre><br/>(`10`)   | Maximum number of documents to retrieve per page                                                                                                                                                                  |
 | `scroll`   | <pre>String</pre><br/>(`""`)    | When set, gets a forward-only cursor having its ttl set to the given value (ie `1s`; cf [elasticsearch time limits](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#time-units)) |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
 ---
 
 ### searchQuery body properties:
 
-- `query`: the search query itself, using the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/query-dsl.html) syntax.
+- `query`: the search query itself, using the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/query-dsl.html) or the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
 - `aggregations`: control how the search results should be [aggregated](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/search-aggregations.html)
 - `sort`: contains a list of fields, used to [sort search results](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/search-request-sort.html), in order of importance.
 
@@ -87,7 +112,14 @@ Returns a [SearchResult](/sdk/jvm/1/core-classes/search-result) object.
 
 ## Usage
 
-<<< ./snippets/search-java.java
+With the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/query-dsl.html) syntax.
+
+<<< ./snippets/search-es-java.java
+
+With the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
+
+
+<<< ./snippets/search-koncorde-java.java
 
 :::
 ::: tab Kotlin
@@ -102,7 +134,8 @@ Returns a [SearchResult](/sdk/jvm/1/core-classes/search-result) object.
       searchQuery: ConcurrentHashMap<String?, Any?>,
       scroll: String? = null,
       size: Int? = null,
-      from: Int = 0): CompletableFuture<SearchResult>
+      from: Int = 0,
+      land: Lang = Lang.ELASTICSEARCH): CompletableFuture<SearchResult>
 ```
  
 | Arguments          | Type                                         | Description                       |
@@ -113,11 +146,12 @@ Returns a [SearchResult](/sdk/jvm/1/core-classes/search-result) object.
 | `from`     | <pre>Int</pre><br/>(`0`)    | Offset of the first document to fetch                                                                                                                                                                             |
 | `size`     | <pre>Int</pre><br/>(`10`)   | Maximum number of documents to retrieve per page                                                                                                                                                                  |
 | `scroll`   | <pre>String</pre><br/>(`""`)    | When set, gets a forward-only cursor having its ttl set to the given value (ie `1s`; cf [elasticsearch time limits](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#time-units)) |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
 ---
 
 ### searchQuery body properties:
 
-- `query`: the search query itself, using the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/query-dsl.html) syntax.
+- `query`: the search query itself, using the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/query-dsl.html) or the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
 - `aggregations`: control how the search results should be [aggregated](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/search-aggregations.html)
 - `sort`: contains a list of fields, used to [sort search results](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/search-request-sort.html), in order of importance.
 
@@ -129,7 +163,14 @@ Returns a [SearchResult](/sdk/jvm/1/core-classes/search-result) object.
 
 ## Usage
 
-<<< ./snippets/search-kotlin.kt
+With the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/query-dsl.html) syntax.
+
+<<< ./snippets/search-es-kotlin.kt
+
+With the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
+
+
+<<< ./snippets/search-koncorde-kotlin.kt
 
 :::
 ::::

@@ -27,7 +27,15 @@ public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> mUpdate(
       String index,
       String collection,
       ArrayList<ConcurrentHashMap<String, Object>> documents,
-      UpdateOptions options)
+      Boolean waitForRefresh)
+throws NotConnectedException, InternalException
+
+public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> mUpdate(
+      String index,
+      String collection,
+      ArrayList<ConcurrentHashMap<String, Object>> documents,
+      Boolean waitForRefresh,
+      Integer retryOnConflict)
 throws NotConnectedException, InternalException
 ```
 
@@ -36,8 +44,8 @@ throws NotConnectedException, InternalException
 | `index`            | <pre>String</pre>                                       | Index                             |
 | `collection`       | <pre>String</pre>                                       | Collection                        |
 | `documents`        | <pre>ArrayList<ConcurrentHashMap<String, Object>></pre> | ArrayList containing the documents to update |
-| `retryOnConflict`  | <pre>Integer</pre> (optional)                | The number of times the database layer should retry in case of version conflict |
 | `waitForRefresh`   | <pre>Boolean</pre> (optional)                | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing |
+| `retryOnConflict`  | <pre>Integer</pre> (optional)                | The number of times the database layer should retry in case of version conflict |
 
 ---
 
@@ -94,8 +102,8 @@ Each errored document is an object of the `errors` array with the following prop
 | `index`            | <pre>String</pre>                                       | Index                             |
 | `collection`       | <pre>String</pre>                                       | Collection                        |
 | `documents`        | <pre>ArrayList<ConcurrentHashMap<String, Any?>></pre> | ArrayList containing the documents to update |
-| `retryOnConflict`  | <pre>Int</pre> (optional)                | The number of times the database layer should retry in case of version conflict |
 | `waitForRefresh`   | <pre>Boolean</pre> (optional)                | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing |
+| `retryOnConflict`  | <pre>Int</pre> (optional)                | The number of times the database layer should retry in case of version conflict |
 
 ---
 

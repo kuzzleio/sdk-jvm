@@ -1,11 +1,11 @@
-name: java-document#deleteByQuery
-description: Delete documents matching query
+name: java-document#updateByQuery-koncorde
+description: Update documents matching query
 hooks:
   before: |
     curl -XDELETE kuzzle:7512/nyc-open-data
     curl -XPOST kuzzle:7512/nyc-open-data/_create
     curl -XPUT kuzzle:7512/nyc-open-data/yellow-taxi
-    for i in  1 2 3 4 5; do
+    for i in  1 2 ; do
       curl -H "Content-type: application/json" -d '{"capacity": 4}' kuzzle:7512/nyc-open-data/yellow-taxi/document_$i/_create
     done
     for i in  1 2 3 4 5; do
@@ -13,10 +13,7 @@ hooks:
     done
     curl -XPOST kuzzle:7512/nyc-open-data/_refresh
   after:
-template: print-result-arraylist
+template: print-result-array
 expected:
-  - "document_1"
-  - "document_2"
-  - "document_3"
-  - "document_4"
-  - "document_5"
+  - "id=document_1(.*)_version=2(.*)status=200"
+  - "id=document_2(.*)_version=2(.*)status=200"

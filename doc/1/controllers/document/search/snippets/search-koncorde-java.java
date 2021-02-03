@@ -1,13 +1,13 @@
 ConcurrentHashMap<String, Object> searchQuery = new ConcurrentHashMap<>();
 ConcurrentHashMap<String, Object> query = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> match = new ConcurrentHashMap<>();
-match.put("category", "suv");
-query.put("match", match);
+ConcurrentHashMap<String, Object> equals = new ConcurrentHashMap<>();
+equals.put("category", "suv");
+query.put("equals", equals);
 searchQuery.put("query", query);
 
 SearchResult results = kuzzle
     .getDocumentController()
-    .search("nyc-open-data", "yellow-taxi", searchQuery).get();
+    .search("nyc-open-data", "yellow-taxi", searchQuery, Lang.KONCORDE).get();
 
 
 /*
