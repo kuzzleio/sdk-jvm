@@ -1,6 +1,6 @@
 val filters: Map<String, Any> = HashMap<String, Any>().apply {
-  put("range", Map<String, Any>().apply {
-    put("age", Map<String, Any>().apply {
+  put("range",= HashMap<{
+    put("age",= HashMap<{
       put("lte", 20)
     })
   })
