@@ -5,7 +5,7 @@ val query: Map<String?, Any?> = HashMap<String?, Any?>().apply {
   put("collection", "yellow-taxi")
   put("_id", "my-custom-document-id")
   put("refresh", "wait_for")
-  put("body", Map<String?, Any?>().apply {
+  put("body", HashMap<String?, Any?>().apply {
     put("trip_distance", 4.23)
     put("passenger_count", 2)
   })
