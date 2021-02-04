@@ -56,7 +56,7 @@ Returns an Integer.
 fun count(
       index: String,
       collection: String,
-      searchQuery: Map<String, Any?> = Map<String, Any?>()): CompletableFuture<Int>
+      searchQuery: Map<String, Any?> = HashMap<String, Any?>()): CompletableFuture<Int>
 ```
 
 | Argument           | Type                                         | Description     |

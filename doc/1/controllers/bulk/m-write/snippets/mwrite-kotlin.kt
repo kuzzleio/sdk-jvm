@@ -1,7 +1,7 @@
 val documents: ArrayList<Map<String, Any?>> = ArrayList<Map<String, Any?>>().apply {
   add(HashMap<String, Any?>().apply {
     put("_id", "foo")
-    put("body", Map<String, Any?>())
+    put("body", HashMap<String, Any?>())
   })
 };
 
