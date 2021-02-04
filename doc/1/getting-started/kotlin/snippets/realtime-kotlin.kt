@@ -19,7 +19,7 @@ fun main() {
     val equals: Map<String, Any?> = HashMap<String, Any?>().apply {
       put("license", "B")
     }
-    val filters: Map<String, Any> = Map<String, Any>().apply {
+    val filters: Map<String, Any> = HashMap<String, Any>().apply {
       put("equals", equals)
     }
 

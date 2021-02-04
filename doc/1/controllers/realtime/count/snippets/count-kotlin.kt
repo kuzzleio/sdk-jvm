@@ -1,4 +1,4 @@
-val filters: Map<String, Any> = Map<String, Any>().apply {
+val filters: Map<String, Any> = HashMap<String, Any>().apply {
   put("exists", "name")
 }
 

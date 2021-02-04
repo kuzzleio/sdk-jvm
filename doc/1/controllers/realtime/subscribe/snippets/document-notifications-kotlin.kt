@@ -1,4 +1,4 @@
-val filters: Map<String, Any> = Map<String, Any>().apply {
+val filters: Map<String, Any> = HashMap<String, Any>().apply {
   put("exists", "name")
 }
 
@@ -13,10 +13,10 @@ val roomId: String = kuzzle.realtimeController.subscribe(
     }
   }.get()
 
-val document: Map<String, Any> = Map<String, Any>().apply {
+val document: Map<String, Any> = HashMap<String, Any>().apply {
   put("name", "nina-vkote")
 }
-val query: Map<String?, Any?> = Map<String?, Any?>().apply {
+val query: Map<String?, Any?> = HashMap<String?, Any?>().apply {
   put("controller", "document");
   put("action", "create");
   put("index", "nyc-open-data");

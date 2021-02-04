@@ -1,4 +1,4 @@
-val query: Map<String?, Any?> = Map<String?, Any?>().apply {
+val query: Map<String?, Any?> = HashMap<String?, Any?>().apply {
   put("controller", "document")
   put("action", "create")
   put("index", "nyc-open-data")

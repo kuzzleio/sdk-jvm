@@ -1,4 +1,4 @@
-val document: Map<String?, Any?> = Map<String?, Any?>().apply {
+val document: Map<String?, Any?> = HashMap<String?, Any?>().apply {
   put("name", "nina-vkote")
 }
 
