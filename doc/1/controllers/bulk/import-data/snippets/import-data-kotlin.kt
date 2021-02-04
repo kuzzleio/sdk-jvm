@@ -1,6 +1,6 @@
 val bulkData: ArrayList<Map<String, Any?>> = ArrayList<Map<String, Any?>>().apply {
   add(HashMap<String, Any?>().apply {
-    put("index", Map<String, Any?>());
+    put("index", HashMap<String, Any?>());
   });
   add(HashMap<String, Any?>().apply {
     put("a", "document");
