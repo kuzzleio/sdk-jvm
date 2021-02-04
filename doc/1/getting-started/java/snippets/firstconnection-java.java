@@ -1,5 +1,6 @@
 import io.kuzzle.sdk.*;
 import io.kuzzle.sdk.protocol.WebSocket;
+import java.util.*;
 
 public class SnippetTest {
   private static Kuzzle kuzzle;
