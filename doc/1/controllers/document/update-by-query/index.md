@@ -11,6 +11,15 @@ Updates documents matching the provided search query.
 
 Kuzzle uses the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/query-dsl.html) syntax.
 
+<SinceBadge version="change-me"/>
+
+This method also supports the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) to match documents by passing the `lang` argument with the value `koncorde`.  
+Koncorde filters will be translated into an Elasticsearch query.  
+
+::: warning
+Koncorde `bool` operator and `regexp` clauses are not supported for search queries.
+:::
+
 An empty or null query will match all documents in the collection.
 
 <br/>
@@ -57,8 +66,10 @@ public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> updateByQ
 | `collection`       | <pre>String</pre>                            | Collection name |
 | `searchQuery`      | <pre>ConcurrentHashMap<String, Object></pre> | Query to match  |
 | `changes`          | <pre>ConcurrentHashMap<String, Object></pre> | Partial changes to apply to the documents |
-| `waitForRefresh`   | <pre>Boolean</pre>                           | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
+| `waitForRefresh`   | <pre>Boolean</pre>                           | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing |
+| `retryOnConflict`  | <pre>Integer</pre> (optional)                | The number of times the database layer should retry in case of version conflict |
 | `source`           | <pre>Boolean</pre>                           | If true, returns the updated document inside the response |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
 
 ---
 
@@ -84,7 +95,14 @@ Each errored document is an object of the `errors` array with the following prop
 
 ## Usage
 
-<<< ./snippets/update-by-query-java.java
+With the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/query-dsl.html) syntax.
+
+<<< ./snippets/update-by-query-es-java.java
+
+With the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
+
+
+<<< ./snippets/update-by-query-koncorde-java.java
 
 :::
 ::: tab Kotlin
@@ -107,7 +125,9 @@ fun updateByQuery(
 | `searchQuery`      | <pre>ConcurrentHashMap<String, Any?></pre> | Query to match  |
 | `changes`          | <pre>ConcurrentHashMap<String, Any?></pre> | Partial changes to apply to the documents |
 | `waitForRefresh`   | <pre>Boolean</pre>                           | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
+| `retryOnConflict`  | <pre>Int</pre> (optional)                | The number of times the database layer should retry in case of version conflict |
 | `source`           | <pre>Boolean</pre>                           | If true, returns the updated document inside the response |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
 
 ---
 
@@ -133,7 +153,14 @@ Each errored document is an object of the `errors` array with the following prop
 
 ## Usage
 
-<<< ./snippets/update-by-query-kotlin.kt
+With the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/query-dsl.html) syntax.
+
+<<< ./snippets/update-by-query-es-kotlin.kt
+
+With the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
+
+
+<<< ./snippets/update-by-query-koncorde-kotlin.kt
 
 :::
 ::::

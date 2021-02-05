@@ -11,6 +11,7 @@ class SearchResult {
     private var scroll: String? = null
     private var from: Int = 0
     private var size: Int? = null
+    private var lang: String? = "elasticsearch"
     private var request: ConcurrentHashMap<String?, Any?>? = null
     private val scrollAction = "scroll"
     private var kuzzle: Kuzzle? = null
@@ -31,6 +32,7 @@ class SearchResult {
         scroll: String? = null,
         from: Int = 0,
         size: Int? = null,
+        lang: String? = null,
         response: Response,
         previouslyFetched: Int? = null
     ) {
@@ -39,6 +41,7 @@ class SearchResult {
         this.scroll = scroll
         this.from = from
         this.size = size
+        this.lang = lang
         this.request = request
         this.aggregations = (_response["result"] as ConcurrentHashMap<*, *>)["aggregations"] as ConcurrentHashMap<String, Any>?
         this.hits = (_response["result"] as ConcurrentHashMap<*, *>)["hits"] as ArrayList<ConcurrentHashMap<String, Any>>
@@ -98,7 +101,7 @@ class SearchResult {
         val request: ConcurrentHashMap<String?, Any?> = nextRequest
         return kuzzle!!.query(nextRequest)
             .thenApplyAsync(
-                Function { response: Response -> SearchResult(kuzzle, request, scroll, from, size, response, fetched) }
+                Function { response: Response -> SearchResult(kuzzle, request, scroll, from, size, lang, response, fetched) }
             )
     }
 }

@@ -1,5 +1,5 @@
-name: java-auth#searchApiKeys
-description: Searches API keys for the currently loggued user.
+name: java-auth#searchApiKeys-koncorde
+description: Searches API keys for the currently logged user.
 hooks:
   before: >
     curl --fail -H "Content-type: application/json" -d '{
@@ -17,4 +17,4 @@ hooks:
     curl -XDELETE kuzzle:7512/users/jared.doe
 template: default
 expected:
-  - Found 2 API keys matching 'LoRa'
+  - Found 1 API key
