@@ -1,20 +1,20 @@
-val plate: ConcurrentHashMap<String, Any?> =
-ConcurrentHashMap<String, Any?>().apply{
+val plate: Map<String, Any?> =
+HashMap<String, Any?>().apply{
   put("type", "keyword")
 }
 
-val _meta: ConcurrentHashMap<String, Any?> =
-ConcurrentHashMap<String, Any?>().apply{
+val _meta: Map<String, Any?> =
+HashMap<String, Any?>().apply{
   put("area", "Panipokhari")
 }
 
-val properties: ConcurrentHashMap<String, Any?> =
-ConcurrentHashMap<String, Any?>().apply{
+val properties: Map<String, Any?> =
+HashMap<String, Any?>().apply{
   put("plate", plate)
 }
 
-val definition: ConcurrentHashMap<String, Any?> =
-ConcurrentHashMap<String, Any?>().apply{
+val definition: Map<String, Any?> =
+HashMap<String, Any?>().apply{
   put("dynamic", false)
   put("_meta", _meta)
   put("properties", properties)

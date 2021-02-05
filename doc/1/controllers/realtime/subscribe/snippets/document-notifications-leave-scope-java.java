@@ -1,6 +1,6 @@
-ConcurrentHashMap<String, Object> filters = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> range = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> age = new ConcurrentHashMap<>();
+Map<String, Object> filters = new HashMap<>();
+Map<String, Object> range = new HashMap<>();
+Map<String, Object> age = new HashMap<>();
 
 age.put("lte", 20);
 range.put("age", age);
@@ -20,9 +20,9 @@ kuzzle.getRealtimeController().subscribe(
     }
   }).get();
 
-ConcurrentHashMap document = new ConcurrentHashMap<>();
+Map document = new HashMap<>();
 document.put("age", 19);
-ConcurrentHashMap<String, Object> query = new ConcurrentHashMap<>();
+Map<String, Object> query = new HashMap<>();
 query.put("controller", "document");
 query.put("action", "create");
 query.put("index", "nyc-open-data");

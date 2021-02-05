@@ -18,18 +18,18 @@ Subscribes by providing a set of filters: messages, document changes and, option
 public CompletableFuture<String> subscribe(
   String index, 
   String collection, 
-  ConcurrentHashMap<String, Object> filters,
+  Map<String, Object> filters,
   String scope,
   String users,
   boolean subscribeToSelf,
-  ConcurrentHashMap<String, Object> volatiles,
+  Map<String, Object> volatiles,
   NotificationHandler handler, 
 ) throws NotConnectedException, InternalException
 
 public CompletableFuture<String> subscribe(
   String index, 
   String collection, 
-  ConcurrentHashMap<String, Object> filters,
+  Map<String, Object> filters,
   String scope,
   String users,
   boolean subscribeToSelf,
@@ -39,7 +39,7 @@ public CompletableFuture<String> subscribe(
 public CompletableFuture<String> subscribe(
   String index, 
   String collection, 
-  ConcurrentHashMap<String, Object> filters,
+  Map<String, Object> filters,
   String scope,
   String users,
   NotificationHandler handler, 
@@ -48,7 +48,7 @@ public CompletableFuture<String> subscribe(
 public CompletableFuture<String> subscribe(
   String index, 
   String collection, 
-  ConcurrentHashMap<String, Object> filters,
+  Map<String, Object> filters,
   String scope,
   NotificationHandler handler, 
 ) throws NotConnectedException, InternalException
@@ -56,7 +56,7 @@ public CompletableFuture<String> subscribe(
 public CompletableFuture<String> subscribe(
   String index, 
   String collection, 
-  ConcurrentHashMap<String, Object> filters,
+  Map<String, Object> filters,
   NotificationHandler handler, 
 ) throws NotConnectedException, InternalException
 ```
@@ -65,12 +65,12 @@ public CompletableFuture<String> subscribe(
 |--------------|-----------------------------------------|----------------------------------------------------------------------------------------------------------------|
 | `index`      | <pre>String</pre>                       | Index name                                                                                                     |
 | `collection` | <pre>String</pre>                       | Collection name                                                                                                |
-| `filters`    | <pre>ConcurrentHashMap<String, Object></pre>                      | ConcurrentHashMap representing a set of filters following [Koncorde syntax](/core/2/api/koncorde-filters-syntax) |
+| `filters`    | <pre>Map<String, Object></pre>                      | Map representing a set of filters following [Koncorde syntax](/core/2/api/koncorde-filters-syntax) |
 | `handler`   | <pre>NotificationHandler</pre>          | Handler function to handle notifications                                                                      |
 | `scope`    | <pre>String</pre><br>(`all`) | Subscribes to document entering or leaving the scope<br>Possible values: all, in, out, none |
 | `users`    | <pre>String</pre><br>(`none`) | Subscribes to users entering or leaving the room<br>Possible values: all, in, out, none |
 | `subscribeToSelf`    | <pre>boolean</pre><br>(`true`) | Subscribes to notifications fired by our own queries |
-| `volatile`    | <pre>ConcurrentHashMap<String, Object></pre><br>(`{}`) | ConcurrentHashMap representing subscription information, used in user join/leave notifications |
+| `volatile`    | <pre>Map<String, Object></pre><br>(`{}`) | Map representing subscription information, used in user join/leave notifications |
 
 ### handler
 
@@ -100,11 +100,11 @@ Subscription to document notifications with scope option_
 fun subscribe(
   index: String?,
   collection: String?,
-  filters: ConcurrentHashMap<String, Any>,
+  filters: Map<String, Any>,
   scope: String = "all",
   users: String = "all",
   subscribeToSelf: Boolean = true,
-  volatiles: ConcurrentHashMap<String?, Any?> = ConcurrentHashMap(),
+  volatiles: Map<String?, Any?> = HashMap(),
   handler: (Response) -> Unit): CompletableFuture<String>
 ```
 
@@ -112,12 +112,12 @@ fun subscribe(
 |--------------|-----------------------------------------|----------------------------------------------------------------------------------------------------------------|
 | `index`      | <pre>String</pre>                       | Index name                                                                                                     |
 | `collection` | <pre>String</pre>                       | Collection name                                                                                                |
-| `filters`    | <pre>ConcurrentHashMap<String, Object></pre>                      | ConcurrentHashMap representing a set of filters following [Koncorde syntax](/core/2/api/koncorde-filters-syntax) |
+| `filters`    | <pre>Map<String, Object></pre>                      | Map representing a set of filters following [Koncorde syntax](/core/2/api/koncorde-filters-syntax) |
 | `handler`   | <pre>NotificationHandler</pre>          | Handler function to handle notifications                                                                      |
 | `scope`    | <pre>String</pre><br>(`all`) | Subscribes to document entering or leaving the scope<br>Possible values: all, in, out, none |
 | `users`    | <pre>String</pre><br>(`none`) | Subscribes to users entering or leaving the room<br>Possible values: all, in, out, none |
 | `subscribeToSelf`    | <pre>boolean</pre><br>(`true`) | Subscribes to notifications fired by our own queries |
-| `volatile`    | <pre>ConcurrentHashMap<String, Object></pre><br>(`{}`) | ConcurrentHashMap representing subscription information, used in user join/leave notifications |
+| `volatile`    | <pre>Map<String, Object></pre><br>(`{}`) | Map representing subscription information, used in user join/leave notifications |
 
 ### handler
 

@@ -1,39 +1,39 @@
-val bulkData: ArrayList<ConcurrentHashMap<String, Any?>> = ArrayList<ConcurrentHashMap<String, Any?>>().apply {
-  add(ConcurrentHashMap<String, Any?>().apply {
-    put("index", ConcurrentHashMap<String, Any?>());
+val bulkData: ArrayList<Map<String, Any?>> = ArrayList<Map<String, Any?>>().apply {
+  add(HashMap<String, Any?>().apply {
+    put("index", HashMap<String, Any?>());
   });
-  add(ConcurrentHashMap<String, Any?>().apply {
+  add(HashMap<String, Any?>().apply {
     put("a", "document");
     put("with", "any");
     put("number", "of fields");
   });
-  add(ConcurrentHashMap<String, Any?>().apply {
+  add(HashMap<String, Any?>().apply {
     put("create", 
-      ConcurrentHashMap<String, Any?>().apply {
+      HashMap<String, Any?>().apply {
         put("_id", "uniq-id-1");
       }
     );
   });
-  add(ConcurrentHashMap<String, Any?>().apply {
+  add(HashMap<String, Any?>().apply {
     put("another", "document");
   });
-  add(ConcurrentHashMap<String, Any?>().apply {
+  add(HashMap<String, Any?>().apply {
     put("create", 
-      ConcurrentHashMap<String, Any?>().apply {
+      HashMap<String, Any?>().apply {
         put("_id", "uniq-id-2");
       }
     );
   });
-  add(ConcurrentHashMap<String, Any?>().apply {
+  add(HashMap<String, Any?>().apply {
     put("and", 
-      ConcurrentHashMap<String, Any?>().apply {
+      HashMap<String, Any?>().apply {
         put("another", "one");
       }
     );
   });
 };
 
-val result: ConcurrentHashMap<String, Any?> =
+val result: Map<String, Any?> =
   kuzzle.bulkController.importData(
     "nyc-open-data",
     "yellow-taxi",

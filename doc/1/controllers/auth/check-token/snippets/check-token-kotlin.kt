@@ -1,7 +1,7 @@
-val response = kuzzle.authController.login("local", ConcurrentHashMap<String, Any?>().apply {
+val response = kuzzle.authController.login("local", HashMap<String, Any?>().apply {
   put("username", "foo")
   put("password", "bar")
 }).get()
 
-val responseToken: ConcurrentHashMap<String, Any?> =
+val responseToken: Map<String, Any?> =
   kuzzle.authController.checkToken(response["jwt"].toString()).get()

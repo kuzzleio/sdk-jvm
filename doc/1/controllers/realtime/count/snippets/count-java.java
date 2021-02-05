@@ -1,4 +1,4 @@
-ConcurrentHashMap<String, Object> filters = new ConcurrentHashMap<>();
+Map<String, Object> filters = new HashMap<>();
 filters.put("exists", "name");
 
 final String roomId = kuzzle.getRealtimeController().subscribe(

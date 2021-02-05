@@ -1,11 +1,11 @@
-ConcurrentHashMap<String, Object> credentials = new ConcurrentHashMap<>();
+Map<String, Object> credentials = new HashMap<>();
 credentials.put("username", "foo");
 credentials.put("password", "bar");
 
 kuzzle.getAuthController().login("local", credentials).get();
 
-ConcurrentHashMap<String, Object> custom = new ConcurrentHashMap<>();
+Map<String, Object> custom = new HashMap<>();
 custom.put("age", 42);
 
-ConcurrentHashMap<String, Object> result = 
+Map<String, Object> result =
   kuzzle.getAuthController().updateSelf(custom).get();

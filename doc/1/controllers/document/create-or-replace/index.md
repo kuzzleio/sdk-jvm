@@ -17,18 +17,18 @@ Creates a new document in the persistent data storage, or replaces its content i
 ## Arguments
 
 ```java
-public CompletableFuture<ConcurrentHashMap<String, Object>> createOrReplace(
+public CompletableFuture<Map<String, Object>> createOrReplace(
       String index,
       String collection,
       String id,
-      ConcurrentHashMap<String, Object> document)
+      Map<String, Object> document)
 throws NotConnectedException, InternalException
 
-public CompletableFuture<ConcurrentHashMap<String, Object>> createOrReplace(
+public CompletableFuture<Map<String, Object>> createOrReplace(
       String index,
       String collection,
       String id,
-      ConcurrentHashMap<String, Object> document,
+      Map<String, Object> document,
       Boolean waitForRefresh)
 throws NotConnectedException, InternalException
 ```
@@ -38,18 +38,18 @@ throws NotConnectedException, InternalException
 | `index`            | <pre>String</pre>                            | Index                             |
 | `collection`       | <pre>String</pre>                            | Collection                        |
 | `id`               | <pre>String</pre>                            | Document ID                       |
-| `document`         | <pre>ConcurrentHashMap<String, Object></pre> | Document content                  |
+| `document`         | <pre>Map<String, Object></pre> | Document content                  |
 | `waitForRefresh`   | <pre>Boolean</pre>                           | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
 
 ---
 
 ## Return
 
-A `ConcurrentHashMap` which has the following properties:
+A `Map` which has the following properties:
 
 | Property     | Type                         | Description                      |
 |------------- |----------------------------- |--------------------------------- |
-| `_source`    | <pre>ConcurrentHashMap</pre> | Document content                 |
+| `_source`    | <pre>Map</pre> | Document content                 |
 | `_id`        | <pre>String</pre>            | ID of the document                       |
 | `_version`   | <pre>Integer</pre>           | Version of the document in the persistent data storage |
 
@@ -67,8 +67,8 @@ fun createOrReplace(
   index: String,
   collection: String,
   id: String,
-  document: ConcurrentHashMap<String, Any?>,
-  waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>>
+  document: Map<String, Any?>,
+  waitForRefresh: Boolean? = null): CompletableFuture<Map<String, Any?>>
 ```
 
 | Arguments          | Type                                         | Description                       |
@@ -76,18 +76,18 @@ fun createOrReplace(
 | `index`            | <pre>String</pre>                            | Index                             |
 | `collection`       | <pre>String</pre>                            | Collection                        |
 | `id`               | <pre>String</pre>                            | Document ID                       |
-| `document`         | <pre>ConcurrentHashMap<String, Any?></pre> | Document content                  |
+| `document`         | <pre>Map<String, Any?></pre> | Document content                  |
 | `waitForRefresh`   | <pre>Boolean</pre><br>(`null`)               | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
 
 ---
 
 ## Return
 
-A `ConcurrentHashMap` which has the following properties:
+A `Map` which has the following properties:
 
 | Property     | Type                         | Description                      |
 |------------- |----------------------------- |--------------------------------- |
-| `_source`    | <pre>ConcurrentHashMap</pre> | Document content                 |
+| `_source`    | <pre>Map</pre> | Document content                 |
 | `_id`        | <pre>String</pre>            | ID of the document                       |
 | `_version`   | <pre>Int</pre>           | Version of the document in the persistent data storage |
 

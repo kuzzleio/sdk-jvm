@@ -29,20 +29,20 @@ import io.kuzzle.sdk.coreClasses.SearchResult;
 
 | Property       | Type                                                    | Description        |
 | -------------- | ------------------------------------------------------- | ------------------ |
-| `aggregations` | <pre>ConcurrentHashMap<String, Object></pre>            | Search aggregations (can be undefined) |
-| `hits`         | <pre>ArrayList<ConcurrentHashMap<String, Object>></pre> | Page results       |
+| `aggregations` | <pre>Map<String, Object></pre>            | Search aggregations (can be undefined) |
+| `hits`         | <pre>ArrayList<Map<String, Object>></pre> | Page results       |
 | `total`        | <pre>Integer</pre>                                      |  Total number of items that _can_ be retrieved |
 | `fetched`      | <pre>Integer</pre>                                      | Number of retrieved items so far   |
 
 ### hits
 
-Each element of the `hits` ArrayList is a `ConcurrentHashMap<String, Object>` containing the following properties:
+Each element of the `hits` ArrayList is a `Map<String, Object>` containing the following properties:
 
 | Property  | Type               | Description            |
 | --------- | ------------------ | ---------------------- |
 | `_id`     | <pre>String</pre>  | Document ID            |
 | `_score`  | <pre>Integer</pre> | [Relevance score](https://www.elastic.co/guide/en/elasticsearch/guide/current/relevance-intro.html) |
-| `_source` | <pre>ConcurrentHashMap<String, Object></pre> | Document content |
+| `_source` | <pre>Map<String, Object></pre> | Document content |
 
 
 :::
@@ -59,20 +59,20 @@ import io.kuzzle.sdk.coreClasses.SearchResult;
 
 | Property       | Type                                                    | Description        |
 | -------------- | ------------------------------------------------------- | ------------------ |
-| `aggregations` | <pre>ConcurrentHashMap<String, Any></pre>            | Search aggregations (can be undefined) |
-| `hits`         | <pre>ArrayList<ConcurrentHashMap<String, Any>></pre> | Page results       |
+| `aggregations` | <pre>Map<String, Any></pre>            | Search aggregations (can be undefined) |
+| `hits`         | <pre>ArrayList<Map<String, Any>></pre> | Page results       |
 | `total`        | <pre>Int</pre>                                      |  Total number of items that _can_ be retrieved |
 | `fetched`      | <pre>Int</pre>                                      | Number of retrieved items so far   |
 
 ### hits
 
-Each element of the `hits` ArrayList is a `ConcurrentHashMap<String, Object>` containing the following properties:
+Each element of the `hits` ArrayList is a `Map<String, Object>` containing the following properties:
 
 | Property  | Type               | Description            |
 | --------- | ------------------ | ---------------------- |
 | `_id`     | <pre>String</pre>  | Document ID            |
 | `_score`  | <pre>Int</pre> | [Relevance score](https://www.elastic.co/guide/en/elasticsearch/guide/current/relevance-intro.html) |
-| `_source` | <pre>ConcurrentHashMap<String, Any?></pre> | Document content |
+| `_source` | <pre>Map<String, Any?></pre> | Document content |
 
 :::
 ::::

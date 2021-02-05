@@ -1,7 +1,7 @@
-ConcurrentHashMap<String, Object> definition = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> mappings = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> properties = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> license = new ConcurrentHashMap<>();
+Map<String, Object> definition = new HashMap<>();
+Map<String, Object> mappings = new HashMap<>();
+Map<String, Object> properties = new HashMap<>();
+Map<String, Object> license = new HashMap<>();
 
 license.put("type", "keyword");
 properties.put("license", license);

@@ -21,12 +21,12 @@ These statistics include:
 ::: tab Java
 
 ```java
-CompletableFuture<ConcurrentHashMap<String, Object>> getAllStats()
+CompletableFuture<Map<String, Object>> getAllStats()
 ```
 
 ## Return
 
-Returns a `ConcurrentHashMap<String, Object>` containing all stored internal statistic snapshots.
+Returns a `Map<String, Object>` containing all stored internal statistic snapshots.
 
 ## Usage
 
@@ -35,12 +35,12 @@ Returns a `ConcurrentHashMap<String, Object>` containing all stored internal sta
 ::: tab Kotlin
 
 ```kotlin
-fun getAllStats(): CompletableFuture<ConcurrentHashMap<String, Any?>>
+fun getAllStats(): CompletableFuture<Map<String, Any?>>
 ```
 
 ## Return
 
-Returns a `ConcurrentHashMap<String, Any?>` containing all stored internal statistic snapshots.
+Returns a `Map<String, Any?>` containing all stored internal statistic snapshots.
 
 ## Usage
 

@@ -24,10 +24,10 @@ You can also provide Elasticsearch [index settings](https://www.elastic.co/guide
 ## Arguments
 
 ```java
-public CompletableFuture<ConcurrentHashMap<String, Object>> update(
+public CompletableFuture<Map<String, Object>> update(
       final String index,
       final String collection,
-      final ConcurrentHashMap<String, Object> definition)
+      final Map<String, Object> definition)
 
 ```
 
@@ -37,7 +37,7 @@ public CompletableFuture<ConcurrentHashMap<String, Object>> update(
 |--------------|-------------------|-------------------------------------------------------------|
 | `index`      | <pre>String</pre> | Index name                                                  |
 | `collection` | <pre>String</pre> | Collection name                                             |
-| `definition` | <pre>ConcurrentHashMap<String, Object></pre> | Describes the collection mappings and the ES index settings |
+| `definition` | <pre>Map<String, Object></pre> | Describes the collection mappings and the ES index settings |
 
 ### definition
 
@@ -77,7 +77,7 @@ An object containing:
 fun update(
     index: String,
     collection: String,
-    definition: ConcurrentHashMap<String, Any?>
+    definition: Map<String, Any?>
   ): CompletableFuture<Void>
 ```
 
@@ -87,7 +87,7 @@ fun update(
 |--------------|-------------------|-------------------------------------------------------------|
 | `index`      | <pre>String</pre> | Index name                                                  |
 | `collection` | <pre>String</pre> | Collection name                                             |
-| `definition` | <pre>ConcurrentHashMap<String, Any?></pre> | Describes the collection mappings and the ES index settings |
+| `definition` | <pre>Map<String, Any?></pre> | Describes the collection mappings and the ES index settings |
 
 ### definition
 

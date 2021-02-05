@@ -26,22 +26,22 @@ When processing a large number of items (i.e. more than 1000), it is advised to 
 
 ```java
 public CompletableFuture<SearchResult> searchSpecifications(
-      ConcurrentHashMap<String, Object> searchQuery,
+      Map<String, Object> searchQuery,
       String scroll,
       Integer from,
       Integer size) throws NotConnectedException, InternalException
 
 public CompletableFuture<SearchResult> searchSpecifications(
-      ConcurrentHashMap<String, Object> searchQuery,
+      Map<String, Object> searchQuery,
       String scroll,
       Integer from) throws NotConnectedException, InternalException
 
 public CompletableFuture<SearchResult> searchSpecifications(
-      ConcurrentHashMap<String, Object> searchQuery,
+      Map<String, Object> searchQuery,
       String scroll) throws NotConnectedException, InternalException
 
 public CompletableFuture<SearchResult> searchSpecifications(
-      ConcurrentHashMap<String, Object> searchQuery)
+      Map<String, Object> searchQuery)
 throws NotConnectedException, InternalException
 ```
 
@@ -49,7 +49,7 @@ throws NotConnectedException, InternalException
 
 | Arguments | Type              | Description                           |
 | --------- | ----------------- | ------------------------------------- |
-| `searchQuery`    | <pre>ConcurrentHashMap<String, Object></pre> | An object containing the search query |
+| `searchQuery`    | <pre>Map<String, Object></pre> | An object containing the search query |
 | `from`     | <pre>Integer</pre><br/>(`0`)    | Offset of the first document to fetch                                                                                                                                                                             |
 | `size`     | <pre>Integer</pre><br/>(`10`)   | Maximum number of documents to retrieve per page                                                                                                                                                                  |
 | `scroll`   | <pre>String</pre><br/>(`""`)    | When set, gets a forward-only cursor having its ttl set to the given value (e.g. `1s`; see [elasticsearch time limits](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/common-options.html#time-units)) |
@@ -77,7 +77,7 @@ Returns a [SearchResult](/sdk/jvm/1/core-classes/search-result) object.
 
 ```kotlin
 fun searchSpecifications(
-    searchQuery: ConcurrentHashMap<String, Any?>,
+    searchQuery: Map<String, Any?>,
     scroll: String? = null,
     from: Int = 0,
     size: Int? = null
@@ -88,7 +88,7 @@ fun searchSpecifications(
 
 | Arguments | Type              | Description                           |
 | --------- | ----------------- | ------------------------------------- |
-| `searchQuery`    | <pre>ConcurrentHashMap<String, Any?></pre> | An object containing the search query |
+| `searchQuery`    | <pre>Map<String, Any?></pre> | An object containing the search query |
 | `from`     | <pre>Int</pre><br/>(`0`)    | Offset of the first document to fetch                                                                                                                                                                             |
 | `size`     | <pre>Int</pre><br/>(`10`)   | Maximum number of documents to retrieve per page                                                                                                                                                                  |
 | `scroll`   | <pre>String</pre><br/>(`""`)    | When set, gets a forward-only cursor having its ttl set to the given value (ie `1s`; cf [elasticsearch time limits](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/common-options.html#time-units)) |

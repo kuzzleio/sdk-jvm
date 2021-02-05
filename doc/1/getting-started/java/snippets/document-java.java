@@ -1,7 +1,6 @@
 import io.kuzzle.sdk.*;
 import io.kuzzle.sdk.protocol.WebSocket;
-
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.*;
 
 public class SnippetTest {
   private static Kuzzle kuzzle;
@@ -25,7 +24,7 @@ public class SnippetTest {
     }
 
     // New document content
-    ConcurrentHashMap<String, Object> content = new ConcurrentHashMap<>();
+    Map<String, Object> content = new HashMap<>();
     content.put("name", "John");
     content.put("birthday", "1995-11-27");
     content.put("license", "B");

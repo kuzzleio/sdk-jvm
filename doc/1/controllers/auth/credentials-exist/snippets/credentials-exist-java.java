@@ -1,4 +1,4 @@
-ConcurrentHashMap<String, Object> credentials = new ConcurrentHashMap<>();
+Map<String, Object> credentials = new HashMap<>();
 credentials.put("username", "foo");
 credentials.put("password", "bar");
 

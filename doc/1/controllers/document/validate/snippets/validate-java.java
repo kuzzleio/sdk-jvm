@@ -1,4 +1,4 @@
-  ConcurrentHashMap<String, Object> document = new ConcurrentHashMap<>();
+  Map<String, Object> document = new HashMap<>();
   document.put("key", "value");
 
   Boolean result = kuzzle

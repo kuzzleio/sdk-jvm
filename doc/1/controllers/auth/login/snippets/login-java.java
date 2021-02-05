@@ -1,6 +1,6 @@
-ConcurrentHashMap<String, Object> credentials = new ConcurrentHashMap<>();
+Map<String, Object> credentials = new HashMap<>();
   credentials.put("username", "foo");
   credentials.put("password", "bar");
 
-ConcurrentHashMap<String, Object> result = 
+Map<String, Object> result =
   kuzzle.getAuthController().login("local", credentials).get();

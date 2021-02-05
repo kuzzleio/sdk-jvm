@@ -17,10 +17,10 @@ This route is faster than the `document:m*` routes family (e.g. [document:mCreat
 ## Arguments
 
 ```java
-public CompletableFuture<ConcurrentHashMap<String, Object>> importData(
+public CompletableFuture<Map<String, Object>> importData(
     String index,
     String collection,
-    ArrayList<ConcurrentHashMap<String, Object>> bulkData
+    ArrayList<Map<String, Object>> bulkData
 ) throws NotConnectedException, InternalException
 ```
 
@@ -28,7 +28,7 @@ public CompletableFuture<ConcurrentHashMap<String, Object>> importData(
 |--------------|-------------------|--------------------------------------------------------------|
 | `index`      | <pre>String</pre> | Index name                                                   |
 | `collection` | <pre>String</pre> | Collection name                                              |
-| `bulkData`   | <pre>ArrayList<ConcurrentHashMap<String, Object>></pre> | Bulk operations to perform, following ElasticSearch Bulk API |
+| `bulkData`   | <pre>ArrayList<Map<String, Object>></pre> | Bulk operations to perform, following ElasticSearch Bulk API |
 
 ### bulkData
 
@@ -55,12 +55,12 @@ Learn more at [Elasticsearch Bulk API](https://www.elastic.co/guide/en/elasticse
 
 ## Return
 
-A ConcurrentHashMap<String, Any?> containing 2 arrays:
+A Map<String, Any?> containing 2 arrays:
 
 | Property | Type                | Description                                         |
 | -------- | ------------------- | --------------------------------------------------- |
-| `successes`  | <pre>ArrayList<ConcurrentHashMap<String, Object>></pre> | Array of object containing successful document import |
-| `errors` | <pre>ArrayList<ConcurrentHashMap<String, Object>></pre>  | Array of object containing failed document import     |
+| `successes`  | <pre>ArrayList<Map<String, Object>></pre> | Array of object containing successful document import |
+| `errors` | <pre>ArrayList<Map<String, Object>></pre>  | Array of object containing failed document import     |
 
 Each item of the `successes` array is an object containing the action name as key and the corresponding object contain the following properties:
 
@@ -75,7 +75,7 @@ Each item of the `errors` array is an object containing the action name as key a
 | -------- | ------------------- | --------------------------------------------------- |
 | `_id`   | <pre>String</pre>   | Document unique identifier      |
 | `status`   | <pre>Integer</pre>   | HTTP status code for that query      |
-| `error`   | <pre><ConcurrentHashMap<String, Object></pre>   | Error object      |
+| `error`   | <pre><Map<String, Object></pre>   | Error object      |
 
 Each `error` object contain the following properties:
 
@@ -97,15 +97,15 @@ Each `error` object contain the following properties:
 fun importData(
   index: String,
   collection: String,
-  bulkData: ArrayList<ConcurrentHashMap<String, Any?>>
-  ): CompletableFuture<ConcurrentHashMap<String, Any?>>
+  bulkData: ArrayList<Map<String, Any?>>
+  ): CompletableFuture<Map<String, Any?>>
 ```
 
 | Argument     | Type              | Description                                                  |
 |--------------|-------------------|--------------------------------------------------------------|
 | `index`      | <pre>String</pre> | Index name                                                   |
 | `collection` | <pre>String</pre> | Collection name                                              |
-| `bulkData`   | <pre>ArrayList<ConcurrentHashMap<String, Any?>></pre> | Bulk operations to perform, following ElasticSearch Bulk API |
+| `bulkData`   | <pre>ArrayList<Map<String, Any?>></pre> | Bulk operations to perform, following ElasticSearch Bulk API |
 
 ### bulkData
 
@@ -132,12 +132,12 @@ Learn more at [Elasticsearch Bulk API](https://www.elastic.co/guide/en/elasticse
 
 ## Return
 
-A ConcurrentHashMap<String, Any?> containing 2 arrays:
+A Map<String, Any?> containing 2 arrays:
 
 | Property | Type                | Description                                         |
 | -------- | ------------------- | --------------------------------------------------- |
-| `successes`  | <pre>ArrayList<ConcurrentHashMap<String, Any?>></pre> | Array of object containing successful document import |
-| `errors` | <pre>ArrayList<ConcurrentHashMap<String, Any?>></pre>  | Array of object containing failed document import     |
+| `successes`  | <pre>ArrayList<Map<String, Any?>></pre> | Array of object containing successful document import |
+| `errors` | <pre>ArrayList<Map<String, Any?>></pre>  | Array of object containing failed document import     |
 
 Each item of the `successes` array is an object containing the action name as key and the corresponding object contain the following properties:
 
@@ -152,7 +152,7 @@ Each item of the `errors` array is an object containing the action name as key a
 | -------- | ------------------- | --------------------------------------------------- |
 | `_id`   | <pre>String</pre>   | Document unique identifier      |
 | `status`   | <pre>Int</pre>   | HTTP status code for that query      |
-| `error`   | <pre><ConcurrentHashMap<String, Any?></pre>   | Error object      |
+| `error`   | <pre><Map<String, Any?></pre>   | Error object      |
 
 Each `error` object contain the following properties:
 

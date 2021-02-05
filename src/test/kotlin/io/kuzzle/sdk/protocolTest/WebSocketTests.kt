@@ -14,7 +14,7 @@ import io.kuzzle.sdk.protocol.WebSocket
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import java.util.concurrent.ConcurrentHashMap
+
 
 class WebSocketTests {
   inner class MockedSocket(host: String) : WebSocket(host) {
@@ -69,7 +69,7 @@ class WebSocketTests {
   @KtorExperimentalAPI
   @Test
   fun sendTest() {
-    val query = ConcurrentHashMap<String?, Any?>().apply {
+    val query = HashMap<String?, Any?>().apply {
       put("controller", "server")
       put("action", "now")
     }

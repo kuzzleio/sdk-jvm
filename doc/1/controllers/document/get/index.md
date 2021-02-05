@@ -17,7 +17,7 @@ Gets a document.
 ## Arguments
  
 ```java
-public CompletableFuture<ConcurrentHashMap<String, Object>> get(
+public CompletableFuture<Map<String, Object>> get(
       String index,
       String collection,
       String id)
@@ -35,11 +35,11 @@ throws NotConnectedException, InternalException
 
 ## Return
 
-A `ConcurrentHashMap` which has the following properties:
+A `Map` which has the following properties:
 
 | Property     | Type                         | Description                                                    |
 |------------- |----------------------------- |--------------------------------------------------------------- |
-| `_source`    | <pre>ConcurrentHashMap</pre> | Document content                |
+| `_source`    | <pre>Map</pre> | Document content                |
 | `_id`        | <pre>String</pre>            | ID of the document                                     |
 | `_version`   | <pre>Integer</pre>           | Version of the document in the persistent data storage         |
 
@@ -56,7 +56,7 @@ A `ConcurrentHashMap` which has the following properties:
 fun get(
       index: String,
       collection: String,
-      id: String): CompletableFuture<ConcurrentHashMap<String, Any?>>
+      id: String): CompletableFuture<Map<String, Any?>>
 
 ```
  
@@ -70,11 +70,11 @@ fun get(
 
 ## Return
 
-A `ConcurrentHashMap` which has the following properties:
+A `Map` which has the following properties:
 
 | Property     | Type                         | Description                                                    |
 |------------- |----------------------------- |--------------------------------------------------------------- |
-| `_source`    | <pre>ConcurrentHashMap</pre> | Document content                |
+| `_source`    | <pre>Map</pre> | Document content                |
 | `_id`        | <pre>String</pre>            | ID of the document                                     |
 | `_version`   | <pre>Integer</pre>           | Version of the document in the persistent data storage         |
 

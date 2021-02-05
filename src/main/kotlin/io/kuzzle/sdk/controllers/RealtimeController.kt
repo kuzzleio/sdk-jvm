@@ -6,26 +6,25 @@ import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.responses.Response
 import io.kuzzle.sdk.handlers.NotificationHandler
 import io.kuzzle.sdk.protocol.ProtocolState
-import java.util.*
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.ConcurrentHashMap
+
 import java.util.function.Consumer
 
 class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   private inner class Subscription(
       val index: String,
       val collection: String,
-      val filter: ConcurrentHashMap<String, Any>,
+      val filter: Map<String, Any>,
       val handler: (Response) -> Unit,
       val scope: String,
       val users: String,
       val subscribeToSelf: Boolean,
-      val volatile: ConcurrentHashMap<String?, Any?>)
+      val volatile: Map<String?, Any?>)
 
   init {
     kuzzle.protocol.addListener("unhandledResponse") {
       val response = Response().apply {
-        fromMap(JsonSerializer.deserialize(it) as ConcurrentHashMap<String?, Any?>)
+        fromMap(JsonSerializer.deserialize(it) as Map<String?, Any?>)
       }
 
       if (response.error != null && response.error!!.id.equals("security.token.expired")) {
@@ -65,7 +64,7 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         .thenApplyAsync { response -> (response.result as KuzzleMap?)!!.getNumber("count")?.toInt() }
   }
 
-  fun publish(index: String, collection: String, message: ConcurrentHashMap<String?, Any?>): CompletableFuture<Void> {
+  fun publish(index: String, collection: String, message: Map<String?, Any?>): CompletableFuture<Void> {
     return kuzzle
         .query(KuzzleMap().apply {
           put("controller", "realtime")
@@ -98,11 +97,11 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   fun subscribe(
       index: String?,
       collection: String?,
-      filters: ConcurrentHashMap<String, Any>,
+      filters: Map<String, Any>,
       scope: String = "all",
       users: String = "all",
       subscribeToSelf: Boolean = true,
-      volatiles: ConcurrentHashMap<String?, Any?> = ConcurrentHashMap(),
+      volatiles: Map<String?, Any?> = HashMap(),
       handler: (Response) -> Unit): CompletableFuture<String> {
     val query: KuzzleMap = KuzzleMap().apply {
       put("controller", "realtime")
@@ -115,7 +114,7 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     return kuzzle
         .query(query)
         .thenApplyAsync { response ->
-          val channel = (response.result as ConcurrentHashMap<*, *>)["channel"].toString()
+          val channel = (response.result as Map<*, *>)["channel"].toString()
           val subscription = Subscription(
               index!!,
               collection!!,
@@ -134,7 +133,7 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             currentSubscriptions[channel]!!.add(subscription)
             subscriptionsCache[channel]!!.add(subscription)
           }
-          (response.result as ConcurrentHashMap<*, *>)["roomId"].toString()
+          (response.result as Map<*, *>)["roomId"].toString()
         }
   }
 
@@ -145,11 +144,11 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   fun subscribe(
       index: String?,
       collection: String?,
-      filters: ConcurrentHashMap<String, Any>,
+      filters: Map<String, Any>,
       scope: String = "all",
       users: String = "all",
       subscribeToSelf: Boolean = true,
-      volatiles: ConcurrentHashMap<String?, Any?> = ConcurrentHashMap(),
+      volatiles: Map<String?, Any?> = HashMap(),
       handler: NotificationHandler): CompletableFuture<String> {
     return subscribe(
         index,
@@ -183,6 +182,6 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         }
   }
 
-  private val currentSubscriptions = ConcurrentHashMap<String, ArrayList<Subscription>>()
-  private val subscriptionsCache = ConcurrentHashMap<String, ArrayList<Subscription>>()
+  private val currentSubscriptions = HashMap<String, ArrayList<Subscription>>()
+  private val subscriptionsCache = HashMap<String, ArrayList<Subscription>>()
 }

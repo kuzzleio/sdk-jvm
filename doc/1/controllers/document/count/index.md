@@ -35,7 +35,7 @@ throws NotConnectedException, InternalException
 | ------------------ | -------------------------------------------- | --------------- |
 | `index`            | <pre>String</pre>                            | Index name      |
 | `collection`       | <pre>String</pre>                            | Collection name |
-| `searchQuery`      | <pre>ConcurrentHashMap<String, Object></pre><br>(`{}`) | Query to match  |
+| `searchQuery`      | <pre>Map<String, Object></pre><br>(`{}`) | Query to match  |
 
 ---
 
@@ -56,14 +56,14 @@ Returns an Integer.
 fun count(
       index: String,
       collection: String,
-      searchQuery: ConcurrentHashMap<String, Any?> = ConcurrentHashMap<String, Any?>()): CompletableFuture<Int>
+      searchQuery: Map<String, Any?> = HashMap<String, Any?>()): CompletableFuture<Int>
 ```
 
 | Argument           | Type                                         | Description     |
 | ------------------ | -------------------------------------------- | --------------- |
 | `index`            | <pre>String</pre>                            | Index name      |
 | `collection`       | <pre>String</pre>                            | Collection name |
-| `searchQuery`      | <pre>ConcurrentHashMap<String, Any?></pre><br>(`{}`) | Query to match  |
+| `searchQuery`      | <pre>Map<String, Any?></pre><br>(`{}`) | Query to match  |
 
 ---
 

@@ -15,23 +15,23 @@ Updates the current user object in Kuzzle.
 ## Arguments
 
 ```java
-CompletableFuture<ConcurrentHashMap<String, Object>> updateSelf(
-  final ConcurrentHashMap<String, Object> content)
+CompletableFuture<Map<String, Object>> updateSelf(
+  final Map<String, Object> content)
   throws NotConnectedException, InternalException
 ```
 
 | Argument  | Type               | Description                           |
 |-----------|--------------------|---------------------------------------|
-| `content` | <pre>ConcurrentHashMap<String, Object></pre> | Hashmap representing the user content |
+| `content` | <pre>Map<String, Object></pre> | Hashmap representing the user content |
 
 ## Return
 
-Returns a ConcurrentHashMap with the following properties:
+Returns a Map with the following properties:
 
 | Property  | Type               | Description                               |
 |-----------|--------------------|-------------------------------------------|
 | `_id`     | <pre>String</pre>  | User's `kuid`                             |
-| `_source` | <pre>ConcurrentHashMap<String, Object></pre> | Additional (and optional) user properties |
+| `_source` | <pre>Map<String, Object></pre> | Additional (and optional) user properties |
 
 ## Usage
 
@@ -44,21 +44,21 @@ Returns a ConcurrentHashMap with the following properties:
 
 ```kotlin
 fun updateSelf(
-      content: ConcurrentHashMap<String, Any?>): CompletableFuture<ConcurrentHashMap<String, Any?>>
+      content: Map<String, Any?>): CompletableFuture<Map<String, Any?>>
 ```
 
 | Argument  | Type               | Description                           |
 |-----------|--------------------|---------------------------------------|
-| `content` | <pre>ConcurrentHashMap<String, Any?></pre> | Hashmap representing the user content |
+| `content` | <pre>Map<String, Any?></pre> | Hashmap representing the user content |
 
 ## Return
 
-Returns a ConcurrentHashMap with the following properties:
+Returns a Map with the following properties:
 
 | Property  | Type               | Description                               |
 |-----------|--------------------|-------------------------------------------|
 | `_id`     | <pre>String</pre>  | User's `kuid`                             |
-| `_source` | <pre>ConcurrentHashMap<String, Any?></pre> | Additional (and optional) user properties |
+| `_source` | <pre>Map<String, Any?></pre> | Additional (and optional) user properties |
 
 ## Usage
 

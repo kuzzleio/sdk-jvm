@@ -3,9 +3,8 @@ package io.kuzzle.sdk.controllers
 import io.kuzzle.sdk.Kuzzle
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.SearchResult
-import java.util.*
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.ConcurrentHashMap
+
 
 class CollectionController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
@@ -13,7 +12,7 @@ class CollectionController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   fun create(
       index: String,
       collection: String,
-      definition: ConcurrentHashMap<String, Any>? = null
+      definition: Map<String, Any>? = null
     ): CompletableFuture<Void> {
     return kuzzle
       .query(KuzzleMap().apply {
@@ -71,7 +70,7 @@ class CollectionController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   fun getMapping(
     index: String,
     collection: String
-  ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+  ): CompletableFuture<Map<String, Any?>> {
   return kuzzle
     .query(KuzzleMap().apply {
       put("controller", "collection")
@@ -79,13 +78,13 @@ class CollectionController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       put("index", index)
       put("collection", collection)
     })
-    .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+    .thenApplyAsync { response -> response.result as Map<String, Any?> }
 }
 
 fun getSpecifications(
     index: String,
     collection: String
-  ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+  ): CompletableFuture<Map<String, Any?>> {
   return kuzzle
     .query(KuzzleMap().apply {
       put("controller", "collection")
@@ -93,17 +92,17 @@ fun getSpecifications(
       put("index", index)
       put("collection", collection)
     })
-    .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+    .thenApplyAsync { response -> response.result as Map<String, Any?> }
 }
 
-  fun list(index: String): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+  fun list(index: String): CompletableFuture<Map<String, Any?>> {
     return kuzzle
         .query(KuzzleMap().apply {
           put("controller", "collection")
           put("action", "list")
           put("index", index)
         })
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+        .thenApplyAsync { response -> response.result as Map<String, Any?> }
   }
 
   fun refresh(
@@ -122,7 +121,7 @@ fun getSpecifications(
 
   @JvmOverloads
   fun searchSpecifications(
-    searchQuery: ConcurrentHashMap<String, Any?>,
+    searchQuery: Map<String, Any?>,
     scroll: String? = null,
     from: Int = 0,
     size: Int? = null
@@ -157,7 +156,7 @@ fun getSpecifications(
   fun update(
     index: String,
     collection: String,
-    definition: ConcurrentHashMap<String, Any?>
+    definition: Map<String, Any?>
   ): CompletableFuture<Void> {
     return kuzzle
         .query(KuzzleMap().apply {
@@ -173,8 +172,8 @@ fun getSpecifications(
   fun updateSpecifications(
     index: String,
     collection: String,
-    definition: ConcurrentHashMap<String, Any?>
-  ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    definition: Map<String, Any?>
+  ): CompletableFuture<Map<String, Any?>> {
     return kuzzle
         .query(KuzzleMap().apply {
           put("controller", "collection")
@@ -183,14 +182,14 @@ fun getSpecifications(
           put("collection", collection)
           put("body", definition)
         })
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+        .thenApplyAsync { response -> response.result as Map<String, Any?> }
   }
 
   fun validateSpecifications(
     index: String,
     collection: String,
-    specifications: ConcurrentHashMap<String, Any>?
-  ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    specifications: Map<String, Any>?
+  ): CompletableFuture<Map<String, Any?>> {
     return kuzzle
         .query(KuzzleMap().apply {
           put("controller", "collection")
@@ -199,6 +198,6 @@ fun getSpecifications(
           put("collection", collection)
           put("body", specifications)
         })
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+        .thenApplyAsync { response -> response.result as Map<String, Any?> }
   }
 }

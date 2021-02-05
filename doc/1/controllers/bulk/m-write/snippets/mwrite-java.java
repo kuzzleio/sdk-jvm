@@ -1,8 +1,8 @@
-ConcurrentHashMap<String, Object> document = new ConcurrentHashMap<String, Object>();
-ArrayList<ConcurrentHashMap<String, Object>> documents = new ArrayList<ConcurrentHashMap<String, Object>>();
+Map<String, Object> document = new HashMap<String, Object>();
+ArrayList<Map<String, Object>> documents = new ArrayList<Map<String, Object>>();
 documents.add(document);
 document.put("_id", "foo");
-document.put("body", new ConcurrentHashMap<String, Object>());
+document.put("body", new HashMap<String, Object>());
 
-ConcurrentHashMap<String, Object> result = 
+Map<String, Object> result =
 kuzzle.getBulkController().mWrite("nyc-open-data", "yellow-taxi", documents).get();

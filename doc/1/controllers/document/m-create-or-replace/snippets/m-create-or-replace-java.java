@@ -1,7 +1,7 @@
-ConcurrentHashMap<String, Object> document1 = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> document2 = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> body = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> body2 = new ConcurrentHashMap<>();
+Map<String, Object> document1 = new HashMap<>();
+Map<String, Object> document2 = new HashMap<>();
+Map<String, Object> body = new HashMap<>();
+Map<String, Object> body2 = new HashMap<>();
 
 body.put("Agent", "Smith");
 body2.put("Gordon", "Freeman");
@@ -12,11 +12,11 @@ document1.put("body", body);
 document2.put("_id", "some-id2");
 document2.put("body", body2);
 
-final ArrayList<ConcurrentHashMap<String, Object>> documents = new ArrayList<>();
+final ArrayList<Map<String, Object>> documents = new ArrayList<>();
 documents.add(document1);
 documents.add(document2);
 
-ConcurrentHashMap<String, ArrayList<Object>> result = kuzzle
+Map<String, ArrayList<Object>> result = kuzzle
   .getDocumentController()
   .mCreateOrReplace("nyc-open-data", "yellow-taxi", documents)
   .get();

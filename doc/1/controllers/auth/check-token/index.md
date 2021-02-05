@@ -15,7 +15,7 @@ Checks an authentication token's validity.
 ## Arguments
 
 ```java
-public CompletableFuture<ConcurrentHashMap<String, Object>> checkToken(String token)
+public CompletableFuture<Map<String, Object>> checkToken(String token)
   throws NotConnectedException, InternalException
 ```
 
@@ -25,7 +25,7 @@ public CompletableFuture<ConcurrentHashMap<String, Object>> checkToken(String to
 
 ## Return
 
-A ConcurrentHashMap which has the following properties:
+A Map which has the following properties:
 
 | Property     | Type              | Description                      |
 |--------------|-------------------|----------------------------------|
@@ -43,7 +43,7 @@ A ConcurrentHashMap which has the following properties:
 ## Arguments
 
 ```kotlin
-fun checkToken(token: String): CompletableFuture<ConcurrentHashMap<String, Any?>>
+fun checkToken(token: String): CompletableFuture<Map<String, Any?>>
 ```
 
 | Argument | Type              | Description |
@@ -52,7 +52,7 @@ fun checkToken(token: String): CompletableFuture<ConcurrentHashMap<String, Any?>
 
 ## Return
 
-A ConcurrentHashMap which has the following properties:
+A Map which has the following properties:
 
 | Property     | Type              | Description                      |
 |--------------|-------------------|----------------------------------|

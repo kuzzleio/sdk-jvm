@@ -1,8 +1,6 @@
 import io.kuzzle.sdk.*;
 import io.kuzzle.sdk.protocol.WebSocket;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 fun main() {
   // Creates a WebSocket connection.
   // Replace "kuzzle" with
@@ -18,7 +16,7 @@ fun main() {
 
   try {
     // New document content
-    val content: ConcurrentHashMap<String, Any?> = ConcurrentHashMap<String, Any?>().apply {
+    val content: Map<String, Any?> = HashMap<String, Any?>().apply {
       put("name", "John")
       put("birthday", "1995-11-27")
       put("license", "B")

@@ -1,6 +1,6 @@
-    ConcurrentHashMap<String, Object> specifications = new ConcurrentHashMap<>();
-    ConcurrentHashMap<String, Object> fields = new ConcurrentHashMap<>();
-    ConcurrentHashMap<String, Object> license = new ConcurrentHashMap<>();
+    Map<String, Object> specifications = new HashMap<>();
+    Map<String, Object> fields = new HashMap<>();
+    Map<String, Object> license = new HashMap<>();
 
     specifications.put("strict", false);
     license.put("mandatory", true);
@@ -8,7 +8,7 @@
     fields.put("license", license);
     specifications.put("fields", fields);
 
-    ConcurrentHashMap<String, Object> result = kuzzle
+    Map<String, Object> result = kuzzle
         .getCollectionController()
         .validateSpecifications("nyc-open-data", "yellow-taxi", specifications)
         .get();

@@ -4,9 +4,7 @@ import com.google.gson.internal.LazilyParsedNumber
 import io.kuzzle.sdk.Kuzzle
 import io.kuzzle.sdk.coreClasses.SearchResult
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
-import java.util.*
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.ConcurrentHashMap
 
 class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
@@ -14,7 +12,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   fun count(
       index: String,
       collection: String,
-      searchQuery: ConcurrentHashMap<String, Any?> = ConcurrentHashMap<String, Any?>()): CompletableFuture<Int> {
+      searchQuery: Map<String, Any?> = mapOf()): CompletableFuture<Int> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -24,16 +22,16 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     }
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> ((response.result as ConcurrentHashMap<String, Any?>)["count"] as LazilyParsedNumber).toInt() }
+        .thenApplyAsync { response -> ((response.result as Map<String, Any?>)["count"] as LazilyParsedNumber).toInt() }
   }
 
   @JvmOverloads
   fun create(
       index: String,
       collection: String,
-      document: ConcurrentHashMap<String, Any?>,
+      document: Map<String, Any?>,
       id: String? = null,
-      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+      waitForRefresh: Boolean? = null): CompletableFuture<Map<String, Any?>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -45,7 +43,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     }
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+        .thenApplyAsync { response -> response.result as Map<String, Any?> }
   }
 
   @JvmOverloads
@@ -53,8 +51,8 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       index: String,
       collection: String,
       id: String,
-      document: ConcurrentHashMap<String, Any?>,
-      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+      document: Map<String, Any?>,
+      waitForRefresh: Boolean? = null): CompletableFuture<Map<String, Any?>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -66,7 +64,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     }
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+        .thenApplyAsync { response -> response.result as Map<String, Any?> }
   }
 
   @JvmOverloads
@@ -74,7 +72,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       index: String,
       collection: String,
       id: String?,
-      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+      waitForRefresh: Boolean? = null): CompletableFuture<Map<String, Any?>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -86,14 +84,14 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+        .thenApplyAsync { response -> response.result as Map<String, Any?> }
   }
 
   @JvmOverloads
   fun deleteByQuery(
       index: String,
       collection: String,
-      searchQuery: ConcurrentHashMap<String, Any?>,
+      searchQuery: Map<String, Any?>,
       waitForRefresh: Boolean? = null): CompletableFuture<ArrayList<String>> {
     val query = KuzzleMap().apply {
       put("index", index)
@@ -105,7 +103,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     }
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> (response.result as ConcurrentHashMap<String?, Any?>)["ids"] as ArrayList<String> }
+        .thenApplyAsync { response -> (response.result as Map<String?, Any?>)["ids"] as ArrayList<String> }
   }
 
   fun exists(
@@ -127,7 +125,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   fun get(
       index: String,
       collection: String,
-      id: String): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+      id: String): CompletableFuture<Map<String, Any?>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -137,15 +135,15 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     }
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+        .thenApplyAsync { response -> response.result as Map<String, Any?> }
   }
 
   @JvmOverloads
   fun mCreate(
       index: String,
       collection: String,
-      documents: ArrayList<ConcurrentHashMap<String, Any?>>,
-      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any>>> {
+      documents: ArrayList<Map<String, Any?>>,
+      waitForRefresh: Boolean? = null): CompletableFuture<Map<String, ArrayList<Any>>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -157,15 +155,15 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, ArrayList<Any>> }
+        .thenApplyAsync { response -> response.result as Map<String, ArrayList<Any>> }
   }
 
   @JvmOverloads
   fun mCreateOrReplace(
       index: String,
       collection: String,
-      documents: ArrayList<ConcurrentHashMap<String, Any?>>,
-      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any>>> {
+      documents: ArrayList<Map<String, Any?>>,
+      waitForRefresh: Boolean? = null): CompletableFuture<Map<String, ArrayList<Any>>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -176,7 +174,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     }
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, ArrayList<Any>> }
+        .thenApplyAsync { response -> response.result as Map<String, ArrayList<Any>> }
   }
 
   @JvmOverloads
@@ -184,7 +182,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       index: String,
       collection: String,
       ids: ArrayList<String>,
-      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any>>> {
+      waitForRefresh: Boolean? = null): CompletableFuture<Map<String, ArrayList<Any>>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -196,13 +194,13 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, ArrayList<Any>> }
+        .thenApplyAsync { response -> response.result as Map<String, ArrayList<Any>> }
   }
 
   fun mGet(
       index: String,
       collection: String,
-      ids: ArrayList<String>): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any>>> {
+      ids: ArrayList<String>): CompletableFuture<Map<String, ArrayList<Any>>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -213,15 +211,15 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, ArrayList<Any>> }
+        .thenApplyAsync { response -> response.result as Map<String, ArrayList<Any>> }
   }
 
   @JvmOverloads
   fun mReplace(
       index: String,
       collection: String,
-      documents: ArrayList<ConcurrentHashMap<String, Any?>>,
-      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any>?>> {
+      documents: ArrayList<Map<String, Any?>>,
+      waitForRefresh: Boolean? = null): CompletableFuture<Map<String, ArrayList<Any>?>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -232,16 +230,16 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     }
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, ArrayList<Any>?> }
+        .thenApplyAsync { response -> response.result as Map<String, ArrayList<Any>?> }
   }
 
   @JvmOverloads
   fun mUpdate(
       index: String,
       collection: String,
-      documents: ArrayList<ConcurrentHashMap<String, Any?>?>,
+      documents: ArrayList<Map<String, Any?>?>,
       waitForRefresh: Boolean? = null,
-      retryOnConflict: Int? = null): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any>?>> {
+      retryOnConflict: Int? = null): CompletableFuture<Map<String, ArrayList<Any>?>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -253,7 +251,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     }
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, ArrayList<Any>?> }
+        .thenApplyAsync { response -> response.result as Map<String, ArrayList<Any>?> }
   }
 
   @JvmOverloads
@@ -261,8 +259,8 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       index: String,
       collection: String,
       id: String?,
-      document: ConcurrentHashMap<String, Any?>,
-      waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+      document: Map<String, Any?>,
+      waitForRefresh: Boolean? = null): CompletableFuture<Map<String, Any?>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -275,14 +273,14 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+        .thenApplyAsync { response -> response.result as Map<String, Any?> }
   }
 
   @JvmOverloads
   fun search(
       index: String,
       collection: String,
-      searchQuery: ConcurrentHashMap<String, Any?>,
+      searchQuery: Map<String, Any?>,
       scroll: String? = null,
       size: Int? = null,
       from: Int = 0): CompletableFuture<SearchResult> {
@@ -308,7 +306,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
   fun search(
       index: String,
       collection: String,
-      searchQuery: ConcurrentHashMap<String, Any?>,
+      searchQuery: Map<String, Any?>,
       size: Int? = null,
       from: Int = 0): CompletableFuture<SearchResult> {
 
@@ -320,10 +318,10 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
       index: String,
       collection: String,
       id: String?,
-      document: ConcurrentHashMap<String, Any?>,
+      document: Map<String, Any?>,
       waitForRefresh: Boolean? = null,
       retryOnConflict: Int? = null,
-      source: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+      source: Boolean? = null): CompletableFuture<Map<String, Any?>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -337,18 +335,18 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     }
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+        .thenApplyAsync { response -> response.result as Map<String, Any?> }
   }
 
   @JvmOverloads
   fun updateByQuery(
       index: String,
       collection: String,
-      searchQuery: ConcurrentHashMap<String, Any?>,
-      changes: ConcurrentHashMap<String, Any?>,
+      searchQuery: Map<String, Any?>,
+      changes: Map<String, Any?>,
       waitForRefresh: Boolean? = null,
       retryOnConflict: Int? = null,
-      source: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, ArrayList<Any?>>> {
+      source: Boolean? = null): CompletableFuture<Map<String, ArrayList<Any?>>> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -365,13 +363,13 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, ArrayList<Any?>> }
+        .thenApplyAsync { response -> response.result as Map<String, ArrayList<Any?>> }
   }
 
   fun validate(
       index: String,
       collection: String,
-      document: ConcurrentHashMap<String, Any?>): CompletableFuture<Boolean> {
+      document: Map<String, Any?>): CompletableFuture<Boolean> {
     val query = KuzzleMap().apply {
       put("index", index)
       put("collection", collection)
@@ -381,6 +379,6 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     }
     return kuzzle
         .query(query)
-        .thenApplyAsync { response -> (response.result as ConcurrentHashMap<*, *>)["valid"] as Boolean }
+        .thenApplyAsync { response -> (response.result as Map<*, *>)["valid"] as Boolean }
   }
 }

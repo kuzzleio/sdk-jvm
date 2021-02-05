@@ -1,14 +1,14 @@
-val match: ConcurrentHashMap<String, Any?> =
-ConcurrentHashMap<String, Any?>().apply {
+val match: Map<String, Any?> =
+HashMap<String, Any?>().apply {
   put("category", "suv")
 }
-val query: ConcurrentHashMap<String, Any?> =
-ConcurrentHashMap<String, Any?>().apply {
+val query: Map<String, Any?> =
+HashMap<String, Any?>().apply {
   put("match", match)
 }
 
-val searchQuery: ConcurrentHashMap<String, Any?> =
-ConcurrentHashMap<String, Any?>().apply {
+val searchQuery: Map<String, Any?> =
+HashMap<String, Any?>().apply {
   put("query", query)
 }
 var result: SearchResult? = kuzzle
@@ -16,7 +16,7 @@ var result: SearchResult? = kuzzle
   .search("nyc-open-data", "yellow-taxi", searchQuery, "1s", 10).get();
 
     // Fetch the matched items by advancing through the result pages
-    val matched: ArrayList<ConcurrentHashMap<String, Any>> = ArrayList<ConcurrentHashMap<String, Any>>();
+    val matched: ArrayList<Map<String, Any>> = ArrayList<Map<String, Any>>();
 
     while (result != null) {
       matched.addAll(result.hits);

@@ -3,10 +3,10 @@ package io.kuzzle.sdk.coreClasses.responses
 import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.maps.Serializable
-import java.util.concurrent.ConcurrentHashMap
+
 
 class Response : Serializable {
-  var mapResponse: ConcurrentHashMap<String?, Any?>? = null
+  var mapResponse: Map<String?, Any?>? = null
     private set
 
   var room: String? = null
@@ -54,7 +54,7 @@ class Response : Serializable {
   /**
    * Volatile data.
    */
-  var Volatile: ConcurrentHashMap<String?, Any?>? = null
+  var Volatile: Map<String?, Any?>? = null
   // The following properties are specific to real-time notifications
   /**
    * Network protocol at the origin of the real-time notification.
@@ -81,7 +81,7 @@ class Response : Serializable {
    */
   var type: String? = null
 
-  override fun fromMap(map: ConcurrentHashMap<String?, Any?>?) {
+  override fun fromMap(map: Map<String?, Any?>?) {
     if (map == null) return
 
     mapResponse = map
@@ -103,7 +103,7 @@ class Response : Serializable {
     action = kuzzleMap.getString("action")
     index = kuzzleMap.getString("index")
     collection = kuzzleMap.getString("collection")
-    Volatile = kuzzleMap.optMap("volatile", ConcurrentHashMap<String?, Any?>())
+    Volatile = kuzzleMap.optMap("volatile", HashMap())
     protocol = kuzzleMap.getString("protocol")
     scope = kuzzleMap.getString("scope")
     state = kuzzleMap.getString("state")
@@ -114,8 +114,8 @@ class Response : Serializable {
     type = kuzzleMap.getString("type")
   }
 
-  override fun toMap(): ConcurrentHashMap<String?, Any?> {
-    val map = ConcurrentHashMap<String?, Any?>()
+  override fun toMap(): Map<String?, Any?> {
+    val map = HashMap<String?, Any?>()
 
     room?.let { map.put("room", it) }
     result?.let { map.put("result", it) }

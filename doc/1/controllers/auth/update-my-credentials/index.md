@@ -15,20 +15,20 @@ Updates the current user's credentials for the specified strategy. The credentia
 ## Arguments
 
 ```java
-CompletableFuture<ConcurrentHashMap<String, Object>> updateMyCredentials(
+CompletableFuture<Map<String, Object>> updateMyCredentials(
   String strategy,
-  ConcurrentHashMap<String, Object> credentials)
+  Map<String, Object> credentials)
   throws NotConnectedException, InternalException
 ```
 
 | Argument      | Type               | Description                          |
 |---------------|--------------------|--------------------------------------|
 | `strategy`    | <pre>String</pre>  | Strategy to use                      |
-| `credentials` | <pre>ConcurrentHashMap<String, Object></pre> | JObject representing the credentials |
+| `credentials` | <pre>Map<String, Object></pre> | JObject representing the credentials |
 
 ## Return
 
-A ConcurrentHashMap representing the updated credentials with the following properties:
+A Map representing the updated credentials with the following properties:
 
 | Property   | Type              | Description       |
 |------------|-------------------|-------------------|
@@ -46,17 +46,17 @@ A ConcurrentHashMap representing the updated credentials with the following prop
 ```kotlin
 fun updateMyCredentials(
       strategy: String,
-      credentials: ConcurrentHashMap<String, Any?>): CompletableFuture<ConcurrentHashMap<String, Any?>>
+      credentials: Map<String, Any?>): CompletableFuture<Map<String, Any?>>
 ```
 
 | Argument      | Type               | Description                          |
 |---------------|--------------------|--------------------------------------|
 | `strategy`    | <pre>String</pre>  | Strategy to use                      |
-| `credentials` | <pre>ConcurrentHashMap<String, Any?></pre> | JObject representing the credentials |
+| `credentials` | <pre>Map<String, Any?></pre> | JObject representing the credentials |
 
 ## Return
 
-A ConcurrentHashMap representing the updated credentials with the following properties:
+A Map representing the updated credentials with the following properties:
 
 | Property   | Type              | Description       |
 |------------|-------------------|-------------------|
