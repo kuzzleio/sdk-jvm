@@ -21,23 +21,23 @@ The optional parameter `waitForRefresh` can be used with the value `true` in ord
 ## Arguments
 
 ```java
-public CompletableFuture<ConcurrentHashMap<String, Object>> create(
+public CompletableFuture<Map<String, Object>> create(
       String index,
       String collection,
-      ConcurrentHashMap<String, Object> document)
+      Map<String, Object> document)
 throws NotConnectedException, InternalException
 
-public CompletableFuture<ConcurrentHashMap<String, Object>> create(
+public CompletableFuture<Map<String, Object>> create(
       String index,
       String collection,
-      ConcurrentHashMap<String, Object> document,
+      Map<String, Object> document,
       String id)
 throws NotConnectedException, InternalException
 
-public CompletableFuture<ConcurrentHashMap<String, Object>> create(
+public CompletableFuture<Map<String, Object>> create(
       String index,
       String collection,
-      ConcurrentHashMap<String, Object> document,
+      Map<String, Object> document,
       String id,
       Boolean waitForRefresh)
 throws NotConnectedException, InternalException
@@ -47,7 +47,7 @@ throws NotConnectedException, InternalException
 | ------------------ | -------------------------------------------- | --------------------------------- |
 | `index`            | <pre>String</pre>                            | Index                             |
 | `collection`       | <pre>String</pre>                            | Collection                        |
-| `document`         | <pre>ConcurrentHashMap<String, Object></pre> | Document content |
+| `document`         | <pre>Map<String, Object></pre> | Document content |
 | `id`               | <pre>String</pre> (optional)                 | Document identifier. Auto-generated if not specified              |
 | `waitForRefresh`   | <pre>Boolean</pre> (optional)                | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
 
@@ -55,11 +55,11 @@ throws NotConnectedException, InternalException
 
 ## Return
 
-A `ConcurrentHashMap` which has the following properties:
+A `Map` which has the following properties:
 
 | Property     | Type                         | Description                      |
 |------------- |----------------------------- |--------------------------------- |
-| `_source`    | <pre>ConcurrentHashMap</pre> | Created document                 |
+| `_source`    | <pre>Map</pre> | Created document                 |
 | `_id`        | <pre>String</pre>            | ID of the newly created document                       |
 | `_version`   | <pre>Integer</pre>           | Version of the document in the persistent data storage |
 
@@ -76,16 +76,16 @@ A `ConcurrentHashMap` which has the following properties:
 fun create(
   index: String,
   collection: String,
-  document: ConcurrentHashMap<String, Any?>,
+  document: Map<String, Any?>,
   id: String? = null,
-  waitForRefresh: Boolean? = null): CompletableFuture<ConcurrentHashMap<String, Any?>>
+  waitForRefresh: Boolean? = null): CompletableFuture<Map<String, Any?>>
 ```
 
 | Arguments          | Type                                         | Description                       |
 | ------------------ | -------------------------------------------- | --------------------------------- |
 | `index`            | <pre>String</pre>                            | Index                             |
 | `collection`       | <pre>String</pre>                            | Collection                        |
-| `document`         | <pre>ConcurrentHashMap<String, Any?></pre> | Document content |
+| `document`         | <pre>Map<String, Any?></pre> | Document content |
 | `id`               | <pre>String</pre> (optional)                 | Document identifier. Auto-generated if not specified              |
 | `waitForRefresh`   | <pre>Boolean</pre> (optional)                | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
 
@@ -93,11 +93,11 @@ fun create(
 
 ## Return
 
-A `ConcurrentHashMap` which has the following properties:
+A `Map` which has the following properties:
 
 | Property     | Type                         | Description                      |
 |------------- |----------------------------- |--------------------------------- |
-| `_source`    | <pre>ConcurrentHashMap</pre> | Created document                 |
+| `_source`    | <pre>Map</pre> | Created document                 |
 | `_id`        | <pre>String</pre>            | ID of the newly created document                       |
 | `_version`   | <pre>Int</pre>           | Version of the document in the persistent data storage |
 

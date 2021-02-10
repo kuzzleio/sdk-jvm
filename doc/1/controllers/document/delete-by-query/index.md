@@ -31,24 +31,24 @@ An empty or null query will match all documents in the collection.
   public CompletableFuture<ArrayList<String>> deleteByQuery(
       String index,
       String collection,
-      ConcurrentHashMap<String, Object> searchQuery) throws NotConnectedException, InternalException
+      Map<String, Object> searchQuery) throws NotConnectedException, InternalException
 
   public CompletableFuture<ArrayList<String>> deleteByQuery(
       String index,
       String collection,
-      ConcurrentHashMap<String, Object> searchQuery,
+      Map<String, Object> searchQuery,
       Lang lang) throws NotConnectedException, InternalException
 
   public CompletableFuture<ArrayList<String>> deleteByQuery(
       String index,
       String collection,
-      ConcurrentHashMap<String, Object> searchQuery,
+      Map<String, Object> searchQuery,
       Boolean waitForRefresh) throws NotConnectedException, InternalException
 
   public CompletableFuture<ArrayList<String>> deleteByQuery(
       String index,
       String collection,
-      ConcurrentHashMap<String, Object> searchQuery,
+      Map<String, Object> searchQuery,
       Boolean waitForRefresh,
       Lang lang) throws NotConnectedException, InternalException
 ```
@@ -57,7 +57,7 @@ An empty or null query will match all documents in the collection.
 | ------------------ | -------------------------------------------- | --------------- |
 | `index`            | <pre>String</pre>                            | Index name      |
 | `collection`       | <pre>String</pre>                            | Collection name |
-| `searchQuery`      | <pre>ConcurrentHashMap<String, Object></pre> | Query to match  |
+| `searchQuery`      | <pre>Map<String, Object></pre> | Query to match  |
 | `waitForRefresh`   | <pre>Boolean</pre> (optional)                | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing |
 | `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
 
@@ -87,7 +87,7 @@ With the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
 fun deleteByQuery(
       index: String,
       collection: String,
-      searchQuery: ConcurrentHashMap<String, Any?>,
+      searchQuery: Map<String, Any?>,
       waitForRefresh: Boolean? = null,
       lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<ArrayList<String>>
 ```
@@ -96,7 +96,7 @@ fun deleteByQuery(
 | ------------------ | -------------------------------------------- | --------------- |
 | `index`            | <pre>String</pre>                            | Index name      |
 | `collection`       | <pre>String</pre>                            | Collection name |
-| `searchQuery`      | <pre>ConcurrentHashMap<String, Any?></pre> | Query to match  |
+| `searchQuery`      | <pre>Map<String, Any?></pre> | Query to match  |
 | `waitForRefresh`   | <pre>Boolean</pre> (optional)                | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing |
 | `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
 

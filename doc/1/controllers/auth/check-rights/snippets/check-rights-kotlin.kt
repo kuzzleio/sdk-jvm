@@ -1,8 +1,8 @@
-val body = ConcurrentHashMap<String, Any?>().apply {
+val body = HashMap<String, Any?>().apply {
     put("name", "Melis")
 }
 
-val requestPayload = ConcurrentHashMap<String, Any?>().apply {
+val requestPayload = HashMap<String, Any?>().apply {
     put("controller", "document")
     put("action", "create")
     put("index", "nyc-open-data")

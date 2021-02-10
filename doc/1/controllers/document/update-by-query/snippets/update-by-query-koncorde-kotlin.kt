@@ -1,20 +1,20 @@
-val equals: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
+val equals: Map<String, Any?> =
+  HashMap<String, Any?>().apply {
     put("capacity", 4)
   }
 
-val searchQuery: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
+val searchQuery: Map<String, Any?> =
+  HashMap<String, Any?>().apply {
     put("equals", equals)  
   }
 
-val changes: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
+val changes: Map<String, Any?> =
+  HashMap<String, Any?>().apply {
     put("capacity", 42)
   }
 
 
-val result: ConcurrentHashMap<String, ArrayList<Any?>> =
+val result: Map<String, ArrayList<Any?>> =
   kuzzle
   .documentController
   .updateByQuery("nyc-open-data", "yellow-taxi", searchQuery, changes, lang = Lang.KONCORDE)

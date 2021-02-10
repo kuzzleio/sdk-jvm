@@ -1,14 +1,14 @@
-val match: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
+val match: Map<String, Any?> =
+  HashMap<String, Any?>().apply {
     put("category", "suv")
   }
-val query: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
+val query: Map<String, Any?> =
+  HashMap<String, Any?>().apply {
     put("match", match)
   }
 
-val searchQuery: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
+val searchQuery: Map<String, Any?> =
+  HashMap<String, Any?>().apply {
     put("query", query)
   }
 val results = kuzzle

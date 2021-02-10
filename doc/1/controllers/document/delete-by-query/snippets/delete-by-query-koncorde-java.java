@@ -1,6 +1,6 @@
-ConcurrentHashMap<String, Object> searchQuery = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> query = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> equals = new ConcurrentHashMap<>();
+Map<String, Object> searchQuery = new HashMap<>();
+Map<String, Object> query = new HashMap<>();
+Map<String, Object> equals = new HashMap<>();
 equals.put("capacity", 4);
 query.put("equals", equals);
 searchQuery.put("query", query);

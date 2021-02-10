@@ -15,19 +15,19 @@ Returns information about the user currently logged with the SDK instance.
 ## Arguments
 
 ```java
-public CompletableFuture<ConcurrentHashMap<String, Object>> getCurrentUser()
+public CompletableFuture<Map<String, Object>> getCurrentUser()
   throws NotConnectedException, InternalException
 ```
 
 ## Return
 
-A ConcurrentHashMap representing the User.
+A Map representing the User.
 
 | Property     | Type               | Description                                       |
 |--------------|--------------------|---------------------------------------------------|
 | `_id`        | <pre>String</pre>  | Representing the current user `kuid`              |
 | `strategies` | <pre>Array</pre>  | Available authentication strategies for that user |
-| `_source`    | <pre>ConcurrentHashMap</pre> | User information                                  |
+| `_source`    | <pre>Map</pre> | User information                                  |
 
 ## Usage
 
@@ -39,18 +39,18 @@ A ConcurrentHashMap representing the User.
 ## Arguments
 
 ```kotlin
-fun getCurrentUser(): CompletableFuture<ConcurrentHashMap<String, Any?>>
+fun getCurrentUser(): CompletableFuture<Map<String, Any?>>
 ```
 
 ## Return
 
-A ConcurrentHashMap representing the User.
+A Map representing the User.
 
 | Property     | Type               | Description                                       |
 |--------------|--------------------|---------------------------------------------------|
 | `_id`        | <pre>String</pre>  | Representing the current user `kuid`              |
 | `strategies` | <pre>Array</pre>  | Available authentication strategies for that user |
-| `_source`    | <pre>ConcurrentHashMap</pre> | User information                                  |
+| `_source`    | <pre>Map</pre> | User information                                  |
 
 ## Usage
 

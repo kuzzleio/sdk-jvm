@@ -22,7 +22,7 @@ The index and collection are indicative and serve only to distinguish the rooms.
 public CompletableFuture<Integer> publish(
   String index, 
   String collection, 
-  ConcurrentHashMap<String, Object> message) 
+  Map<String, Object> message) 
     throws NotConnectedException, InternalException
 ```
 
@@ -30,7 +30,7 @@ public CompletableFuture<Integer> publish(
 |--------------|--------------------|-------------------------------------|
 | `index`      | <pre>String</pre>  | Index name                          |
 | `collection` | <pre>String</pre>  | Collection name                     |
-| `message`    | <pre>ConcurrentHashMap<String, Object></pre> | ConcurrentHashMap representing a JSON payload |
+| `message`    | <pre>Map<String, Object></pre> | Map representing a JSON payload |
 
 ## Usage
 
@@ -42,14 +42,14 @@ public CompletableFuture<Integer> publish(
 ## Arguments
 
 ```kotlin
-fun publish(index: String, collection: String, message: ConcurrentHashMap<String?, Any?>): CompletableFuture<Void>
+fun publish(index: String, collection: String, message: Map<String?, Any?>): CompletableFuture<Void>
 ```
 
 | Argument     | Type               | Description                         |
 |--------------|--------------------|-------------------------------------|
 | `index`      | <pre>String</pre>  | Index name                          |
 | `collection` | <pre>String</pre>  | Collection name                     |
-| `message`    | <pre>ConcurrentHashMap<String?, Any?></pre> | ConcurrentHashMap representing a JSON payload |
+| `message`    | <pre>Map<String?, Any?></pre> | Map representing a JSON payload |
 
 ## Usage
 

@@ -15,7 +15,7 @@ Returns the current user's credential information for the specified strategy. Th
 ## Arguments
 
 ```java
-public CompletableFuture<ConcurrentHashMap<String, Object>> getMyCredentials(String strategy)
+public CompletableFuture<Map<String, Object>> getMyCredentials(String strategy)
   throws NotConnectedException, InternalException
 ```
 
@@ -25,7 +25,7 @@ public CompletableFuture<ConcurrentHashMap<String, Object>> getMyCredentials(Str
 
 ## Return
 
-Returns a ConcurrentHashMap representing the credentials for the provided authentication strategy.
+Returns a Map representing the credentials for the provided authentication strategy.
 
 ## Usage
 
@@ -38,7 +38,7 @@ Returns a ConcurrentHashMap representing the credentials for the provided authen
 
 ```kotlin
 fun getMyCredentials(
-      strategy: String): CompletableFuture<ConcurrentHashMap<String, Any?>>
+      strategy: String): CompletableFuture<Map<String, Any?>>
 ```
 
 | Argument   | Type              | Description     |
@@ -47,7 +47,7 @@ fun getMyCredentials(
 
 ## Return
 
-Returns a ConcurrentHashMap representing the credentials for the provided authentication strategy.
+Returns a Map representing the credentials for the provided authentication strategy.
 
 ## Usage
 

@@ -1,26 +1,24 @@
 package io.kuzzle.sdk.coreClasses.maps
 
-import java.util.concurrent.ConcurrentHashMap
-
 /**
- * CustomMap is a Class that extends ConcurrentHashMap to be ThreadSafe and that
- * has the purpose of giving a wrapper on top of ConcurrentHashMap to easily
+ * KuzzleMap is a Class that extends Map to be ThreadSafe and that
+ * has the purpose of giving a wrapper on top of Map to easily
  * manipulate them.
  */
-class KuzzleMap : ConcurrentHashMap<String?, Any?> {
+class KuzzleMap : HashMap<String?, Any?> {
     /**
      * Create a new instance of CustomMap
      */
     constructor() : super() {}
 
     /**
-     * Create a new instance of CustomMap from a ConcurrentHashMap<String></String>,
+     * Create a new instance of CustomMap from a Map<String></String>,
      * Object>.
      *
      * @param map
-     * ConcurrentHashMap<String></String>, Object> representing JSON.
+     * Map<String></String>, Object> representing JSON.
      */
-    constructor(map: ConcurrentHashMap<String?, Any?>) : super() {
+    constructor(map: Map<String?, Any?>) : super() {
         val it = map.entries.iterator()
         while (it.hasNext()) {
             val entry = it.next()
@@ -98,14 +96,14 @@ class KuzzleMap : ConcurrentHashMap<String?, Any?> {
     }
 
     /**
-     * Check whether the key value is a ConcurrentHashMap or not.
+     * Check whether the key value is a Map or not.
      *
      * @param key
      * a String representing the key.
-     * @return true if the key is a ConcurrentHashMap.
+     * @return true if the key is a Map.
      */
     fun isMap(key: String): Boolean {
-        return super.get(key) is ConcurrentHashMap<*, *>
+        return super.get(key) is Map<*, *>
     }
 
     /**
@@ -154,14 +152,14 @@ class KuzzleMap : ConcurrentHashMap<String?, Any?> {
 
     /**
      * Return the specified key value or null if the value is not a
-     * ConcurrentHashMap.
+     * Map.
      *
      * @param key
      * a String representing the key.
-     * @return The ConcurrentHashMap at the key or null
+     * @return The Map at the key or null
      */
     fun getMap(key: String): KuzzleMap? {
-        return if (isMap(key)) from(super.get(key) as ConcurrentHashMap<String?, Any?>) else null
+        return if (isMap(key)) from(super.get(key) as Map<String?, Any?>) else null
     }
 
     /**
@@ -214,14 +212,14 @@ class KuzzleMap : ConcurrentHashMap<String?, Any?> {
 
     /**
      * Return the specified key value or the def value if the value is nul or not
-     * a ConcurrentHashMap.
+     * a Map.
      *
      * @param key
      * a String representing the key.
-     * @return The ConcurrentHashMap at the key or def value
+     * @return The Map at the key or def value
      */
-    fun optMap(key: String, def: ConcurrentHashMap<String?, Any?>): KuzzleMap {
-        return if (isMap(key)) from(super.get(key) as ConcurrentHashMap<String?, Any?>) else from(def)
+    fun optMap(key: String, def: Map<String?, Any?>): KuzzleMap {
+        return if (isMap(key)) from(super.get(key) as Map<String?, Any?>) else from(def)
     }
 
     companion object {
@@ -231,16 +229,14 @@ class KuzzleMap : ConcurrentHashMap<String?, Any?> {
         private const val serialVersionUID = -3027862451021177820L
 
         /**
-         * Convert à ConcurrentHashMap<String></String>, Object> to a CustomMap
+         * Convert à Map<String></String>, Object> to a CustomMap
          *
          * @param map
-         * ConcurrentHashMap<String></String>, Object> representing JSON.
+         * Map<String></String>, Object> representing JSON.
          * @return a CustomMap instance
          */
-        fun from(map: ConcurrentHashMap<String?, Any?>): KuzzleMap {
-            return if (map is KuzzleMap) {
-                map
-            } else KuzzleMap(map)
+        fun from(map: Map<String?, Any?>): KuzzleMap {
+            return KuzzleMap(map)
         }
     }
 }

@@ -9,5 +9,5 @@ runs:
         chmod a+x ktlint
       shell: bash
     - name: Run ktlint
-      run: ./ktlint "src/**/*.kt"
+      run: ./ktlint --disabled_rules="no-wildcard-imports" "src/**/*.kt"
       shell: bash

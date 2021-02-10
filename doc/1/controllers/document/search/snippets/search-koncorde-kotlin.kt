@@ -1,14 +1,14 @@
-val equals: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
+val equals: Map<String, Any?> =
+  HashMap<String, Any?>().apply {
     put("category", "suv")
   }
-val query: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
+val query: Map<String, Any?> =
+  HashMap<String, Any?>().apply {
     put("equals", equals)
   }
 
-val searchQuery: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
+val searchQuery: Map<String, Any?> =
+  HashMap<String, Any?>().apply {
     put("query", query)
   }
 

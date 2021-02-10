@@ -2,7 +2,6 @@ package io.kuzzle.sdk.coreClasses.responses
 
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.maps.Serializable
-import java.util.concurrent.ConcurrentHashMap
 
 class ErrorResponse : Serializable {
     /**
@@ -25,7 +24,7 @@ class ErrorResponse : Serializable {
      */
     var stack: String? = null
 
-    override fun fromMap(map: ConcurrentHashMap<String?, Any?>?) {
+    override fun fromMap(map: Map<String?, Any?>?) {
         if (map == null) return
         val kuzzleMap: KuzzleMap? = KuzzleMap?.from(map)
         status = kuzzleMap?.optNumber("status", 0)!!.toInt()
@@ -34,8 +33,8 @@ class ErrorResponse : Serializable {
         id = kuzzleMap?.getString("id")
     }
 
-    override fun toMap(): ConcurrentHashMap<String?, Any?> {
-        val map: ConcurrentHashMap<String?, Any?> = KuzzleMap()
+    override fun toMap(): Map<String?, Any?> {
+        val map = KuzzleMap()
         map["status"] = status
         map["message"] = message!!
         map["stack"] = stack!!

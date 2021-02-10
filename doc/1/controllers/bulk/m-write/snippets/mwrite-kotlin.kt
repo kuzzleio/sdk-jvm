@@ -1,11 +1,9 @@
-val documents: ArrayList<ConcurrentHashMap<String, Any?>> = ArrayList<ConcurrentHashMap<String, Any?>>().apply {
-    add(
-        ConcurrentHashMap<String, Any?>().apply {
-            put("_id", "foo")
-            put("body", ConcurrentHashMap<String, Any?>())
-        }
-    )
-}
+val documents: ArrayList<Map<String, Any?>> = ArrayList<Map<String, Any?>>().apply {
+  add(HashMap<String, Any?>().apply {
+    put("_id", "foo")
+    put("body", HashMap<String, Any?>())
+  })
+};
 
-val result: ConcurrentHashMap<String, Any?> =
-    kuzzle.bulkController.mWrite("nyc-open-data", "yellow-taxi", documents).get()
+val result: Map<String, Any?> = 
+kuzzle.bulkController.mWrite("nyc-open-data", "yellow-taxi", documents).get();

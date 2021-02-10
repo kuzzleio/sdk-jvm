@@ -1,4 +1,4 @@
-ConcurrentHashMap<String, Object> result = kuzzle
+Map<String, Object> result = kuzzle
     .getCollectionController()
     .getMapping("nyc-open-data", "yellow-taxi")
     .get();

@@ -151,7 +151,7 @@ New created document notification:
 
 ```
 
-You should see the document content as a `ConcurrentHashMap`.
+You should see the document content as a `Map`.
 
 Now, you know how to:
 

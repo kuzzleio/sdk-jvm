@@ -1,7 +1,7 @@
 
-ConcurrentHashMap<String, Object> searchQuery = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> filters = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> args = new ConcurrentHashMap<>();
+Map<String, Object> searchQuery = new HashMap<>();
+Map<String, Object> filters = new HashMap<>();
+Map<String, Object> args = new HashMap<>();
 
 filters.put("match_all", args);
 searchQuery.put("query", filters);

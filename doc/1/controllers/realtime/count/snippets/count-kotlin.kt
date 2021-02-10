@@ -1,5 +1,5 @@
-val filters: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>().apply {
-    put("exists", "name")
+val filters: Map<String, Any> = HashMap<String, Any>().apply {
+  put("exists", "name")
 }
 
 val roomId: String = kuzzle.realtimeController.subscribe(

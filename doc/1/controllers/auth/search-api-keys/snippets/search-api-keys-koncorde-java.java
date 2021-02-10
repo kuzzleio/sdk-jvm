@@ -1,8 +1,8 @@
 
-ConcurrentHashMap<String, Object> description = new ConcurrentHashMap<>();
+Map<String, Object> description = new HashMap<>();
 description.put("description", "LoRa permanent API Key");
 
-ConcurrentHashMap<String, Object> query = new ConcurrentHashMap<>();
+Map<String, Object> query = new HashMap<>();
 query.put("controller", "security");
 query.put("action", "createApiKey");
 query.put("userId", "jared.doe");
@@ -20,16 +20,16 @@ query.put("body", description);
 query.put("expiresIn", 36000);
 kuzzle.query(query).get();
 
-ConcurrentHashMap<String, Object> credentials = new ConcurrentHashMap<>();
+Map<String, Object> credentials = new HashMap<>();
 credentials.put("username", "jared.doe");
 credentials.put("password", "password");
 
 kuzzle.getAuthController().login("local", credentials).get();
 
-ConcurrentHashMap<String, Object> equals = new ConcurrentHashMap<>();
+Map<String, Object> equals = new HashMap<>();
 equals.put("ttl", "36000");
 
-ConcurrentHashMap<String, Object> squery = new ConcurrentHashMap<>();
+Map<String, Object> squery = new HashMap<>();
 squery.put("equals", equals);
 
 SearchResult results = kuzzle

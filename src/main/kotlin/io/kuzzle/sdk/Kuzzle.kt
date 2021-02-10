@@ -17,7 +17,6 @@ import io.kuzzle.sdk.protocol.AbstractProtocol
 import io.kuzzle.sdk.protocol.ProtocolState
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.HashMap
 
 class Kuzzle {
@@ -55,7 +54,7 @@ class Kuzzle {
 
     private fun onMessageReceived(message: String?) {
         val response = Response().apply {
-            fromMap(JsonSerializer.deserialize(message) as ConcurrentHashMap<String?, Any?>)
+            fromMap(JsonSerializer.deserialize(message) as Map<String?, Any?>)
         }
 
         if (queries.size == 0 || (queries.size != 0 && (response.room == null || queries[response.room!!] == null))) {
@@ -95,7 +94,7 @@ class Kuzzle {
         protocol.disconnect()
     }
 
-    fun query(query: ConcurrentHashMap<String?, Any?>): CompletableFuture<Response> {
+    fun query(query: Map<String?, Any?>): CompletableFuture<Response> {
         if (protocol.state == ProtocolState.CLOSE) {
             throw NotConnectedException()
         }
@@ -116,7 +115,7 @@ class Kuzzle {
         }
 
         queries[requestId] = futureRes
-        query["requestId"] = requestId
+        queryMap["requestId"] = requestId
 
         if (!queryMap.containsKey("volatile") || queryMap.isNull("volatile")) {
             queryMap["volatile"] = KuzzleMap()
@@ -128,7 +127,7 @@ class Kuzzle {
 
         queryMap.getMap("volatile")!!["sdkName"] = sdkName
 
-        protocol.send(query)
+        protocol.send(queryMap)
 
         return futureRes
     }

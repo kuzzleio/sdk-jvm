@@ -1,6 +1,6 @@
-val searchQuery: ConcurrentHashMap<String, Any?> = ConcurrentHashMap<String, Any?>().apply {
-  put("query", ConcurrentHashMap<String, Any?>().apply {
-    put("equals", ConcurrentHashMap<String, Any?>().apply {
+val searchQuery: Map<String, Any?> = HashMap<String, Any?>().apply {
+  put("query", HashMap<String, Any?>().apply {
+    put("equals", HashMap<String, Any?>().apply {
       put("capacity", 4)
     })
   })

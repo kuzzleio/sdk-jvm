@@ -20,7 +20,6 @@ import java.io.IOException
 import java.net.ConnectException
 import java.net.SocketException
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedQueue
 import kotlin.concurrent.thread
 
@@ -154,7 +153,7 @@ open class WebSocket : AbstractProtocol {
         }
     }
 
-    override fun send(payload: ConcurrentHashMap<String?, Any?>) {
+    override fun send(payload: Map<String?, Any?>) {
         queue.add(JsonSerializer.serialize(payload))
     }
 }

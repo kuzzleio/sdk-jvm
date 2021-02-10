@@ -1,6 +1,6 @@
-val filters: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>().apply {
-  put("range", ConcurrentHashMap<String, Any>().apply {
-    put("age", ConcurrentHashMap<String, Any>().apply {
+val filters: Map<String, Any> = HashMap<String, Any>().apply {
+  put("range", HashMap<String, Any>().apply {
+    put("age", HashMap<String, Any>().apply {
       put("lte", 20)
     })
   })
@@ -17,10 +17,10 @@ val roomId: String = kuzzle.realtimeController.subscribe(
   }
 }.get()
 
-val document: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>().apply {
+val document = HashMap<String, Any>().apply {
   put("age", 19)
 }
-val query: ConcurrentHashMap<String?, Any?> = ConcurrentHashMap<String?, Any?>().apply {
+val query = HashMap<String?, Any?>().apply {
   put("controller", "document");
   put("action", "create");
   put("index", "nyc-open-data");

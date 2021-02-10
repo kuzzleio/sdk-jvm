@@ -1,10 +1,8 @@
 import io.kuzzle.sdk.Kuzzle;
 import io.kuzzle.sdk.protocol.WebSocket;
-import java.util.Date;
 import io.kuzzle.sdk.coreClasses.responses.Response;
 import io.kuzzle.sdk.coreClasses.lang.Lang;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.ArrayList;
+import java.util.*;
 
 public class SnippetTest {
   private static Kuzzle kuzzle;

@@ -1,6 +1,6 @@
-    ConcurrentHashMap<String, Object> searchQuery = new ConcurrentHashMap<>();
-    ConcurrentHashMap<String, Object> query = new ConcurrentHashMap<>();
-    ConcurrentHashMap<String, Object> match = new ConcurrentHashMap<>();
+    Map<String, Object> searchQuery = new HashMap<>();
+    Map<String, Object> query = new HashMap<>();
+    Map<String, Object> match = new HashMap<>();
     match.put("category", "suv");
     query.put("match", match);
     searchQuery.put("query", query);
@@ -11,7 +11,7 @@
       searchQuery, 1, 5).get();
 
     // Fetch the matched items by advancing through the result pages
-    ArrayList<ConcurrentHashMap<String, Object>> matched = new ArrayList<>();
+    ArrayList<Map<String, Object>> matched = new ArrayList<>();
 
     while (results != null) {
       matched.addAll(results.hits);

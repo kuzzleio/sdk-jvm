@@ -33,19 +33,19 @@ An empty or null query will match all documents in the collection.
 
 ```java
 public CompletableFuture<SearchResult> searchApiKeys(
-  ConcurrentHashMap<String, Object> query) throws NotConnectedException, InternalException
+  Map<String, Object> query) throws NotConnectedException, InternalException
 
 public CompletableFuture<SearchResult> searchApiKeys(
-  ConcurrentHashMap<String, Object> query,
+  Map<String, Object> query,
   Integer from) throws NotConnectedException, InternalException
 
 public CompletableFuture<SearchResult> searchApiKeys(
-  ConcurrentHashMap<String, Object> query
+  Map<String, Object> query
   Integer from
   Integer size) throws NotConnectedException, InternalException
 
 public CompletableFuture<SearchResult> searchApiKeys(
-  ConcurrentHashMap<String, Object> query
+  Map<String, Object> query
   Integer from
   Integer size,
   Lang lang) throws NotConnectedException, InternalException
@@ -54,7 +54,7 @@ public CompletableFuture<SearchResult> searchApiKeys(
 
 | Property | Type | Description |
 | --- | --- | --- |
-| `query` | <pre>ConcurrentHashMap<String, Object></pre> | Search query |
+| `query` | <pre>Map<String, Object></pre> | Search query |
 | `from`     | <pre>Integer</pre><br/>(`0`)     | (optional) Offset of the first document to fetch   |
 | `size`     | <pre>Integer</pre>    | (optional) Maximum number of documents to retrieve per page     |
 | `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
@@ -88,7 +88,7 @@ With the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
 
 ```kotlin
 fun searchApiKeys(
-    query: ConcurrentHashMap<String, Any?>,
+    query: Map<String, Any?>,
     from: Int = 0,
     size: Int? = null,
     lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<SearchResult>
@@ -97,7 +97,7 @@ fun searchApiKeys(
 
 | Property | Type | Description |
 | --- | --- | --- |
-| `query` | <pre>ConcurrentHashMap<String, Any?></pre> | Search query |
+| `query` | <pre>Map<String, Any?></pre> | Search query |
 | `from`     | <pre>Int</pre><br/>(`0`)     | (optional) Offset of the first document to fetch   |
 | `size`     | <pre>Int</pre>    | (optional) Maximum number of documents to retrieve per page     |
 | `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |

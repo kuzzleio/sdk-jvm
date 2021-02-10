@@ -1,5 +1,5 @@
-import io.kuzzle.sdk.*
-import io.kuzzle.sdk.protocol.WebSocket
+import io.kuzzle.sdk.*;
+import io.kuzzle.sdk.protocol.WebSocket;
 
 fun main() {
     // Creates a WebSocket connection.

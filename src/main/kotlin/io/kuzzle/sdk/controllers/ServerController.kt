@@ -4,7 +4,6 @@ import io.kuzzle.sdk.Kuzzle
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import java.util.Date
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.ConcurrentHashMap
 
 class ServerController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
@@ -18,12 +17,12 @@ class ServerController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             .query(query)
             .thenApplyAsync { response ->
                 KuzzleMap
-                    .from(response.result as ConcurrentHashMap<String?, Any?>)
+                    .from(response.result as Map<String?, Any?>)
                     .getBoolean("exists")
             }
     }
 
-    fun getAllStats(): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    fun getAllStats(): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("controller", "server")
             put("action", "getAllStats")
@@ -31,11 +30,11 @@ class ServerController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         return kuzzle
             .query(query)
             .thenApplyAsync { response ->
-                response.result as ConcurrentHashMap<String, Any?>
+                response.result as Map<String, Any?>
             }
     }
 
-    fun getConfig(): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    fun getConfig(): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("controller", "server")
             put("action", "getConfig")
@@ -43,11 +42,11 @@ class ServerController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         return kuzzle
             .query(query)
             .thenApplyAsync { response ->
-                response.result as ConcurrentHashMap<String, Any?>
+                response.result as Map<String, Any?>
             }
     }
 
-    fun getLastStats(): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    fun getLastStats(): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("controller", "server")
             put("action", "getLastStats")
@@ -55,11 +54,11 @@ class ServerController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         return kuzzle
             .query(query)
             .thenApplyAsync { response ->
-                response.result as ConcurrentHashMap<String, Any?>
+                response.result as Map<String, Any?>
             }
     }
 
-    fun getStats(startTime: Date, stopTime: Date): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    fun getStats(startTime: Date, stopTime: Date): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("controller", "server")
             put("action", "getStats")
@@ -69,11 +68,11 @@ class ServerController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         return kuzzle
             .query(query)
             .thenApplyAsync { response ->
-                response.result as ConcurrentHashMap<String, Any?>
+                response.result as Map<String, Any?>
             }
     }
 
-    fun info(): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    fun info(): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("controller", "server")
             put("action", "info")
@@ -81,7 +80,7 @@ class ServerController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         return kuzzle
             .query(query)
             .thenApplyAsync { response ->
-                response.result as ConcurrentHashMap<String, Any?>
+                response.result as Map<String, Any?>
             }
     }
 
@@ -95,7 +94,7 @@ class ServerController(kuzzle: Kuzzle) : BaseController(kuzzle) {
                 }
             )
             .thenApplyAsync { response ->
-                val date = ((response.result as ConcurrentHashMap<String, Any>)["now"]).toString().toLong()
+                val date = ((response.result as Map<String, Any>)["now"]).toString().toLong()
                 Date(date)
             }
     }
