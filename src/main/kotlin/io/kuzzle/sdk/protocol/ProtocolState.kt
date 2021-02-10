@@ -1,7 +1,7 @@
 package io.kuzzle.sdk.protocol
 
 enum class ProtocolState {
-  CLOSE,  // The network protocol does not accept requests.
-  OPEN, // The network protocol accepts new requests.
-  RECONNECTING // The nerwork protocol is trying to reconnect
+    CLOSE, // The network protocol does not accept requests.
+    OPEN, // The network protocol accepts new requests.
+    RECONNECTING // The nerwork protocol is trying to reconnect
 }
