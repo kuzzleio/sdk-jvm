@@ -125,14 +125,14 @@ With the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
 
 ```kotlin
 fun updateByQuery(
-    index: String,
-    collection: String,
-    searchQuery: Map<String, Any?>,
-    changes: Map<String, Any?>,
-    waitForRefresh: Boolean? = null,
-    retryOnConflict: Int? = null,
-    source: Boolean? = null,
-    lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<Map<String, ArrayList<Any?>>>
+  index: String,
+  collection: String,
+  searchQuery: Map<String, Any?>,
+  changes: Map<String, Any?>,
+  waitForRefresh: Boolean? = null,
+  retryOnConflict: Int? = null,
+  source: Boolean? = null,
+  lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<Map<String, ArrayList<Any?>>>
 ```
 
 | Argument           | Type                                         | Description     |
