@@ -1,12 +1,30 @@
 package io.kuzzle.sdk.controllers
 
 import io.kuzzle.sdk.Kuzzle
+import io.kuzzle.sdk.coreClasses.SearchResult
+import io.kuzzle.sdk.coreClasses.lang.Lang
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.responses.Response
-import java.util.*
 import java.util.concurrent.CompletableFuture
 
 class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
+
+    fun checkRights(
+        requestPayload: Map<String, Any?>
+    ): CompletableFuture<Boolean> {
+        val query = KuzzleMap().apply {
+            put("controller", "auth")
+            put("action", "checkRights")
+            put("body", requestPayload)
+        }
+        return kuzzle
+            .query(query)
+            .thenApplyAsync { response ->
+                KuzzleMap
+                    .from(response.result as Map<String?, Any?>)
+                    .getBoolean("allowed") as Boolean
+            }
+    }
 
     fun checkToken(
         token: String
@@ -163,6 +181,34 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             kuzzle.authenticationToken = map.getString("jwt")
             map as Map<String, Any?>
         }
+    }
+
+    @JvmOverloads
+    fun searchApiKeys(
+        query: Map<String, Any?>,
+        from: Int = 0,
+        size: Int? = null,
+        lang: Lang = Lang.ELASTICSEARCH
+    ): CompletableFuture<SearchResult> {
+        val query = KuzzleMap().apply {
+            put("controller", "auth")
+            put("action", "searchApiKeys")
+            put("body", query)
+            put("from", from)
+            put("size", size)
+            put("lang", lang.lang)
+        }
+        return kuzzle
+            .query(query)
+            .thenApplyAsync { response -> SearchResult(kuzzle, query, null, from, size, lang.lang, response) }
+    }
+
+    fun searchApiKeys(
+        query: Map<String, Any?>,
+        lang: Lang = Lang.ELASTICSEARCH
+    ): CompletableFuture<SearchResult> {
+
+        return searchApiKeys(query, 0, null, lang)
     }
 
     fun updateMyCredentials(

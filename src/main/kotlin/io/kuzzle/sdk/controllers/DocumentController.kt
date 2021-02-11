@@ -3,6 +3,7 @@ package io.kuzzle.sdk.controllers
 import com.google.gson.internal.LazilyParsedNumber
 import io.kuzzle.sdk.Kuzzle
 import io.kuzzle.sdk.coreClasses.SearchResult
+import io.kuzzle.sdk.coreClasses.lang.Lang
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import java.util.concurrent.CompletableFuture
 
@@ -85,7 +86,6 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             put("_id", id)
             put("waitForRefresh", waitForRefresh)
         }
-
         return kuzzle
             .query(query)
             .thenApplyAsync { response -> response.result as Map<String, Any?> }
@@ -96,7 +96,8 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         index: String,
         collection: String,
         searchQuery: Map<String, Any?>,
-        waitForRefresh: Boolean? = null
+        waitForRefresh: Boolean? = null,
+        lang: Lang = Lang.ELASTICSEARCH
     ): CompletableFuture<ArrayList<String>> {
         val query = KuzzleMap().apply {
             put("index", index)
@@ -105,10 +106,21 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             put("action", "deleteByQuery")
             put("body", searchQuery)
             put("waitForRefresh", waitForRefresh)
+            put("lang", lang.lang)
         }
         return kuzzle
             .query(query)
             .thenApplyAsync { response -> (response.result as Map<String?, Any?>)["ids"] as ArrayList<String> }
+    }
+
+    fun deleteByQuery(
+        index: String,
+        collection: String,
+        searchQuery: Map<String, Any?>,
+        lang: Lang = Lang.ELASTICSEARCH
+    ): CompletableFuture<ArrayList<String>> {
+
+        return deleteByQuery(index, collection, searchQuery, null, lang)
     }
 
     fun exists(
@@ -284,7 +296,6 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             put("_id", id)
             put("waitForRefresh", waitForRefresh)
         }
-
         return kuzzle
             .query(query)
             .thenApplyAsync { response -> response.result as Map<String, Any?> }
@@ -297,7 +308,8 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         searchQuery: Map<String, Any?>,
         scroll: String? = null,
         size: Int? = null,
-        from: Int = 0
+        from: Int = 0,
+        lang: Lang = Lang.ELASTICSEARCH
     ): CompletableFuture<SearchResult> {
         val query = KuzzleMap().apply {
             put("index", index)
@@ -308,14 +320,38 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             put("from", from)
             put("size", size)
             put("scroll", scroll)
+            put("lang", lang.lang)
         }
+
         if (scroll != null) {
             query["scroll"] = scroll
         }
 
         return kuzzle
             .query(query)
-            .thenApplyAsync { response -> SearchResult(kuzzle, query, scroll, from, size, response) }
+            .thenApplyAsync { response -> SearchResult(kuzzle, query, scroll, from, size, lang.lang, response) }
+    }
+
+    fun search(
+        index: String,
+        collection: String,
+        searchQuery: Map<String, Any?>,
+        size: Int? = null,
+        from: Int = 0,
+        lang: Lang = Lang.ELASTICSEARCH
+    ): CompletableFuture<SearchResult> {
+
+        return search(index, collection, searchQuery, null, size, from, lang)
+    }
+
+    fun search(
+        index: String,
+        collection: String,
+        searchQuery: Map<String, Any?>,
+        lang: Lang = Lang.ELASTICSEARCH
+    ): CompletableFuture<SearchResult> {
+
+        return search(index, collection, searchQuery, null, null, 0, lang)
     }
 
     fun search(
@@ -326,7 +362,7 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         from: Int = 0
     ): CompletableFuture<SearchResult> {
 
-        return search(index, collection, searchQuery, null, size, from)
+        return search(index, collection, searchQuery, null, size, from, Lang.ELASTICSEARCH)
     }
 
     @JvmOverloads
@@ -363,7 +399,8 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         changes: Map<String, Any?>,
         waitForRefresh: Boolean? = null,
         retryOnConflict: Int? = null,
-        source: Boolean? = null
+        source: Boolean? = null,
+        lang: Lang = Lang.ELASTICSEARCH
     ): CompletableFuture<Map<String, ArrayList<Any?>>> {
         val query = KuzzleMap().apply {
             put("index", index)
@@ -380,11 +417,23 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             put("source", source)
             put("retryOnConflict", retryOnConflict)
             put("waitForRefresh", waitForRefresh)
+            put("lang", lang.lang)
         }
 
         return kuzzle
             .query(query)
             .thenApplyAsync { response -> response.result as Map<String, ArrayList<Any?>> }
+    }
+
+    fun updateByQuery(
+        index: String,
+        collection: String,
+        searchQuery: Map<String, Any?>,
+        changes: Map<String, Any?>,
+        lang: Lang = Lang.ELASTICSEARCH
+    ): CompletableFuture<Map<String, ArrayList<Any?>>> {
+
+        return updateByQuery(index, collection, searchQuery, changes, null, null, null, lang)
     }
 
     fun validate(

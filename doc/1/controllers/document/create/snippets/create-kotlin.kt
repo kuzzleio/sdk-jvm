@@ -4,6 +4,6 @@ val document: Map<String, Any?> = HashMap<String, Any?>().apply {
 
 val result: Map<String, Any?> =
     kuzzle
-      .documentController
-      .create("nyc-open-data", "yellow-taxi", document)
-      .get();
+        .documentController
+        .create("nyc-open-data", "yellow-taxi", document)
+        .get()

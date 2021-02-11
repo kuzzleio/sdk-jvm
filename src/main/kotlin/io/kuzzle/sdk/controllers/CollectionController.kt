@@ -151,7 +151,7 @@ class CollectionController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         }
         return kuzzle
             .query(query)
-            .thenApplyAsync { response -> SearchResult(kuzzle, query, scroll, from, size, response) }
+            .thenApplyAsync { response -> SearchResult(kuzzle, query, scroll, from, size, null, response) }
     }
 
     fun truncate(

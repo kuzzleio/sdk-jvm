@@ -27,7 +27,15 @@ public CompletableFuture<Map<String, ArrayList<Object>>> mUpdate(
       String index,
       String collection,
       ArrayList<Map<String, Object>> documents,
-      UpdateOptions options)
+      Boolean waitForRefresh)
+throws NotConnectedException, InternalException
+
+public CompletableFuture<Map<String, ArrayList<Object>>> mUpdate(
+      String index,
+      String collection,
+      ArrayList<Map<String, Object>> documents,
+      Boolean waitForRefresh,
+      Integer retryOnConflict)
 throws NotConnectedException, InternalException
 ```
 

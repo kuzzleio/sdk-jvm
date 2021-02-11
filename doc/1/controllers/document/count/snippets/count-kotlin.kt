@@ -6,6 +6,6 @@ val searchQuery : Map<String, Any?> =
     }
 
 val result: Int = kuzzle
-  .documentController
-  .count("nyc-open-data", "yellow-taxi", searchQuery)
-  .get();
+    .documentController
+    .count("nyc-open-data", "yellow-taxi", searchQuery)
+    .get()

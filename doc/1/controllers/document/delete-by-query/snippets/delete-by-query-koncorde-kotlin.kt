@@ -1,6 +1,6 @@
 val searchQuery: Map<String, Any?> = HashMap<String, Any?>().apply {
   put("query", HashMap<String, Any?>().apply {
-    put("match", HashMap<String, Any?>().apply {
+    put("equals", HashMap<String, Any?>().apply {
       put("capacity", 4)
     })
   })
@@ -8,5 +8,5 @@ val searchQuery: Map<String, Any?> = HashMap<String, Any?>().apply {
 
 val result: ArrayList<String> = kuzzle
   .documentController
-  .deleteByQuery("nyc-open-data", "yellow-taxi", searchQuery)
+  .deleteByQuery("nyc-open-data", "yellow-taxi", searchQuery, lang = Lang.KONCORDE)
   .get()

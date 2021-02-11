@@ -2,7 +2,6 @@ package io.kuzzle.sdk.controllers
 
 import io.kuzzle.sdk.Kuzzle
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
-import java.util.*
 import java.util.concurrent.CompletableFuture
 
 class IndexController(kuzzle: Kuzzle) : BaseController(kuzzle) {

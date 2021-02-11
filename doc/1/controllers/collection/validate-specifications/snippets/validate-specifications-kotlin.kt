@@ -13,4 +13,4 @@ val specifications: Map<String, Any> = HashMap<String, Any>().apply {
 val result = kuzzle
     .collectionController
     .validateSpecifications("nyc-open-data", "yellow-taxi", specifications)
-    .get();
+    .get()

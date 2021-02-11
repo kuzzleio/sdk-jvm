@@ -5,6 +5,6 @@ val ids: ArrayList<String> = ArrayList<String>().apply {
 
 val result: Map<String, ArrayList<Any>> =
     kuzzle
-    .documentController
-    .mDelete("nyc-open-data", "yellow-taxi", ids)
-    .get()
+        .documentController
+        .mDelete("nyc-open-data", "yellow-taxi", ids)
+        .get()

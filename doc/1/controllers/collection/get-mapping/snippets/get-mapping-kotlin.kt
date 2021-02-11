@@ -1,7 +1,7 @@
 val result = kuzzle
     .collectionController
     .getMapping("nyc-open-data", "yellow-taxi")
-    .get();
+    .get()
 
 /*
 {

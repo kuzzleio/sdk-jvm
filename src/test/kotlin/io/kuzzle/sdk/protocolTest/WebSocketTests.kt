@@ -11,7 +11,8 @@ import io.ktor.http.headersOf
 import io.ktor.util.KtorExperimentalAPI
 import io.kuzzle.sdk.protocol.ProtocolState
 import io.kuzzle.sdk.protocol.WebSocket
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
 

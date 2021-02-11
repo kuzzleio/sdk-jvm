@@ -16,7 +16,7 @@ HashMap<String, Any?>().apply{
 val result: Map<String, Any?> = kuzzle
     .collectionController
     .updateSpecifications("nyc-open-data", "yellow-taxi", specifications)
-    .get();
+    .get()
 
 /*
    {

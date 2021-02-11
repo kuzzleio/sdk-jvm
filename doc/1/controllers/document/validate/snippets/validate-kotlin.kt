@@ -3,10 +3,8 @@ val document: Map<String, Any?> =
     put("key", "value")
   }
 
-
 val result: Boolean =
-  kuzzle
-  .documentController
-  .validate("nyc-open-data", "yellow-taxi", document)
-  .get()
-  
+    kuzzle
+        .documentController
+        .validate("nyc-open-data", "yellow-taxi", document)
+        .get()
