@@ -11,7 +11,7 @@ Deletes documents matching the provided search query.
 
 Kuzzle uses the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/query-dsl.html) syntax.
 
-<SinceBadge version="change-me"/>
+<SinceBadge version="1.1.0"/>
 
 This method also supports the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) to match documents by passing the `lang` argument with the value `koncorde`.  
 Koncorde filters will be translated into an Elasticsearch query.  
@@ -59,7 +59,7 @@ An empty or null query will match all documents in the collection.
 | `collection`       | <pre>String</pre>                            | Collection name |
 | `searchQuery`      | <pre>Map<String, Object></pre> | Query to match  |
 | `waitForRefresh`   | <pre>Boolean</pre> (optional)                | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing |
-| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="1.1.0"/> |
 
 ---
 
@@ -98,7 +98,7 @@ fun deleteByQuery(
 | `collection`       | <pre>String</pre>                            | Collection name |
 | `searchQuery`      | <pre>Map<String, Any?></pre> | Query to match  |
 | `waitForRefresh`   | <pre>Boolean</pre> (optional)                | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing |
-| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="1.1.0"/> |
 
 ---
 

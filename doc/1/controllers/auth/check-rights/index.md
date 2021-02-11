@@ -8,7 +8,7 @@ description: Using the current authentication information, verify if the network
 # checkRights
 
 <SinceBadge version="Kuzzle 2.8.0"/>
-<SinceBadge version="auto-version"/>
+<SinceBadge version="1.1.0"/>
 
 Using the current authentication information, verify if the network connection can execute the required API request.
 

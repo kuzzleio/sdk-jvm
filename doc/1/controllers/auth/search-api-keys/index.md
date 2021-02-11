@@ -7,7 +7,7 @@ description: Searches API keys for the currently logged user.
 
 # searchApiKeys
 
-<SinceBadge version="auto-version" />
+<SinceBadge version="1.1.0" />
 
 <SinceBadge version="Kuzzle 2.1.0" />
 
@@ -15,7 +15,7 @@ Searches API keys for the currently logged user.
 
 Kuzzle uses the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/query-dsl.html) syntax.
 
-<SinceBadge version="change-me"/>
+<SinceBadge version="1.1.0"/>
 
 This method also supports the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) to match documents by passing the `lang` argument with the value `koncorde`.  
 Koncorde filters will be translated into an Elasticsearch query.  
@@ -57,7 +57,7 @@ public CompletableFuture<SearchResult> searchApiKeys(
 | `query` | <pre>Map<String, Object></pre> | Search query |
 | `from`     | <pre>Integer</pre><br/>(`0`)     | (optional) Offset of the first document to fetch   |
 | `size`     | <pre>Integer</pre>    | (optional) Maximum number of documents to retrieve per page     |
-| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="1.1.0"/> |
 
 ### query
 
@@ -100,7 +100,7 @@ fun searchApiKeys(
 | `query` | <pre>Map<String, Any?></pre> | Search query |
 | `from`     | <pre>Int</pre><br/>(`0`)     | (optional) Offset of the first document to fetch   |
 | `size`     | <pre>Int</pre>    | (optional) Maximum number of documents to retrieve per page     |
-| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="1.1.0"/> |
 
 ### query
 

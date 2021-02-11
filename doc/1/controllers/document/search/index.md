@@ -28,7 +28,7 @@ It can lead to memory leaks if a scroll duration too great is provided, or if to
 You can restrict the scroll session maximum duration under the `services.storage.maxScrollDuration` configuration key.
 :::
 
-<SinceBadge version="change-me"/>
+<SinceBadge version="1.1.0"/>
 
 This method also supports the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) to match documents by passing the `lang` argument with the value `koncorde`.  
 Koncorde filters will be translated into an Elasticsearch query.  
@@ -95,7 +95,7 @@ throws NotConnectedException, InternalException
 | `from`     | <pre>Integer</pre><br/>(`0`)    | Offset of the first document to fetch                                                                                                                                                                             |
 | `size`     | <pre>Integer</pre><br/>(`10`)   | Maximum number of documents to retrieve per page                                                                                                                                                                  |
 | `scroll`   | <pre>String</pre><br/>(`""`)    | When set, gets a forward-only cursor having its ttl set to the given value (ie `1s`; cf [elasticsearch time limits](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#time-units)) |
-| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="1.1.0"/> |
 ---
 
 ### searchQuery body properties:
@@ -146,7 +146,7 @@ With the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
 | `from`     | <pre>Int</pre><br/>(`0`)    | Offset of the first document to fetch                                                                                                                                                                             |
 | `size`     | <pre>Int</pre><br/>(`10`)   | Maximum number of documents to retrieve per page                                                                                                                                                                  |
 | `scroll`   | <pre>String</pre><br/>(`""`)    | When set, gets a forward-only cursor having its ttl set to the given value (ie `1s`; cf [elasticsearch time limits](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#time-units)) |
-| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="1.1.0"/> |
 ---
 
 ### searchQuery body properties:

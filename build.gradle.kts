@@ -94,7 +94,7 @@ bintray {
 }
 
 group = "io.kuzzle.sdk"
-version = "1.0.2"
+version = "1.1.0"
 val ktorVersion = "1.3.2"
 
 repositories {

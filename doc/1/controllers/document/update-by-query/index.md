@@ -11,7 +11,7 @@ Updates documents matching the provided search query.
 
 Kuzzle uses the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/7.4/query-dsl.html) syntax.
 
-<SinceBadge version="change-me"/>
+<SinceBadge version="1.1.0"/>
 
 This method also supports the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) to match documents by passing the `lang` argument with the value `koncorde`.  
 Koncorde filters will be translated into an Elasticsearch query.  
@@ -85,7 +85,7 @@ An empty or null query will match all documents in the collection.
 | `changes`          | <pre>Map<String, Object></pre> | Partial changes to apply to the documents |
 | `waitForRefresh`   | <pre>Boolean</pre>                           | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
 | `source`           | <pre>Boolean</pre>                           | If true, returns the updated document inside the response |
-| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="1.1.0"/> |
 
 ---
 
@@ -144,7 +144,7 @@ fun updateByQuery(
 | `waitForRefresh`   | <pre>Boolean</pre>                           | If set to `true`, Kuzzle will wait for the persistence layer to finish indexing|
 | `retryOnConflict`  | <pre>Int</pre> (optional)                | The number of times the database layer should retry in case of version conflict |
 | `source`           | <pre>Boolean</pre>                           | If true, returns the updated document inside the response |
-| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="change-me"/> |
+| `lang`     | <pre>[Lang](/sdk/jvm/1/core-classes/lang)</pre>               | Specify the query language to use. By default, it's `elasticsearch` but `koncorde` can also be used. <SinceBadge version="1.1.0"/> |
 
 ---
 
