@@ -13,7 +13,7 @@ Returns information about Kuzzle: available API (base + extended), plugins, exte
 ::: tab Java
 
 ```java
-CompletableFuture<ConcurrentHashMap<String, Object>> info()
+CompletableFuture<Map<String, Object>> info()
 ```
 
 ## Return
@@ -27,12 +27,12 @@ Returns a `Map<String, dynamic>` containing server information.
 ::: tab Kotlin
 
 ```kotlin
-fun info(): CompletableFuture<ConcurrentHashMap<String, Any?>>
+fun info(): CompletableFuture<Map<String, Any?>>
 ```
 
 ## Return
 
-Returns a `ConcurrentHashMap<String, Object>` containing server information.
+Returns a `Map<String, Object>` containing server information.
 
 ## Usage
 

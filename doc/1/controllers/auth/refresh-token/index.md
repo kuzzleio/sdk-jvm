@@ -19,10 +19,10 @@ Refreshes an authentication token.
 ## Arguments
 
 ```java
-CompletableFuture<ConcurrentHashMap<String, Object>> refreshToken(
+CompletableFuture<Map<String, Object>> refreshToken(
   String expiresIn) throws NotConnectedException, InternalException
 
-CompletableFuture<ConcurrentHashMap<String, Object>> refreshToken()
+CompletableFuture<Map<String, Object>> refreshToken()
   throws NotConnectedException, InternalException
 ```
 
@@ -34,7 +34,7 @@ CompletableFuture<ConcurrentHashMap<String, Object>> refreshToken()
 
 ## Return
 
-A ConcurrentHashMap with the following properties:
+A Map with the following properties:
 
 | Property    | Type              | Description                                                                              |
 |-------------|-------------------|------------------------------------------------------------------------------------------|
@@ -55,7 +55,7 @@ Once `auth:refreshToken` has been called, the returned authentication token is s
 
 ```kotlin
 fun refreshToken(
-      expiresIn: String? = null): CompletableFuture<ConcurrentHashMap<String, Any?>>
+      expiresIn: String? = null): CompletableFuture<Map<String, Any?>>
 ```
 
 **Optional:**
@@ -66,7 +66,7 @@ fun refreshToken(
 
 ## Return
 
-A ConcurrentHashMap with the following properties:
+A Map with the following properties:
 
 | Property    | Type              | Description                                                                              |
 |-------------|-------------------|------------------------------------------------------------------------------------------|

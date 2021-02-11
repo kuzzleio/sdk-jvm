@@ -1,10 +1,10 @@
-val document: ConcurrentHashMap<String, Any?> =
-    ConcurrentHashMap<String, Any?>().apply {
-        put("firstname", "John")
-    }
+val document: Map<String, Any?> =
+  HashMap<String, Any?>().apply {
+    put("firstname", "John")
+  }
 
-val result: ConcurrentHashMap<String, Any?> =
-    kuzzle
-        .documentController
-        .replace("nyc-open-data", "yellow-taxi", "some-id", document)
-        .get()
+val result: Map<String, Any?> =
+  kuzzle
+  .documentController
+  .replace("nyc-open-data", "yellow-taxi", "some-id", document)
+  .get()

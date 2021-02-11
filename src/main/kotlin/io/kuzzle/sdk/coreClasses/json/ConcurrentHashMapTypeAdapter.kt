@@ -8,11 +8,11 @@ import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import java.io.IOException
-import java.util.concurrent.ConcurrentHashMap
+import java.util.*
 
-class ConcurrentHashMapTypeAdapter : TypeAdapter<ConcurrentHashMap<String?, Any?>?>() {
+class MapTypeAdapter : TypeAdapter<Map<String?, Any?>?>() {
     @Throws(IOException::class)
-    override fun write(out: JsonWriter, map: ConcurrentHashMap<String?, Any?>?) {
+    override fun write(out: JsonWriter, map: Map<String?, Any?>?) {
         if (map == null) {
             out.nullValue()
         } else {
@@ -28,7 +28,7 @@ class ConcurrentHashMapTypeAdapter : TypeAdapter<ConcurrentHashMap<String?, Any?
     }
 
     @Throws(IOException::class)
-    override fun read(`in`: JsonReader): ConcurrentHashMap<String?, Any?>? {
+    override fun read(`in`: JsonReader): Map<String?, Any?>? {
         val peek = `in`.peek()
         if (peek == JsonToken.NULL) {
             `in`.nextNull()
@@ -68,9 +68,9 @@ class ConcurrentHashMapTypeAdapter : TypeAdapter<ConcurrentHashMap<String?, Any?
                 writeObject(out, iterator.next())
             }
             out.endArray()
-        } else if (value is ConcurrentHashMap<*, *>) {
+        } else if (value is Map<*, *>) {
             out.beginObject()
-            val iterator: Iterator<Map.Entry<String?, Any?>> = (value as ConcurrentHashMap<String?, Any?>)
+            val iterator: Iterator<Map.Entry<String?, Any?>> = (value as Map<String?, Any?>)
                 .entries
                 .iterator()
             while (iterator.hasNext()) {

@@ -17,7 +17,7 @@ Returns the collection mapping.
 ## Arguments
 
 ```java
-public CompletableFuture<ConcurrentHashMap<String, Object>> getMapping(
+public CompletableFuture<Map<String, Object>> getMapping(
       final String index,
       final String collection) throws NotConnectedException, InternalException
 ```
@@ -31,7 +31,7 @@ public CompletableFuture<ConcurrentHashMap<String, Object>> getMapping(
 
 ## Returns
 
-Returns a `ConcurrentHashMap<String, Object>` representing the collection mappings.
+Returns a `Map<String, Object>` representing the collection mappings.
 
 ## Usage
 
@@ -46,7 +46,7 @@ Returns a `ConcurrentHashMap<String, Object>` representing the collection mappin
 fun getMapping(
     index: String,
     collection: String
-  ): CompletableFuture<ConcurrentHashMap<String, Any?>>
+  ): CompletableFuture<Map<String, Any?>>
 ```
 
 | Arguments    | Type              | Description     |
@@ -57,7 +57,7 @@ fun getMapping(
 
 ## Returns
 
-Returns a `ConcurrentHashMap<String, Any?>` representing the collection mappings.
+Returns a `Map<String, Any?>` representing the collection mappings.
 
 ## Usage
 

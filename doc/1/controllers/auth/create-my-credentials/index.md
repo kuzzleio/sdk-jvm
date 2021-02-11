@@ -15,19 +15,19 @@ Creates the current user's credentials for the specified strategy.
 ## Arguments
 
 ```java
-public CompletableFuture<ConcurrentHashMap<String, Object>> createMyCredentials(final String strategy,
-  final ConcurrentHashMap<String, Object> credentials)
+public CompletableFuture<Map<String, Object>> createMyCredentials(final String strategy,
+  final Map<String, Object> credentials)
   throws NotConnectedException, InternalException
 ```
 
 | Argument      | Type               | Description                          |
 |---------------|--------------------|--------------------------------------|
 | `strategy`    | <pre>String</pre>  | Strategy to use                      |
-| `credentials` | <pre>ConcurrentHashMap<String, Object></pre> | ConcurrentHashMap representing the credentials |
+| `credentials` | <pre>Map<String, Object></pre> | Map representing the credentials |
 
 ## Return
 
-A ConcurrentHashMap representing the new credentials.
+A Map representing the new credentials.
 
 ## Usage
 
@@ -41,17 +41,17 @@ A ConcurrentHashMap representing the new credentials.
 ```kotlin
 fun createMyCredentials(
       strategy: String,
-      credentials: ConcurrentHashMap<String, Any>): CompletableFuture<ConcurrentHashMap<String, Any?>>
+      credentials: Map<String, Any>): CompletableFuture<Map<String, Any?>>
 ```
 
 | Argument      | Type               | Description                          |
 |---------------|--------------------|--------------------------------------|
 | `strategy`    | <pre>String</pre>  | Strategy to use                      |
-| `credentials` | <pre>ConcurrentHashMap<String, Any?></pre> | ConcurrentHashMap representing the credentials |
+| `credentials` | <pre>Map<String, Any?></pre> | Map representing the credentials |
 
 ## Return
 
-A ConcurrentHashMap representing the new credentials.
+A Map representing the new credentials.
 
 ## Usage
 

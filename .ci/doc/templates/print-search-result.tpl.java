@@ -1,9 +1,9 @@
 import io.kuzzle.sdk.Kuzzle;
-import java.util.ArrayList;
+import java.util.*;
 import io.kuzzle.sdk.protocol.WebSocket;
-import java.util.concurrent.ConcurrentHashMap;
 import io.kuzzle.sdk.coreClasses.responses.Response;
 import io.kuzzle.sdk.coreClasses.SearchResult;
+import io.kuzzle.sdk.coreClasses.lang.Lang;
 
 public class SnippetTest {
   private static Kuzzle kuzzle;

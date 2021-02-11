@@ -17,15 +17,15 @@ If this action is successful, all further requests emitted by this SDK instance 
 ## Arguments
 
 ```java
-CompletableFuture<ConcurrentHashMap<String, Object>> login(
+CompletableFuture<Map<String, Object>> login(
   final String strategy,
-  final ConcurrentHashMap<String, Object> credentials,
+  final Map<String, Object> credentials,
   final String expiresIn) 
   throws NotConnectedException, InternalException
 
-CompletableFuture<ConcurrentHashMap<String, Object>> login(
+CompletableFuture<Map<String, Object>> login(
   final String strategy,
-  final ConcurrentHashMap<String, Object> credentials) 
+  final Map<String, Object> credentials) 
   throws NotConnectedException, InternalException
 ```
 
@@ -34,7 +34,7 @@ CompletableFuture<ConcurrentHashMap<String, Object>> login(
 | Argument      | Type                 | Description                          |
 |---------------|----------------------|--------------------------------------|
 | `strategy`    | <pre>String</pre>    | Strategy to use                      |
-| `credentials` | <pre>ConcurrentHashMap<String, Object></pre>   | Hashmap representing the credentials |
+| `credentials` | <pre>Map<String, Object></pre>   | Hashmap representing the credentials |
 | `expiresIn`   | <pre>String</pre> | Token duration                       |
 
 #### strategy
@@ -77,8 +77,8 @@ Once `auth:login` has been called, the returned authentication token is stored b
 ```kotlin
 fun login(
   strategy: String,
-  credentials: ConcurrentHashMap<String, Any?>?,
-  expiresIn: String? = null): CompletableFuture<ConcurrentHashMap<String, Any?>>
+  credentials: Map<String, Any?>?,
+  expiresIn: String? = null): CompletableFuture<Map<String, Any?>>
 ```
 
 <br/>
@@ -86,7 +86,7 @@ fun login(
 | Argument      | Type                 | Description                          |
 |---------------|----------------------|--------------------------------------|
 | `strategy`    | <pre>String</pre>    | Strategy to use                      |
-| `credentials` | <pre>ConcurrentHashMap<String, Any?></pre>   | Hashmap representing the credentials |
+| `credentials` | <pre>Map<String, Any?></pre>   | Hashmap representing the credentials |
 | `expiresIn`   | <pre>String?</pre> | Token duration                       |
 
 #### strategy

@@ -1,7 +1,7 @@
-ConcurrentHashMap<String, Object> definition = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> properties = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> _meta = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> plate = new ConcurrentHashMap<>();
+Map<String, Object> definition = new HashMap<>();
+Map<String, Object> properties = new HashMap<>();
+Map<String, Object> _meta = new HashMap<>();
+Map<String, Object> plate = new HashMap<>();
 
 plate.put("type", "keyword");
 _meta.put("area", "Panipokhari");

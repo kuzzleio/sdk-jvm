@@ -21,7 +21,7 @@ These statistics include:
 ::: tab Java
 
 ```java
-CompletableFuture<ConcurrentHashMap<String, Object>> getStats(
+CompletableFuture<Map<String, Object>> getStats(
       Date startTime, Date stopTime)
 ```
 
@@ -34,7 +34,7 @@ CompletableFuture<ConcurrentHashMap<String, Object>> getStats(
 
 ## Return
 
-Returns a `ConcurrentHashMap<String, Object>` containing statistics snapshots within the provided range.
+Returns a `Map<String, Object>` containing statistics snapshots within the provided range.
 
 ## Usage
 
@@ -43,7 +43,7 @@ Returns a `ConcurrentHashMap<String, Object>` containing statistics snapshots wi
 ::: tab Kotlin
 
 ```kotlin
-fun getStats(startTime: Date, stopTime: Date): CompletableFuture<ConcurrentHashMap<String, Any?>>
+fun getStats(startTime: Date, stopTime: Date): CompletableFuture<Map<String, Any?>>
 ```
 
 <br/>
@@ -55,7 +55,7 @@ fun getStats(startTime: Date, stopTime: Date): CompletableFuture<ConcurrentHashM
 
 ## Return
 
-Returns a `ConcurrentHashMap<String, Any?>` containing statistics snapshots within the provided range.
+Returns a `Map<String, Any?>` containing statistics snapshots within the provided range.
 
 ## Usage
 

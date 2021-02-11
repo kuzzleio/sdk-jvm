@@ -1,14 +1,14 @@
-val category: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
+val category: Map<String, Any?> =
+  HashMap<String, Any?>().apply {
     put("category", "suv")
   }
 
-val changes: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
+val changes: Map<String, Any?> =
+  HashMap<String, Any?>().apply {
     put("changes", category)  
   }
 
-val result: ConcurrentHashMap<String, Any?> =
+val result: Map<String, Any?> =
   kuzzle
     .documentController
     .upsert("nyc-open-data", "yellow-taxi", "some-id", changes)

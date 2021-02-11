@@ -2,15 +2,15 @@ package io.kuzzle.sdk.controllers
 
 import io.kuzzle.sdk.Kuzzle
 import io.kuzzle.sdk.coreClasses.SearchResult
+import io.kuzzle.sdk.coreClasses.lang.Lang
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.responses.Response
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.ConcurrentHashMap
 
 class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
     fun checkRights(
-        requestPayload: ConcurrentHashMap<String, Any?>
+        requestPayload: Map<String, Any?>
     ): CompletableFuture<Boolean> {
         val query = KuzzleMap().apply {
             put("controller", "auth")
@@ -21,14 +21,14 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             .query(query)
             .thenApplyAsync { response ->
                 KuzzleMap
-                    .from(response.result as ConcurrentHashMap<String?, Any?>)
+                    .from(response.result as Map<String?, Any?>)
                     .getBoolean("allowed") as Boolean
             }
     }
 
     fun checkToken(
         token: String
-    ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    ): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("controller", "auth")
             put("action", "checkToken")
@@ -41,13 +41,13 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         }
         return kuzzle
             .query(query)
-            .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+            .thenApplyAsync { response -> response.result as Map<String, Any?> }
     }
 
     fun createMyCredentials(
         strategy: String,
-        credentials: ConcurrentHashMap<String, Any?>
-    ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+        credentials: Map<String, Any?>
+    ): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("controller", "auth")
             put("action", "createMyCredentials")
@@ -56,7 +56,7 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         }
         return kuzzle
             .query(query)
-            .thenApplyAsync { response -> response.result as ConcurrentHashMap<String, Any?> }
+            .thenApplyAsync { response -> response.result as Map<String, Any?> }
     }
 
     fun credentialsExist(strategy: String): CompletableFuture<Boolean> {
@@ -79,7 +79,7 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         return kuzzle.query(query).thenRunAsync {}
     }
 
-    fun getCurrentUser(): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    fun getCurrentUser(): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("controller", "auth")
             put("action", "getCurrentUser")
@@ -87,13 +87,13 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         return kuzzle
             .query(query)
             .thenApplyAsync { response ->
-                response.result as ConcurrentHashMap<String, Any?>
+                response.result as Map<String, Any?>
             }
     }
 
     fun getMyCredentials(
         strategy: String
-    ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    ): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("controller", "auth")
             put("action", "getMyCredentials")
@@ -102,7 +102,7 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         return kuzzle
             .query(query)
             .thenApplyAsync { response ->
-                response.result as ConcurrentHashMap<String, Any?>
+                response.result as Map<String, Any?>
             }
     }
 
@@ -115,7 +115,7 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             .query(query)
             .thenApplyAsync { response ->
                 KuzzleMap
-                    .from(response.result as ConcurrentHashMap<String?, Any?>)
+                    .from(response.result as Map<String?, Any?>)
                     .getArrayList("hits") as ArrayList<Any>
             }
     }
@@ -133,9 +133,9 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     @JvmOverloads
     fun login(
         strategy: String,
-        credentials: ConcurrentHashMap<String, Any?>?,
+        credentials: Map<String, Any?>?,
         expiresIn: String? = null
-    ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    ): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("controller", "auth")
             put("action", "login")
@@ -147,14 +147,14 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         }
         return kuzzle.query(query).thenApplyAsync { response ->
             val map: KuzzleMap = KuzzleMap
-                .from(response.result as ConcurrentHashMap<String?, Any?>)
+                .from(response.result as Map<String?, Any?>)
             kuzzle.authenticationToken = map.getString("jwt")
             if (map.getString("_id") != null) {
                 kuzzle.protocol.trigger("loginAttempt", "true")
             } else {
                 kuzzle.protocol.trigger("loginAttempt", "false")
             }
-            map as ConcurrentHashMap<String, Any?>
+            map as Map<String, Any?>
         }
     }
 
@@ -169,7 +169,7 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     @JvmOverloads
     fun refreshToken(
         expiresIn: String? = null
-    ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    ): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("controller", "auth")
             put("action", "refreshToken")
@@ -177,17 +177,18 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         }
         return kuzzle.query(query).thenApplyAsync { response ->
             val map: KuzzleMap = KuzzleMap
-                .from(response.result as ConcurrentHashMap<String?, Any?>)
+                .from(response.result as Map<String?, Any?>)
             kuzzle.authenticationToken = map.getString("jwt")
-            map as ConcurrentHashMap<String, Any?>
+            map as Map<String, Any?>
         }
     }
 
     @JvmOverloads
     fun searchApiKeys(
-        query: ConcurrentHashMap<String, Any?>,
+        query: Map<String, Any?>,
         from: Int = 0,
-        size: Int? = null
+        size: Int? = null,
+        lang: Lang = Lang.ELASTICSEARCH
     ): CompletableFuture<SearchResult> {
         val query = KuzzleMap().apply {
             put("controller", "auth")
@@ -195,16 +196,25 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             put("body", query)
             put("from", from)
             put("size", size)
+            put("lang", lang.lang)
         }
         return kuzzle
             .query(query)
-            .thenApplyAsync { response -> SearchResult(kuzzle, query, null, from, size, response) }
+            .thenApplyAsync { response -> SearchResult(kuzzle, query, null, from, size, lang.lang, response) }
+    }
+
+    fun searchApiKeys(
+        query: Map<String, Any?>,
+        lang: Lang = Lang.ELASTICSEARCH
+    ): CompletableFuture<SearchResult> {
+
+        return searchApiKeys(query, 0, null, lang)
     }
 
     fun updateMyCredentials(
         strategy: String,
-        credentials: ConcurrentHashMap<String, Any?>
-    ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+        credentials: Map<String, Any?>
+    ): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("controller", "auth")
             put("action", "updateMyCredentials")
@@ -214,13 +224,13 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         return kuzzle
             .query(query)
             .thenApplyAsync { response ->
-                response.result as ConcurrentHashMap<String, Any?>
+                response.result as Map<String, Any?>
             }
     }
 
     fun updateSelf(
-        content: ConcurrentHashMap<String, Any?>
-    ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+        content: Map<String, Any?>
+    ): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("controller", "auth")
             put("action", "updateSelf")
@@ -229,13 +239,13 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         return kuzzle
             .query(query)
             .thenApplyAsync { response ->
-                response.result as ConcurrentHashMap<String, Any?>
+                response.result as Map<String, Any?>
             }
     }
 
     fun validateMyCredentials(
         strategy: String,
-        credentials: ConcurrentHashMap<String, Any?>
+        credentials: Map<String, Any?>
     ): CompletableFuture<Boolean> {
         val query = KuzzleMap().apply {
             put("controller", "auth")

@@ -1,4 +1,4 @@
-kuzzle.authController.login("local", ConcurrentHashMap<String, Any?>().apply {
+kuzzle.authController.login("local", HashMap<String, Any?>().apply {
   put("username", "foo")
   put("password", "bar")
 }).get()

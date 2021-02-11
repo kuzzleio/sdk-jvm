@@ -1,9 +1,9 @@
 
-val description: ConcurrentHashMap<String?, Any?> = ConcurrentHashMap<String?, Any?>().apply {
+val description: HashMap<String?, Any?> = HashMap<String?, Any?>().apply {
   put("description", "LoRa permanent API Key")
 }
 
-val query: ConcurrentHashMap<String?, Any?> = ConcurrentHashMap<String?, Any?>().apply {
+val query: HashMap<String?, Any?> = HashMap<String?, Any?>().apply {
   put("controller", "security")
   put("action", "createApiKey")
   put("userId", "jared.doe")
@@ -22,26 +22,26 @@ query.put("body", description);
 query.put("expiresIn", 36000);
 kuzzle.query(query).get()
 
-kuzzle.authController.login("local", ConcurrentHashMap<String, Any?>().apply {
+kuzzle.authController.login("local", HashMap<String, Any?>().apply {
       put("username", "jared.doe")
       put("password", "password")
     }).get()
 
-val match: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
-    put("description", "LoRa")
+val equals: HashMap<String, Any?> =
+  HashMap<String, Any?>().apply {
+    put("ttl", "36000")
   }
 
-val squery: ConcurrentHashMap<String, Any?> =
-  ConcurrentHashMap<String, Any?>().apply {
-    put("match", match)
+val squery: HashMap<String, Any?> =
+  HashMap<String, Any?>().apply {
+    put("equals", equals)
   }
 
 val results = kuzzle
   .authController
-  .searchApiKeys(squery).get();
+  .searchApiKeys(squery, lang = Lang.KONCORDE).get();
 
-print("Found ${results.total} API keys matching 'LoRa'");
+print("Found ${results.total} API key");
 
 /*
 {

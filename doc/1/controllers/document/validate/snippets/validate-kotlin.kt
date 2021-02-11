@@ -1,7 +1,7 @@
-val document: ConcurrentHashMap<String, Any?> =
-    ConcurrentHashMap<String, Any?>().apply {
-        put("key", "value")
-    }
+val document: Map<String, Any?> =
+  HashMap<String, Any?>().apply {
+    put("key", "value")
+  }
 
 val result: Boolean =
     kuzzle

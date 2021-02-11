@@ -22,12 +22,12 @@ These statistics include:
 ::: tab Java
 
 ```java
-CompletableFuture<ConcurrentHashMap<String, Object>> getLastStats()
+CompletableFuture<Map<String, Object>> getLastStats()
 ```
 
 ## Return
 
-Returns an `ConcurrentHashMap<String, Object>` containing the most recent statistics snapshot.
+Returns an `Map<String, Object>` containing the most recent statistics snapshot.
 
 ## Usage
 
@@ -36,12 +36,12 @@ Returns an `ConcurrentHashMap<String, Object>` containing the most recent statis
 ::: tab Kotlin
 
 ```kotlin
-fun getConfig(): CompletableFuture<ConcurrentHashMap<String, Any?>>
+fun getConfig(): CompletableFuture<Map<String, Any?>>
 ```
 
 ## Return
 
-Returns an `ConcurrentHashMap<String, Any?>` containing the most recent statistics snapshot.
+Returns an `Map<String, Any?>` containing the most recent statistics snapshot.
 
 ## Usage
 

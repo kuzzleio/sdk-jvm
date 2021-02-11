@@ -1,7 +1,7 @@
-ConcurrentHashMap<String, Object> body = new ConcurrentHashMap<>();
+Map<String, Object> body = new HashMap<>();
 body.put("name", "Melis");
 
-ConcurrentHashMap<String, Object> requestPayload = new ConcurrentHashMap<>();
+Map<String, Object> requestPayload = new HashMap<>();
 requestPayload.put("controller", "document");
 requestPayload.put("action", "create");
 requestPayload.put("index", "nyc-open-data");

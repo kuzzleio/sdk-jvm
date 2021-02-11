@@ -1,5 +1,5 @@
-ConcurrentHashMap<String, Object> searchQuery = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> match = new ConcurrentHashMap<>();
+Map<String, Object> searchQuery = new HashMap<>();
+Map<String, Object> match = new HashMap<>();
 match.put("Hello", "Clarisse");
 searchQuery.put("match", match);
 

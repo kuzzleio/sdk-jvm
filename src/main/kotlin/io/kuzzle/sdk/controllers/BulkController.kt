@@ -2,8 +2,8 @@ package io.kuzzle.sdk.controllers
 
 import io.kuzzle.sdk.Kuzzle
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
+import java.util.*
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.ConcurrentHashMap
 
 class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
@@ -11,7 +11,7 @@ class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     fun deleteByQuery(
         index: String,
         collection: String,
-        searchQuery: ConcurrentHashMap<String, Any?>,
+        searchQuery: Map<String, Any?>,
         waitForRefresh: Boolean? = null
     ): CompletableFuture<Int> {
         val query = KuzzleMap().apply {
@@ -21,7 +21,7 @@ class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             put("action", "deleteByQuery")
             put(
                 "body",
-                ConcurrentHashMap<String, Any?>().apply {
+                HashMap<String, Any?>().apply {
                     put("query", searchQuery)
                 }
             )
@@ -29,14 +29,14 @@ class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         }
         return kuzzle
             .query(query)
-            .thenApplyAsync { response -> (response.result as ConcurrentHashMap<String?, Any?>)["deleted"] as Int }
+            .thenApplyAsync { response -> (response.result as Map<String?, Any?>)["deleted"] as Int }
     }
 
     fun importData(
         index: String,
         collection: String,
-        bulkData: ArrayList<ConcurrentHashMap<String, Any?>>
-    ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+        bulkData: ArrayList<Map<String, Any?>>
+    ): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("index", index)
             put("collection", collection)
@@ -44,24 +44,24 @@ class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             put("action", "import")
             put(
                 "body",
-                ConcurrentHashMap<String, Any?>().apply {
+                HashMap<String, Any?>().apply {
                     put("bulkData", bulkData)
                 }
             )
         }
         return kuzzle
             .query(query)
-            .thenApplyAsync { response -> (response.result as ConcurrentHashMap<String, Any?>) }
+            .thenApplyAsync { response -> (response.result as Map<String, Any?>) }
     }
 
     @JvmOverloads
     fun mWrite(
         index: String,
         collection: String,
-        documents: ArrayList<ConcurrentHashMap<String, Any?>>,
+        documents: ArrayList<Map<String, Any?>>,
         notify: Boolean? = null,
         waitForRefresh: Boolean? = null
-    ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    ): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("index", index)
             put("collection", collection)
@@ -69,7 +69,7 @@ class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             put("action", "mWrite")
             put(
                 "body",
-                ConcurrentHashMap<String, Any?>().apply {
+                HashMap<String, Any?>().apply {
                     put("documents", documents)
                 }
             )
@@ -78,18 +78,18 @@ class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         }
         return kuzzle
             .query(query)
-            .thenApplyAsync { response -> (response.result as ConcurrentHashMap<String, Any?>) }
+            .thenApplyAsync { response -> (response.result as Map<String, Any?>) }
     }
 
     @JvmOverloads
     fun write(
         index: String,
         collection: String,
-        content: ConcurrentHashMap<String, Any?>,
+        content: Map<String, Any?>,
         id: String? = null,
         notify: Boolean? = null,
         waitForRefresh: Boolean? = null
-    ): CompletableFuture<ConcurrentHashMap<String, Any?>> {
+    ): CompletableFuture<Map<String, Any?>> {
         val query = KuzzleMap().apply {
             put("index", index)
             put("collection", collection)
@@ -102,6 +102,6 @@ class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         }
         return kuzzle
             .query(query)
-            .thenApplyAsync { response -> (response.result as ConcurrentHashMap<String, Any?>) }
+            .thenApplyAsync { response -> (response.result as Map<String, Any?>) }
     }
 }

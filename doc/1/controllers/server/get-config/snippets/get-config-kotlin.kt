@@ -1,4 +1,4 @@
-val result: ConcurrentHashMap<String, Any?> = kuzzle
+val result: Map<String, Any?> = kuzzle
     .serverController
     .getConfig()
     .get()

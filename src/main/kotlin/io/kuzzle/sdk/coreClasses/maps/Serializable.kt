@@ -1,11 +1,9 @@
 package io.kuzzle.sdk.coreClasses.maps
 
-import java.util.concurrent.ConcurrentHashMap
-
 interface Serializable {
     @Throws(Exception::class)
-    fun fromMap(map: ConcurrentHashMap<String?, Any?>?)
+    fun fromMap(map: Map<String?, Any?>?)
 
     @Throws(Exception::class)
-    fun toMap(): ConcurrentHashMap<String?, Any?>?
+    fun toMap(): Map<String?, Any?>?
 }

@@ -1,14 +1,14 @@
-ConcurrentHashMap<String, Object> searchQuery = new ConcurrentHashMap<>();
-ConcurrentHashMap<String, Object> match = new ConcurrentHashMap<>();
-match.put("capacity", 4);
-searchQuery.put("match", match);
+Map<String, Object> searchQuery = new HashMap<>();
+Map<String, Object> equals = new HashMap<>();
+equals.put("capacity", 4);
+searchQuery.put("equals", equals);
 
-ConcurrentHashMap<String, Object> changes = new ConcurrentHashMap<>();
+Map<String, Object> changes = new HashMap<>();
 changes.put("capacity", 42);
 
-ConcurrentHashMap<String, ArrayList<Object>> result = kuzzle
+Map<String, ArrayList<Object>> result = kuzzle
     .getDocumentController()
-    .updateByQuery("nyc-open-data", "yellow-taxi", searchQuery, changes)
+    .updateByQuery("nyc-open-data", "yellow-taxi", searchQuery, changes, Lang.KONCORDE)
     .get();
 
 /*
