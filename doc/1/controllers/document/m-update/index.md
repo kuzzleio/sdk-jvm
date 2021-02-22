@@ -17,26 +17,23 @@ Updates multiple documents.
 ## Arguments
 
 ```java
-public CompletableFuture<Map<String, ArrayList<Object>>> mUpdate(
-      String index,
-      String collection,
-      ArrayList<Map<String, Object>> documents)
-throws NotConnectedException, InternalException
+public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> mUpdate(
+	String index,
+	String collection,
+	ArrayList<ConcurrentHashMap<String, Object>> documents) throws NotConnectedException, InternalException
 
-public CompletableFuture<Map<String, ArrayList<Object>>> mUpdate(
-      String index,
-      String collection,
-      ArrayList<Map<String, Object>> documents,
-      Boolean waitForRefresh)
-throws NotConnectedException, InternalException
+public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> mUpdate(
+	String index,
+	String collection,
+	ArrayList<ConcurrentHashMap<String, Object>> documents,
+	Boolean waitForRefresh)	throws NotConnectedException, InternalException
 
-public CompletableFuture<Map<String, ArrayList<Object>>> mUpdate(
-      String index,
-      String collection,
-      ArrayList<Map<String, Object>> documents,
-      Boolean waitForRefresh,
-      Integer retryOnConflict)
-throws NotConnectedException, InternalException
+public CompletableFuture<ConcurrentHashMap<String, ArrayList<Object>>> mUpdate(
+	String index,
+	String collection,
+	ArrayList<ConcurrentHashMap<String, Object>> documents,
+	Boolean waitForRefresh,
+	Integer retryOnConflict) throws NotConnectedException, InternalException
 ```
 
 | Arguments          | Type                                                    | Description                       |

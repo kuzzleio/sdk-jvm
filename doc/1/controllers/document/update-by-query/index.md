@@ -30,10 +30,10 @@ An empty or null query will match all documents in the collection.
 
 ```java
   public CompletableFuture<Map<String, ArrayList<Object>>> updateByQuery(
-      String index,
-      String collection,
-      Map<String, Object> searchQuery,
-      Map<String, Object> changes) throws NotConnectedException, InternalException
+    String index,
+    String collection,
+    Map<String, Object> searchQuery,
+    Map<String, Object> changes) throws NotConnectedException, InternalException
 
   public CompletableFuture<Map<String, ArrayList<Object>>> updateByQuery(
     String index,
@@ -125,14 +125,14 @@ With the [Koncorde Filters DSL](/core/2/api/koncorde-filters-syntax) syntax.
 
 ```kotlin
 fun updateByQuery(
-      index: String,
-      collection: String,
-      searchQuery: Map<String, Any?>,
-      changes: Map<String, Any?>,
-      waitForRefresh: Boolean? = null,
-      retryOnConflict: Int? = null,
-      source: Boolean? = null,
-      lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<Map<String, ArrayList<Any?>>>
+  index: String,
+  collection: String,
+  searchQuery: Map<String, Any?>,
+  changes: Map<String, Any?>,
+  waitForRefresh: Boolean? = null,
+  retryOnConflict: Int? = null,
+  source: Boolean? = null,
+  lang: Lang = Lang.ELASTICSEARCH): CompletableFuture<Map<String, ArrayList<Any?>>>
 ```
 
 | Argument           | Type                                         | Description     |
