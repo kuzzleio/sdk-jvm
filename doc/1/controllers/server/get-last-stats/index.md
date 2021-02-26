@@ -33,6 +33,7 @@ Returns an `Map<String, Object>` containing the most recent statistics snapshot.
 
 <<< ./snippets/get-last-stats-java.java
 
+:::
 ::: tab Kotlin
 
 ```kotlin
@@ -46,3 +47,6 @@ Returns an `Map<String, Any?>` containing the most recent statistics snapshot.
 ## Usage
 
 <<< ./snippets/get-last-stats-kotlin.kt
+
+:::
+::::

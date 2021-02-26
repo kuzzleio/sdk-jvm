@@ -28,6 +28,32 @@ Having trouble? Get in touch with us on [Discord](http://join.discord.kuzzle.io)
 
 You can find the SDK JARs directly on [bintray](https://bintray.com/kuzzle/maven/sdk-jvm). Download and add them to your classpath.
 
+::: warning
+If you have duplicates dependencies issues, you should either add those lines in your application `gradle.build file`
+
+```groovy
+configurations {
+     cleanedAnnotations
+     compile.exclude group: 'org.jetbrains'
+     compile.exclude group: 'org.jetbrains.kotlin'
+ }
+```
+
+Or you can use our jar dependencies less, and add those dependencies in your application:
+
+```groovy
+    implementation("io.ktor:ktor-client-websockets:1.5.2")
+    implementation("io.ktor:ktor-client-okhttp:1.5.2")
+    implementation("io.ktor:ktor-client-cio:1.5.2")
+    implementation("io.ktor:ktor-client-json:1.5.2")
+    implementation("io.ktor:ktor-client-gson:1.5.2")
+    implementation("io.ktor:ktor-client-serialization:1.5.2")
+    implementation("com.google.code.gson:gson:2.8.5")
+```
+
+:::
+
+
 ::: info
 The following examples are made to be executed without any IDE.
 If you're using Eclipse, IntelliJ or another Java IDE, you need to add the SDK as a project dependency in your classpath.
@@ -43,7 +69,7 @@ To build the project, add the following lines:
 <dependency>
   <groupId>io.kuzzle</groupId>
   <artifactId>sdk-jvm</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -57,14 +83,14 @@ repositories {
     }
 }
 dependencies {
-  compile 'io.kuzzle:sdk-jvm:1.0.0'
+  compile 'io.kuzzle:sdk-jvm:1.1.0'
 }
 ```
 
 ### Ivy
 
 ```html
-<dependency org='io.kuzzle' name='sdk-jvm' rev='1.0.0'>
+<dependency org='io.kuzzle' name='sdk-jvm' rev='1.1.0'>
   <artifact name='sdk-jvm' ext='pom' ></artifact>
 </dependency>
 ```

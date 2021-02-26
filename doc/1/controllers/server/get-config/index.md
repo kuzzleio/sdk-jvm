@@ -28,6 +28,7 @@ Returns a `Map<String, Object>` containing server configuration.
 
 <<< ./snippets/get-config-java.java
 
+:::
 ::: tab Kotlin
 
 ```kotlin
@@ -41,3 +42,6 @@ Returns a `Map<String, Any?>` containing server configuration.
 ## Usage
 
 <<< ./snippets/get-config-kotlin.kt
+
+:::
+::::

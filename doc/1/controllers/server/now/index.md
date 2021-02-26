@@ -24,6 +24,7 @@ Returns a `Date` representing the current server timestamp.
 
 <<< ./snippets/now-java.java
 
+:::
 ::: tab Kotlin
 
 ```kotlin
@@ -37,3 +38,6 @@ Returns a `Date` representing the current server timestamp.
 ## Usage
 
 <<< ./snippets/now-kotlin.kt
+
+:::
+::::

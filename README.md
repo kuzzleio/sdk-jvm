@@ -45,7 +45,7 @@ https://bintray.com/kuzzle/maven
 <dependency>
   <groupId>io.kuzzle</groupId>
   <artifactId>sdk-jvm</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -54,19 +54,44 @@ https://bintray.com/kuzzle/maven
 ### Gradle
 
 ```groovy
-compile 'io.kuzzle:sdk-jvm:1.0.0'
+compile 'io.kuzzle:sdk-jvm:1.1.0'
 ```
 
 For amd64:
 
 ```groovy
-compile 'io.kuzzle:sdk-jvm:1.0.0'
+compile 'io.kuzzle:sdk-jvm:1.1.0'
 ```
 
 ### Ivy
 
 ```html
-<dependency org='io.kuzzle' name='sdk-jvm' rev='1.0.0'>
+<dependency org='io.kuzzle' name='sdk-jvm' rev='1.1.0'>
   <artifact name='sdk-jvm' ext='pom' ></artifact>
 </dependency>
 ```
+
+::: warning
+If you have duplicates dependencies issues, you should either add those lines in your application `gradle.build file`
+
+```groovy
+configurations {
+     cleanedAnnotations
+     compile.exclude group: 'org.jetbrains'
+     compile.exclude group: 'org.jetbrains.kotlin'
+}
+```
+
+Or you can use our jar dependencies less, and add those dependencies in your application:
+
+```groovy
+    implementation("io.ktor:ktor-client-websockets:1.5.2")
+    implementation("io.ktor:ktor-client-okhttp:1.5.2")
+    implementation("io.ktor:ktor-client-cio:1.5.2")
+    implementation("io.ktor:ktor-client-json:1.5.2")
+    implementation("io.ktor:ktor-client-gson:1.5.2")
+    implementation("io.ktor:ktor-client-serialization:1.5.2")
+    implementation("com.google.code.gson:gson:2.8.5")
+```
+
+:::
