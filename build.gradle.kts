@@ -36,10 +36,36 @@ val pomDeveloperName = "kuzzle"
 
 publishing {
     publications {
-        create<MavenPublication>("kuzzle-sdk-jvm") {
+        create<MavenPublication>("kuzzle-sdk-jvm-fat") {
             groupId = artifactGroup
             artifactId = artifactName
             version = artifactVersion
+            from(components["java"])
+
+            pom.withXml {
+                asNode().apply {
+                    appendNode("description", pomDesc)
+                    appendNode("name", rootProject.name)
+                    appendNode("url", pomUrl)
+                    appendNode("licenses").appendNode("license").apply {
+                        appendNode("name", pomLicenseName)
+                        appendNode("url", pomLicenseUrl)
+                        appendNode("distribution", pomLicenseDist)
+                    }
+                    appendNode("developers").appendNode("developer").apply {
+                        appendNode("id", pomDeveloperId)
+                        appendNode("name", pomDeveloperName)
+                    }
+                    appendNode("scm").apply {
+                        appendNode("url", pomScmUrl)
+                    }
+                }
+            }
+        }
+        create<MavenPublication>("kuzzle-sdk-jvm-thin") {
+            groupId = artifactGroup
+            artifactId = artifactName
+            version = "${artifactVersion}-without-dependencies"
             from(components["java"])
 
             pom.withXml {
@@ -70,7 +96,7 @@ bintray {
     key = System.getenv("BINTRAY_KEY")
     publish = true
 
-    setPublications("kuzzle-sdk-jvm")
+    setPublications("kuzzle-sdk-jvm-fat", "kuzzle-sdk-jvm-thin")
 
     pkg.apply {
         repo = "maven"
@@ -154,7 +180,7 @@ tasks.withType<Jar> {
 
 tasks {
   register("fatJar", Jar::class.java) {
-    archiveClassifier.set("with-dependencies")
+    archiveClassifier.set("")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
       attributes("Main-Class" to application.mainClassName)

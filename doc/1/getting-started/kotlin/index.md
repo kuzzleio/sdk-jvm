@@ -29,7 +29,7 @@ Having trouble? Get in touch with us on [Discord](http://join.discord.kuzzle.io)
 You can find the SDK JARs directly on [bintray](https://bintray.com/kuzzle/maven/sdk-jvm). Download and add them to your classpath.
 
 ::: warning
-If you have duplicates dependencies issues, you should either add those lines in your application `gradle.build file`
+If you are using the `sdk-jvm-X.Y.Z.jar` in a Kotlin Android Studio project, consider adding the following lines to your `gradle.build` file
 
 ```groovy
 configurations {
@@ -39,7 +39,7 @@ configurations {
  }
 ```
 
-Or you can use our jar dependencies less, and add those dependencies in your application:
+If have duplicate dependencies issues when you build your project, remove the lines above if you added them, and consider using the `sdk-jvm-X.Y.Z-without-dependencies.jar`. Then, you have to add the following dependencies:
 
 ```groovy
     implementation("io.ktor:ktor-client-websockets:1.5.2")
