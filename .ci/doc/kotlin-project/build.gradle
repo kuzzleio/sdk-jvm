@@ -9,10 +9,17 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'io.ktor:ktor-client-websockets:1.5.2'
+    compile 'io.ktor:ktor-client-okhttp:1.5.2'
+    compile 'io.ktor:ktor-client-cio:1.5.2'
+    compile 'io.ktor:ktor-client-json:1.5.2'
+    compile 'io.ktor:ktor-client-gson:1.5.2'
+    compile 'io.ktor:ktor-client-serialization:1.5.2'
     compile 'com.google.code.gson:gson:2.8.5'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
