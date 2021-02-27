@@ -29,7 +29,7 @@ Having trouble? Get in touch with us on [Discord](http://join.discord.kuzzle.io)
 You can find the SDK JARs directly on [bintray](https://bintray.com/kuzzle/maven/sdk-jvm). Download and add them to your classpath.
 
 ::: warning
-If you are using the `sdk-jvm-X.Y.Z.jar` in a Kotlin Android Studio project, consider adding the following lines to your `gradle.build` file
+If you are using the `sdk-jvm-X.Y.Z.jar` in a Kotlin Android Studio project, consider adding the following lines to your `gradle.build` file:
 
 ```groovy
 configurations {
