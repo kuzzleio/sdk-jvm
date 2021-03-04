@@ -72,7 +72,7 @@ compile 'io.kuzzle:sdk-jvm:1.1.0'
 ```
 
 ::: warning
-If you are using the `sdk-jvm-X.Y.Z.jar` in a Kotlin Android Studio project, consider adding the following lines to your `gradle.build` file:
+If you are using the `sdk-jvm-X.Y.Z.jar` in a Kotlin Android Studio project, consider adding the following lines to your `build.gradle` file:
 
 ```groovy
 configurations {
