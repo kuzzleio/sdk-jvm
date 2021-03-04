@@ -93,5 +93,3 @@ If have duplicate dependencies issues when you build your project, remove the li
     implementation("io.ktor:ktor-client-serialization:1.5.2")
     implementation("com.google.code.gson:gson:2.8.5")
 ```
-
-:::
