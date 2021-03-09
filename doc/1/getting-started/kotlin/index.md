@@ -28,8 +28,14 @@ Having trouble? Get in touch with us on [Discord](http://join.discord.kuzzle.io)
 
 You can find the SDK JARs directly on [bintray](https://bintray.com/kuzzle/maven/sdk-jvm). Download and add them to your classpath.
 
+This SDK has 2 jar files that you can use:
+* `sdk-jvm-<version>.jar`: this is the fat jar version, containing the SDK and all its dependencies.
+* `sdk-jvm-<version>-without-dependencies.jar`: this is the thin jar version of the SDK, without any dependencies included in it.
+
+Depending on your project, you might need one or the other version of the SDK: if you already use some of the dependencies needed by the SDK, then you need to use the thin jar version. Otherwise, you may use the fat jar one.
+
 ::: warning
-If you are using the `sdk-jvm-X.Y.Z.jar` in a Kotlin Android Studio project, consider adding the following lines to your `build.gradle` file:
+If you are using the fat jar, you might have duplicate dependencies issues in a Kotlin Android Studio project. Add the following lines to your `build.gradle` file:
 
 ```groovy
 configurations {
@@ -38,8 +44,9 @@ configurations {
      compile.exclude group: 'org.jetbrains.kotlin'
  }
 ```
+:::
 
-If have duplicate dependencies issues when you build your project, remove the lines above if you added them, and consider using the `sdk-jvm-X.Y.Z-without-dependencies.jar`. Then, you have to add the following dependencies:
+If you are using the thin jar, make sure to add the following dependencies:
 
 ```groovy
     implementation("io.ktor:ktor-client-websockets:1.5.2")
@@ -50,9 +57,6 @@ If have duplicate dependencies issues when you build your project, remove the li
     implementation("io.ktor:ktor-client-serialization:1.5.2")
     implementation("com.google.code.gson:gson:2.8.5")
 ```
-
-:::
-
 
 ::: info
 The following examples are made to be executed without any IDE.
