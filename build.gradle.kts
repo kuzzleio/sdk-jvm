@@ -1,5 +1,5 @@
 import org.gradle.jvm.tasks.Jar
-import java.time.LocalDateTime
+import java.util.Date
 import com.jfrog.bintray.gradle.BintrayPlugin
 import com.jfrog.bintray.gradle.BintrayExtension
 import org.gradle.api.publish.maven.MavenPom
@@ -90,12 +90,12 @@ application {
 }
 
 tasks.withType<Jar> {
-    archiveClassifier.set("without-dependencies")
+    archiveFileName.set("sdk-jvm-1.2.0-without-dependencies.jar")
 }
 
 tasks {
   register("fatJar", Jar::class.java) {
-    archiveClassifier.set("")
+    archiveFileName.set("sdk-jvm-1.2.0.jar")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
       attributes("Main-Class" to application.mainClassName)
@@ -111,13 +111,11 @@ tasks {
 
 publishing {
     publications {
-        create<MavenPublication>("kuzzle-sdk-jvm-fat") {
+        create<MavenPublication>("kuzzle-sdk-jvm-thin") {
             groupId = artifactGroup
             artifactId = artifactName
-            version = artifactVersion
+            version = "${artifactVersion}-without-dependencies"
             from(components["java"])
-            artifact(tasks["fatJar"])
-
             pom.withXml {
                 asNode().apply {
                     appendNode("description", pomDesc)
@@ -138,11 +136,11 @@ publishing {
                 }
             }
         }
-        create<MavenPublication>("kuzzle-sdk-jvm-thin") {
+        create<MavenPublication>("kuzzle-sdk-jvm-fat") {
             groupId = artifactGroup
             artifactId = artifactName
-            version = "${artifactVersion}-without-dependencies"
-            from(components["java"])
+            version = artifactVersion
+            artifact(tasks["fatJar"])
 
             pom.withXml {
                 asNode().apply {
@@ -189,7 +187,7 @@ bintray {
         version.apply {
             name = artifactVersion
             desc = pomDesc
-            // released = LocalDateTime.now().toString()
+            released = Date().toString()
             vcsTag = artifactVersion
         }
     }
