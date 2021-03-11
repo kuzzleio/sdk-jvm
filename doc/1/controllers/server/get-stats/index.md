@@ -40,6 +40,7 @@ Returns a `Map<String, Object>` containing statistics snapshots within the provi
 
 <<< ./snippets/get-stats-java.java
 
+:::
 ::: tab Kotlin
 
 ```kotlin
@@ -60,3 +61,6 @@ Returns a `Map<String, Any?>` containing statistics snapshots within the provide
 ## Usage
 
 <<< ./snippets/get-stats-kotlin.kt
+
+:::
+::::

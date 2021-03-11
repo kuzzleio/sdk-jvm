@@ -32,6 +32,7 @@ Returns a `Map<String, Object>` containing all stored internal statistic snapsho
 
 <<< ./snippets/get-all-stats-java.java
 
+:::
 ::: tab Kotlin
 
 ```kotlin
@@ -45,3 +46,6 @@ Returns a `Map<String, Any?>` containing all stored internal statistic snapshots
 ## Usage
 
 <<< ./snippets/get-all-stats-kotlin.kt
+
+:::
+::::
