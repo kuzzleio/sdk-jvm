@@ -39,8 +39,9 @@ publishing {
         create<MavenPublication>("kuzzle-sdk-jvm-fat") {
             groupId = artifactGroup
             artifactId = artifactName
-version = "1.2.0"
+            version = artifactVersion
             from(components["java"])
+            artifact(tasks["fatJar"])
 
             pom.withXml {
                 asNode().apply {
@@ -65,7 +66,7 @@ version = "1.2.0"
         create<MavenPublication>("kuzzle-sdk-jvm-thin") {
             groupId = artifactGroup
             artifactId = artifactName
-            version = "${artifactVersion}-without-dependencies"
+            version = artifactVersion
             from(components["java"])
 
             pom.withXml {
