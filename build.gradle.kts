@@ -141,7 +141,7 @@ publishing {
         create<MavenPublication>("kuzzle-sdk-jvm-thin") {
             groupId = artifactGroup
             artifactId = artifactName
-            version = artifactVersion
+            version = "${artifactVersion}-without-dependencies"
             from(components["java"])
 
             pom.withXml {
