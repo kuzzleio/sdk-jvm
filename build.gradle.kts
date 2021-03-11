@@ -39,7 +39,7 @@ publishing {
         create<MavenPublication>("kuzzle-sdk-jvm-fat") {
             groupId = artifactGroup
             artifactId = artifactName
-            version = "${artifactVersion}-with-dependencies"
+version = "1.2.0"
             from(components["java"])
 
             pom.withXml {
