@@ -73,7 +73,7 @@ To build the project, add the following lines:
 <dependency>
   <groupId>io.kuzzle</groupId>
   <artifactId>sdk-jvm</artifactId>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -87,14 +87,14 @@ repositories {
     }
 }
 dependencies {
-  compile 'io.kuzzle:sdk-jvm:1.1.0'
+  compile 'io.kuzzle:sdk-jvm:1.2.0'
 }
 ```
 
 ### Ivy
 
 ```html
-<dependency org='io.kuzzle' name='sdk-jvm' rev='1.1.0'>
+<dependency org='io.kuzzle' name='sdk-jvm' rev='1.2.0'>
   <artifact name='sdk-jvm' ext='pom' ></artifact>
 </dependency>
 ```
