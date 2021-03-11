@@ -34,6 +34,81 @@ val pomLicenseDist = "repo"
 val pomDeveloperId = "kuzzleio"
 val pomDeveloperName = "kuzzle"
 
+group = "io.kuzzle.sdk"
+version = "1.2.0"
+val ktorVersion = "1.5.2"
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation(kotlin("stdlib"))
+    implementation("io.ktor:ktor-client-websockets:$ktorVersion")
+    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+    implementation("io.ktor:ktor-client-cio:$ktorVersion")
+    implementation("io.ktor:ktor-client-json:$ktorVersion")
+    implementation("io.ktor:ktor-client-gson:$ktorVersion")
+    implementation("io.ktor:ktor-client-serialization:$ktorVersion")
+    implementation("com.google.code.gson:gson:2.8.5")
+
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+    testImplementation("io.mockk:mockk:1.8.13")
+    testImplementation("io.ktor:ktor-client-mock:1.3.2")
+    testImplementation("io.ktor:ktor-client-mock-jvm:$ktorVersion")
+    testImplementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
+    testImplementation("io.ktor:ktor-client-mock-js:1.3.2")
+    testImplementation("io.ktor:ktor-client-mock-native:1.3.2")
+
+}
+
+// Configure existing Dokka task to output HTML to typical Javadoc directory
+tasks.dokka {
+    outputFormat = "html"
+    outputDirectory = "$buildDir/javadoc"
+}
+
+// Create dokka Jar task from dokka task output
+val dokkaJar by tasks.creating(Jar::class) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    description = "Assembles Kotlin docs with Dokka"
+    classifier = "javadoc"
+    // dependsOn(tasks.dokka) not needed; dependency automatically inferred by from(tasks.dokka)
+    from(tasks.dokka)
+}
+
+// Create sources Jar from main kotlin sources
+val sourcesJar by tasks.creating(Jar::class) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    description = "Assembles sources JAR"
+    classifier = "sources"
+    from(sourceSets["main"].allSource)
+}
+
+application {
+    mainClassName = "io.kuzzle.sdk.protocol"
+}
+
+tasks.withType<Jar> {
+    archiveClassifier.set("without-dependencies")
+}
+
+tasks {
+  register("fatJar", Jar::class.java) {
+    archiveClassifier.set("")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+      attributes("Main-Class" to application.mainClassName)
+    }
+    from(configurations.runtimeClasspath.get()
+        .onEach { println("Add from dependencies: ${it.name}") }
+        .map { if (it.isDirectory) it else zipTree(it) })
+    val sourcesMain = sourceSets.main.get()
+    sourcesMain.allSource.forEach { println("Add from sources: ${it.name}") }
+    from(sourcesMain.output)
+  }
+}
+
 publishing {
     publications {
         create<MavenPublication>("kuzzle-sdk-jvm-fat") {
@@ -118,79 +193,4 @@ bintray {
             vcsTag = artifactVersion
         }
     }
-}
-
-group = "io.kuzzle.sdk"
-version = "1.2.0"
-val ktorVersion = "1.5.2"
-
-repositories {
-    jcenter()
-}
-
-dependencies {
-    implementation(kotlin("stdlib"))
-    implementation("io.ktor:ktor-client-websockets:$ktorVersion")
-    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
-    implementation("io.ktor:ktor-client-cio:$ktorVersion")
-    implementation("io.ktor:ktor-client-json:$ktorVersion")
-    implementation("io.ktor:ktor-client-gson:$ktorVersion")
-    implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-    implementation("com.google.code.gson:gson:2.8.5")
-
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
-    testImplementation("io.mockk:mockk:1.8.13")
-    testImplementation("io.ktor:ktor-client-mock:1.3.2")
-    testImplementation("io.ktor:ktor-client-mock-jvm:$ktorVersion")
-    testImplementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
-    testImplementation("io.ktor:ktor-client-mock-js:1.3.2")
-    testImplementation("io.ktor:ktor-client-mock-native:1.3.2")
-
-}
-
-// Configure existing Dokka task to output HTML to typical Javadoc directory
-tasks.dokka {
-    outputFormat = "html"
-    outputDirectory = "$buildDir/javadoc"
-}
-
-// Create dokka Jar task from dokka task output
-val dokkaJar by tasks.creating(Jar::class) {
-    group = JavaBasePlugin.DOCUMENTATION_GROUP
-    description = "Assembles Kotlin docs with Dokka"
-    classifier = "javadoc"
-    // dependsOn(tasks.dokka) not needed; dependency automatically inferred by from(tasks.dokka)
-    from(tasks.dokka)
-}
-
-// Create sources Jar from main kotlin sources
-val sourcesJar by tasks.creating(Jar::class) {
-    group = JavaBasePlugin.DOCUMENTATION_GROUP
-    description = "Assembles sources JAR"
-    classifier = "sources"
-    from(sourceSets["main"].allSource)
-}
-
-application {
-    mainClassName = "io.kuzzle.sdk.protocol"
-}
-
-tasks.withType<Jar> {
-    archiveClassifier.set("without-dependencies")
-}
-
-tasks {
-  register("fatJar", Jar::class.java) {
-    archiveClassifier.set("")
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    manifest {
-      attributes("Main-Class" to application.mainClassName)
-    }
-    from(configurations.runtimeClasspath.get()
-        .onEach { println("Add from dependencies: ${it.name}") }
-        .map { if (it.isDirectory) it else zipTree(it) })
-    val sourcesMain = sourceSets.main.get()
-    sourcesMain.allSource.forEach { println("Add from sources: ${it.name}") }
-    from(sourcesMain.output)
-  }
 }
