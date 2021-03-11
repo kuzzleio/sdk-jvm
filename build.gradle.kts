@@ -17,7 +17,7 @@ plugins {
 
 val artifactName = "sdk-jvm"
 val artifactGroup = "io.kuzzle"
-val artifactVersion = "1.1.0"
+val artifactVersion = "1.2.0"
 
 val pomUrl = "https://github.com/kuzzleio/sdk-jvm"
 val pomScmUrl = "https://github.com/kuzzleio/sdk-jvm"
@@ -36,10 +36,36 @@ val pomDeveloperName = "kuzzle"
 
 publishing {
     publications {
-        create<MavenPublication>("kuzzle-sdk-jvm") {
+        create<MavenPublication>("kuzzle-sdk-jvm-fat") {
             groupId = artifactGroup
             artifactId = artifactName
-            version = artifactVersion
+version = "1.2.0"
+            from(components["java"])
+
+            pom.withXml {
+                asNode().apply {
+                    appendNode("description", pomDesc)
+                    appendNode("name", rootProject.name)
+                    appendNode("url", pomUrl)
+                    appendNode("licenses").appendNode("license").apply {
+                        appendNode("name", pomLicenseName)
+                        appendNode("url", pomLicenseUrl)
+                        appendNode("distribution", pomLicenseDist)
+                    }
+                    appendNode("developers").appendNode("developer").apply {
+                        appendNode("id", pomDeveloperId)
+                        appendNode("name", pomDeveloperName)
+                    }
+                    appendNode("scm").apply {
+                        appendNode("url", pomScmUrl)
+                    }
+                }
+            }
+        }
+        create<MavenPublication>("kuzzle-sdk-jvm-thin") {
+            groupId = artifactGroup
+            artifactId = artifactName
+            version = "${artifactVersion}-without-dependencies"
             from(components["java"])
 
             pom.withXml {
@@ -70,7 +96,7 @@ bintray {
     key = System.getenv("BINTRAY_KEY")
     publish = true
 
-    setPublications("kuzzle-sdk-jvm")
+    setPublications("kuzzle-sdk-jvm-fat", "kuzzle-sdk-jvm-thin")
 
     pkg.apply {
         repo = "maven"
@@ -94,8 +120,8 @@ bintray {
 }
 
 group = "io.kuzzle.sdk"
-version = "1.1.0"
-val ktorVersion = "1.3.2"
+version = "1.2.0"
+val ktorVersion = "1.5.2"
 
 repositories {
     jcenter()
@@ -113,11 +139,11 @@ dependencies {
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
     testImplementation("io.mockk:mockk:1.8.13")
-    testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
+    testImplementation("io.ktor:ktor-client-mock:1.3.2")
     testImplementation("io.ktor:ktor-client-mock-jvm:$ktorVersion")
     testImplementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
-    testImplementation("io.ktor:ktor-client-mock-js:$ktorVersion")
-    testImplementation("io.ktor:ktor-client-mock-native:$ktorVersion")
+    testImplementation("io.ktor:ktor-client-mock-js:1.3.2")
+    testImplementation("io.ktor:ktor-client-mock-native:1.3.2")
 
 }
 
@@ -149,12 +175,21 @@ application {
 }
 
 tasks.withType<Jar> {
+    archiveClassifier.set("without-dependencies")
+}
+
+tasks {
+  register("fatJar", Jar::class.java) {
+    archiveClassifier.set("")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
-        attributes(
-            mapOf(
-                "Main-Class" to application.mainClassName
-            )
-        )
+      attributes("Main-Class" to application.mainClassName)
     }
-    from(configurations.compileClasspath.get().map { if (it.isDirectory()) it else zipTree(it) })
+    from(configurations.runtimeClasspath.get()
+        .onEach { println("Add from dependencies: ${it.name}") }
+        .map { if (it.isDirectory) it else zipTree(it) })
+    val sourcesMain = sourceSets.main.get()
+    sourcesMain.allSource.forEach { println("Add from sources: ${it.name}") }
+    from(sourcesMain.output)
+  }
 }

@@ -366,6 +366,40 @@ class DocumentController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     }
 
     @JvmOverloads
+    fun upsert(
+        index: String,
+        collection: String,
+        id: String,
+        changes: Map<String, Any?>,
+        defaults: Map<String, Any?>? = null,
+        waitForRefresh: Boolean? = null,
+        retryOnConflict: Int? = null,
+        source: Boolean? = null
+    ): CompletableFuture<Map<String, Any?>> {
+        val query = KuzzleMap().apply {
+            put("index", index)
+            put("collection", collection)
+            put("controller", "document")
+            put("action", "upsert")
+            put(
+                "body",
+                KuzzleMap().apply {
+                    put("changes", changes)
+                    put("defaults", defaults)
+                }
+            )
+            put("_id", id)
+            put("source", source)
+            put("retryOnConflict", retryOnConflict)
+            put("waitForRefresh", waitForRefresh)
+        }
+
+        return kuzzle
+            .query(query)
+            .thenApplyAsync { response -> response.result as Map<String, Any?> }
+    }
+
+    @JvmOverloads
     fun update(
         index: String,
         collection: String,

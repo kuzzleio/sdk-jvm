@@ -24,6 +24,7 @@ Returns a `Map<String, dynamic>` containing server information.
 
 <<< ./snippets/info-java.java
 
+:::
 ::: tab Kotlin
 
 ```kotlin
@@ -37,3 +38,6 @@ Returns a `Map<String, Object>` containing server information.
 ## Usage
 
 <<< ./snippets/info-kotlin.kt
+
+:::
+::::
