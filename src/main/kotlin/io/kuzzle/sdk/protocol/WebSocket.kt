@@ -135,6 +135,7 @@ open class WebSocket : AbstractProtocol {
                         block = block
                     )
                 }
+                retryCount = 0
                 // This thread is here to let JAVA run until the socket is closed
                 // In Kotlin this is handled by the block function above but for some reason in JAVA it is
                 // non blocking.
