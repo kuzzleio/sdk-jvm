@@ -69,7 +69,7 @@ open class WebSocket : AbstractProtocol {
         trigger("networkStateChange", state.toString())
 
         while (retryCount < reconnectionRetries) {
-            retryCount++  
+            retryCount++
             Thread.sleep(reconnectionDelay)
             try {
                 connect()
