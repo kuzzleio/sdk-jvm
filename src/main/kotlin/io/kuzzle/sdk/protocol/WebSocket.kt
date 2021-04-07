@@ -69,13 +69,13 @@ open class WebSocket : AbstractProtocol {
         trigger("networkStateChange", state.toString())
 
         while (retryCount < reconnectionRetries) {
-            retryCount++    
+            retryCount++  
             Thread.sleep(reconnectionDelay)
             try {
                 connect()
                 return true
             } catch (e: Exception) {
-                
+                // Nothing to do, just retry
             }
         }
         return false
@@ -147,8 +147,8 @@ open class WebSocket : AbstractProtocol {
                     is ConnectException,
                     is SocketException,
                     is IOException -> {
-                        if (state != ProtocolState.RECONNECTING) {
-                            if (!tryToReconnect()) {
+                        if (state == ProtocolState.RECONNECTING || !tryToReconnect()) {
+                            if () {
                                 wait.completeExceptionally(e)
                             } else {
                                 wait.complete(null)
