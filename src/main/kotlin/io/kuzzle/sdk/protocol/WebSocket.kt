@@ -61,26 +61,36 @@ open class WebSocket : AbstractProtocol {
         this.reconnectionRetries = reconnectionRetries
     }
 
-    private fun tryToReconnect() {
-        if (retryCount < reconnectionRetries) {
-            retryCount++
-            state = ProtocolState.RECONNECTING
-            trigger("networkStateChange", state.toString())
+    private fun tryToReconnect(): Boolean {
+        if (!autoReconnect)
+            return false
+
+        state = ProtocolState.RECONNECTING
+        trigger("networkStateChange", state.toString())
+
+        while (retryCount < reconnectionRetries) {
+            retryCount++    
             Thread.sleep(reconnectionDelay)
-            thread(start = true) {
+            try {
                 connect()
+                return true
+            } catch (e: Exception) {
+                
             }
         }
+        return false
     }
 
     @KtorExperimentalAPI
     override fun connect() {
+        println(retryCount)
         val wait = CompletableFuture<Void>()
         val block: suspend DefaultClientWebSocketSession.() -> Unit = {
             ws = this
             // @TODO Create enums for events
             state = ProtocolState.OPEN
             trigger("networkStateChange", ProtocolState.OPEN.toString())
+            retryCount = 0
             thread(start = true) {
                 while (ws != null) {
                     val payload = queue.poll()
@@ -92,6 +102,7 @@ open class WebSocket : AbstractProtocol {
                 }
             }
             wait.complete(null)
+            var reconnected = false
             try {
                 for (frame in incoming) {
                     when (frame) {
@@ -102,11 +113,13 @@ open class WebSocket : AbstractProtocol {
                     }
                 }
             } catch (e: Exception) {
-                tryToReconnect()
+                reconnected = tryToReconnect()
             }
-            state = ProtocolState.CLOSE
-            trigger("networkStateChange", ProtocolState.CLOSE.toString())
-            ws = null
+            if (! reconnected) {
+                state = ProtocolState.CLOSE
+                trigger("networkStateChange", ProtocolState.CLOSE.toString())
+                ws = null
+            }
         }
         GlobalScope.launch {
             try {
@@ -123,7 +136,6 @@ open class WebSocket : AbstractProtocol {
                         block = block
                     )
                 }
-                retryCount = 0
                 // This thread is here to let JAVA run until the socket is closed
                 // In Kotlin this is handled by the block function above but for some reason in JAVA it is
                 // non blocking.
@@ -135,8 +147,15 @@ open class WebSocket : AbstractProtocol {
                     is ConnectException,
                     is SocketException,
                     is IOException -> {
-                        tryToReconnect()
-                        wait.complete(null)
+                        if (state != ProtocolState.RECONNECTING) {
+                            if (!tryToReconnect()) {
+                                wait.completeExceptionally(e)
+                            } else {
+                                wait.complete(null)
+                            }
+                        } else {
+                            wait.completeExceptionally(e)
+                        }
                     } else -> throw e
                 }
             }
