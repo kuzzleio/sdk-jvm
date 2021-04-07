@@ -147,8 +147,8 @@ open class WebSocket : AbstractProtocol {
                     is ConnectException,
                     is SocketException,
                     is IOException -> {
-                        if (state == ProtocolState.RECONNECTING || !tryToReconnect()) {
-                            if () {
+                        if (state != ProtocolState.RECONNECTING) {
+                            if (!tryToReconnect()) {
                                 wait.completeExceptionally(e)
                             } else {
                                 wait.complete(null)
