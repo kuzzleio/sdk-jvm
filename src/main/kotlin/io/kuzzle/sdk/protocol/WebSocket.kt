@@ -114,7 +114,7 @@ open class WebSocket : AbstractProtocol {
             } catch (e: Exception) {
                 reconnected = tryToReconnect()
             }
-            if (! reconnected) {
+            if (!reconnected) {
                 state = ProtocolState.CLOSE
                 trigger("networkStateChange", ProtocolState.CLOSE.toString())
                 ws = null
