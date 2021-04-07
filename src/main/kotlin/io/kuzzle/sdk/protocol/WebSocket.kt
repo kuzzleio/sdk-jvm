@@ -83,7 +83,6 @@ open class WebSocket : AbstractProtocol {
 
     @KtorExperimentalAPI
     override fun connect() {
-        println(retryCount)
         val wait = CompletableFuture<Void>()
         val block: suspend DefaultClientWebSocketSession.() -> Unit = {
             ws = this
