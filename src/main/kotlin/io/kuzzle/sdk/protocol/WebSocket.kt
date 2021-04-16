@@ -61,16 +61,24 @@ open class WebSocket : AbstractProtocol {
         this.reconnectionRetries = reconnectionRetries
     }
 
-    private fun tryToReconnect() {
-        if (retryCount < reconnectionRetries) {
+    private fun tryToReconnect(): Boolean {
+        if (!autoReconnect)
+            return false
+
+        state = ProtocolState.RECONNECTING
+        trigger("networkStateChange", state.toString())
+
+        while (retryCount < reconnectionRetries) {
             retryCount++
-            state = ProtocolState.RECONNECTING
-            trigger("networkStateChange", state.toString())
             Thread.sleep(reconnectionDelay)
-            thread(start = true) {
+            try {
                 connect()
+                return true
+            } catch (e: Exception) {
+                // Nothing to do, just retry
             }
         }
+        return false
     }
 
     @KtorExperimentalAPI
@@ -81,6 +89,7 @@ open class WebSocket : AbstractProtocol {
             // @TODO Create enums for events
             state = ProtocolState.OPEN
             trigger("networkStateChange", ProtocolState.OPEN.toString())
+            retryCount = 0
             thread(start = true) {
                 while (ws != null) {
                     val payload = queue.poll()
@@ -92,6 +101,7 @@ open class WebSocket : AbstractProtocol {
                 }
             }
             wait.complete(null)
+            var reconnected = false
             try {
                 for (frame in incoming) {
                     when (frame) {
@@ -102,11 +112,13 @@ open class WebSocket : AbstractProtocol {
                     }
                 }
             } catch (e: Exception) {
-                tryToReconnect()
+                reconnected = tryToReconnect()
             }
-            state = ProtocolState.CLOSE
-            trigger("networkStateChange", ProtocolState.CLOSE.toString())
-            ws = null
+            if (!reconnected) {
+                state = ProtocolState.CLOSE
+                trigger("networkStateChange", ProtocolState.CLOSE.toString())
+                ws = null
+            }
         }
         GlobalScope.launch {
             try {
@@ -135,8 +147,15 @@ open class WebSocket : AbstractProtocol {
                     is ConnectException,
                     is SocketException,
                     is IOException -> {
-                        tryToReconnect()
-                        wait.complete(null)
+                        if (state != ProtocolState.RECONNECTING) {
+                            if (!tryToReconnect()) {
+                                wait.completeExceptionally(e)
+                            } else {
+                                wait.complete(null)
+                            }
+                        } else {
+                            wait.completeExceptionally(e)
+                        }
                     } else -> throw e
                 }
             }
