@@ -66,10 +66,11 @@ open class WebSocket : AbstractProtocol {
         if (!autoReconnect)
             return CompletableFuture.completedFuture(false);
 
+        state = ProtocolState.RECONNECTING
+        trigger("networkStateChange", state.toString())
+        
         return CompletableFuture.supplyAsync(
             fun(): Boolean {
-                state = ProtocolState.RECONNECTING
-                trigger("networkStateChange", state.toString())
         
                 while (retryCount < reconnectionRetries) {
                     retryCount++
