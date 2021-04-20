@@ -94,7 +94,7 @@ open class WebSocket : AbstractProtocol {
     @KtorExperimentalAPI
     override fun connect() {
         if (this.stopRetryingToConnect.get())
-            throw Exception("Reconnection Aborted")
+            throw Exception("Connection Aborted")
 
         val wait = CompletableFuture<Void>()
         val block: suspend DefaultClientWebSocketSession.() -> Unit = {
