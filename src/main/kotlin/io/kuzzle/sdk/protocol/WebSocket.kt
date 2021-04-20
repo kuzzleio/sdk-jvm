@@ -93,6 +93,9 @@ open class WebSocket : AbstractProtocol {
 
     @KtorExperimentalAPI
     override fun connect() {
+        if (this.stopRetryingToConnect.get())
+            return
+            
         val wait = CompletableFuture<Void>()
         val block: suspend DefaultClientWebSocketSession.() -> Unit = {
             ws = this
@@ -130,6 +133,8 @@ open class WebSocket : AbstractProtocol {
                             trigger("networkStateChange", ProtocolState.CLOSE.toString())
                             ws = null
                         }
+                        // reset stopRetryingToConnect
+                        stopRetryingToConnect.set(false)
                     }
                 )
             }
@@ -155,6 +160,7 @@ open class WebSocket : AbstractProtocol {
                     )
                 }
 
+                // On connection success
                 stopRetryingToConnect.set(false)
 
                 // This thread is here to let JAVA run until the socket is closed
