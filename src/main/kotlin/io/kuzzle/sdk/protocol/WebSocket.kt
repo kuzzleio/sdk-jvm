@@ -21,6 +21,7 @@ import java.net.ConnectException
 import java.net.SocketException
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.concurrent.thread
 
 open class WebSocket : AbstractProtocol {
@@ -33,6 +34,7 @@ open class WebSocket : AbstractProtocol {
     private val autoReconnect: Boolean
     private val reconnectionDelay: Long
     private val reconnectionRetries: Long
+    private val stopRetryingToConnect: AtomicBoolean = AtomicBoolean(false)
 
     @KtorExperimentalAPI
     protected open var client = HttpClient {
@@ -62,7 +64,7 @@ open class WebSocket : AbstractProtocol {
 
     @KtorExperimentalAPI
     private fun tryToReconnect(): CompletableFuture<Boolean> {
-        if (!autoReconnect)
+        if (!autoReconnect || this.stopRetryingToConnect.get())
             return CompletableFuture.completedFuture(false)
 
         state = ProtocolState.RECONNECTING
@@ -70,8 +72,11 @@ open class WebSocket : AbstractProtocol {
         return CompletableFuture.supplyAsync(
             fun(): Boolean {
                 var retryCount: Long = 0
-                while (retryCount < reconnectionRetries) {
-                    retryCount++
+                while ((reconnectionRetries == -1L || retryCount < reconnectionRetries) && !this.stopRetryingToConnect.get()) {
+                    // If not infinite, increment retryCount
+                    if (reconnectionRetries != -1L)
+                        retryCount++
+
                     Thread.sleep(reconnectionDelay)
                     try {
                         connect()
@@ -80,6 +85,7 @@ open class WebSocket : AbstractProtocol {
                         // Nothing to do, just retry
                     }
                 }
+                this.stopRetryingToConnect.set(false)
                 return false
             }
         )
@@ -149,6 +155,8 @@ open class WebSocket : AbstractProtocol {
                     )
                 }
 
+                stopRetryingToConnect.set(false)
+
                 // This thread is here to let JAVA run until the socket is closed
                 // In Kotlin this is handled by the block function above but for some reason in JAVA it is
                 // non blocking.
@@ -161,15 +169,20 @@ open class WebSocket : AbstractProtocol {
                     is SocketException,
                     is IOException -> {
                         if (state != ProtocolState.RECONNECTING) {
-                            tryToReconnect().thenAcceptAsync(
-                                fun (success: Boolean) {
-                                    if (success) {
-                                        wait.complete(null)
-                                    } else {
-                                        wait.completeExceptionally(e)
+                            // Fast fail, avoid spawning Future
+                            if (!autoReconnect || stopRetryingToConnect.get()) {
+                                wait.completeExceptionally(e)
+                            } else {
+                                tryToReconnect().thenAcceptAsync(
+                                    fun (success: Boolean) {
+                                        if (success) {
+                                            wait.complete(null)
+                                        } else {
+                                            wait.completeExceptionally(e)
+                                        }
                                     }
-                                }
-                            )
+                                )
+                            }
                         } else {
                             wait.completeExceptionally(e)
                         }
@@ -183,6 +196,7 @@ open class WebSocket : AbstractProtocol {
     override fun disconnect() {
         state = ProtocolState.CLOSE
         trigger("networkStateChange", ProtocolState.CLOSE.toString())
+        stopRetryingToConnect.set(true)
         GlobalScope.launch {
             ws?.close()
             ws = null
