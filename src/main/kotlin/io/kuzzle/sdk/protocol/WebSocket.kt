@@ -33,7 +33,6 @@ open class WebSocket : AbstractProtocol {
     private val autoReconnect: Boolean
     private val reconnectionDelay: Long
     private val reconnectionRetries: Long
-    private var retryCount: Long = 0
 
     @KtorExperimentalAPI
     protected open var client = HttpClient {
@@ -61,6 +60,7 @@ open class WebSocket : AbstractProtocol {
         this.reconnectionRetries = reconnectionRetries
     }
 
+    @KtorExperimentalAPI
     private fun tryToReconnect(): CompletableFuture<Boolean> {
         if (!autoReconnect)
             return CompletableFuture.completedFuture(false)
@@ -69,6 +69,7 @@ open class WebSocket : AbstractProtocol {
         trigger("networkStateChange", state.toString())
         return CompletableFuture.supplyAsync(
             fun(): Boolean {
+                var retryCount: Long = 0
                 while (retryCount < reconnectionRetries) {
                     retryCount++
                     Thread.sleep(reconnectionDelay)
@@ -92,7 +93,7 @@ open class WebSocket : AbstractProtocol {
             // @TODO Create enums for events
             state = ProtocolState.OPEN
             trigger("networkStateChange", ProtocolState.OPEN.toString())
-            retryCount = 0
+
             thread(start = true) {
                 while (ws != null) {
                     val payload = queue.poll()
@@ -147,7 +148,7 @@ open class WebSocket : AbstractProtocol {
                         block = block
                     )
                 }
-                retryCount = 0
+
                 // This thread is here to let JAVA run until the socket is closed
                 // In Kotlin this is handled by the block function above but for some reason in JAVA it is
                 // non blocking.
