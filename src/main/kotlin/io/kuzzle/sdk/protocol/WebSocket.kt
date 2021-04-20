@@ -196,12 +196,14 @@ open class WebSocket : AbstractProtocol {
     }
 
     override fun disconnect() {
-        state = ProtocolState.CLOSE
-        trigger("networkStateChange", ProtocolState.CLOSE.toString())
-        stopRetryingToConnect.set(true)
-        GlobalScope.launch {
-            ws?.close()
-            ws = null
+        if (state != ProtocolState.CLOSE) {
+            state = ProtocolState.CLOSE
+            trigger("networkStateChange", ProtocolState.CLOSE.toString())
+            stopRetryingToConnect.set(true)
+            GlobalScope.launch {
+                ws?.close()
+                ws = null
+            }
         }
     }
 
