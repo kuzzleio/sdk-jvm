@@ -21,6 +21,7 @@ import java.net.ConnectException
 import java.net.SocketException
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.function.Supplier
 import kotlin.concurrent.thread
 
 open class WebSocket : AbstractProtocol {
@@ -61,24 +62,28 @@ open class WebSocket : AbstractProtocol {
         this.reconnectionRetries = reconnectionRetries
     }
 
-    private fun tryToReconnect(): Boolean {
+    private fun tryToReconnect(): CompletableFuture<Boolean> {
         if (!autoReconnect)
-            return false
+            return CompletableFuture.completedFuture(false);
 
-        state = ProtocolState.RECONNECTING
-        trigger("networkStateChange", state.toString())
-
-        while (retryCount < reconnectionRetries) {
-            retryCount++
-            Thread.sleep(reconnectionDelay)
-            try {
-                connect()
-                return true
-            } catch (e: Exception) {
-                // Nothing to do, just retry
+        return CompletableFuture.supplyAsync(
+            fun(): Boolean {
+                state = ProtocolState.RECONNECTING
+                trigger("networkStateChange", state.toString())
+        
+                while (retryCount < reconnectionRetries) {
+                    retryCount++
+                    Thread.sleep(reconnectionDelay)
+                    try {
+                        connect()
+                        return true
+                    } catch (e: Exception) {
+                        // Nothing to do, just retry
+                    }
+                }
+                return false
             }
-        }
-        return false
+        )
     }
 
     @KtorExperimentalAPI
@@ -101,7 +106,7 @@ open class WebSocket : AbstractProtocol {
                 }
             }
             wait.complete(null)
-            var reconnected = false
+            var skip = false
             try {
                 for (frame in incoming) {
                     when (frame) {
@@ -112,9 +117,18 @@ open class WebSocket : AbstractProtocol {
                     }
                 }
             } catch (e: Exception) {
-                reconnected = tryToReconnect()
+                skip = true
+                tryToReconnect().thenApply(
+                    fun (success: Boolean) {
+                        if (!success) {
+                            state = ProtocolState.CLOSE
+                            trigger("networkStateChange", ProtocolState.CLOSE.toString())
+                            ws = null
+                        }
+                    }
+                )
             }
-            if (!reconnected) {
+            if (!skip) {
                 state = ProtocolState.CLOSE
                 trigger("networkStateChange", ProtocolState.CLOSE.toString())
                 ws = null
@@ -148,11 +162,15 @@ open class WebSocket : AbstractProtocol {
                     is SocketException,
                     is IOException -> {
                         if (state != ProtocolState.RECONNECTING) {
-                            if (!tryToReconnect()) {
-                                wait.completeExceptionally(e)
-                            } else {
-                                wait.complete(null)
-                            }
+                            tryToReconnect().thenAcceptAsync(
+                                fun (success: Boolean) {
+                                    if (success) {
+                                        wait.complete(null)
+                                    } else {
+                                        wait.completeExceptionally(e)
+                                    }                        
+                                }
+                            )
                         } else {
                             wait.completeExceptionally(e)
                         }
