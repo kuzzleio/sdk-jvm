@@ -169,20 +169,16 @@ open class WebSocket : AbstractProtocol {
                     is SocketException,
                     is IOException -> {
                         if (state != ProtocolState.RECONNECTING) {
-                            // Fast fail, avoid spawning Future
-                            if (!autoReconnect || stopRetryingToConnect.get()) {
-                                wait.completeExceptionally(e)
-                            } else {
-                                tryToReconnect().thenAcceptAsync(
-                                    fun (success: Boolean) {
-                                        if (success) {
-                                            wait.complete(null)
-                                        } else {
-                                            wait.completeExceptionally(e)
-                                        }
+                            tryToReconnect().thenAcceptAsync(
+                                fun (success: Boolean) {
+                                    if (success) {
+                                        wait.complete(null)
+                                    } else {
+                                        wait.completeExceptionally(e)
                                     }
-                                )
-                            }
+                                    stopRetryingToConnect.set(false)
+                                }
+                            )
                         } else {
                             wait.completeExceptionally(e)
                         }
