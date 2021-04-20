@@ -21,7 +21,6 @@ import java.net.ConnectException
 import java.net.SocketException
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentLinkedQueue
-import java.util.function.Supplier
 import kotlin.concurrent.thread
 
 open class WebSocket : AbstractProtocol {
@@ -64,14 +63,12 @@ open class WebSocket : AbstractProtocol {
 
     private fun tryToReconnect(): CompletableFuture<Boolean> {
         if (!autoReconnect)
-            return CompletableFuture.completedFuture(false);
+            return CompletableFuture.completedFuture(false)
 
         state = ProtocolState.RECONNECTING
         trigger("networkStateChange", state.toString())
-        
         return CompletableFuture.supplyAsync(
             fun(): Boolean {
-        
                 while (retryCount < reconnectionRetries) {
                     retryCount++
                     Thread.sleep(reconnectionDelay)
@@ -169,7 +166,7 @@ open class WebSocket : AbstractProtocol {
                                         wait.complete(null)
                                     } else {
                                         wait.completeExceptionally(e)
-                                    }                        
+                                    }
                                 }
                             )
                         } else {
