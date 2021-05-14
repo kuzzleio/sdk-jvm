@@ -12,7 +12,7 @@ runners:
     service: doc-runner-java
     path: /var/snippets/java
     build:
-      cmd: cd /mnt && ./gradlew jar
+      cmd: cd /mnt && ./gradlew thinJar
     run:
       before: timeout 600 bash -c 'until stat /tmp/runner_is_ready && curl -f -s -o /dev/null http://kuzzle:7512/_now; do sleep 1; done'
       cmd: /mnt/.ci/doc/test-snippet.sh {{ snippet.source }}
