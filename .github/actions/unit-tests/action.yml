@@ -3,6 +3,9 @@ description: Run Unit Tests
 runs:
   using: "composite"
   steps:
+    - name: Build
+      run: ./gradlew thinJar fatJar
+      shell: bash
     - name: Launch Tests
       run: ./gradlew test
       shell: bash
