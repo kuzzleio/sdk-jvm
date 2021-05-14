@@ -2,19 +2,23 @@ name: Deploy package
 description: Run Deploy package
 
 inputs:
-  BINTRAY_KEY:
-    description: BINTRAY_KEY
+  MAVEN_CENTRAL_GPG:
+    description: MAVEN_CENTRAL_GPG
     required: true
-  BINTRAY_USER:
-    description: BINTRAY_USER
+  MAVEN_CENTRAL_GPG_PASSWORD:
+    description: MAVEN_CENTRAL_GPG_PASSWORD
+    required: true
+  OSSRH_PASSWORD:
+    description: OSSRH_PASSWORD
     required: true
 
 runs:
   using: "composite"
   steps:
-    - name: Deploy to bintray
-      run: ./gradlew bintrayUpload
+    - name: Deploy to MavenCentral
+      run: ./gradlew publish
       env:
-        BINTRAY_KEY: ${{ inputs.BINTRAY_KEY }}
-        BINTRAY_USER: ${{ inputs.BINTRAY_USER }}
+        MAVEN_CENTRAL_GPG: ${{ inputs.MAVEN_CENTRAL_GPG }}
+        MAVEN_CENTRAL_GPG_PASSWORD: ${{ inputs.MAVEN_CENTRAL_GPG_PASSWORD }}
+        OSSRH_PASSWORD: ${{ inputs.OSSRH_PASSWORD }}
       shell: bash
