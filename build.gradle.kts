@@ -9,7 +9,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
+    `java-library`
     `maven-publish`
+    signing
     kotlin("jvm") version "1.3.61"
     id("org.jetbrains.dokka") version "0.10.0"
     id("com.jfrog.bintray") version "1.8.5"
@@ -21,6 +23,7 @@ val artifactVersion = "1.2.1"
 
 val pomUrl = "https://github.com/kuzzleio/sdk-jvm"
 val pomScmUrl = "https://github.com/kuzzleio/sdk-jvm"
+val pomScmConnection = "git@github.com/kuzzleio/sdk-jvm"
 val pomIssueUrl = "https://github.com/kuzzleio/sdk-jvm/issues"
 val pomDesc = "https://github.com/kuzzleio/sdk-jvm"
 
@@ -39,7 +42,7 @@ version = "1.2.1"
 val ktorVersion = "1.5.2"
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -62,40 +65,17 @@ dependencies {
 
 }
 
-// Configure existing Dokka task to output HTML to typical Javadoc directory
-tasks.dokka {
-    outputFormat = "html"
-    outputDirectory = "$buildDir/javadoc"
-}
-
-// Create dokka Jar task from dokka task output
-val dokkaJar by tasks.creating(Jar::class) {
-    group = JavaBasePlugin.DOCUMENTATION_GROUP
-    description = "Assembles Kotlin docs with Dokka"
-    classifier = "javadoc"
-    // dependsOn(tasks.dokka) not needed; dependency automatically inferred by from(tasks.dokka)
-    from(tasks.dokka)
-}
-
-// Create sources Jar from main kotlin sources
-val sourcesJar by tasks.creating(Jar::class) {
-    group = JavaBasePlugin.DOCUMENTATION_GROUP
-    description = "Assembles sources JAR"
-    classifier = "sources"
-    from(sourceSets["main"].allSource)
-}
-
 application {
     mainClassName = "io.kuzzle.sdk.protocol"
 }
 
-tasks.withType<Jar> {
-    archiveFileName.set("sdk-jvm-1.2.1-without-dependencies.jar")
+tasks.register<Jar>("thinJar") {
+    archiveFileName.set("${artifactName}-${artifactVersion}-without-dependencies.jar")
 }
 
 tasks {
   register("fatJar", Jar::class.java) {
-    archiveFileName.set("sdk-jvm-1.2.1.jar")
+    archiveFileName.set("${artifactName}-${artifactVersion}.jar")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
       attributes("Main-Class" to application.mainClassName)
@@ -109,12 +89,34 @@ tasks {
   }
 }
 
+tasks.register<Jar>("sourcesJar") {
+    from(sourceSets.main.get().allJava)
+    archiveClassifier.set("sources")
+}
+
+tasks.register<Jar>("javadocJar") {
+    from(tasks.javadoc)
+    archiveClassifier.set("javadoc")
+}
+
 publishing {
+    repositories {
+        maven {
+            credentials {
+                username = "Kuzzle"
+                password = System.getenv("OSSRH_PASSWORD")
+            }
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+        }
+    }
     publications {
         create<MavenPublication>("kuzzle-sdk-jvm-thin") {
             groupId = artifactGroup
             artifactId = artifactName
             version = "${artifactVersion}-without-dependencies"
+            artifact(tasks["sourcesJar"])
+            artifact(tasks["javadocJar"])
+            
             from(components["java"])
             pom.withXml {
                 asNode().apply {
@@ -132,6 +134,7 @@ publishing {
                     }
                     appendNode("scm").apply {
                         appendNode("url", pomScmUrl)
+                        appendNode("connection", pomScmConnection)
                     }
                 }
             }
@@ -141,6 +144,8 @@ publishing {
             artifactId = artifactName
             version = artifactVersion
             artifact(tasks["fatJar"])
+            artifact(tasks["sourcesJar"])
+            artifact(tasks["javadocJar"])
 
             pom.withXml {
                 asNode().apply {
@@ -158,6 +163,7 @@ publishing {
                     }
                     appendNode("scm").apply {
                         appendNode("url", pomScmUrl)
+                        appendNode("connection", pomScmConnection)
                     }
                 }
             }
@@ -165,30 +171,8 @@ publishing {
     }
 }
 
-bintray {
-    user = System.getenv("BINTRAY_USER")
-    key = System.getenv("BINTRAY_KEY")
-    publish = true
-
-    setPublications("kuzzle-sdk-jvm-fat", "kuzzle-sdk-jvm-thin")
-
-    pkg.apply {
-        repo = "maven"
-        name = artifactName
-        userOrg = "kuzzle"
-        vcsUrl = pomScmUrl
-        description = "Kuzzle JVM SDK"
-        setLabels("kuzzle", "java", "kotlin", "scala", "jvm", "sdk")
-        setLicenses("MIT")
-        desc = description
-        websiteUrl = pomUrl
-        issueTrackerUrl = pomIssueUrl
-
-        version.apply {
-            name = artifactVersion
-            desc = pomDesc
-            released = Date().toString()
-            vcsTag = artifactVersion
-        }
-    }
+signing {
+    useInMemoryPgpKeys(System.getenv("MAVEN_CENTRAL_GPG"), System.getenv("MAVEN_CENTRAL_GPG_PASSWORD"))
+    sign(publishing.publications["kuzzle-sdk-jvm-thin"])
+    sign(publishing.publications["kuzzle-sdk-jvm-fat"])
 }
