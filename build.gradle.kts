@@ -65,7 +65,7 @@ application {
     mainClassName = "io.kuzzle.sdk.protocol"
 }
 
-tasks.register<Jar>("thinJar") {
+tasks.withType<Jar> {
     archiveFileName.set("${artifactName}-${artifactVersion}-without-dependencies.jar")
 }
 
