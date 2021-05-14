@@ -1,7 +1,5 @@
 import org.gradle.jvm.tasks.Jar
 import java.util.Date
-import com.jfrog.bintray.gradle.BintrayPlugin
-import com.jfrog.bintray.gradle.BintrayExtension
 import org.gradle.api.publish.maven.MavenPom
 import org.jetbrains.kotlin.gradle.dsl.Coroutines
 import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
@@ -13,8 +11,6 @@ plugins {
     `maven-publish`
     signing
     kotlin("jvm") version "1.3.61"
-    id("org.jetbrains.dokka") version "0.10.0"
-    id("com.jfrog.bintray") version "1.8.5"
 }
 
 val artifactName = "sdk-jvm"
@@ -57,11 +53,11 @@ dependencies {
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
     testImplementation("io.mockk:mockk:1.8.13")
-    testImplementation("io.ktor:ktor-client-mock:1.3.2")
+    testImplementation("io.ktor:ktor-client-mock:1.3.1")
     testImplementation("io.ktor:ktor-client-mock-jvm:$ktorVersion")
     testImplementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
-    testImplementation("io.ktor:ktor-client-mock-js:1.3.2")
-    testImplementation("io.ktor:ktor-client-mock-native:1.3.2")
+    testImplementation("io.ktor:ktor-client-mock-js:1.3.1")
+    testImplementation("io.ktor:ktor-client-mock-native:1.3.1")
 
 }
 
