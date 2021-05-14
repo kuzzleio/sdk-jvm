@@ -4,7 +4,7 @@ runs:
   using: "composite"
   steps:
     - name: Build
-      run: ./gradlew thinJar fatJar
+      run: ./gradlew build fatJar
       shell: bash
     - name: Launch Tests
       run: docker-compose -f .ci/doc/docker-compose.yml run doc-tests index
