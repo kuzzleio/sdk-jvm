@@ -17,7 +17,7 @@ plugins {
 
 val artifactName = "sdk-jvm"
 val artifactGroup = "io.kuzzle"
-val artifactVersion = "1.2.1"
+val artifactVersion = "1.2.2"
 
 val pomUrl = "https://github.com/kuzzleio/sdk-jvm"
 val pomScmUrl = "https://github.com/kuzzleio/sdk-jvm"
@@ -35,7 +35,7 @@ val pomDeveloperId = "kuzzleio"
 val pomDeveloperName = "kuzzle"
 
 group = "io.kuzzle.sdk"
-version = "1.2.1"
+version = "1.2.2"
 val ktorVersion = "1.5.2"
 
 repositories {
@@ -90,12 +90,12 @@ application {
 }
 
 tasks.withType<Jar> {
-    archiveFileName.set("sdk-jvm-1.2.1-without-dependencies.jar")
+    archiveFileName.set("sdk-jvm-1.2.2-without-dependencies.jar")
 }
 
 tasks {
   register("fatJar", Jar::class.java) {
-    archiveFileName.set("sdk-jvm-1.2.1.jar")
+    archiveFileName.set("sdk-jvm-1.2.2.jar")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
       attributes("Main-Class" to application.mainClassName)

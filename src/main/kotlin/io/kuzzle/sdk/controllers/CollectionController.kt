@@ -20,7 +20,7 @@ class CollectionController(kuzzle: Kuzzle) : BaseController(kuzzle) {
                     put("action", "create")
                     put("index", index)
                     put("collection", collection)
-                    put("definition", definition)
+                    put("body", definition)
                 }
             )
             .thenApplyAsync { null }
