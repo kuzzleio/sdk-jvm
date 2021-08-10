@@ -26,7 +26,7 @@ Having trouble? Get in touch with us on [Discord](http://join.discord.kuzzle.io)
 
 ## Installation
 
-You can find the SDK JARs directly on [bintray](https://bintray.com/kuzzle/maven/sdk-jvm). Download and add them to your classpath.
+You can find the SDK JARs directly on [Maven](https://mvnrepository.com/artifact/io.kuzzle/sdk-jvm). Download and add them to your classpath.
 
 This SDK has 2 jar files that you can use:
 * `sdk-jvm-<version>.jar`: this is the fat jar version, containing the SDK and all its dependencies.
@@ -69,11 +69,6 @@ To build the project, add the following lines:
 ### Gradle
 
 ```groovy
-repositories {
-    maven() {
-        url  "https://dl.bintray.com/kuzzle/maven" 
-    }
-}
 dependencies {
   compile 'io.kuzzle:sdk-jvm:1.2.2'
 }
