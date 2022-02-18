@@ -27,6 +27,18 @@ internal fun MockServerClient.setup(
         )
 }
 
+internal fun MockServerClient.verifyRequest(
+    method: String?,
+    path: String?
+) {
+    val request = request()
+
+    method?.let { request.withMethod(method) }
+    path?.let { request.withPath(path) }
+
+    this.verify(request)
+}
+
 abstract class HttpTestBase {
     private val port = 7512
     var mockServer: MockServerClient = MockServerClient("localhost", port)
@@ -47,13 +59,17 @@ class HttpTests: HttpTestBase() {
     @Test
     fun SendValidRequestTest () {
         mockServer.setup(
-            "POST",
-            "/users",
+            "GET",
+            "/ping/_query",
             200,
-            "{\"name\":\"albert\"}"
+            "ping"
         )
 
-        val httpProtol = Http("http://localhost:7512")
+        val httpProtol = Http("http://localhost:7512/ping")
         httpProtol.send(kotlin.collections.mapOf())
+        mockServer.verifyRequest(
+            "GET",
+            "/ping/_query"
+        )
     }
 }
