@@ -43,6 +43,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-websockets:$ktorVersion")
     implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
@@ -58,6 +59,8 @@ dependencies {
     testImplementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock-js:1.3.1")
     testImplementation("io.ktor:ktor-client-mock-native:1.3.1")
+    implementation("org.mock-server:mockserver-netty:5.3.0")
+
 
 }
 

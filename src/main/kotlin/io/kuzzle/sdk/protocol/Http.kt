@@ -16,21 +16,18 @@ open class Http : AbstractProtocol {
    * @param Uri request uri
    */
   constructor(url: String) {
-    if (url.contains("/_query")) {
-      this.request.uri(URI.create(url))
-    } else {
-      this.request.uri(URI.create("$url/_query"))
-    }
+    this.request.uri(URI.create("$url/_query"))
     this.state = ProtocolState.OPEN
   }
 
   override fun connect() {
-    // if state is not ready
-    // if state is NOT ready
+    if (this.state == ProtocolState.OPEN) {
+      return
+    }
+    // if state is NOT open, return response to /_publicApi
   }
 
   override fun disconnect() {
-    // state = ProtocolState.CLOSE
     this.state = ProtocolState.CLOSE
   }
 
