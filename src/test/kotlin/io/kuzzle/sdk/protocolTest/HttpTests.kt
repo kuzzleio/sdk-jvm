@@ -7,7 +7,7 @@ import org.junit.Test
 class HttpTest {
   @Test
   fun testConstructor() {
-    val req = Http(URI.create("http://webcode.me"))
+    val req = Http("http://webcode.me")
     req.send(mapOf("foo" to "bar"))
   }
 

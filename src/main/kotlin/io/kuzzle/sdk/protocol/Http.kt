@@ -6,7 +6,7 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 open class Http : AbstractProtocol {
-  override var state: ProtocolState = ProtocolState.CLOSE
+  override var state: ProtocolState = ProtocolState.OPEN
   private val request = HttpRequest.newBuilder()
   private val client = HttpClient.newBuilder().build()
   
@@ -15,14 +15,18 @@ open class Http : AbstractProtocol {
    * Contrsructor of the Http protocol
    * @param Uri request uri
    */
-  constructor(uri: URI) {
+  constructor(url: String) {
+    if (url.contains("/_query")) {
+      this.request.uri(URI.create(url))
+    } else {
+      this.request.uri(URI.create("$url/_query"))
+    }
     this.state = ProtocolState.OPEN
-    this.request.uri(uri)
   }
 
   override fun connect() {
     // if state is not ready
-    // Get on publicapi
+    // if state is NOT ready
   }
 
   override fun disconnect() {
@@ -43,6 +47,8 @@ open class Http : AbstractProtocol {
     }
     // Send request
     val response = client.send(request.build(), HttpResponse.BodyHandlers.ofString())
+    // trigger messageReceived
+    super.trigger("messageReceived", response.body())
     println("response: $response")
   }
 }
