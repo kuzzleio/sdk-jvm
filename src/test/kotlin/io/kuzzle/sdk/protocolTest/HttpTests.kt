@@ -72,4 +72,22 @@ class HttpTests: HttpTestBase() {
             "/ping/_query"
         )
     }
+
+    @Test
+    fun ConnectTestWithoutError () {
+        mockServer.setup(
+            "GET",
+            "/_publicApi",
+            200,
+            "_publicApi"
+        )
+
+        val httpProtol = Http("http://localhost:7512/")
+        httpProtol.disconnect()
+        httpProtol.connect()
+        mockServer.verifyRequest(
+            "GET",
+            "/_publicApi"
+        )
+    }
 }
