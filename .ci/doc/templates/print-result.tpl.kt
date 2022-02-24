@@ -7,7 +7,7 @@ import io.kuzzle.sdk.coreClasses.lang.Lang
 import io.kuzzle.sdk.coreClasses.responses.Response
 
 fun main() {
-  val ws = Http("http://kuzzle:7512/")
+  val ws = Http("http://kuzzle:7512")
   val kuzzle = Kuzzle(ws).apply {
     connect()
   }

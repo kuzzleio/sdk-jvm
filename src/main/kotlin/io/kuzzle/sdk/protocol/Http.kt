@@ -50,7 +50,7 @@ open class Http : AbstractProtocol {
     // Send request
     val response = client.send(request.build(), HttpResponse.BodyHandlers.ofString())
     // trigger messageReceived
-    super.trigger("messageReceived", response.body())
+    super.trigger("messageReceived", response.body().toString())
     println("response: $response")
   }
 }

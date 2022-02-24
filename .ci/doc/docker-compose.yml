@@ -48,6 +48,8 @@ services:
         touch /tmp/runner_is_ready;
         tail -f /dev/null
       '
+    links:
+      - kuzzle
     volumes:
       - ../..:/mnt
       - snippets:/var/snippets
