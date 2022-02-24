@@ -1,5 +1,5 @@
 import io.kuzzle.sdk.Kuzzle;
-import io.kuzzle.sdk.protocol.WebSocket;
+import io.kuzzle.sdk.protocol.Http;
 import io.kuzzle.sdk.coreClasses.responses.Response;
 import io.kuzzle.sdk.coreClasses.lang.Lang;
 import java.util.*;
@@ -9,7 +9,7 @@ public class SnippetTest {
 
   public static void main(String[] argv) {
     try {
-      kuzzle = new Kuzzle(new WebSocket("kuzzle"));
+      kuzzle = new Kuzzle(new Http("http://kuzzle:7512"));
       kuzzle.connect();
       [snippet-code]
       System.out.println(result.toString());
