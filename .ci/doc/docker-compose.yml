@@ -43,7 +43,7 @@ services:
   doc-runner-java:
     image: adoptopenjdk/openjdk11:alpine
     command: >
-      bash -c '
+      sh -c '
         mkdir -p /var/snippets/java;
         touch /tmp/runner_is_ready;
         tail -f /dev/null
