@@ -1,5 +1,5 @@
 import io.kuzzle.sdk.Kuzzle
-import io.kuzzle.sdk.protocol.WebSocket
+import io.kuzzle.sdk.protocol.Http
 import java.util.Date
 
 import java.util.concurrent.ExecutionException
@@ -7,7 +7,7 @@ import io.kuzzle.sdk.coreClasses.lang.Lang
 import io.kuzzle.sdk.coreClasses.responses.Response
 
 fun main() {
-  val ws = WebSocket("kuzzle")
+  val ws = Http("http://kuzzle:7512/")
   val kuzzle = Kuzzle(ws).apply {
     connect()
   }
