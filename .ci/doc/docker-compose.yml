@@ -41,7 +41,7 @@ services:
       - CONFIG_FILE=/mnt/.ci/doc/config.yml
 
   doc-runner-java:
-    image: adoptopenjdk/openjdk11:alpine
+    image: adoptopenjdk/openjdk11
     command: >
       sh -c '
         mkdir -p /var/snippets/java;
