@@ -16,39 +16,39 @@ data class RequestPayload(
         val map = HashMap<String?, Any?>()
 
         if (controller != null) {
-            map.put("controller", controller)
+            map["controller"] = controller
         }
 
         if (action != null) {
-            map.put("controller", action)
+            map["action"] = action
         }
 
         if (index != null) {
-            map.put("controller", index)
+            map["index"] = index
         }
 
         if (collection != null) {
-            map.put("controller", collection)
+            map["collection"] = collection
         }
 
         if (_id != null) {
-            map.put("controller", _id)
+            map["_id"] = _id
         }
 
         if (jwt != null) {
-            map.put("controller", jwt)
+            map["jwt"] = jwt
         }
 
         if (volatile != null) {
-            map.put("controller", volatile)
+            map["volatile"] = volatile
         }
 
         if (body != null) {
-            map.put("controller", body)
+            map["body"] = body
         }
 
         if (requestId != null) {
-            map.put("controller", requestId)
+            map["requestId"] = requestId
         }
 
         if (other != null) {
