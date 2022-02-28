@@ -2,6 +2,7 @@ package io.kuzzle.sdk.coreClasses.json
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import io.kuzzle.sdk.coreClasses.RequestPayload
 
 object JsonSerializer {
     private var gson: Gson? = null
@@ -9,8 +10,14 @@ object JsonSerializer {
         return gson!!.fromJson(rawJson, Map::class.java)
     }
 
-    fun serialize(map: Map<String?, Any?>?): String {
-        return gson!!.toJson(map, Map::class.java)
+    fun serialize(obj: Any): String {
+        if (obj is Map<*, *>) {
+            return gson!!.toJson(obj, Map::class.java)
+        }
+        if (obj is RawJson) {
+            return obj.rawJson
+        }
+        return gson!!.toJson(obj)
     }
 
     init {
@@ -21,6 +28,10 @@ object JsonSerializer {
             .registerTypeAdapter(
                 Map::class.java,
                 MapTypeAdapter()
+            )
+            .registerTypeAdapter(
+                RequestPayload::class.java,
+                RequestTypeAdapter()
             )
             .create()
     }

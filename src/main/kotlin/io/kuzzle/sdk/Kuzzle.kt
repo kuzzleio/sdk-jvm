@@ -1,5 +1,6 @@
 package io.kuzzle.sdk
 
+import com.google.gson.Gson
 import io.kuzzle.sdk.controllers.AuthController
 import io.kuzzle.sdk.controllers.BulkController
 import io.kuzzle.sdk.controllers.CollectionController
@@ -7,10 +8,12 @@ import io.kuzzle.sdk.controllers.DocumentController
 import io.kuzzle.sdk.controllers.IndexController
 import io.kuzzle.sdk.controllers.RealtimeController
 import io.kuzzle.sdk.controllers.ServerController
+import io.kuzzle.sdk.coreClasses.RequestPayload
 import io.kuzzle.sdk.coreClasses.exceptions.ApiErrorException
 import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
 import io.kuzzle.sdk.coreClasses.exceptions.NotConnectedException
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
+import io.kuzzle.sdk.coreClasses.json.RawJson
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.responses.Response
 import io.kuzzle.sdk.protocol.AbstractProtocol
@@ -92,6 +95,19 @@ class Kuzzle {
 
     fun disconnect() {
         protocol.disconnect()
+    }
+
+    fun query(query: RequestPayload): CompletableFuture<Response> {
+        return query(query.toMap())
+    }
+
+    fun query(query: Any): CompletableFuture<Response> {
+        return query(JsonSerializer.serialize(query))
+    }
+
+    fun query(query: String): CompletableFuture<Response> {
+        val queryMap = JsonSerializer.deserialize(query) as Map<String?, Any?>
+        return query(queryMap)
     }
 
     fun query(query: Map<String?, Any?>): CompletableFuture<Response> {
