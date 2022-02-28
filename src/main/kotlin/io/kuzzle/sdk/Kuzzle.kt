@@ -56,7 +56,7 @@ class Kuzzle {
         val response = Response().apply {
             fromMap(JsonSerializer.deserialize(message) as Map<String?, Any?>)
         }
-        
+
         val requestId = response.room ?: response.requestId
 
         if (queries.size == 0 || (queries.size != 0 && (requestId == null || queries[requestId] == null))) {
