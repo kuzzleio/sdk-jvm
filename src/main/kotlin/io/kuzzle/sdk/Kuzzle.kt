@@ -1,6 +1,5 @@
 package io.kuzzle.sdk
 
-import com.google.gson.Gson
 import io.kuzzle.sdk.controllers.AuthController
 import io.kuzzle.sdk.controllers.BulkController
 import io.kuzzle.sdk.controllers.CollectionController
@@ -13,7 +12,6 @@ import io.kuzzle.sdk.coreClasses.exceptions.ApiErrorException
 import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
 import io.kuzzle.sdk.coreClasses.exceptions.NotConnectedException
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
-import io.kuzzle.sdk.coreClasses.json.RawJson
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.responses.Response
 import io.kuzzle.sdk.protocol.AbstractProtocol

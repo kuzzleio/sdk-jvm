@@ -1,6 +1,5 @@
 package io.kuzzle.sdk.coreClasses.json
 
-import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.TypeAdapter
 import com.google.gson.internal.LazilyParsedNumber
@@ -74,8 +73,8 @@ class MapTypeAdapter : TypeAdapter<Map<String?, Any?>?>() {
             } else if (value is Map<*, *>) {
                 out.beginObject()
                 val iterator: Iterator<Map.Entry<String?, Any?>> = (value as Map<String?, Any?>)
-                        .entries
-                        .iterator()
+                    .entries
+                    .iterator()
                 while (iterator.hasNext()) {
                     val e = iterator.next()
                     out.name(e.key)
