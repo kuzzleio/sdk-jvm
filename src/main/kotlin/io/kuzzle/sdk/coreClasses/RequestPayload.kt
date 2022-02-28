@@ -1,5 +1,18 @@
 package io.kuzzle.sdk.coreClasses
 
+/**
+ * Kuzzle Request Payload
+ * @property controller API controller name
+ * @property action API action name
+ * @property index Index name
+ * @property collection Collection name
+ * @property _id Document unique identifier
+ * @property jwt Authentication token
+ * @property volatile Volatile data
+ * @property body Request body
+ * @property requestId Request unique identifier
+ * @property other Other parameters not present in RequestPayload
+ */
 data class RequestPayload(
     var controller: String? = null,
     var action: String? = null,
