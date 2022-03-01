@@ -7,15 +7,18 @@ query.put("controller", "security");
 query.put("action", "createApiKey");
 query.put("userId", "jared.doe");
 query.put("refresh", "wait_for");
+query.put("_id", "lora-key");
 query.put("body", description);
 
 kuzzle.query(query).get();
 
 description.put("description", "Sigfox API key");
+query.put("_id", "sigfox-key");
 query.put("body", description);
 kuzzle.query(query).get();
 
 description.put("description", "LoRa 6 month API key");
+query.put("_id", "lora-temp-key");
 query.put("body", description);
 query.put("expiresIn", 36000);
 kuzzle.query(query).get();
