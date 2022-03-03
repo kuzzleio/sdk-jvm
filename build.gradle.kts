@@ -51,6 +51,7 @@ dependencies {
     implementation("io.ktor:ktor-client-gson:$ktorVersion")
     implementation("io.ktor:ktor-client-serialization:$ktorVersion")
     implementation("com.google.code.gson:gson:2.8.5")
+    implementation("com.google.code.gson:gson:2.9.0")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
     testImplementation("io.mockk:mockk:1.8.13")
@@ -59,7 +60,7 @@ dependencies {
     testImplementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock-js:1.3.1")
     testImplementation("io.ktor:ktor-client-mock-native:1.3.1")
-    implementation("org.mock-server:mockserver-netty:5.3.0")
+    testImplementation("org.mock-server:mockserver-netty:5.3.0")
 
 
 }
