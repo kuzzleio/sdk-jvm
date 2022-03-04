@@ -44,10 +44,6 @@ repositories {
 
 configurations {}
 
-val cucumberRuntime by configurations.creating {
-    extendsFrom(configurations["testImplementation"])
-}
-
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("io.ktor:ktor-client-core:$ktorVersion")
@@ -68,7 +64,6 @@ dependencies {
     testImplementation("io.ktor:ktor-client-mock-js:1.3.1")
     testImplementation("io.ktor:ktor-client-mock-native:1.3.1")
     testImplementation("org.mock-server:mockserver-netty:5.3.0")
-
     testImplementation("io.cucumber:cucumber-java8:7.0.0")
     testImplementation("io.cucumber:cucumber-junit:7.0.0")
 }
@@ -81,15 +76,7 @@ tasks.withType<Jar> {
     archiveFileName.set("${artifactName}-${artifactVersion}-without-dependencies.jar")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
-    }
-}
-
-tasks {
-  register("fatJar", Jar::class.java) {
+tasks.register<Jar>("fatJar") {
     archiveFileName.set("${artifactName}-${artifactVersion}.jar")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
@@ -101,7 +88,6 @@ tasks {
     val sourcesMain = sourceSets.main.get()
     sourcesMain.allSource.forEach { println("Add from sources: ${it.name}") }
     from(sourcesMain.output)
-  }
 }
 
 tasks.register<Jar>("sourcesJar") {
@@ -113,6 +99,16 @@ tasks.register<Jar>("javadocJar") {
     from(tasks.javadoc)
     archiveClassifier.set("javadoc")
 }
+
+// tasks.register("cucumber") {
+//     dependsOn compileTestKotlin
+//     doLast {
+//         javaexec {
+//             main = "io.cucumber.core.cli.Main"
+//             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+//         }
+//     }
+// }
 
 publishing {
     repositories {
