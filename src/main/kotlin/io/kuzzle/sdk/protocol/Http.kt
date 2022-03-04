@@ -1,15 +1,11 @@
 package io.kuzzle.sdk.protocol
 
 import com.google.gson.Gson
+import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
-
-fun <K, V> Map<K?, V?>.filterNonNull(): Map<K, V> =
-  this.mapNotNull {
-      (key, value) -> if (value == null || key == null) null else Pair(key, value)
-  }.toMap()
 
 open class Http : AbstractProtocol {
   override var state: ProtocolState = ProtocolState.OPEN
@@ -53,10 +49,9 @@ open class Http : AbstractProtocol {
     if (payload["volatile"] != null) {
       this.request.header("Volatile", "${payload["volatile"]}")
     }
-    val tmp = payload.filterNonNull()
-    val jsonPayload = Gson().toJson(tmp)
     // Send request
-    val response = client.send(request.POST(HttpRequest.BodyPublishers.ofString(jsonPayload)).build(), HttpResponse.BodyHandlers.ofString())
+    val response = client.send(request.POST(HttpRequest.BodyPublishers.ofString(JsonSerializer.serialize(payload))).build(), HttpResponse.BodyHandlers.ofString())
+    println(response)
     // trigger messageReceived
     super.trigger("messageReceived", response.body().toString())
   }

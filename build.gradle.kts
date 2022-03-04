@@ -1,15 +1,16 @@
 import org.gradle.jvm.tasks.Jar
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.Date
 import org.gradle.api.publish.maven.MavenPom
 import org.jetbrains.kotlin.gradle.dsl.Coroutines
 import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
     `java-library`
     `maven-publish`
     signing
+    jacoco
     kotlin("jvm") version "1.3.61"
 }
 
@@ -41,6 +42,12 @@ repositories {
     mavenCentral()
 }
 
+configurations {}
+
+val cucumberRuntime by configurations.creating {
+    extendsFrom(configurations["testImplementation"])
+}
+
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("io.ktor:ktor-client-core:$ktorVersion")
@@ -62,7 +69,8 @@ dependencies {
     testImplementation("io.ktor:ktor-client-mock-native:1.3.1")
     testImplementation("org.mock-server:mockserver-netty:5.3.0")
 
-
+    testImplementation("io.cucumber:cucumber-java8:7.0.0")
+    testImplementation("io.cucumber:cucumber-junit:7.0.0")
 }
 
 application {
@@ -71,6 +79,13 @@ application {
 
 tasks.withType<Jar> {
     archiveFileName.set("${artifactName}-${artifactVersion}-without-dependencies.jar")
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "11"
+    }
 }
 
 tasks {
@@ -116,7 +131,7 @@ publishing {
             version = "${artifactVersion}-without-dependencies"
             artifact(tasks["sourcesJar"])
             artifact(tasks["javadocJar"])
-            
+
             from(components["java"])
             pom.withXml {
                 asNode().apply {
