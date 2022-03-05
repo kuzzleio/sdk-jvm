@@ -11,7 +11,7 @@ plugins {
     `maven-publish`
     signing
     jacoco
-    kotlin("jvm") version "1.3.61"
+    id("org.jetbrains.kotlin.jvm") version "1.5.31"
 }
 
 val artifactName = "sdk-jvm"
@@ -42,7 +42,11 @@ repositories {
     mavenCentral()
 }
 
-configurations {}
+configurations {
+    register("cucumberRuntime") {
+        extendsFrom(testImplementation.get())
+    }
+}
 
 dependencies {
     implementation(kotlin("stdlib"))
@@ -68,47 +72,48 @@ dependencies {
     testImplementation("io.cucumber:cucumber-junit:7.0.0")
 }
 
+java {
+    withSourcesJar()
+}
+
 application {
-    mainClassName = "io.kuzzle.sdk.protocol"
+    mainClass.set("io.kuzzle.sdk.protocol")
 }
 
 tasks.withType<Jar> {
     archiveFileName.set("${artifactName}-${artifactVersion}-without-dependencies.jar")
 }
 
-tasks.register<Jar>("fatJar") {
-    archiveFileName.set("${artifactName}-${artifactVersion}.jar")
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    manifest {
-      attributes("Main-Class" to application.mainClassName)
+tasks {
+    register<Jar>("fatJar") {
+        archiveFileName.set("foo-bar.jar")
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        manifest {
+            attributes("Main-Class" to application.mainClass.get())
+        }
+        from(configurations.runtimeClasspath.get()
+                .onEach { println("Add from dependencies: ${it.name}") }
+                .map { if (it.isDirectory) it else zipTree(it) })
+        val sourcesMain = sourceSets.main.get()
+        sourcesMain.allSource.forEach { println("Add from sources: ${it.name}") }
+        from(sourcesMain.output)
     }
-    from(configurations.runtimeClasspath.get()
-        .onEach { println("Add from dependencies: ${it.name}") }
-        .map { if (it.isDirectory) it else zipTree(it) })
-    val sourcesMain = sourceSets.main.get()
-    sourcesMain.allSource.forEach { println("Add from sources: ${it.name}") }
-    from(sourcesMain.output)
+    register<JavaExec>("cucumber") {
+        dependsOn(compileTestKotlin)
+        mainClass.set("io.cucumber.core.cli.Main")
+        classpath = configurations["cucumberRuntime"] + sourceSets.main.get().output + sourceSets.test.get().output
+    }
 }
 
-tasks.register<Jar>("sourcesJar") {
-    from(sourceSets.main.get().allJava)
-    archiveClassifier.set("sources")
-}
+// tasks.register<Jar>("sourcesJar") {
+//     from(sourceSets.main.get().allJava)
+//     archiveClassifier.set("sources")
+// }
 
 tasks.register<Jar>("javadocJar") {
     from(tasks.javadoc)
     archiveClassifier.set("javadoc")
 }
-
-// tasks.register("cucumber") {
-//     dependsOn compileTestKotlin
-//     doLast {
-//         javaexec {
-//             main = "io.cucumber.core.cli.Main"
-//             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-//         }
-//     }
-// }
 
 publishing {
     repositories {
