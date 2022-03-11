@@ -14,7 +14,7 @@ hooks:
       }
     }' "kuzzle:7512/users/jared.doe/_create?refresh=wait_for"
   after:
-    curl -XDELETE kuzzle:7512/users/jared.doe
+    curl -XDELETE kuzzle:7512/users/jared.doe?refresh=wait_for
 template: default
 expected:
   - Found 2 API keys matching 'LoRa'
