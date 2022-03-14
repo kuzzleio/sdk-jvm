@@ -7,6 +7,7 @@ import io.kuzzle.sdk.controllers.DocumentController
 import io.kuzzle.sdk.controllers.IndexController
 import io.kuzzle.sdk.controllers.RealtimeController
 import io.kuzzle.sdk.controllers.ServerController
+import io.kuzzle.sdk.coreClasses.RequestPayload
 import io.kuzzle.sdk.coreClasses.exceptions.ApiErrorException
 import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
 import io.kuzzle.sdk.coreClasses.exceptions.NotConnectedException
@@ -94,6 +95,19 @@ class Kuzzle {
 
     fun disconnect() {
         protocol.disconnect()
+    }
+
+    fun query(query: RequestPayload): CompletableFuture<Response> {
+        return query(query.toMap())
+    }
+
+    fun query(query: Any): CompletableFuture<Response> {
+        return query(JsonSerializer.serialize(query))
+    }
+
+    fun query(query: String): CompletableFuture<Response> {
+        val queryMap = JsonSerializer.deserialize(query) as Map<String?, Any?>
+        return query(queryMap)
     }
 
     fun query(query: Map<String?, Any?>): CompletableFuture<Response> {
