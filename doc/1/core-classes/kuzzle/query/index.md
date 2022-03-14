@@ -24,7 +24,7 @@ public CompletableFuture<Response> query(
       throws InternalException, NotConnectedException
 ```
 
-<SinceBadge version="auto-version"/>
+<SinceBadge version="1.2.3"/>
 
 ```java
 public CompletableFuture<Response> query(
@@ -50,7 +50,7 @@ public CompletableFuture<Response> query(
 | --------- | ----------------- | ---------------------- |
 | `query` | <pre>Map<String, Object> | API request    |
 
-<SinceBadge version="auto-version"/>
+<SinceBadge version="1.2.3"/>
 
 | Argument  | Type              | Description            |
 | --------- | ----------------- | ---------------------- |
@@ -101,7 +101,7 @@ Returns a [Response](/sdk/jvm/1/core-classes/response) object which represents a
 fun query(query: Map<String?, Any?>): CompletableFuture<Response>
 ```
 
-<SinceBadge version="auto-version"/>
+<SinceBadge version="1.2.3"/>
 
 ```kotlin
 fun query(query: RawJson): CompletableFuture<Response>
@@ -116,7 +116,7 @@ fun query(query: Any): CompletableFuture<Response>
 | --------- | ----------------- | ---------------------- |
 | `query` | <pre>Map<String?, Any?> | API request    |
 
-<SinceBadge version="auto-version"/>
+<SinceBadge version="1.2.3"/>
 
 | Argument  | Type              | Description            |
 | --------- | ----------------- | ---------------------- |
