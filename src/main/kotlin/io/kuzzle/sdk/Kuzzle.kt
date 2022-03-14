@@ -20,7 +20,7 @@ import java.util.UUID
 import java.util.concurrent.CompletableFuture
 import kotlin.collections.HashMap
 
-class Kuzzle {
+open class Kuzzle {
     val protocol: AbstractProtocol
     val autoResubscribe: Boolean
     private val queries: HashMap<String, CompletableFuture<Response>> = HashMap()
