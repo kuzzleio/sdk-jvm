@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutionException
 import io.kuzzle.sdk.coreClasses.responses.Response
 import io.kuzzle.sdk.coreClasses.SearchResult
 import io.kuzzle.sdk.coreClasses.lang.Lang
+import java.util.*;
 
 fun main() {
   val ws = WebSocket("kuzzle")

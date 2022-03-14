@@ -1,7 +1,7 @@
 name: kotlin-auth#checkRights
 description: Checks if an API action can be executed by the current user
 hooks:
-  before: curl -X POST kuzzle:7512/users/foo/_create -H "Content-Type:application/json" --data '{"content":{"profileIds":["default"]},"credentials":{"local":{"username":"foo","password":"bar"}}}'
-  after: curl -X DELETE kuzzle:7512/users/foo
+  before: curl -X POST kuzzle:7512/users/foo/_create?refresh=wait_for -H "Content-Type:application/json" --data '{"content":{"profileIds":["default"]},"credentials":{"local":{"username":"foo","password":"bar"}}}'
+  after: curl -X DELETE kuzzle:7512/users/foo?refresh=wait_for
 template: print-result
 expected: true
