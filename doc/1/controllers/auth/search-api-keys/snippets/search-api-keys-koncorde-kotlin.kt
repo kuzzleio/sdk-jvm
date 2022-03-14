@@ -8,16 +8,19 @@ val query: HashMap<String?, Any?> = HashMap<String?, Any?>().apply {
   put("action", "createApiKey")
   put("userId", "jared.doe")
   put("refresh", "wait_for")
+  put("_id", "lora-key")
   put("body", description)
 }
 
 kuzzle.query(query).get()
 
 description.put("description", "Sigfox API key")
+query.put("_id", "sigfox-key")
 query.put("body", description);
 kuzzle.query(query).get()
 
 description.put("description", "LoRa 6 month API key")
+query.put("_id", "lora-temp-key")
 query.put("body", description);
 query.put("expiresIn", 36000);
 kuzzle.query(query).get()
