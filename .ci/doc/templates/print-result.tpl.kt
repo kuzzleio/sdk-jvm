@@ -7,8 +7,13 @@ import io.kuzzle.sdk.coreClasses.lang.Lang
 import io.kuzzle.sdk.coreClasses.responses.Response
 
 fun main() {
-  val ws = Http("http://kuzzle:7512")
-  val kuzzle = Kuzzle(ws).apply {
+  val protocol;
+  if (System.getenv("SNIPPET_PROTOCOL") == "http") {
+    protocol = Http("http://kuzzle:7512")
+  } else {
+    protocol = WebSocket("kuzzle")
+  }
+  val kuzzle = Kuzzle(protocol).apply {
     connect()
   }
   try {
