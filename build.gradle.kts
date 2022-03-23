@@ -11,7 +11,7 @@ plugins {
     `maven-publish`
     signing
     jacoco
-    id("org.jetbrains.kotlin.jvm") version "1.5.31"
+    kotlin("jvm") version "1.3.61"
 }
 
 val artifactName = "sdk-jvm"
@@ -57,7 +57,6 @@ dependencies {
     implementation("io.ktor:ktor-client-json:$ktorVersion")
     implementation("io.ktor:ktor-client-gson:$ktorVersion")
     implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-    implementation("com.google.code.gson:gson:2.8.5")
     implementation("com.google.code.gson:gson:2.9.0")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
@@ -92,8 +91,8 @@ tasks {
             attributes("Main-Class" to application.mainClass.get())
         }
         from(configurations.runtimeClasspath.get()
-                .onEach { println("Add from dependencies: ${it.name}") }
-                .map { if (it.isDirectory) it else zipTree(it) })
+            .onEach { println("Add from dependencies: ${it.name}") }
+            .map { if (it.isDirectory) it else zipTree(it) })
         val sourcesMain = sourceSets.main.get()
         sourcesMain.allSource.forEach { println("Add from sources: ${it.name}") }
         from(sourcesMain.output)
@@ -101,7 +100,10 @@ tasks {
     register<JavaExec>("cucumber") {
         dependsOn(compileTestKotlin)
         mainClass.set("io.cucumber.core.cli.Main")
-        classpath = configurations["cucumberRuntime"] + sourceSets.main.get().output + sourceSets.test.get().output
+        sourceSets.test.get().allSource.forEach { println("Add from sources test: ${it.name}") }
+        sourceSets.main.get().allSource.forEach { println("Add from sources cucumber main: ${it.name}") }
+        classpath = configurations["cucumberRuntime"] + sourceSets.main.get().allSource + sourceSets.test.get().allSource
+        // args = ["--plugin", "pretty", "--glue", "hellocucumber", "src/test/resources"]
     }
 }
 
