@@ -86,7 +86,7 @@ tasks.withType<Jar> {
 
 tasks {
     register<Jar>("fatJar") {
-        archiveFileName.set("foo-bar.jar")
+        archiveFileName.set("${artifactName}-${artifactVersion}.jar")
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         manifest {
             attributes("Main-Class" to application.mainClass.get())
@@ -105,10 +105,10 @@ tasks {
     }
 }
 
-// tasks.register<Jar>("sourcesJar") {
-//     from(sourceSets.main.get().allJava)
-//     archiveClassifier.set("sources")
-// }
+tasks.register<Jar>("sourcesJar") {
+    from(sourceSets.main.get().allJava)
+    archiveClassifier.set("sources")
+}
 
 tasks.register<Jar>("javadocJar") {
     from(tasks.javadoc)

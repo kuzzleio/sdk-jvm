@@ -51,7 +51,6 @@ open class Http : AbstractProtocol {
     }
     // Send request
     val response = client.send(request.POST(HttpRequest.BodyPublishers.ofString(JsonSerializer.serialize(payload))).build(), HttpResponse.BodyHandlers.ofString())
-    println(response)
     // trigger messageReceived
     super.trigger("messageReceived", response.body().toString())
   }

@@ -7,3 +7,4 @@ template: print-result
 expected: true
 protocols:
   - http
+  - websocket
