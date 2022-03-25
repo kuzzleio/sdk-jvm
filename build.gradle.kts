@@ -76,7 +76,7 @@ java {
 }
 
 application {
-    mainClass.set("io.kuzzle.sdk.protocol")
+    mainClassName = "io.kuzzle.sdk.protocol"
 }
 
 tasks.withType<Jar> {
@@ -88,7 +88,7 @@ tasks {
         archiveFileName.set("${artifactName}-${artifactVersion}.jar")
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         manifest {
-            attributes("Main-Class" to application.mainClass.get())
+            attributes("Main-Class" to application.mainClassName)
         }
         from(configurations.runtimeClasspath.get()
                 .onEach { println("Add from dependencies: ${it.name}") }
@@ -96,11 +96,6 @@ tasks {
         val sourcesMain = sourceSets.main.get()
         sourcesMain.allSource.forEach { println("Add from sources: ${it.name}") }
         from(sourcesMain.output)
-    }
-    register<JavaExec>("cucumber") {
-        dependsOn(compileTestKotlin)
-        mainClass.set("io.cucumber.core.cli.Main")
-        classpath = configurations["cucumberRuntime"] + sourceSets.main.get().output + sourceSets.test.get().output
     }
 }
 
