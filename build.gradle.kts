@@ -11,7 +11,7 @@ plugins {
     `maven-publish`
     signing
     jacoco
-    kotlin("jvm") version "1.3.61"
+    id("org.jetbrains.kotlin.jvm") version "1.5.31"
 }
 
 val artifactName = "sdk-jvm"
