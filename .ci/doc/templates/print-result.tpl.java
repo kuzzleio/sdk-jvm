@@ -15,7 +15,7 @@ public class SnippetTest {
       } else {
         protocol = new WebSocket("kuzzle");
       }
-      Kuzzle kuzzle = Kuzzle(protocol);
+      Kuzzle kuzzle = new Kuzzle(protocol);
       kuzzle.connect();
       [snippet-code]
       System.out.println(result.toString());
