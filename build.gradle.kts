@@ -40,6 +40,7 @@ val ktorVersion = "1.5.2"
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://jitpack.io") }
 }
 
 configurations {
@@ -49,6 +50,8 @@ configurations {
 }
 
 dependencies {
+    implementation("com.github.jkcclemens:khttp:0.1.0")
+
     implementation(kotlin("stdlib"))
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-websockets:$ktorVersion")
@@ -103,11 +106,6 @@ tasks {
         mainClass.set("io.cucumber.core.cli.Main")
         classpath = configurations["cucumberRuntime"] + sourceSets.main.get().output + sourceSets.test.get().output
     }
-}
-
-tasks.register<Jar>("sourcesJar") {
-    from(sourceSets.main.get().allJava)
-    archiveClassifier.set("sources")
 }
 
 tasks.register<Jar>("javadocJar") {

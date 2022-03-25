@@ -11,19 +11,28 @@ open class Http : AbstractProtocol {
   override var state: ProtocolState = ProtocolState.OPEN
   private val request = HttpRequest.newBuilder()
   private val client = HttpClient.newBuilder().build()
+  private var uri = ""
 
 
-  /**
-   * Contrsructor of the Http protocol
-   * @param url request uri
-   */
-  constructor(url: String) {
-    this.request.uri(URI.create("$url/_query"))
+  @JvmOverloads
+  constructor(
+    host: String,
+    port: String = "7512",
+    isSsl: Boolean = false,
+  ) {
+
+    if (!isSsl) {
+      this.uri = "http://${host}:${port}/_query"
+    } else {
+      this.uri = "https://${host}:${port}/_query"
+    }
+    this.request.uri(URI.create(this.uri))
     this.state = ProtocolState.OPEN
   }
 
   override fun connect () {
     if (this.state == ProtocolState.OPEN) {
+      trigger("networkStateChange", ProtocolState.OPEN.toString())
       return
     }
     // if state is NOT open, return response to /_publicApi
@@ -36,22 +45,35 @@ open class Http : AbstractProtocol {
 
   override fun disconnect () {
     this.state = ProtocolState.CLOSE
+    trigger("networkStateChange", ProtocolState.CLOSE.toString())
   }
 
   override fun send (payload: Map<String?, Any?>) {
-    // Create header
-    this.request.header("Content-Type", "application/json")
-    // Get jwt
-    if (payload["jwt"] != null) {
-      this.request.header("Authorization", "Bearer ${payload["jwt"]}")
+    if (payload["requestId"] != null) {
+      // Create header
+      this.request.header("Content-Type", "application/json")
+      // Get jwt
+      if (payload["jwt"] != null) {
+        this.request.header("Authorization", "Bearer ${payload["jwt"]}")
+      }
+      // Get volatile
+      if (payload["volatile"] != null) {
+        this.request.header("Volatile", "${payload["volatile"]}")
+      }
+      // Send request
+      var response = client.send(
+        request.POST(HttpRequest.BodyPublishers.ofString(JsonSerializer.serialize(payload))).build(),
+        HttpResponse.BodyHandlers.ofString()
+      ).body().toString()
+
+      // get initial requestId
+      var tmp = mutableMapOf<String?, Any?>()
+      for ((k, v) in JsonSerializer.deserialize(response) as Map<String?, Any?>) {
+        tmp.put(k, v)
+      }
+      tmp["requestId"] = payload.get("requestId")
+      // trigger messageReceived
+      super.trigger("messageReceived", JsonSerializer.serialize(tmp))
     }
-    // Get volatile
-    if (payload["volatile"] != null) {
-      this.request.header("Volatile", "${payload["volatile"]}")
-    }
-    // Send request
-    val response = client.send(request.POST(HttpRequest.BodyPublishers.ofString(JsonSerializer.serialize(payload))).build(), HttpResponse.BodyHandlers.ofString())
-    // trigger messageReceived
-    super.trigger("messageReceived", response.body().toString())
   }
 }
