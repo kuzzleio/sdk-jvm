@@ -5,3 +5,6 @@ hooks:
   after:
 template: print-result
 expected: serverInfo
+protocols:
+  - http
+  - websocket

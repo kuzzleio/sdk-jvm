@@ -5,3 +5,6 @@ hooks:
   after: curl -X DELETE kuzzle:7512/users/foo?refresh=wait_for
 template: print-result
 expected: ^{_source={profileIds=\[default\],\ _kuzzle_info={.+},\ age=42},\ _id=foo}$
+protocols:
+  - http
+  - websocket

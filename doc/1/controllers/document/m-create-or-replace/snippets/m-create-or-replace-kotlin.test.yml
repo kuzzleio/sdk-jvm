@@ -8,3 +8,6 @@ hooks:
   after:
 template: print-result-array
 expected: "id=some-id(.*)_version=1(.*)status=201(.*)id=some-id2(.*)_version=1(.*)status=201"
+protocols:
+  - http
+  - websocket

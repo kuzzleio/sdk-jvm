@@ -7,4 +7,6 @@ hooks:
     curl -XPUT kuzzle:7512/nyc-open-data/yellow-taxi
   after:
 template: print-result
-expected: "firstname=John"
+expected: "firstname=John"protocols:
+  - http
+  - websocket

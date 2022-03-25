@@ -6,4 +6,6 @@ hooks:
     curl -X PUT kuzzle:7512/nyc-open-data/yellow-taxi
   after:
 template: default
-expected: Success
+expected: Successprotocols:
+  - http
+  - websocket

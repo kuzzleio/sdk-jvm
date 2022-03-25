@@ -8,3 +8,6 @@ expected:
   - Connected!
   - Successfully subscribed!
   - ^New created document notification:.*$
+protocols:
+  - http
+  - websocket

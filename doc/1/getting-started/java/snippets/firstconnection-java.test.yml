@@ -8,3 +8,6 @@ expected:
   - Connected!
   - Index nyc-open-data created!
   - Collection yellow-taxi created!
+protocols:
+  - http
+  - websocket

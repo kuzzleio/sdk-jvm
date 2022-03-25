@@ -8,4 +8,6 @@ hooks:
     curl -X DELETE kuzzle:7512/nyc-open-data/yellow-taxi/my-custom-document-id
   after:
 template: default
-expected: Success
+expected: Successprotocols:
+  - http
+  - websocket

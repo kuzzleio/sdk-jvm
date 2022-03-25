@@ -20,3 +20,6 @@ expected:
   - "document_3"
   - "document_4"
   - "document_5"
+protocols:
+  - http
+  - websocket

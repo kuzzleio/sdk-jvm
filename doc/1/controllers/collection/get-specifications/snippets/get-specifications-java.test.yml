@@ -8,4 +8,6 @@ hooks:
     curl -X PUT -H "Content-Type: application/json" -d '{ "strict": false, "fields": {"license": {"type": "string"} } }' kuzzle:7512/nyc-open-data/yellow-taxi/_specifications
   after:
 template: print-result
-expected: 'fields'
+expected: 'fields'protocols:
+  - http
+  - websocket

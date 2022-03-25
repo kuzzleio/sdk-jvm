@@ -15,4 +15,6 @@ hooks:
     curl -XPOST kuzzle:7512/nyc-open-data/yellow-taxi/_refresh
   after:
 template: print-result
-expected: 5
+expected: 5protocols:
+  - http
+  - websocket

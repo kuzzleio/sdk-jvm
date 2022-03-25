@@ -11,4 +11,6 @@ hooks:
 template: print-result-array
 expected:
   - "_id=some-id(.*)_version=1"
-  - "_id=some-id2(.*)_version=1"
+  - "_id=some-id2(.*)_version=1"protocols:
+  - http
+  - websocket
