@@ -18,6 +18,3 @@ hooks:
     curl -XDELETE kuzzle:7512/nyc-open-data
 template: print-result
 expected: 5
-protocols:
-  - http
-  - websocket

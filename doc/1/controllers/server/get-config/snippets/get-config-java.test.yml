@@ -4,6 +4,4 @@ hooks:
   before:
   after:
 template: print-result
-expected: ^{server={.*}$protocols:
-  - http
-  - websocket
+expected: ^{server={.*}$

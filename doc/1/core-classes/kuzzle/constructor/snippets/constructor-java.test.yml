@@ -5,6 +5,4 @@ hooks:
   before:
   after:
 template: without-ctor
-expected: Successprotocols:
-  - http
-  - websocket
+expected: Success

@@ -18,6 +18,3 @@ hooks:
 template: default
 expected:
   - Found 1 API key
-protocols:
-  - http
-  - websocket

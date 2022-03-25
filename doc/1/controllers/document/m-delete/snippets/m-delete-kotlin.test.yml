@@ -9,6 +9,4 @@ hooks:
     curl -XPOST -d '{"color":"purple"}' -H "Content-Type: application/json" kuzzle:7512/nyc-open-data/yellow-taxi/some-id2/_create
   after:
 template: print-result
-expected: "some-id, some-id2"protocols:
-  - http
-  - websocket
+expected: "some-id, some-id2"

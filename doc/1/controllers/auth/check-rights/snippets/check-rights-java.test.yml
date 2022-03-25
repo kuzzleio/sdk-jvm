@@ -8,4 +8,3 @@ expected: true
 protocols:
   - http
   - websocket
-

@@ -4,6 +4,4 @@ hooks:
   before:
   after:
 template: print-result
-expected: 1protocols:
-  - http
-  - websocket
+expected: 1

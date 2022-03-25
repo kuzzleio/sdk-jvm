@@ -7,6 +7,4 @@ hooks:
     curl -X DELETE kuzzle:7512/nyc-open-data/yellow-taxi/nina-vkote
   after:
 template: default
-expected: Document\ moved\ in\ the\ scopeprotocols:
-  - http
-  - websocket
+expected: Document\ moved\ in\ the\ scope

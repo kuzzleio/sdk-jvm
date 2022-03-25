@@ -6,6 +6,4 @@ hooks:
 template: empty
 expected:
   - Connected!
-  - New document added to the yellow-taxi collection!protocols:
-  - http
-  - websocket
+  - New document added to the yellow-taxi collection!

@@ -5,6 +5,4 @@ hooks:
   before:
   after:
 template: default
-expected: Successprotocols:
-  - http
-  - websocket
+expected: Success
