@@ -9,7 +9,7 @@ import io.kuzzle.sdk.coreClasses.responses.Response
 fun main() {
   val protocol;
   if (System.getenv("SNIPPET_PROTOCOL") == "http") {
-    protocol = Http("http://kuzzle:7512")
+    protocol = Http("kuzzle")
   } else {
     protocol = WebSocket("kuzzle")
   }

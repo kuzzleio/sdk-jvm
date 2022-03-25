@@ -11,7 +11,7 @@ public class SnippetTest {
     try {
       AbstractProtocol protocol;
       if (System.getenv("SNIPPET_PROTOCOL") == "http") {
-        protocol = new Http("http://kuzzle:7512");
+        protocol = new Http("kuzzle");
       } else {
         protocol = new WebSocket("kuzzle");
       }
