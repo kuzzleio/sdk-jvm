@@ -1,5 +1,5 @@
 import io.kuzzle.sdk.Kuzzle
-import io.kuzzle.sdk.protocol.Http
+import io.kuzzle.sdk.protocol.*
 import java.util.Date
 
 import java.util.concurrent.ExecutionException
