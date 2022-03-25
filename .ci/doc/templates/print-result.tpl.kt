@@ -13,6 +13,9 @@ fun main() {
   } else {
     protocol = WebSocket("kuzzle")
   }
+  val kuzzle = Kuzzle(protocol).apply {
+    connect()
+  }
   try {
     [snippet-code]
     println(result.toString())
