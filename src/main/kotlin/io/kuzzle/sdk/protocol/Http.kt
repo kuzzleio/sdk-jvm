@@ -15,7 +15,7 @@ open class Http : AbstractProtocol {
     @JvmOverloads
     constructor(
         host: String,
-        port: String = "7512",
+        port: Int = 7512,
         isSsl: Boolean = false
     ) {
       if (!isSsl) {
