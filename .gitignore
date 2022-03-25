@@ -8,6 +8,7 @@ bin
 bin
 .classpath
 .project
+.DS_Store
 
 doc/framework
 node_modules

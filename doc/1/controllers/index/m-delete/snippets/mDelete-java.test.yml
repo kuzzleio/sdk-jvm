@@ -6,3 +6,6 @@ hooks:
   after:
 template: print-result
 expected: ["nyc-open-data"]
+protocols:
+  - http
+  - websocket

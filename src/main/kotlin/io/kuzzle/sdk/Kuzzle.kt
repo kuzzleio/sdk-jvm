@@ -60,7 +60,7 @@ open class Kuzzle {
 
         val requestId = response.room ?: response.requestId
 
-        if (queries.size == 0 || (queries.size != 0 && (requestId == null || queries[requestId] == null))) {
+        if (queries.size == 0) {
             protocol.trigger("unhandledResponse", message)
             return
         }

@@ -41,13 +41,15 @@ services:
       - CONFIG_FILE=/mnt/.ci/doc/config.yml
 
   doc-runner-java:
-    image: adoptopenjdk/openjdk8
+    image: adoptopenjdk/openjdk11
     command: >
-      bash -c '
+      sh -c '
         mkdir -p /var/snippets/java;
         touch /tmp/runner_is_ready;
         tail -f /dev/null
       '
+    links:
+      - kuzzle
     volumes:
       - ../..:/mnt
       - snippets:/var/snippets

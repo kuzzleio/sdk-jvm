@@ -1,11 +1,18 @@
 import io.kuzzle.sdk.Kuzzle
-import io.kuzzle.sdk.protocol.WebSocket
+import io.kuzzle.sdk.protocol.*
 
 import java.util.concurrent.ExecutionException
 
 fun main() {
-  val ws = WebSocket("kuzzle")
-  val kuzzle = Kuzzle(ws)
+  val protocol: AbstractProtocol;
+  if (System.getenv("SNIPPET_PROTOCOL") == "http") {
+    protocol = Http("kuzzle")
+  } else {
+    protocol = WebSocket("kuzzle")
+  }
+  val kuzzle = Kuzzle(protocol).apply {
+    connect()
+  }
   try {
     [snippet-code]
     println("Success")

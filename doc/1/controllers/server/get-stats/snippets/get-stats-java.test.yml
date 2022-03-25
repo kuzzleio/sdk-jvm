@@ -5,3 +5,7 @@ hooks:
   after:
 template: print-result
 expected: hits
+
+protocols:
+  - http
+  - websocket

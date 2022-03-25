@@ -8,3 +8,6 @@ hooks:
   after:
 template: default
 expected: Document entered the scope
+protocols:
+  - http
+  - websocket

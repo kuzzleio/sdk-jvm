@@ -15,3 +15,6 @@ hooks:
     }' kuzzle:7512/nyc-open-data/yellow-taxi/_specifications?refresh=wait_for
 template: default
 expected: 'fetched: 1'
+protocols:
+  - http
+  - websocket
