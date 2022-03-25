@@ -40,7 +40,6 @@ val ktorVersion = "1.5.2"
 
 repositories {
     mavenCentral()
-    maven { url = uri("https://jitpack.io") }
 }
 
 configurations {
@@ -50,8 +49,6 @@ configurations {
 }
 
 dependencies {
-    implementation("com.github.jkcclemens:khttp:0.1.0")
-
     implementation(kotlin("stdlib"))
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-websockets:$ktorVersion")
@@ -60,7 +57,6 @@ dependencies {
     implementation("io.ktor:ktor-client-json:$ktorVersion")
     implementation("io.ktor:ktor-client-gson:$ktorVersion")
     implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-    implementation("com.google.code.gson:gson:2.8.5")
     implementation("com.google.code.gson:gson:2.9.0")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")

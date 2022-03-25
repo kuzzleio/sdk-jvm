@@ -58,13 +58,9 @@ open class Kuzzle {
             fromMap(JsonSerializer.deserialize(message) as Map<String?, Any?>)
         }
 
-<<<<<<< HEAD
-        if (queries.size == 0) {
-=======
         val requestId = response.room ?: response.requestId
 
-        if (queries.size == 0 || (queries.size != 0 && (requestId == null || queries[requestId] == null))) {
->>>>>>> origin/1-dev
+        if (queries.size == 0) {
             protocol.trigger("unhandledResponse", message)
             return
         }
