@@ -4,7 +4,7 @@ import io.kuzzle.sdk.protocol.*
 import java.util.concurrent.ExecutionException
 
 fun main() {
-  val protocol;
+  val protocol: AbstractProtocol;
   if (System.getenv("SNIPPET_PROTOCOL") == "http") {
     protocol = Http("kuzzle")
   } else {
