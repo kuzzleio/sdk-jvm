@@ -11,6 +11,7 @@ import java.io.IOException
 import java.util.*
 
 class MapTypeAdapter : TypeAdapter<Map<String?, Any?>?>() {
+
     @Throws(IOException::class)
     override fun write(out: JsonWriter, map: Map<String?, Any?>?) {
         if (map == null) {
@@ -53,74 +54,80 @@ class MapTypeAdapter : TypeAdapter<Map<String?, Any?>?>() {
         return null
     }
 
-    @Throws(IOException::class)
-    private fun writeObject(out: JsonWriter, value: Any?) {
-        if (value is Number) {
-            out.value(value as Number?)
-        } else if (value is Boolean) {
-            out.value(value as Boolean?)
-        } else if (value is String) {
-            out.value(value as String?)
-        } else if (value is ArrayList<*>) {
-            out.beginArray()
-            val iterator: Iterator<Any?> = (value as ArrayList<Any?>).iterator()
-            while (iterator.hasNext()) {
-                writeObject(out, iterator.next())
+    companion object {
+        @Throws(IOException::class)
+        fun writeObject(out: JsonWriter, value: Any?) {
+            if (value is Number) {
+                out.value(value as Number?)
+            } else if (value is Boolean) {
+                out.value(value as Boolean?)
+            } else if (value is String) {
+                out.value(value as String?)
+            } else if (value is ArrayList<*>) {
+                out.beginArray()
+                val iterator: Iterator<Any?> = (value as ArrayList<Any?>).iterator()
+                while (iterator.hasNext()) {
+                    writeObject(out, iterator.next())
+                }
+                out.endArray()
+            } else if (value is Map<*, *>) {
+                out.beginObject()
+                val iterator: Iterator<Map.Entry<String?, Any?>> = (value as Map<String?, Any?>)
+                    .entries
+                    .iterator()
+                while (iterator.hasNext()) {
+                    val e = iterator.next()
+                    out.name(e.key)
+                    writeObject(out, e.value)
+                }
+                out.endObject()
+            } else if (value is RawJson) {
+                out.jsonValue(value.rawJson)
+            } else if (value == null) {
+                out.nullValue()
+            } else {
+                out.jsonValue(JsonSerializer.serialize(value))
             }
-            out.endArray()
-        } else if (value is Map<*, *>) {
-            out.beginObject()
-            val iterator: Iterator<Map.Entry<String?, Any?>> = (value as Map<String?, Any?>)
-                .entries
-                .iterator()
-            while (iterator.hasNext()) {
-                val e = iterator.next()
-                out.name(e.key)
-                writeObject(out, e.value)
-            }
-            out.endObject()
-        } else if (value == null) {
-            out.nullValue()
         }
-    }
 
-    @Throws(IOException::class)
-    private fun readObject(`in`: JsonReader): Any? {
-        return when (`in`.peek()) {
-            JsonToken.NUMBER -> {
-                val number = `in`.nextString()
-                LazilyParsedNumber(number)
-            }
-            JsonToken.BOOLEAN -> `in`.nextBoolean()
-            JsonToken.STRING -> `in`.nextString()
-            JsonToken.NULL -> {
-                `in`.nextNull()
-                null
-            }
-            JsonToken.BEGIN_ARRAY -> {
-                val array = ArrayList<Any?>()
-                `in`.beginArray()
-                while (`in`.hasNext()) {
-                    array.add(readObject(`in`))
+        @Throws(IOException::class)
+        fun readObject(`in`: JsonReader): Any? {
+            return when (`in`.peek()) {
+                JsonToken.NUMBER -> {
+                    val number = `in`.nextString()
+                    LazilyParsedNumber(number)
                 }
-                `in`.endArray()
-                array
-            }
-            JsonToken.BEGIN_OBJECT -> {
-                val map = KuzzleMap()
-                `in`.beginObject()
-                while (`in`.hasNext()) {
-                    val key = `in`.nextName()
-                    val `object` = readObject(`in`)
-                    if (`object` != null) {
-                        map.put(key, `object`)
+                JsonToken.BOOLEAN -> `in`.nextBoolean()
+                JsonToken.STRING -> `in`.nextString()
+                JsonToken.NULL -> {
+                    `in`.nextNull()
+                    null
+                }
+                JsonToken.BEGIN_ARRAY -> {
+                    val array = ArrayList<Any?>()
+                    `in`.beginArray()
+                    while (`in`.hasNext()) {
+                        array.add(readObject(`in`))
                     }
+                    `in`.endArray()
+                    array
                 }
-                `in`.endObject()
-                map
+                JsonToken.BEGIN_OBJECT -> {
+                    val map = KuzzleMap()
+                    `in`.beginObject()
+                    while (`in`.hasNext()) {
+                        val key = `in`.nextName()
+                        val `object` = readObject(`in`)
+                        if (`object` != null) {
+                            map.put(key, `object`)
+                        }
+                    }
+                    `in`.endObject()
+                    map
+                }
+                JsonToken.END_DOCUMENT, JsonToken.NAME, JsonToken.END_OBJECT, JsonToken.END_ARRAY -> throw IllegalArgumentException()
+                else -> throw IllegalArgumentException()
             }
-            JsonToken.END_DOCUMENT, JsonToken.NAME, JsonToken.END_OBJECT, JsonToken.END_ARRAY -> throw IllegalArgumentException()
-            else -> throw IllegalArgumentException()
         }
     }
 }

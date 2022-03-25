@@ -7,6 +7,7 @@ import io.kuzzle.sdk.controllers.DocumentController
 import io.kuzzle.sdk.controllers.IndexController
 import io.kuzzle.sdk.controllers.RealtimeController
 import io.kuzzle.sdk.controllers.ServerController
+import io.kuzzle.sdk.coreClasses.RequestPayload
 import io.kuzzle.sdk.coreClasses.exceptions.ApiErrorException
 import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
 import io.kuzzle.sdk.coreClasses.exceptions.NotConnectedException
@@ -19,7 +20,7 @@ import java.util.UUID
 import java.util.concurrent.CompletableFuture
 import kotlin.collections.HashMap
 
-class Kuzzle {
+open class Kuzzle {
     val protocol: AbstractProtocol
     val autoResubscribe: Boolean
     private val queries: HashMap<String, CompletableFuture<Response>> = HashMap()
@@ -57,7 +58,13 @@ class Kuzzle {
             fromMap(JsonSerializer.deserialize(message) as Map<String?, Any?>)
         }
 
+<<<<<<< HEAD
         if (queries.size == 0) {
+=======
+        val requestId = response.room ?: response.requestId
+
+        if (queries.size == 0 || (queries.size != 0 && (requestId == null || queries[requestId] == null))) {
+>>>>>>> origin/1-dev
             protocol.trigger("unhandledResponse", message)
             return
         }
@@ -92,6 +99,19 @@ class Kuzzle {
 
     fun disconnect() {
         protocol.disconnect()
+    }
+
+    fun query(query: RequestPayload): CompletableFuture<Response> {
+        return query(query.toMap())
+    }
+
+    fun query(query: Any): CompletableFuture<Response> {
+        return query(JsonSerializer.serialize(query))
+    }
+
+    fun query(query: String): CompletableFuture<Response> {
+        val queryMap = JsonSerializer.deserialize(query) as Map<String?, Any?>
+        return query(queryMap)
     }
 
     fun query(query: Map<String?, Any?>): CompletableFuture<Response> {
