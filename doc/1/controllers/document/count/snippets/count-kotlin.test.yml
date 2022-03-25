@@ -16,3 +16,6 @@ hooks:
   after:
 template: print-result
 expected: 5
+protocols:
+  - http
+  - websocket

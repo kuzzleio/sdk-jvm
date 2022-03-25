@@ -9,3 +9,6 @@ hooks:
   after:
 template: default
 expected: ^Success
+protocols:
+  - http
+  - websocket

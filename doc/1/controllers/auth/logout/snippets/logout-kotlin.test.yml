@@ -5,3 +5,7 @@ hooks:
   after: curl -X DELETE kuzzle:7512/users/foo?refresh=wait_for
 template: default
 expected: Success
+
+protocols:
+  - http
+  - websocket

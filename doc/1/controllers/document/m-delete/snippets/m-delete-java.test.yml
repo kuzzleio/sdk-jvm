@@ -12,3 +12,6 @@ template: print-result-array
 expected:
   - "some-id"
   - "some-id2"
+protocols:
+  - http
+  - websocket

@@ -6,3 +6,7 @@ hooks:
   after:
 template: without-connect
 expected: Success
+
+protocols:
+  - http
+  - websocket

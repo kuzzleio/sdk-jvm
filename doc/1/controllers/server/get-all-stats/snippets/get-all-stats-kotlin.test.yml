@@ -5,3 +5,7 @@ hooks:
   after:
 template: print-result
 expected: ongoingRequests
+
+protocols:
+  - http
+  - websocket

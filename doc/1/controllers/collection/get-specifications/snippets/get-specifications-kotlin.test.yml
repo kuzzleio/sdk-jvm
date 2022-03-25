@@ -9,3 +9,6 @@ hooks:
   after:
 template: print-result
 expected: 'fields'
+protocols:
+  - http
+  - websocket

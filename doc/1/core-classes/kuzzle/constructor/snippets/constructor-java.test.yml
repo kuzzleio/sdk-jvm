@@ -6,3 +6,6 @@ hooks:
   after:
 template: without-ctor
 expected: Success
+protocols:
+  - http
+  - websocket

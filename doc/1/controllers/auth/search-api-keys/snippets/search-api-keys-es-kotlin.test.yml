@@ -18,3 +18,7 @@ hooks:
 template: default
 expected:
   - Found 2 API keys matching 'LoRa'
+
+protocols:
+  - http
+  - websocket
