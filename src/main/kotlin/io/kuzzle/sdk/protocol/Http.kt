@@ -14,11 +14,10 @@ open class Http : AbstractProtocol {
 
     @JvmOverloads
     constructor(
-      host: String,
-      port: String = "7512",
-      isSsl: Boolean = false,
+        host: String,
+        port: String = "7512",
+        isSsl: Boolean = false
     ) {
-
       if (!isSsl) {
         this.uri = "http://${host}:${port}/_query"
       } else {
