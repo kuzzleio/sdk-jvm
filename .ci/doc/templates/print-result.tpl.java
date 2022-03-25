@@ -15,11 +15,6 @@ public class SnippetTest {
       } else {
         protocol = new WebSocket("kuzzle");
       }
-      Kuzzle kuzzle = new Kuzzle(protocol);
-        protocol = Http("http://kuzzle:7512")
-      } else {
-        protocol = WebSocket("kuzzle")
-      }
       Kuzzle kuzzle = Kuzzle(protocol);
       kuzzle.connect();
       [snippet-code]
