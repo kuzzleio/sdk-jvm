@@ -68,7 +68,7 @@ open class WebSocket : AbstractProtocol {
             return CompletableFuture.completedFuture(false)
 
         state = ProtocolState.RECONNECTING
-        trigger("networkStateChange", state.toString())
+        trigger("networkStateChange", arrayOf(state.toString()))
         return CompletableFuture.supplyAsync(
             fun(): Boolean {
                 var retryCount: Long = 0
@@ -101,7 +101,7 @@ open class WebSocket : AbstractProtocol {
             ws = this
             // @TODO Create enums for events
             state = ProtocolState.OPEN
-            trigger("networkStateChange", ProtocolState.OPEN.toString())
+            trigger("networkStateChange", arrayOf(ProtocolState.OPEN.toString()))
 
             thread(start = true) {
                 while (ws != null) {
@@ -119,9 +119,9 @@ open class WebSocket : AbstractProtocol {
                 for (frame in incoming) {
                     when (frame) {
                         // @TODO Create enums for events
-                        is Frame.Text -> super.trigger("messageReceived", frame.readText())
+                        is Frame.Text -> super.trigger("messageReceived", arrayOf(frame.readText()))
                         // @TODO Create enums for events
-                        is Frame.Binary -> super.trigger("messageReceived", frame.readBytes().toString())
+                        is Frame.Binary -> super.trigger("messageReceived", arrayOf(frame.readBytes().toString()))
                     }
                 }
             } catch (e: Exception) {
@@ -130,7 +130,7 @@ open class WebSocket : AbstractProtocol {
                     fun (success: Boolean) {
                         if (!success) {
                             state = ProtocolState.CLOSE
-                            trigger("networkStateChange", ProtocolState.CLOSE.toString())
+                            trigger("networkStateChange", arrayOf(ProtocolState.CLOSE.toString()))
                             ws = null
                         }
                         // reset stopRetryingToConnect
@@ -140,7 +140,7 @@ open class WebSocket : AbstractProtocol {
             }
             if (!skip) {
                 state = ProtocolState.CLOSE
-                trigger("networkStateChange", ProtocolState.CLOSE.toString())
+                trigger("networkStateChange", arrayOf(ProtocolState.CLOSE.toString()))
                 ws = null
             }
         }
@@ -198,7 +198,7 @@ open class WebSocket : AbstractProtocol {
     override fun disconnect() {
         if (state != ProtocolState.CLOSE) {
             state = ProtocolState.CLOSE
-            trigger("networkStateChange", ProtocolState.CLOSE.toString())
+            trigger("networkStateChange", arrayOf(ProtocolState.CLOSE.toString()))
             stopRetryingToConnect.set(true)
             GlobalScope.launch {
                 ws?.close()

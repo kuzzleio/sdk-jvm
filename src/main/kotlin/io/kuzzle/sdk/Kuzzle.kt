@@ -53,15 +53,21 @@ open class Kuzzle {
         protocol.addListener("networkStateChange", ::onNetworkStateChange)
     }
 
-    private fun onMessageReceived(message: String?) {
+    private fun onMessageReceived(args: Array<Any?>?) {
+        if (args.isNullOrEmpty()) {
+            return;
+        }
+
+        val message = args[0] as String?
+        val receivedRequestId = if (args.size > 1) args[1] as String? else null
         val response = Response().apply {
             fromMap(JsonSerializer.deserialize(message) as Map<String?, Any?>)
         }
 
-        val requestId = response.room ?: response.requestId
+        val requestId = response.room ?: response.requestId ?: receivedRequestId;
 
         if (queries.size == 0) {
-            protocol.trigger("unhandledResponse", message)
+            protocol.trigger("unhandledResponse", arrayOf(message))
             return
         }
 
@@ -80,10 +86,16 @@ open class Kuzzle {
         }
 
         queries[response.requestId]?.completeExceptionally(ApiErrorException(response))
-        protocol.trigger("tokenExpired")
+        protocol.trigger("tokenExpired", null)
     }
 
-    private fun onNetworkStateChange(state: String?) {
+    private fun onNetworkStateChange(args: Array<Any?>?) {
+        if (args.isNullOrEmpty()) {
+            return
+        }
+
+        val state = args!![0] as String?
+
         if (state == ProtocolState.OPEN.toString() && autoResubscribe) {
             realtimeController.renewSubscriptions()
         }

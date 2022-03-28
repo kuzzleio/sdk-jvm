@@ -23,12 +23,15 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
 
     init {
         kuzzle.protocol.addListener("unhandledResponse") {
+            if (it.isNullOrEmpty()) {
+                return@addListener
+            }
             val response = Response().apply {
-                fromMap(JsonSerializer.deserialize(it) as Map<String?, Any?>)
+                fromMap(JsonSerializer.deserialize(it!![0] as String?) as Map<String?, Any?>)
             }
 
             if (response.error != null && response.error!!.id.equals("security.token.expired")) {
-                kuzzle.protocol.trigger("tokenExpired")
+                kuzzle.protocol.trigger("tokenExpired", null)
             } else {
                 var sdkInstanceId = ""
                 if (response.Volatile != null) {
@@ -48,7 +51,10 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         }
 
         kuzzle.protocol.addListener("networkStateChange") {
-            if (it == ProtocolState.CLOSE.toString()) {
+            if (it.isNullOrEmpty()) {
+                return@addListener
+            }
+            if (it!![0] == ProtocolState.CLOSE.toString()) {
                 currentSubscriptions.clear()
             }
         }

@@ -150,9 +150,9 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
                 .from(response.result as Map<String?, Any?>)
             kuzzle.authenticationToken = map.getString("jwt")
             if (map.getString("_id") != null) {
-                kuzzle.protocol.trigger("loginAttempt", "true")
+                kuzzle.protocol.trigger("loginAttempt", arrayOf("true"))
             } else {
-                kuzzle.protocol.trigger("loginAttempt", "false")
+                kuzzle.protocol.trigger("loginAttempt", arrayOf("false"))
             }
             map as Map<String, Any?>
         }

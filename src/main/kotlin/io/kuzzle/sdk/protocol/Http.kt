@@ -29,7 +29,7 @@ open class Http : AbstractProtocol {
 
     override fun connect () {
         if (this.state == ProtocolState.OPEN) {
-            trigger("networkStateChange", ProtocolState.OPEN.toString())
+            trigger("networkStateChange", arrayOf(ProtocolState.OPEN.toString()))
             return
         }
         // if state is NOT open, return response to /_publicApi
@@ -42,7 +42,7 @@ open class Http : AbstractProtocol {
 
     override fun disconnect () {
         this.state = ProtocolState.CLOSE
-        trigger("networkStateChange", ProtocolState.CLOSE.toString())
+        trigger("networkStateChange", arrayOf(ProtocolState.CLOSE.toString()))
     }
 
     override fun send (payload: Map<String?, Any?>) {
@@ -63,14 +63,8 @@ open class Http : AbstractProtocol {
               HttpResponse.BodyHandlers.ofString()
             ).body().toString()
 
-            // get initial requestId
-            var tmp = mutableMapOf<String?, Any?>()
-            for ((k, v) in JsonSerializer.deserialize(response) as Map<String?, Any?>) {
-                tmp.put(k, v)
-            }
-            tmp["requestId"] = payload.get("requestId")
             // trigger messageReceived
-            super.trigger("messageReceived", JsonSerializer.serialize(tmp))
+            super.trigger("messageReceived", arrayOf(response, payload.get("requestId") as String?))
         }
     }
 }
