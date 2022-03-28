@@ -17,7 +17,7 @@ The complete SDK documentation is available [here](https://docs.kuzzle.io/sdk/jv
 
 ## Protocol used
 
-The JVM SDK implements the websocket protocol.
+The JVM SDK implements the websocket protocol and http protocol.
 
 ### Build jar
 
@@ -91,11 +91,12 @@ configurations {
 If you are using the thin jar, make sure to add the following dependencies:
 
 ```groovy
+    implementation("io.ktor:ktor-client-core:1.5.2")
     implementation("io.ktor:ktor-client-websockets:1.5.2")
     implementation("io.ktor:ktor-client-okhttp:1.5.2")
     implementation("io.ktor:ktor-client-cio:1.5.2")
     implementation("io.ktor:ktor-client-json:1.5.2")
     implementation("io.ktor:ktor-client-gson:1.5.2")
     implementation("io.ktor:ktor-client-serialization:1.5.2")
-    implementation("com.google.code.gson:gson:2.8.5")
+    implementation("com.google.code.gson:gson:2.9.0")
 ```
