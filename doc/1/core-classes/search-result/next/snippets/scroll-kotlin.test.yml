@@ -15,6 +15,3 @@ hooks:
     curl -XDELETE kuzzle:7512/nyc-open-data
 template: print-search-result
 expected: Successfully retrieved 100 documents
-protocols:
-  - http
-  - websocket

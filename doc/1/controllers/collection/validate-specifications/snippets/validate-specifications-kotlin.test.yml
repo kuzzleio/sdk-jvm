@@ -5,6 +5,3 @@ hooks:
   after:
 template: print-result
 expected: Some errors with provided specifications.
-protocols:
-  - http
-  - websocket
