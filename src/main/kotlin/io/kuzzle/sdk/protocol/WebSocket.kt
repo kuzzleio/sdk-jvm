@@ -84,6 +84,16 @@ open class WebSocket : AbstractProtocol {
         )
     }
 
+    open protected fun createHTTPClient(): HttpClient {
+        return HttpClient {
+            install(WebSockets)
+            install(JsonFeature) {
+                serializer = GsonSerializer()
+                acceptContentTypes += ContentType("application", "json")
+            }
+        }
+    }
+
     override fun connect() {
         if (this.state == ProtocolState.OPEN) {
             return
@@ -93,13 +103,7 @@ open class WebSocket : AbstractProtocol {
             throw Exception("Connection Aborted")
 
         if (this.state == ProtocolState.CLOSE) {
-            client = HttpClient {
-                install(WebSockets)
-                install(JsonFeature) {
-                    serializer = GsonSerializer()
-                    acceptContentTypes += ContentType("application", "json")
-                }
-            }
+            client = createHTTPClient()
         }
 
         val wait = CompletableFuture<Void>()

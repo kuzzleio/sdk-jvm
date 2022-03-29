@@ -18,11 +18,10 @@ import org.junit.Test
 
 class WebSocketTests {
     inner class MockedSocket(host: String) : WebSocket(host) {
-        var mockedClient: HttpClient?
-            get() = super.client
-            set(value) {
-                super.client = value
-            }
+        lateinit var mockedClient: HttpClient
+        override fun createHTTPClient(): HttpClient {
+            return mockedClient
+        }
     }
 
     private var socket: MockedSocket? = null
@@ -53,7 +52,6 @@ class WebSocketTests {
         assertEquals(ProtocolState.CLOSE, socket?.state)
     }
 
-    @KtorExperimentalAPI
     @Test
     fun connectTest() {
         assertEquals(ProtocolState.CLOSE, socket?.state)
@@ -63,7 +61,6 @@ class WebSocketTests {
         socket = null
     }
 
-    @KtorExperimentalAPI
     @Test
     fun sendTest() {
         val query = HashMap<String?, Any?>().apply {
