@@ -14,10 +14,7 @@ import io.kuzzle.sdk.coreClasses.exceptions.NotConnectedException
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.responses.Response
-import io.kuzzle.sdk.events.MessageReceivedEvent
-import io.kuzzle.sdk.events.NetworkStateChangeEvent
-import io.kuzzle.sdk.events.TokenExpiredEvent
-import io.kuzzle.sdk.events.UnhandledResponseEvent
+import io.kuzzle.sdk.events.*
 import io.kuzzle.sdk.protocol.AbstractProtocol
 import io.kuzzle.sdk.protocol.ProtocolState
 import java.util.UUID
@@ -55,6 +52,14 @@ open class Kuzzle {
         // @TODO Create enums for events
         protocol.addListener<MessageReceivedEvent>(::onMessageReceived)
         protocol.addListener<NetworkStateChangeEvent>(::onNetworkStateChange)
+        protocol.addListener<RequestErrorEvent>(::onRequestError)
+    }
+
+    private fun onRequestError(event: RequestErrorEvent) {
+        if (event.requestId != null && queries[event.requestId] != null) {
+            queries[event.requestId]?.completeExceptionally(event.exception)
+            queries.remove(event.requestId)
+        }
     }
 
     private fun onMessageReceived(event: MessageReceivedEvent) {

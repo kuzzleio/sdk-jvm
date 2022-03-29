@@ -7,6 +7,7 @@ import io.ktor.client.statement.*
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import io.kuzzle.sdk.events.MessageReceivedEvent
 import io.kuzzle.sdk.events.NetworkStateChangeEvent
+import io.kuzzle.sdk.events.RequestErrorEvent
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.CompletableFuture
@@ -36,18 +37,22 @@ open class Http : AbstractProtocol {
         val wait = CompletableFuture<Void>()
         // if state is NOT open, request /_query to see if we have the proper rights to make request using _query
         GlobalScope.launch {
-
             var client = HttpClient()
-            var response: HttpResponse = client.post(uri) {
-                this.header("content-type", "application/json")
-                this.body = "{}"
+            try {
+                var response: HttpResponse = client.post(uri) {
+                    this.header("content-type", "application/json")
+                    this.body = "{}"
+                }
+                if (response.status.value == 401 || response.status.value == 403) {
+                    wait.completeExceptionally(java.lang.Exception("You must have permission on the _query route."))
+                    return@launch
+                }
+                wait.complete(null)
+            } catch (e: Exception) {
+                wait.completeExceptionally(e)
+            } finally {
+                client.close()
             }
-            client.close()
-            if (response.status.value == 401 || response.status.value == 403) {
-                wait.completeExceptionally(java.lang.Exception("You must have permission on the _query route."))
-                return@launch
-            }
-            wait.complete(null)
         }
 
         wait.get()
@@ -68,19 +73,24 @@ open class Http : AbstractProtocol {
     override fun send(payload: Map<String?, Any?>) {
         GlobalScope.launch { // Launch HTTP Request inside a coroutine to be non-blocking
             var client = HttpClient()
-            var response: HttpResponse = client.post(uri) {
-                this.header("content-type", "application/json")
-                if (payload["jwt"] != null) {
-                    this.header("Authorization", "Bearer ${payload["jwt"]}")
+            try {
+                var response: HttpResponse = client.post(uri) {
+                    this.header("content-type", "application/json")
+                    if (payload["jwt"] != null) {
+                        this.header("Authorization", "Bearer ${payload["jwt"]}")
+                    }
+                    if (payload["volatile"] != null) {
+                        this.header("Volatile", "${payload["volatile"]}")
+                    }
+                    this.body = JsonSerializer.serialize(payload)
                 }
-                if (payload["volatile"] != null) {
-                    this.header("Volatile", "${payload["volatile"]}")
-                }
-                this.body = JsonSerializer.serialize(payload)
+                // trigger messageReceived
+                super.trigger(MessageReceivedEvent(response.receive(), payload["requestId"] as String?))
+            } catch (e: Exception) {
+                super.trigger(RequestErrorEvent(e, payload["requestId"] as String?))
+            } finally {
+                client.close()
             }
-            client.close()
-            // trigger messageReceived
-            super.trigger(MessageReceivedEvent(response.receive(), payload["requestId"] as String?))
         }
     }
 }
