@@ -18,8 +18,7 @@ import org.junit.Test
 
 class WebSocketTests {
     inner class MockedSocket(host: String) : WebSocket(host) {
-        @KtorExperimentalAPI
-        var mockedClient: HttpClient
+        var mockedClient: HttpClient?
             get() = super.client
             set(value) {
                 super.client = value
@@ -27,8 +26,6 @@ class WebSocketTests {
     }
 
     private var socket: MockedSocket? = null
-
-    @KtorExperimentalAPI
     @Before
     fun setup() {
         socket = MockedSocket("localhost")
