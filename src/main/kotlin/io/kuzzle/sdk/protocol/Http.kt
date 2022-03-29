@@ -21,14 +21,14 @@ open class Http : AbstractProtocol {
         port: Int = 7512,
         isSsl: Boolean = false
     ) {
-      if (!isSsl) {
-        this.uri = "http://${host}:${port}/_query"
-      } else {
-        this.uri = "https://${host}:${port}/_query"
-      }
+        if (!isSsl) {
+            this.uri = "http://$host:$port/_query"
+        } else {
+            this.uri = "https://$host:$port/_query"
+        }
     }
 
-    override fun connect () {
+    override fun connect() {
         if (this.state != ProtocolState.CLOSE) {
             return
         }
@@ -56,7 +56,7 @@ open class Http : AbstractProtocol {
         trigger(NetworkStateChangeEvent(ProtocolState.OPEN))
     }
 
-    override fun disconnect () {
+    override fun disconnect() {
         if (state != ProtocolState.OPEN) {
             return
         }
@@ -65,7 +65,7 @@ open class Http : AbstractProtocol {
         trigger(NetworkStateChangeEvent(ProtocolState.CLOSE))
     }
 
-    override fun send (payload: Map<String?, Any?>) {
+    override fun send(payload: Map<String?, Any?>) {
         GlobalScope.launch { // Launch HTTP Request inside a coroutine to be non-blocking
             var client = HttpClient()
             var response: HttpResponse = client.post(uri) {

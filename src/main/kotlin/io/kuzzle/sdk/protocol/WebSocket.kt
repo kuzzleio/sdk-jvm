@@ -84,7 +84,7 @@ open class WebSocket : AbstractProtocol {
         )
     }
 
-    open protected fun createHTTPClient(): HttpClient {
+    protected open fun createHTTPClient(): HttpClient {
         return HttpClient {
             install(WebSockets)
             install(JsonFeature) {
@@ -158,15 +158,15 @@ open class WebSocket : AbstractProtocol {
             try {
                 if (isSsl) {
                     client?.wss(
-                            host = this@WebSocket.host,
-                            port = this@WebSocket.port,
-                            block = block
+                        host = this@WebSocket.host,
+                        port = this@WebSocket.port,
+                        block = block
                     )
                 } else {
                     client?.ws(
-                            host = this@WebSocket.host,
-                            port = this@WebSocket.port,
-                            block = block
+                        host = this@WebSocket.host,
+                        port = this@WebSocket.port,
+                        block = block
                     )
                 }
 

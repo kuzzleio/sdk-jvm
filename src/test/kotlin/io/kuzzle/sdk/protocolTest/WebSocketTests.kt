@@ -8,7 +8,6 @@ import io.ktor.client.features.json.JsonFeature
 import io.ktor.http.ContentType
 import io.ktor.http.fullPath
 import io.ktor.http.headersOf
-import io.ktor.util.KtorExperimentalAPI
 import io.kuzzle.sdk.protocol.ProtocolState
 import io.kuzzle.sdk.protocol.WebSocket
 import org.junit.Assert.assertEquals
