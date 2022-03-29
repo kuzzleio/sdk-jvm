@@ -14,6 +14,10 @@ import io.kuzzle.sdk.coreClasses.exceptions.NotConnectedException
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.responses.Response
+import io.kuzzle.sdk.events.MessageReceivedEvent
+import io.kuzzle.sdk.events.NetworkStateChangeEvent
+import io.kuzzle.sdk.events.TokenExpiredEvent
+import io.kuzzle.sdk.events.UnhandledResponseEvent
 import io.kuzzle.sdk.protocol.AbstractProtocol
 import io.kuzzle.sdk.protocol.ProtocolState
 import java.util.UUID
@@ -49,54 +53,43 @@ open class Kuzzle {
         collectionController = CollectionController(this)
         bulkController = BulkController(this)
         // @TODO Create enums for events
-        protocol.addListener("messageReceived", ::onMessageReceived)
-        protocol.addListener("networkStateChange", ::onNetworkStateChange)
+        protocol.addListener<MessageReceivedEvent>(::onMessageReceived)
+        protocol.addListener<NetworkStateChangeEvent>(::onNetworkStateChange)
     }
 
-    private fun onMessageReceived(args: Array<Any?>?) {
-        if (args.isNullOrEmpty()) {
-            return;
-        }
-
-        val message = args[0] as String?
-        val receivedRequestId = if (args.size > 1) args[1] as String? else null
+    private fun onMessageReceived(event: MessageReceivedEvent) {
+        val message = event.message
         val response = Response().apply {
             fromMap(JsonSerializer.deserialize(message) as Map<String?, Any?>)
         }
 
-        val requestId = response.room ?: response.requestId ?: receivedRequestId;
+        val requestId = event.requestId ?: response.room ?: response.requestId
 
         if (queries.size == 0) {
-            protocol.trigger("unhandledResponse", arrayOf(message))
+            protocol.trigger(UnhandledResponseEvent(message))
             return
         }
 
         if (response.error == null) {
-            queries[response.requestId]?.complete(response)
-            queries.remove(response.requestId)
+            queries[requestId]?.complete(response)
+            queries.remove(requestId)
             return
         }
 
         if (response.error?.id == null ||
             response.error?.id != "security.token.expired"
         ) {
-            queries[response.requestId]?.completeExceptionally(ApiErrorException(response))
-            queries.remove(response.requestId)
+            queries[requestId]?.completeExceptionally(ApiErrorException(response))
+            queries.remove(requestId)
             return
         }
 
-        queries[response.requestId]?.completeExceptionally(ApiErrorException(response))
-        protocol.trigger("tokenExpired", null)
+        queries[requestId]?.completeExceptionally(ApiErrorException(response))
+        protocol.trigger(TokenExpiredEvent())
     }
 
-    private fun onNetworkStateChange(args: Array<Any?>?) {
-        if (args.isNullOrEmpty()) {
-            return
-        }
-
-        val state = args!![0] as String?
-
-        if (state == ProtocolState.OPEN.toString() && autoResubscribe) {
+    private fun onNetworkStateChange(event: NetworkStateChangeEvent) {
+        if (event.state == ProtocolState.OPEN && autoResubscribe) {
             realtimeController.renewSubscriptions()
         }
     }

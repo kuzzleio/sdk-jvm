@@ -1,4 +1,3 @@
 package io.kuzzle.sdk.events
 
-class TokenExpiredEvent {
-}
+class TokenExpiredEvent : IEvent(3) {}
