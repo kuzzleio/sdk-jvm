@@ -1,8 +1,8 @@
 package io.kuzzle.sdk.events
 
-class LoginAttemptEvent : IEvent {
+class LoginAttemptEvent {
     var success: Boolean
-    constructor(success: Boolean) : super(0) {
+    constructor(success: Boolean){
         this.success = success
     }
 }

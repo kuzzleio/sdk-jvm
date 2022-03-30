@@ -1,8 +1,8 @@
 package io.kuzzle.sdk.events
 
-class UnhandledResponseEvent : IEvent {
+class UnhandledResponseEvent {
     var message: String?
-    constructor(message: String?) : super(4) {
+    constructor(message: String?) {
         this.message = message
     }
 }
