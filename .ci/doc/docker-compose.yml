@@ -25,8 +25,21 @@ services:
     ulimits:
       nofile: 65536
 
+  snippet-builder:
+    build: ./builder
+    command: >
+      sh -c '
+        rm /mnt/build/SnippetTest.java;
+        rm /mnt/build/SnippetTest.kt;
+        node /var/app/builder.js
+      '
+    volumes:
+      - ../..:/mnt
+      - build:/mnt/build
+      - ./templates:/mnt/snippet-templates
+
   doc-tests:
-    image: kuzzleio/snippets-tests
+    image: kuzzleio/snippets-tests:test
     privileged: true
     ports:
       - '9229:9229'
@@ -48,11 +61,15 @@ services:
         touch /tmp/runner_is_ready;
         tail -f /dev/null
       '
+    depends_on:
+      - snippet-builder
     links:
       - kuzzle
     volumes:
       - ../..:/mnt
+      - build:/mnt/build
       - snippets:/var/snippets
 
 volumes:
   snippets:
+  build:

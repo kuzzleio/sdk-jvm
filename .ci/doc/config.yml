@@ -11,10 +11,10 @@ runners:
   default: java
 
   java:
+    debugStdout: false
+    debugStderr: false
     service: doc-runner-java
     path: /var/snippets/java
-    build:
-      cmd: cd /mnt && ./gradlew jar
+    afterInit: /mnt/.ci/doc/snippet-build.sh
     run:
-      before: timeout 600 bash -c 'until stat /tmp/runner_is_ready && curl -f -s -o /dev/null http://kuzzle:7512/_now; do sleep 1; done'
-      cmd: SNIPPET_PROTOCOL="{{ snippet.protocol }}" /mnt/.ci/doc/test-snippet.sh {{ snippet.source }}
+      cmd: SNIPPET_PROTOCOL="{{ snippet.protocol }}" /mnt/.ci/doc/test-snippet.sh "{{ snippet.source }}" "{{ snippet.name }}"

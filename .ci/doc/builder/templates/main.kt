@@ -8,7 +8,7 @@ import java.lang.reflect.Method
 import java.util.*;
 import kotlin.system.exitProcess
 
-class Snippets {
+public class Snippets {
   [builded-snippets]
 }
 
@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
 
   var snippets: Snippets = Snippets()
   // Find the method that has the given name using reflection
-  var method: Method = snippets.javaClass.getMethod("kotlin_authcheckrights")
+  var method: Method = snippets.javaClass.getMethod(methodName)
   // execute method
   method.invoke(snippets)
 }

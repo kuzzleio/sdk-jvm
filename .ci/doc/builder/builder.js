@@ -5,7 +5,7 @@ const glob = require('glob');
 
 const javaSnippetPath = '/mnt/doc/**/snippets/*-java.test.yml';
 const kotlinSnippetPath = '/mnt/doc/**/snippets/*-kotlin.test.yml';
-const snippetTemplatesPath = '/mnt/snippet-templates';
+const snippetTemplatesPath = '/mnt/snippet-templates/*';
 const buildDir = '/mnt/build';
 
 /**
