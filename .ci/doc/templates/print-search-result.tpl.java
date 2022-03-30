@@ -16,7 +16,7 @@ public class SnippetTest {
       } else {
         protocol = new WebSocket("kuzzle");
       }
-      Kuzzle kuzzle = new Kuzzle(protocol);
+      kuzzle = new Kuzzle(protocol);
       kuzzle.connect();
       [snippet-code]
       System.out.println("Successfully retrieved " + matched.size() + " documents");

@@ -13,7 +13,7 @@ public class SnippetTest {
       } else {
         protocol = new WebSocket("kuzzle");
       }
-      Kuzzle kuzzle = new Kuzzle(protocol);
+      kuzzle = new Kuzzle(protocol);
       [snippet-code]
       System.out.println("Success");
     } catch (Exception e) {
