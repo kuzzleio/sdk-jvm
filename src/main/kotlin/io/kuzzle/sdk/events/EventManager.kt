@@ -1,7 +1,7 @@
 package io.kuzzle.sdk.events
 
 open class EventManager {
-    val listeners: HashMap<Any, Any> = HashMap()
+    protected val listeners: HashMap<Any, Any> = HashMap()
 
     // Java version of addListener function
     fun <T : Any> addListener(eventClass: Class<T>, listener: (T) -> Unit) {
