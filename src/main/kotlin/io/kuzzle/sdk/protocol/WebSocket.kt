@@ -132,6 +132,9 @@ open class WebSocket : AbstractProtocol {
                         is Frame.Text -> super.trigger(MessageReceivedEvent(frame.readText(), null))
                         // @TODO Create enums for events
                         is Frame.Binary -> super.trigger(MessageReceivedEvent(frame.readBytes().toString(), null))
+                        is Frame.Close -> TODO()
+                        is Frame.Ping -> TODO()
+                        is Frame.Pong -> TODO()
                     }
                 }
             } catch (e: Exception) {
