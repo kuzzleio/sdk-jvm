@@ -37,7 +37,9 @@ open class Http : AbstractProtocol {
         val wait = CompletableFuture<Void>()
         // if state is NOT open, request /_query to see if we have the proper rights to make request using _query
         GlobalScope.launch {
-            var client = HttpClient()
+            var client = HttpClient() {
+                expectSuccess = false
+            }
             try {
                 var response: HttpResponse = client.post(uri) {
                     this.header("content-type", "application/json")
@@ -72,7 +74,9 @@ open class Http : AbstractProtocol {
 
     override fun send(payload: Map<String?, Any?>) {
         GlobalScope.launch { // Launch HTTP Request inside a coroutine to be non-blocking
-            var client = HttpClient()
+            var client = HttpClient() {
+                expectSuccess = false
+            }
             try {
                 var response: HttpResponse = client.post(uri) {
                     this.header("content-type", "application/json")
