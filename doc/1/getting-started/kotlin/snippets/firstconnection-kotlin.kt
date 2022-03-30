@@ -2,6 +2,7 @@ import io.kuzzle.sdk.*;
 import io.kuzzle.sdk.protocol.WebSocket;
 
 fun main() {
+    // @start
     // Creates a WebSocket connection.
     // Replace "kuzzle" with
     // your Kuzzle hostname like "localhost"
@@ -33,4 +34,5 @@ fun main() {
         // Disconnects the SDK
         kuzzle.disconnect()
     }
+    // @end
 }
