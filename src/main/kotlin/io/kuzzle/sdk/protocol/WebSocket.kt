@@ -12,8 +12,9 @@ import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.close
 import io.ktor.http.cio.websocket.readBytes
 import io.ktor.http.cio.websocket.readText
-import io.ktor.util.KtorExperimentalAPI
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
+import io.kuzzle.sdk.events.MessageReceivedEvent
+import io.kuzzle.sdk.events.NetworkStateChangeEvent
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -36,14 +37,7 @@ open class WebSocket : AbstractProtocol {
     private val reconnectionRetries: Long
     private val stopRetryingToConnect: AtomicBoolean = AtomicBoolean(false)
 
-    @KtorExperimentalAPI
-    protected open var client = HttpClient {
-        install(WebSockets)
-        install(JsonFeature) {
-            serializer = GsonSerializer()
-            acceptContentTypes += ContentType("application", "json")
-        }
-    }
+    protected open var client: HttpClient? = null
 
     @JvmOverloads
     constructor(
@@ -62,13 +56,12 @@ open class WebSocket : AbstractProtocol {
         this.reconnectionRetries = reconnectionRetries
     }
 
-    @KtorExperimentalAPI
     private fun tryToReconnect(): CompletableFuture<Boolean> {
         if (!autoReconnect || this.stopRetryingToConnect.get())
             return CompletableFuture.completedFuture(false)
 
         state = ProtocolState.RECONNECTING
-        trigger("networkStateChange", state.toString())
+        trigger(NetworkStateChangeEvent(state))
         return CompletableFuture.supplyAsync(
             fun(): Boolean {
                 var retryCount: Long = 0
@@ -91,17 +84,34 @@ open class WebSocket : AbstractProtocol {
         )
     }
 
-    @KtorExperimentalAPI
+    protected open fun createHTTPClient(): HttpClient {
+        return HttpClient {
+            install(WebSockets)
+            install(JsonFeature) {
+                serializer = GsonSerializer()
+                acceptContentTypes += ContentType("application", "json")
+            }
+        }
+    }
+
     override fun connect() {
+        if (this.state == ProtocolState.OPEN) {
+            return
+        }
+
         if (this.stopRetryingToConnect.get())
             throw Exception("Connection Aborted")
+
+        if (this.state == ProtocolState.CLOSE) {
+            client = createHTTPClient()
+        }
 
         val wait = CompletableFuture<Void>()
         val block: suspend DefaultClientWebSocketSession.() -> Unit = {
             ws = this
             // @TODO Create enums for events
             state = ProtocolState.OPEN
-            trigger("networkStateChange", ProtocolState.OPEN.toString())
+            trigger(NetworkStateChangeEvent(ProtocolState.OPEN))
 
             thread(start = true) {
                 while (ws != null) {
@@ -119,9 +129,12 @@ open class WebSocket : AbstractProtocol {
                 for (frame in incoming) {
                     when (frame) {
                         // @TODO Create enums for events
-                        is Frame.Text -> super.trigger("messageReceived", frame.readText())
+                        is Frame.Text -> super.trigger(MessageReceivedEvent(frame.readText(), null))
                         // @TODO Create enums for events
-                        is Frame.Binary -> super.trigger("messageReceived", frame.readBytes().toString())
+                        is Frame.Binary -> super.trigger(MessageReceivedEvent(frame.readBytes().toString(), null))
+                        is Frame.Close -> TODO()
+                        is Frame.Ping -> TODO()
+                        is Frame.Pong -> TODO()
                     }
                 }
             } catch (e: Exception) {
@@ -130,7 +143,7 @@ open class WebSocket : AbstractProtocol {
                     fun (success: Boolean) {
                         if (!success) {
                             state = ProtocolState.CLOSE
-                            trigger("networkStateChange", ProtocolState.CLOSE.toString())
+                            trigger(NetworkStateChangeEvent(ProtocolState.CLOSE))
                             ws = null
                         }
                         // reset stopRetryingToConnect
@@ -140,20 +153,20 @@ open class WebSocket : AbstractProtocol {
             }
             if (!skip) {
                 state = ProtocolState.CLOSE
-                trigger("networkStateChange", ProtocolState.CLOSE.toString())
+                trigger(NetworkStateChangeEvent(ProtocolState.CLOSE))
                 ws = null
             }
         }
         GlobalScope.launch {
             try {
                 if (isSsl) {
-                    client.wss(
+                    client?.wss(
                         host = this@WebSocket.host,
                         port = this@WebSocket.port,
                         block = block
                     )
                 } else {
-                    client.ws(
+                    client?.ws(
                         host = this@WebSocket.host,
                         port = this@WebSocket.port,
                         block = block
@@ -167,7 +180,7 @@ open class WebSocket : AbstractProtocol {
                 // In Kotlin this is handled by the block function above but for some reason in JAVA it is
                 // non blocking.
                 thread(start = true) {
-                    while (true) {}
+                    while (state != ProtocolState.CLOSE) {}
                 }
             } catch (e: Exception) {
                 when (e) {
@@ -198,11 +211,12 @@ open class WebSocket : AbstractProtocol {
     override fun disconnect() {
         if (state != ProtocolState.CLOSE) {
             state = ProtocolState.CLOSE
-            trigger("networkStateChange", ProtocolState.CLOSE.toString())
+            trigger(NetworkStateChangeEvent(ProtocolState.CLOSE))
             stopRetryingToConnect.set(true)
             GlobalScope.launch {
                 ws?.close()
                 ws = null
+                client?.close()
             }
         }
     }

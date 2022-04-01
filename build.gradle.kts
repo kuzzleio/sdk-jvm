@@ -11,7 +11,7 @@ plugins {
     `maven-publish`
     signing
     jacoco
-    kotlin("jvm") version "1.3.61"
+    kotlin("jvm") version "1.6.10"
 }
 
 val artifactName = "sdk-jvm"
@@ -36,7 +36,7 @@ val pomDeveloperName = "kuzzle"
 
 group = "io.kuzzle.sdk"
 version = "1.2.3"
-val ktorVersion = "1.5.2"
+val ktorVersion = "1.6.8"
 
 repositories {
     mavenCentral()

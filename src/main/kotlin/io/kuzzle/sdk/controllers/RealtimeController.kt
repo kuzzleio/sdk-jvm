@@ -4,6 +4,9 @@ import io.kuzzle.sdk.Kuzzle
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.responses.Response
+import io.kuzzle.sdk.events.NetworkStateChangeEvent
+import io.kuzzle.sdk.events.TokenExpiredEvent
+import io.kuzzle.sdk.events.UnhandledResponseEvent
 import io.kuzzle.sdk.handlers.NotificationHandler
 import io.kuzzle.sdk.protocol.ProtocolState
 import java.util.concurrent.CompletableFuture
@@ -22,13 +25,13 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     )
 
     init {
-        kuzzle.protocol.addListener("unhandledResponse") {
+        kuzzle.protocol.addListener<UnhandledResponseEvent>() {
             val response = Response().apply {
-                fromMap(JsonSerializer.deserialize(it) as Map<String?, Any?>)
+                fromMap(JsonSerializer.deserialize(it.message) as Map<String?, Any?>)
             }
 
             if (response.error != null && response.error!!.id.equals("security.token.expired")) {
-                kuzzle.protocol.trigger("tokenExpired")
+                kuzzle.protocol.trigger(TokenExpiredEvent())
             } else {
                 var sdkInstanceId = ""
                 if (response.Volatile != null) {
@@ -47,8 +50,8 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             }
         }
 
-        kuzzle.protocol.addListener("networkStateChange") {
-            if (it == ProtocolState.CLOSE.toString()) {
+        kuzzle.protocol.addListener<NetworkStateChangeEvent>() {
+            if (it.state == ProtocolState.CLOSE) {
                 currentSubscriptions.clear()
             }
         }

@@ -10,12 +10,12 @@ public class SnippetTest {
   public static void main(String[] argv) {
     try {
       AbstractProtocol protocol;
-      if (System.getenv("SNIPPET_PROTOCOL") == "http") {
+      if (System.getenv("SNIPPET_PROTOCOL") != null && System.getenv("SNIPPET_PROTOCOL").equals("http")) {
         protocol = new Http("kuzzle");
       } else {
         protocol = new WebSocket("kuzzle");
       }
-      Kuzzle kuzzle = new Kuzzle(protocol);
+      kuzzle = new Kuzzle(protocol);
       kuzzle.connect();
       [snippet-code]
       System.out.println("Error");

@@ -9,6 +9,3 @@ hooks:
   after:
 template: print-result
 expected: "firstname=John"
-protocols:
-  - http
-  - websocket

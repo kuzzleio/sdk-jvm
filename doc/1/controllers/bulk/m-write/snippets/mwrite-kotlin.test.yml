@@ -8,6 +8,3 @@ hooks:
 template: print-result
 expected: 'successes=\[.*\], errors=\[\]'
 
-protocols:
-  - http
-  - websocket

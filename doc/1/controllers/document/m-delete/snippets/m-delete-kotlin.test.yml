@@ -10,6 +10,3 @@ hooks:
   after:
 template: print-result
 expected: "some-id, some-id2"
-protocols:
-  - http
-  - websocket

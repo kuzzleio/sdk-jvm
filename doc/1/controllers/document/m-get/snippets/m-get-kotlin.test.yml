@@ -14,6 +14,3 @@ expected:
   - "_version=1"
   - "_id=some-id2"
   - "_version=1"
-protocols:
-  - http
-  - websocket

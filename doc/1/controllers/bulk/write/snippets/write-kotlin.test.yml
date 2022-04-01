@@ -7,7 +7,3 @@ hooks:
   after: curl -X DELETE kuzzle:7512/nyc-open-data
 template: print-result
 expected: ^{_source={_kuzzle_info={.*}}, _id=.+, _version=[0-9]+}$
-
-protocols:
-  - http
-  - websocket

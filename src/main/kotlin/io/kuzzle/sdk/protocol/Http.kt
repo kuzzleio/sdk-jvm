@@ -1,15 +1,19 @@
 package io.kuzzle.sdk.protocol
 
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
+import io.kuzzle.sdk.events.MessageReceivedEvent
+import io.kuzzle.sdk.events.NetworkStateChangeEvent
+import io.kuzzle.sdk.events.RequestErrorEvent
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.concurrent.CompletableFuture
 
 open class Http : AbstractProtocol {
-    override var state: ProtocolState = ProtocolState.OPEN
-    private val request = HttpRequest.newBuilder()
-    private val client = HttpClient.newBuilder().build()
+    override var state: ProtocolState = ProtocolState.CLOSE
     private var uri: String
 
     @JvmOverloads
@@ -18,59 +22,79 @@ open class Http : AbstractProtocol {
         port: Int = 7512,
         isSsl: Boolean = false
     ) {
-      if (!isSsl) {
-        this.uri = "http://${host}:${port}/_query"
-      } else {
-        this.uri = "https://${host}:${port}/_query"
-      }
-      this.request.uri(URI.create(this.uri))
-      this.state = ProtocolState.OPEN
+        if (!isSsl) {
+            this.uri = "http://$host:$port/_query"
+        } else {
+            this.uri = "https://$host:$port/_query"
+        }
     }
 
-    override fun connect () {
-        if (this.state == ProtocolState.OPEN) {
-            trigger("networkStateChange", ProtocolState.OPEN.toString())
+    override fun connect() {
+        if (this.state != ProtocolState.CLOSE) {
             return
         }
-        // if state is NOT open, return response to /_publicApi
-        this.request.uri(URI.create("http://localhost:7512/_publicApi"))
-        val response = client.send(request.build(), HttpResponse.BodyHandlers.ofString())
-        if (response.statusCode() == 401 || response.statusCode() == 403) {
-            throw Exception("You must have permission on the _query route.")
+
+        val wait = CompletableFuture<Void>()
+        // if state is NOT open, request /_query to see if we have the proper rights to make request using _query
+        GlobalScope.launch {
+            var client = HttpClient() {
+                expectSuccess = false
+            }
+            try {
+                var response: HttpResponse = client.post(uri) {
+                    this.header("content-type", "application/json")
+                    this.body = "{}"
+                }
+                if (response.status.value == 401 || response.status.value == 403) {
+                    wait.completeExceptionally(java.lang.Exception("You must have permission on the _query route."))
+                    return@launch
+                }
+                wait.complete(null)
+            } catch (e: Exception) {
+                wait.completeExceptionally(e)
+            } finally {
+                client.close()
+            }
         }
+
+        wait.get()
+
+        this.state = ProtocolState.OPEN
+        trigger(NetworkStateChangeEvent(ProtocolState.OPEN))
     }
 
-    override fun disconnect () {
+    override fun disconnect() {
+        if (state != ProtocolState.OPEN) {
+            return
+        }
+
         this.state = ProtocolState.CLOSE
-        trigger("networkStateChange", ProtocolState.CLOSE.toString())
+        trigger(NetworkStateChangeEvent(ProtocolState.CLOSE))
     }
 
-    override fun send (payload: Map<String?, Any?>) {
-        if (payload["requestId"] != null) {
-            // Create header
-            this.request.header("Content-Type", "application/json")
-            // Get jwt
-            if (payload["jwt"] != null) {
-                this.request.header("Authorization", "Bearer ${payload["jwt"]}")
+    override fun send(payload: Map<String?, Any?>) {
+        GlobalScope.launch { // Launch HTTP Request inside a coroutine to be non-blocking
+            var client = HttpClient() {
+                expectSuccess = false
             }
-            // Get volatile
-            if (payload["volatile"] != null) {
-                this.request.header("Volatile", "${payload["volatile"]}")
+            try {
+                var response: HttpResponse = client.post(uri) {
+                    this.header("content-type", "application/json")
+                    if (payload["jwt"] != null) {
+                        this.header("Authorization", "Bearer ${payload["jwt"]}")
+                    }
+                    if (payload["volatile"] != null) {
+                        this.header("Volatile", "${payload["volatile"]}")
+                    }
+                    this.body = JsonSerializer.serialize(payload)
+                }
+                // trigger messageReceived
+                super.trigger(MessageReceivedEvent(response.receive(), payload["requestId"] as String?))
+            } catch (e: Exception) {
+                super.trigger(RequestErrorEvent(e, payload["requestId"] as String?))
+            } finally {
+                client.close()
             }
-            // Send request
-            var response = client.send(
-              request.POST(HttpRequest.BodyPublishers.ofString(JsonSerializer.serialize(payload))).build(),
-              HttpResponse.BodyHandlers.ofString()
-            ).body().toString()
-
-            // get initial requestId
-            var tmp = mutableMapOf<String?, Any?>()
-            for ((k, v) in JsonSerializer.deserialize(response) as Map<String?, Any?>) {
-                tmp.put(k, v)
-            }
-            tmp["requestId"] = payload.get("requestId")
-            // trigger messageReceived
-            super.trigger("messageReceived", JsonSerializer.serialize(tmp))
         }
     }
 }

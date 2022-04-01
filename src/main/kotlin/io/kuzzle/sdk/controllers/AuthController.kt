@@ -5,6 +5,7 @@ import io.kuzzle.sdk.coreClasses.SearchResult
 import io.kuzzle.sdk.coreClasses.lang.Lang
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.responses.Response
+import io.kuzzle.sdk.events.LoginAttemptEvent
 import java.util.concurrent.CompletableFuture
 
 class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
@@ -150,9 +151,9 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
                 .from(response.result as Map<String?, Any?>)
             kuzzle.authenticationToken = map.getString("jwt")
             if (map.getString("_id") != null) {
-                kuzzle.protocol.trigger("loginAttempt", "true")
+                kuzzle.protocol.trigger(LoginAttemptEvent(true))
             } else {
-                kuzzle.protocol.trigger("loginAttempt", "false")
+                kuzzle.protocol.trigger(LoginAttemptEvent(false))
             }
             map as Map<String, Any?>
         }

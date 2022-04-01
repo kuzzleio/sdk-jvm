@@ -1,8 +1,11 @@
 ---
 snippets:
   mount: /mnt
-  path: 'doc/**/snippets/*-java.test.yml'
+  path: 'doc/**/snippets/*.test.yml'
   templates: /mnt/.ci/doc/templates
+  protocols:
+    - http
+    - websocket
 
 runners:
   default: java

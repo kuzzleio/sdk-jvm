@@ -9,5 +9,4 @@ hooks:
 template: default
 expected: Document\ moved\ in\ the\ scope
 protocols:
-  - http
   - websocket

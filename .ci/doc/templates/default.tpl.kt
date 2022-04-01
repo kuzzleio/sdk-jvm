@@ -9,7 +9,7 @@ import java.util.*;
 
 fun main() {
   val protocol: AbstractProtocol;
-  if (System.getenv("SNIPPET_PROTOCOL") == "http") {
+  if (System.getenv("SNIPPET_PROTOCOL") != null && System.getenv("SNIPPET_PROTOCOL") == "http") {
     protocol = Http("kuzzle")
   } else {
     protocol = WebSocket("kuzzle")

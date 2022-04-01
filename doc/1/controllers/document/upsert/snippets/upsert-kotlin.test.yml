@@ -8,6 +8,3 @@ hooks:
   after:
 template: print-result
 expected: "{created=true, _id=some-id, _version=1}"
-protocols:
-  - http
-  - websocket
