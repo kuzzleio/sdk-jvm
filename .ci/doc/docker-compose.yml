@@ -39,7 +39,7 @@ services:
       - ./templates:/mnt/snippet-templates
 
   doc-tests:
-    image: kuzzleio/snippets-tests:test
+    image: kuzzleio/snippets-tests:latest
     privileged: true
     ports:
       - '9229:9229'
