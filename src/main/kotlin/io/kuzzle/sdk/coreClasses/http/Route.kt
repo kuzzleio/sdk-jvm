@@ -23,8 +23,6 @@ private class RoutePart {
 val PayloadProperties = setOf<String>(
     "controller",
     "action",
-    "index",
-    "collection",
     "meta",
     "volatile",
 )
