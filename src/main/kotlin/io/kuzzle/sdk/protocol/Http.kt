@@ -22,7 +22,6 @@ open class Http : AbstractProtocol {
     private var uri: String
     private var useBuiltRoutes = false
     private val routes = HashMap<String, Route>()
-    private var buildOnFirstTry = false
 
     @JvmOverloads
     constructor(
@@ -39,15 +38,8 @@ open class Http : AbstractProtocol {
     }
 
     private fun onLoginAttempt(event: LoginAttemptEvent) {
-        if (! buildOnFirstTry && event.success) {
+        if (! useBuiltRoutes && event.success) {
             tryToBuildRoutes()
-        }
-    }
-
-    private fun onLogoutAttempt(event: LogoutAttemptEvent) {
-        if (! buildOnFirstTry) {
-            useBuiltRoutes = false
-            routes.clear()
         }
     }
 
@@ -169,9 +161,6 @@ open class Http : AbstractProtocol {
 
         wait.get()
         tryToBuildRoutes()
-        if (useBuiltRoutes) {
-            buildOnFirstTry = true // Built on first try
-        }
 
         this.state = ProtocolState.OPEN
         trigger(NetworkStateChangeEvent(ProtocolState.OPEN))
