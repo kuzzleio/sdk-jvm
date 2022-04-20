@@ -20,6 +20,15 @@ private class RoutePart {
     }
 }
 
+val PayloadProperties = setOf<String>(
+    "controller",
+    "action",
+    "index",
+    "collection",
+    "meta",
+    "volatile",
+)
+
 class Route {
     private val partType: PartType
     private val routeParts: ArrayList<RoutePart>
@@ -34,7 +43,9 @@ class Route {
         val hasOnePartTemplated = routeParts.indexOfFirst { it.type == PartType.TEMPLATE } > -1
         this.partType = if (hasOnePartTemplated) PartType.TEMPLATE else PartType.STATIC
         if (! hasOnePartTemplated) {
-            staticURL = routeParts.joinToString("/")
+            staticURL = routeParts.joinToString("") {
+                it.value
+            }
         }
     }
 
@@ -70,7 +81,9 @@ class Route {
                     }
                 }
                 else -> {
-                    queryArgs[key] = request[key]
+                    if (! PayloadProperties.contains(key)) {
+                        queryArgs[key] = request[key]
+                    }
                 }
             }
         }
