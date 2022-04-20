@@ -38,16 +38,31 @@ open class Http : AbstractProtocol {
     }
 
     private fun onLoginAttempt(event: LoginAttemptEvent) {
+        /**
+         * Once the user is logged in we try to fetch and build the routes
+         * if not already built.
+         */
         if (! useBuiltRoutes && event.success) {
             tryToBuildRoutes()
         }
     }
 
+    /**
+     * Try to find the best route for a given action of a controller
+     *
+     * With same URL size, we prefer the GET route
+     * with different URL sizes, we keep the shortest because URL params
+     * will be in the query string
+     */
     private fun findBestRoute(controller: String, action: String, httpRoutes: List<ControllerActionRoute>): ControllerActionRoute {
         if (httpRoutes.size == 1) {
             return httpRoutes[0]
         }
 
+        /**
+         * Search route can also be accessed with GET,
+         * but to provide a query for the search we need to use the POST method
+         */
         if (controller.lowercase() == "document" && action.lowercase() == "search") {
             return httpRoutes.find {
                 it.verb == "POST"
@@ -72,6 +87,10 @@ open class Http : AbstractProtocol {
         return if (sameLength) selectedRoute else shortestRoute
     }
 
+    /**
+     * Given a map of routes from _publicApi
+     * construct the best routes for each controller's action
+     */
     private fun buildRoutes(routes: Map<String?, Any?>) {
         for (controllerEntry in routes) {
             for (actionEntry in controllerEntry.value as Map<String?, Any?>) {
@@ -100,6 +119,10 @@ open class Http : AbstractProtocol {
         }
     }
 
+    /**
+     * Try to fetch and build the routes
+     * if it fails it does not switch the flag "useBuiltRoutes"
+     */
     private fun tryToBuildRoutes() {
         val wait = CompletableFuture<Void>()
 
@@ -214,6 +237,9 @@ open class Http : AbstractProtocol {
         }
     }
 
+    /**
+     * Make a request to Kuzzle using the appropriate HTTP Endpoint for a given controller's action
+     */
     private fun queryHTTPEndpoint(payload: Map<String?, Any?>, requestInfo: io.kuzzle.sdk.coreClasses.http.HttpRequest) {
         GlobalScope.launch { // Launch HTTP Request inside a coroutine to be non-blocking
             var client = HttpClient() {
@@ -253,6 +279,10 @@ open class Http : AbstractProtocol {
             return
         }
 
+        /**
+         * If no route has been built we try to send the request to Kuzzle using
+         * the /_query endpoint
+         */
         if (! useBuiltRoutes) {
             query(payload)
             return
