@@ -22,10 +22,6 @@ class ApiErrorException : KuzzleException {
     var id: String? = null
         private set
 
-    override fun toString(): String {
-        return "ApiErrorException \"$id\": $message\n$stack"
-    }
-
     /**
      * Initializes a new instance of the ApiErrorException
      *
