@@ -75,16 +75,16 @@ open class Http : AbstractProtocol {
     private fun buildRoutes(routes: Map<String?, Any?>) {
         for (controllerEntry in routes) {
             for (actionEntry in controllerEntry.value as Map<String?, Any?>) {
-                var map = actionEntry.value as Map<String?, Any?>
+                val map = actionEntry.value as Map<String?, Any?>
 
                 if (! map.containsKey("controller") || ! map.containsKey("action") || ! map.containsKey("http")) {
                     continue
                 }
 
-                var controller = map["controller"] as String
-                var action = map["action"] as String
+                val controller = map["controller"] as String
+                val action = map["action"] as String
 
-                var httpRoutes = map["http"] as List<Map<String?, Any?>>
+                val httpRoutes = map["http"] as List<Map<String?, Any?>>
 
                 if (httpRoutes.isNotEmpty()) {
                     val route = findBestRoute(controller, action, httpRoutes.map {
@@ -212,7 +212,7 @@ open class Http : AbstractProtocol {
         }
     }
 
-    private fun queryActionEndpoint(payload: Map<String?, Any?>, requestInfo: io.kuzzle.sdk.coreClasses.http.HttpRequest) {
+    private fun queryHTTPEndpoint(payload: Map<String?, Any?>, requestInfo: io.kuzzle.sdk.coreClasses.http.HttpRequest) {
         GlobalScope.launch { // Launch HTTP Request inside a coroutine to be non-blocking
             var client = HttpClient() {
                 expectSuccess = false
@@ -228,7 +228,7 @@ open class Http : AbstractProtocol {
                         this.header(entry.key.toString(), JsonSerializer.serialize(entry.value!!))
                     }
                     this.header("content-type", "application/json")
-                    this.body = requestInfo.body
+                    this.body = JsonSerializer.serialize(requestInfo.body)
                 }
                 // trigger messageReceived
                 super.trigger(MessageReceivedEvent(response.receive(), payload["requestId"] as String?))
@@ -269,7 +269,7 @@ open class Http : AbstractProtocol {
 
         try {
             val requestInfo = route.buildRequest(KuzzleMap.from(payload))
-            queryActionEndpoint(payload, requestInfo)
+            queryHTTPEndpoint(payload, requestInfo)
         } catch (e: MissingURLParamException) {
             /**
              * Fallback if we could not find a matching route with the given parameters

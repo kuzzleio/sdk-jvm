@@ -83,15 +83,14 @@ class Route {
 
             if (queryArgs.isArrayList(it)) {
                 val value = queryArgs.getArrayList(it)!!.joinToString(",")
-                "${encodedKey}=${URLEncoder.encode(value, "utf-8")}"
+                "$encodedKey=${URLEncoder.encode(value, "utf-8")}"
             } else if (queryArgs.optBoolean(it, false) == true) {
                 encodedKey
             } else {
                 val value = if (queryArgs.isMap(it)) JsonSerializer.serialize(queryArgs.getMap(it)!!) else queryArgs[it].toString()
-                "${encodedKey}=${URLEncoder.encode(value, "utf-8")}"
+                "$encodedKey=${URLEncoder.encode(value, "utf-8")}"
             }
         }
-
 
         /**
          * If the partType is STATIC it means that there is no template in the url
@@ -99,11 +98,11 @@ class Route {
          */
         if (partType == PartType.STATIC) {
             return HttpRequest(
-                    verb,
-                    if (queryArgs.isEmpty()) staticURL else "$staticURL?$queryString",
-                    if (request["body"] != null) JsonSerializer.serialize(request["body"]!!) else "",
-                    headers
-                )
+                verb,
+                if (queryArgs.isEmpty()) staticURL else "$staticURL?$queryString",
+                request.optMap("body",  KuzzleMap()),
+                headers
+            )
         }
 
         /**
@@ -124,10 +123,10 @@ class Route {
             }
         }
         return HttpRequest(
-                verb,
-                if (queryArgs.isEmpty()) urlBuilder.toString() else "$urlBuilder?$queryString",
-                if (request["body"] != null) JsonSerializer.serialize(request["body"]!!) else "",
-                headers
+            verb,
+            if (queryArgs.isEmpty()) urlBuilder.toString() else "$urlBuilder?$queryString",
+            request.optMap("body",  KuzzleMap()),
+            headers
         )
     }
 
