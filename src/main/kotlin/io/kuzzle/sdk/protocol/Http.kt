@@ -93,7 +93,6 @@ open class Http : AbstractProtocol {
                         httpRoutes.map {
                             ControllerActionRoute(it["verb"] as String, it["path"] as String)
                         })
-
                     this.routes["$controller:$action"] = Route.parse(route.verb, route.path)
                 }
             }
@@ -123,7 +122,7 @@ open class Http : AbstractProtocol {
                 buildRoutes(responseJson["result"] as Map<String?, Any?>)
                 useBuiltRoutes = true
             } catch (e: Exception) {
-
+                // Do nothing
             } finally {
                 client.close()
                 wait.complete(null)
