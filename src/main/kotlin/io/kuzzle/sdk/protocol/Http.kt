@@ -92,7 +92,8 @@ open class Http : AbstractProtocol {
                         action,
                         httpRoutes.map {
                             ControllerActionRoute(it["verb"] as String, it["path"] as String)
-                        })
+                        }
+                    )
                     this.routes["$controller:$action"] = Route.parse(route.verb, route.path)
                 }
             }
