@@ -1,7 +1,5 @@
 package io.kuzzle.sdk.coreClasses.maps
 
-import io.kuzzle.sdk.coreClasses.json.JsonSerializer
-
 /**
  * KuzzleMap is a Class that extends Map to be ThreadSafe and that
  * has the purpose of giving a wrapper on top of Map to easily
