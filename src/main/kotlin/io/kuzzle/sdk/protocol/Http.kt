@@ -6,10 +6,10 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.kuzzle.sdk.coreClasses.exceptions.*
-import io.kuzzle.sdk.coreClasses.http.HttpRequest
 import io.kuzzle.sdk.coreClasses.http.Route
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
+import io.kuzzle.sdk.coreClasses.serializer.StringSerializer
 import io.kuzzle.sdk.events.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -192,7 +192,7 @@ open class Http : AbstractProtocol {
                             if (entry.key == null || entry.value == null) {
                                 continue
                             }
-                            this.header(entry.key.toString(), JsonSerializer.serialize(entry.value!!))
+                            this.header(entry.key.toString(), StringSerializer.serialize(entry.value!!))
                         }
                     }
                     this.header("content-type", "application/json")
@@ -200,7 +200,7 @@ open class Http : AbstractProtocol {
                         this.header("Authorization", "Bearer ${payload["jwt"]}")
                     }
                     if (payload["volatile"] != null) {
-                        this.header("x-kuzzle-volatile", JsonSerializer.serialize(payload["volatile"]!!))
+                        this.header("x-kuzzle-volatile", StringSerializer.serialize(payload["volatile"]!!))
                     }
                     this.body = JsonSerializer.serialize(payload)
                 }
@@ -227,7 +227,7 @@ open class Http : AbstractProtocol {
                             continue
                         }
 
-                        this.header(entry.key.toString(), JsonSerializer.serialize(entry.value!!))
+                        this.header(entry.key.toString(), StringSerializer.serialize(entry.value!!))
                     }
                     this.header("content-type", "application/json")
                     this.body = JsonSerializer.serialize(requestInfo.body)

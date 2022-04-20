@@ -70,7 +70,7 @@ class Route {
             }
 
             when (key) {
-                "jwt" -> headers["Authorization"] = "Bearer ${request["jwt"]}"
+                "jwt" -> headers["authorization"] = "Bearer ${request["jwt"]}"
                 "volatile" -> {
                     headers["x-kuzzle-volatile"] = request["volatile"]
                 }

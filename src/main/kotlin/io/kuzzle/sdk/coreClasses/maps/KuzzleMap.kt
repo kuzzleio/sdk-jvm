@@ -1,5 +1,7 @@
 package io.kuzzle.sdk.coreClasses.maps
 
+import io.kuzzle.sdk.coreClasses.json.JsonSerializer
+
 /**
  * KuzzleMap is a Class that extends Map to be ThreadSafe and that
  * has the purpose of giving a wrapper on top of Map to easily
@@ -220,6 +222,10 @@ class KuzzleMap : HashMap<String?, Any?> {
      */
     fun optMap(key: String, def: Map<String?, Any?>): KuzzleMap {
         return if (isMap(key)) from(super.get(key) as Map<String?, Any?>) else from(def)
+    }
+
+    override fun toString(): String {
+        return JsonSerializer.serialize(this)
     }
 
     companion object {

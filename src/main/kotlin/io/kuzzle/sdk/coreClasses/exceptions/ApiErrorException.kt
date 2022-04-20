@@ -22,6 +22,10 @@ class ApiErrorException : KuzzleException {
     var id: String? = null
         private set
 
+    override fun toString(): String {
+        return "ApiErrorException \"$id\": $message\n$stack"
+    }
+
     /**
      * Initializes a new instance of the ApiErrorException
      *
@@ -30,8 +34,8 @@ class ApiErrorException : KuzzleException {
     constructor(response: Response) :
         super(response.error?.message, response.status) {
             if (response.error != null) {
-                this.stack = response.error?.stack
-                this.id = response.error?.id
+                this.stack = response.error!!.stack
+                this.id = response.error!!.id
             }
         }
 }

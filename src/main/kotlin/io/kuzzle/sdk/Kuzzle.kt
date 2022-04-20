@@ -90,6 +90,7 @@ open class Kuzzle {
         }
 
         queries[requestId]?.completeExceptionally(ApiErrorException(response))
+        queries.remove(requestId)
         protocol.trigger(TokenExpiredEvent())
     }
 
