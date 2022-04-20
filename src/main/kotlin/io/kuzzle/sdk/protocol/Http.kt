@@ -87,9 +87,12 @@ open class Http : AbstractProtocol {
                 val httpRoutes = map["http"] as List<Map<String?, Any?>>
 
                 if (httpRoutes.isNotEmpty()) {
-                    val route = findBestRoute(controller, action, httpRoutes.map {
-                        ControllerActionRoute(it["verb"] as String, it["path"] as String)
-                    })
+                    val route = findBestRoute(
+                        controller,
+                        action,
+                        httpRoutes.map {
+                            ControllerActionRoute(it["verb"] as String, it["path"] as String)
+                        })
 
                     this.routes["$controller:$action"] = Route.parse(route.verb, route.path)
                 }
@@ -119,9 +122,8 @@ open class Http : AbstractProtocol {
 
                 buildRoutes(responseJson["result"] as Map<String?, Any?>)
                 useBuiltRoutes = true
-
             } catch (e: Exception) {
-                e.printStackTrace()
+
             } finally {
                 client.close()
                 wait.complete(null)
@@ -239,7 +241,6 @@ open class Http : AbstractProtocol {
             }
         }
     }
-
 
     override fun send(payload: Map<String?, Any?>) {
         if (! payload.containsKey("controller") || payload["controller"] !is String) {

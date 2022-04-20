@@ -113,7 +113,7 @@ class Route {
             return HttpRequest(
                 verb,
                 if (queryArgs.isEmpty()) staticURL else "$staticURL?$queryString",
-                request.optMap("body",  KuzzleMap()),
+                request.optMap("body", KuzzleMap()),
                 headers
             )
         }
@@ -138,7 +138,7 @@ class Route {
         return HttpRequest(
             verb,
             if (queryArgs.isEmpty()) urlBuilder.toString() else "$urlBuilder?$queryString",
-            request.optMap("body",  KuzzleMap()),
+            request.optMap("body", KuzzleMap()),
             headers
         )
     }
