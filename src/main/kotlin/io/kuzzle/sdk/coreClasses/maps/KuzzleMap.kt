@@ -224,10 +224,6 @@ class KuzzleMap : HashMap<String?, Any?> {
         return if (isMap(key)) from(super.get(key) as Map<String?, Any?>) else from(def)
     }
 
-    override fun toString(): String {
-        return JsonSerializer.serialize(this)
-    }
-
     companion object {
         /**
          * serialVersionUID
