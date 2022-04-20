@@ -1,5 +1,6 @@
 package io.kuzzle.sdk.coreClasses.http
 
+import io.kuzzle.sdk.Kuzzle
 import io.kuzzle.sdk.coreClasses.exceptions.MissingURLParamException
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
@@ -74,7 +75,7 @@ class Route {
                 "volatile" -> {
                     headers["x-kuzzle-volatile"] = request["volatile"]
                 }
-                "headers" -> continue
+                "headers" -> headers.putAll(request.optMap("headers", KuzzleMap()))
                 "body" -> {
                     if (verb == "GET") {
                         queryArgs.putAll(request.optMap("body", KuzzleMap()))
