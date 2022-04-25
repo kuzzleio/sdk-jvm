@@ -75,6 +75,11 @@ class Route {
                 "volatile" -> headers["x-kuzzle-volatile"] = request["volatile"]
                 "requestId" -> headers["x-kuzzle-request-id"] = request["requestId"]
                 "headers" -> headers.putAll(request.optMap("headers", KuzzleMap()))
+                "body" -> {
+                    if (verb == "GET") {
+                        queryArgs.putAll(request.optMap("body", KuzzleMap()))
+                    }
+                }
                 else -> {
                     if (! PayloadProperties.contains(key)) {
                         queryArgs[key] = request[key]

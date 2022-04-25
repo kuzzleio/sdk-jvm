@@ -220,7 +220,7 @@ open class Http : AbstractProtocol {
                     }
                     this.header("content-type", "application/json")
                     if (payload["jwt"] != null) {
-                        this.header("Authorization", "Bearer ${payload["jwt"]}")
+                        this.header("authorization", "Bearer ${payload["jwt"]}")
                     }
                     if (payload["volatile"] != null) {
                         this.header("x-kuzzle-volatile", StringSerializer.serialize(payload["volatile"]!!))
