@@ -219,6 +219,15 @@ open class Http : AbstractProtocol {
                         }
                     }
                     this.header("content-type", "application/json")
+                    if (payload["jwt"] != null) {
+                        this.header("Authorization", "Bearer ${payload["jwt"]}")
+                    }
+                    if (payload["volatile"] != null) {
+                        this.header("x-kuzzle-volatile", StringSerializer.serialize(payload["volatile"]!!))
+                    }
+                    if (payload["requestId"] != null) {
+                        this.header("x-kuzzle-request-id", payload["requestId"].toString())
+                    }
                     this.body = JsonSerializer.serialize(payload)
                 }
                 // trigger messageReceived
