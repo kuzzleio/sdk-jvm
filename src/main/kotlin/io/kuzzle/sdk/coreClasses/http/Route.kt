@@ -87,19 +87,20 @@ class Route {
         /**
          * Build the query string
          */
-        val queryString: String = queryArgs.keys.filter {
-            it != null && ! queryArgs.isArrayList(it) && ! queryArgs.isMap(it)
-        }
-        .joinToString("&") {
-            val encodedKey = URLEncoder.encode(it, "utf-8")
-
-            if (queryArgs.optBoolean(it!!, false) == true) {
-                encodedKey
-            } else {
-                val value = queryArgs[it].toString()
-                "$encodedKey=${URLEncoder.encode(value, "utf-8")}"
+        val queryString: String = queryArgs.keys
+            .filter {
+                it != null && ! queryArgs.isArrayList(it) && ! queryArgs.isMap(it)
             }
-        }
+            .joinToString("&") {
+                val encodedKey = URLEncoder.encode(it, "utf-8")
+
+                if (queryArgs.optBoolean(it!!, false) == true) {
+                    encodedKey
+                } else {
+                    val value = queryArgs[it].toString()
+                    "$encodedKey=${URLEncoder.encode(value, "utf-8")}"
+                }
+            }
 
         /**
          * If the partType is STATIC it means that there is no template in the url
