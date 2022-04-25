@@ -25,6 +25,7 @@ val PayloadProperties = setOf<String>(
     "action",
     "meta",
     "volatile",
+    "body",
 )
 
 class Route {
@@ -69,15 +70,9 @@ class Route {
 
             when (key) {
                 "jwt" -> headers["authorization"] = "Bearer ${request["jwt"]}"
-                "volatile" -> {
-                    headers["x-kuzzle-volatile"] = request["volatile"]
-                }
+                "volatile" -> headers["x-kuzzle-volatile"] = request["volatile"]
+                "requestId" -> headers["x-kuzzle-request-id"] = request["requestId"]
                 "headers" -> headers.putAll(request.optMap("headers", KuzzleMap()))
-                "body" -> {
-                    if (verb == "GET") {
-                        queryArgs.putAll(request.optMap("body", KuzzleMap()))
-                    }
-                }
                 else -> {
                     if (! PayloadProperties.contains(key)) {
                         queryArgs[key] = request[key]
@@ -89,16 +84,16 @@ class Route {
         /**
          * Build the query string
          */
-        val queryString: String = queryArgs.keys.filterNotNull().joinToString("&") {
+        val queryString: String = queryArgs.keys.filter {
+            it != null && ! queryArgs.isArrayList(it) && ! queryArgs.isMap(it)
+        }
+        .joinToString("&") {
             val encodedKey = URLEncoder.encode(it, "utf-8")
 
-            if (queryArgs.isArrayList(it)) {
-                val value = queryArgs.getArrayList(it)!!.joinToString(",")
-                "$encodedKey=${URLEncoder.encode(value, "utf-8")}"
-            } else if (queryArgs.optBoolean(it, false) == true) {
+            if (queryArgs.optBoolean(it!!, false) == true) {
                 encodedKey
             } else {
-                val value = if (queryArgs.isMap(it)) JsonSerializer.serialize(queryArgs.getMap(it)!!) else queryArgs[it].toString()
+                val value = queryArgs[it].toString()
                 "$encodedKey=${URLEncoder.encode(value, "utf-8")}"
             }
         }
@@ -111,7 +106,7 @@ class Route {
             return HttpRequest(
                 verb,
                 if (queryArgs.isEmpty()) staticURL else "$staticURL?$queryString",
-                request.optMap("body", KuzzleMap()),
+                if (verb != "GET") request.optMap("body", KuzzleMap()) else null,
                 headers
             )
         }
@@ -136,7 +131,7 @@ class Route {
         return HttpRequest(
             verb,
             if (queryArgs.isEmpty()) urlBuilder.toString() else "$urlBuilder?$queryString",
-            request.optMap("body", KuzzleMap()),
+            if (verb != "GET") request.optMap("body", KuzzleMap()) else null,
             headers
         )
     }
