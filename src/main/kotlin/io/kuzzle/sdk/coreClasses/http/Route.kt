@@ -25,6 +25,10 @@ val PayloadProperties = setOf<String>(
     "action",
     "meta",
     "volatile",
+    "jwt",
+    "requestId",
+    "volatile",
+    "body"
 )
 
 class Route {
@@ -69,9 +73,8 @@ class Route {
 
             when (key) {
                 "jwt" -> headers["authorization"] = "Bearer ${request["jwt"]}"
-                "volatile" -> {
-                    headers["x-kuzzle-volatile"] = request["volatile"]
-                }
+                "volatile" -> headers["x-kuzzle-volatile"] = request["volatile"]
+                "requestId" -> headers["x-kuzzle-request-id"] = request["requestId"]
                 "headers" -> headers.putAll(request.optMap("headers", KuzzleMap()))
                 "body" -> {
                     if (verb == "GET") {

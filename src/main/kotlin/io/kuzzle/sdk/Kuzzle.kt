@@ -56,9 +56,9 @@ open class Kuzzle {
     }
 
     private fun onRequestError(event: RequestErrorEvent) {
-        if (event.requestId != null && queries[event.requestId] != null) {
-            queries[event.requestId]?.completeExceptionally(event.exception)
-            queries.remove(event.requestId)
+        if (event.requestId != null && queries[event.requestId!!] != null) {
+            queries[event.requestId!!]?.completeExceptionally(event.exception)
+            queries.remove(event.requestId!!)
         }
     }
 
