@@ -95,15 +95,15 @@ class Route {
         val queryString: String = queryArgs.filter {
             it.key != null && it.value != null
         }.keys.joinToString("&") {
-                val encodedKey = URLEncoder.encode(it, "utf-8")
+            val encodedKey = URLEncoder.encode(it, "utf-8")
 
-                if (queryArgs.optBoolean(it!!, false) == true) {
-                    encodedKey
-                } else {
-                    val value = StringSerializer.serialize(queryArgs[it]!!)
-                    "$encodedKey=${URLEncoder.encode(value, "utf-8")}"
-                }
+            if (queryArgs.optBoolean(it!!, false) == true) {
+                encodedKey
+            } else {
+                val value = StringSerializer.serialize(queryArgs[it]!!)
+                "$encodedKey=${URLEncoder.encode(value, "utf-8")}"
             }
+        }
 
         /**
          * If the partType is STATIC it means that there is no template in the url
