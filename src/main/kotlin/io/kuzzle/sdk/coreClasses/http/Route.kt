@@ -93,9 +93,8 @@ class Route {
          * Build the query string
          */
         val queryString: String = queryArgs.filter {
-                it.key != null && it.value != null
-            }
-            .keys.joinToString("&") {
+            it.key != null && it.value != null
+        }.keys.joinToString("&") {
                 val encodedKey = URLEncoder.encode(it, "utf-8")
 
                 if (queryArgs.optBoolean(it!!, false) == true) {
