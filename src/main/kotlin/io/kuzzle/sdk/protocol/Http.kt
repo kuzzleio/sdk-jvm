@@ -29,10 +29,10 @@ open class Http : AbstractProtocol {
         port: Int = 7512,
         isSsl: Boolean = false
     ) {
-        if (!isSsl) {
-            this.uri = "http://$host:$port"
-        } else {
+        if (isSsl) {
             this.uri = "https://$host:$port"
+        } else {
+            this.uri = "http://$host:$port"
         }
         super.addListener<LoginAttemptEvent>(::onLoginAttempt)
     }
@@ -127,7 +127,7 @@ open class Http : AbstractProtocol {
         val wait = CompletableFuture<Void>()
 
         GlobalScope.launch {
-            var client = HttpClient() {
+            val client = HttpClient() {
                 expectSuccess = false
             }
             try {
@@ -164,11 +164,11 @@ open class Http : AbstractProtocol {
         val wait = CompletableFuture<Void>()
         // if state is NOT open, request /_query to see if we have the proper rights to make request using _query
         GlobalScope.launch {
-            var client = HttpClient() {
+            val client = HttpClient() {
                 expectSuccess = false
             }
             try {
-                var response: HttpResponse = client.post("$uri/_query") {
+                val response: HttpResponse = client.post("$uri/_query") {
                     this.header("content-type", "application/json")
                     this.body = "{}"
                 }
@@ -205,11 +205,11 @@ open class Http : AbstractProtocol {
      */
     private fun query(payload: Map<String?, Any?>) {
         GlobalScope.launch { // Launch HTTP Request inside a coroutine to be non-blocking
-            var client = HttpClient() {
+            val client = HttpClient() {
                 expectSuccess = false
             }
             try {
-                var response: HttpResponse = client.post("$uri/_query") {
+                val response: HttpResponse = client.post("$uri/_query") {
                     if (payload["headers"] != null && payload["headers"] is Map<*, *>) {
                         for (entry in payload["headers"] as Map<String?, Any?>) {
                             if (entry.key == null || entry.value == null) {
@@ -219,18 +219,6 @@ open class Http : AbstractProtocol {
                         }
                     }
                     this.header("content-type", "application/json")
-<<<<<<< HEAD
-                    if (payload["jwt"] != null) {
-                        this.header("authorization", "Bearer ${payload["jwt"]}")
-                    }
-                    if (payload["volatile"] != null) {
-                        this.header("x-kuzzle-volatile", StringSerializer.serialize(payload["volatile"]!!))
-                    }
-                    if (payload["requestId"] != null) {
-                        this.header("x-kuzzle-request-id", payload["requestId"].toString())
-                    }
-=======
->>>>>>> e3bc10b0249dd2441b7a6f0e4700e68399244d8c
                     this.body = JsonSerializer.serialize(payload)
                 }
                 // trigger messageReceived
@@ -248,11 +236,11 @@ open class Http : AbstractProtocol {
      */
     private fun queryHTTPEndpoint(payload: Map<String?, Any?>, requestInfo: io.kuzzle.sdk.coreClasses.http.HttpRequest) {
         GlobalScope.launch { // Launch HTTP Request inside a coroutine to be non-blocking
-            var client = HttpClient() {
+            val client = HttpClient() {
                 expectSuccess = false
             }
             try {
-                var response: HttpResponse = client.request("$uri${requestInfo.url}") {
+                val response: HttpResponse = client.request("$uri${requestInfo.url}") {
                     this.method = HttpMethod.parse(requestInfo.verb)
                     for (entry in requestInfo.headers) {
                         if (entry.key == null || entry.value == null) {
@@ -292,13 +280,13 @@ open class Http : AbstractProtocol {
         var headers = payload.getMap("headers")!!
 
         if (payload["jwt"] != null) {
-            headers.put("Authorization", "Bearer ${payload["jwt"]}")
+            headers["Authorization"] = "Bearer ${payload["jwt"]}"
         }
         if (payload["volatile"] != null) {
-            headers.put("x-kuzzle-volatile", StringSerializer.serialize(payload["volatile"]!!))
+            headers["x-kuzzle-volatile"] = StringSerializer.serialize(payload["volatile"]!!)
         }
         if (payload["requestId"] != null) {
-            headers.put("x-kuzzle-request-id", payload["requestId"].toString())
+            headers["x-kuzzle-request-id"] = payload["requestId"].toString()
         }
 
         /**

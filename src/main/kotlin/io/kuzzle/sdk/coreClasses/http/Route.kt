@@ -26,13 +26,8 @@ val PayloadProperties = setOf<String>(
     "volatile",
     "jwt",
     "requestId",
-<<<<<<< HEAD
-    "body",
-    "headers",
-=======
     "volatile",
     "body"
->>>>>>> e3bc10b0249dd2441b7a6f0e4700e68399244d8c
 )
 
 class Route {

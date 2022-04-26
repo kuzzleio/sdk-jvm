@@ -1,5 +1,3 @@
 package io.kuzzle.sdk.coreClasses.exceptions
 
-class URLNotFoundException : KuzzleException {
-    constructor(controller: String, action: String) : super("No URL found for \"$controller:$action\".", 400)
-}
+class URLNotFoundException(controller: String, action: String) : KuzzleException("No URL found for \"$controller:$action\".", 400)
