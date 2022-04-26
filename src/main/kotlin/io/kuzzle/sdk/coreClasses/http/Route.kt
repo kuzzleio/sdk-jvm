@@ -2,6 +2,7 @@ package io.kuzzle.sdk.coreClasses.http
 
 import io.kuzzle.sdk.coreClasses.exceptions.MissingURLParamException
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
+import io.kuzzle.sdk.coreClasses.serializer.StringSerializer
 import java.net.URLEncoder
 
 enum class PartType {
@@ -91,17 +92,16 @@ class Route {
         /**
          * Build the query string
          */
-        val queryString: String = queryArgs.keys
-            .filter {
-                it != null && ! queryArgs.isArrayList(it) && ! queryArgs.isMap(it)
+        val queryString: String = queryArgs.filter {
+                it.key != null && it.value != null
             }
-            .joinToString("&") {
+            .keys.joinToString("&") {
                 val encodedKey = URLEncoder.encode(it, "utf-8")
 
                 if (queryArgs.optBoolean(it!!, false) == true) {
                     encodedKey
                 } else {
-                    val value = queryArgs[it].toString()
+                    val value = StringSerializer.serialize(queryArgs[it!!].toString())
                     "$encodedKey=${URLEncoder.encode(value, "utf-8")}"
                 }
             }
