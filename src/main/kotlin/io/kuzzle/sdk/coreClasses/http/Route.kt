@@ -101,7 +101,7 @@ class Route {
                 if (queryArgs.optBoolean(it!!, false) == true) {
                     encodedKey
                 } else {
-                    val value = StringSerializer.serialize(queryArgs[it!!].toString())
+                    val value = StringSerializer.serialize(queryArgs[it]!!)
                     "$encodedKey=${URLEncoder.encode(value, "utf-8")}"
                 }
             }
