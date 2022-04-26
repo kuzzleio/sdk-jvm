@@ -235,10 +235,6 @@ open class Http : AbstractProtocol {
      * Make a request to Kuzzle using the appropriate HTTP Endpoint for a given controller's action
      */
     private fun queryHTTPEndpoint(payload: Map<String?, Any?>, requestInfo: io.kuzzle.sdk.coreClasses.http.HttpRequest) {
-        println(requestInfo.verb)
-        println(requestInfo.url)
-        println(requestInfo.body)
-        println(requestInfo.headers)
         GlobalScope.launch { // Launch HTTP Request inside a coroutine to be non-blocking
             val client = HttpClient() {
                 expectSuccess = false
