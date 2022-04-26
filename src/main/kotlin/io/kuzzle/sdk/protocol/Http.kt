@@ -63,7 +63,7 @@ open class Http : AbstractProtocol {
          * Search route can also be accessed with GET,
          * but to provide a query for the search we need to use the POST method
          */
-        if (controller.lowercase() == "document" && action.lowercase() == "search") {
+        if (controller.toLowerCase() == "document" && action.toLowerCase() == "search") {
             return httpRoutes.find {
                 it.verb == "POST"
             } ?: httpRoutes[0]
@@ -80,7 +80,7 @@ open class Http : AbstractProtocol {
                 sameLength = false
             }
 
-            if (route.verb.uppercase() == "GET") {
+            if (route.verb.toUpperCase() == "GET") {
                 selectedRoute = route
             }
         }
@@ -219,6 +219,7 @@ open class Http : AbstractProtocol {
                         }
                     }
                     this.header("content-type", "application/json")
+<<<<<<< HEAD
                     if (payload["jwt"] != null) {
                         this.header("authorization", "Bearer ${payload["jwt"]}")
                     }
@@ -228,6 +229,8 @@ open class Http : AbstractProtocol {
                     if (payload["requestId"] != null) {
                         this.header("x-kuzzle-request-id", payload["requestId"].toString())
                     }
+=======
+>>>>>>> e3bc10b0249dd2441b7a6f0e4700e68399244d8c
                     this.body = JsonSerializer.serialize(payload)
                 }
                 // trigger messageReceived
@@ -271,7 +274,7 @@ open class Http : AbstractProtocol {
         }
     }
 
-    override fun send(payload: Map<String?, Any?>) {
+    override fun send(payload: KuzzleMap) {
         if (! payload.containsKey("controller") || payload["controller"] !is String) {
             super.trigger(RequestErrorEvent(MissingControllerException(), payload["requestId"] as String?))
             return
@@ -280,6 +283,22 @@ open class Http : AbstractProtocol {
         if (! payload.containsKey("action") || payload["action"] !is String) {
             super.trigger(RequestErrorEvent(MissingActionException(), payload["requestId"] as String?))
             return
+        }
+
+        if (payload["headers"] == null) {
+            payload["headers"] = KuzzleMap()
+        }
+
+        var headers = payload.getMap("headers")!!
+
+        if (payload["jwt"] != null) {
+            headers.put("Authorization", "Bearer ${payload["jwt"]}")
+        }
+        if (payload["volatile"] != null) {
+            headers.put("x-kuzzle-volatile", StringSerializer.serialize(payload["volatile"]!!))
+        }
+        if (payload["requestId"] != null) {
+            headers.put("x-kuzzle-request-id", payload["requestId"].toString())
         }
 
         /**
