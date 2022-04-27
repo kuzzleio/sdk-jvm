@@ -40,6 +40,11 @@ You can then find the jars file in build/libs/
 | **< 1.2.4**  |  **1.5.2**   |    **6.1**     |  **JDK-8**   |
 | **>= 1.2.4** |  **1.6.8**   |    **7.4**     |  **JDK-11**  |
 
+| SDK Version  | Kuzzle Version |
+| :----------: | :------------: |
+| **< 1.2.4**  |  **2.x.x**     |
+| **>= 1.2.4** |  **Websocket: 2.x.x**<br>**HTTP: >=2.18.1**  |
+
 ### Maven
 
 ```xml
