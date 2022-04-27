@@ -37,13 +37,13 @@ You can then find the jars file in build/libs/
 
 | SDK Version  | Ktor Version | Gradle Version | Java Version |
 | :----------: | :----------: | :------------: | :----------: |
-| **< 1.2.4**  |  **1.5.2**   |    **6.1**     |  **JDK-8**   |
-| **>= 1.2.4** |  **1.6.8**   |    **7.4**     |  **JDK-11**  |
+| **< 1.3.0**  |  **1.5.2**   |    **6.1**     |  **JDK-8**   |
+| **>= 1.3.0** |  **1.6.8**   |    **7.4**     |  **JDK-11**  |
 
 | SDK Version  | Kuzzle Version |
 | :----------: | :------------: |
-| **< 1.2.4**  |  **2.x.x**     |
-| **>= 1.2.4** |  **Websocket: 2.x.x**<br>**HTTP: >=2.18.1**  |
+| **< 1.3.0**  |  **2.x.x**     |
+| **>= 1.3.0** |  **Websocket: 2.x.x**<br>**HTTP: >=2.18.1**  |
 
 ### Maven
 
@@ -51,7 +51,7 @@ You can then find the jars file in build/libs/
 <dependency>
   <groupId>io.kuzzle</groupId>
   <artifactId>sdk-jvm</artifactId>
-  <version>1.2.4</version>
+  <version>1.3.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -60,19 +60,19 @@ You can then find the jars file in build/libs/
 ### Gradle
 
 ```groovy
-compile 'io.kuzzle:sdk-jvm:1.2.4'
+compile 'io.kuzzle:sdk-jvm:1.3.0'
 ```
 
 For amd64:
 
 ```groovy
-compile 'io.kuzzle:sdk-jvm:1.2.4'
+compile 'io.kuzzle:sdk-jvm:1.3.0'
 ```
 
 ### Ivy
 
 ```html
-<dependency org='io.kuzzle' name='sdk-jvm' rev='1.2.4'>
+<dependency org='io.kuzzle' name='sdk-jvm' rev='1.3.0'>
   <artifact name='sdk-jvm' ext='pom' ></artifact>
 </dependency>
 ```
