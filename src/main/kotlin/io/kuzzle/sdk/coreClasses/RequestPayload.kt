@@ -23,7 +23,8 @@ data class RequestPayload(
     var volatile: Any? = null,
     var body: Any? = null,
     var requestId: String? = null,
-    var other: Map<String?, Any?>? = null
+    var other: Map<String?, Any?>? = null,
+    var headers: Map<String?, Any?>? = null,
 ) {
     fun toMap(): Map<String?, Any?> {
         val map = HashMap<String?, Any?>()
@@ -62,6 +63,10 @@ data class RequestPayload(
 
         if (requestId != null) {
             map["requestId"] = requestId
+        }
+
+        if (headers != null) {
+            map["headers"] = headers
         }
 
         if (other != null) {

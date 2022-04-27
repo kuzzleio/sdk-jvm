@@ -46,15 +46,15 @@ public CompletableFuture<Response> query(
 
 <br/>
 
-| Argument  | Type              | Description            |
-| --------- | ----------------- | ---------------------- |
-| `query` | <pre>Map<String, Object> | API request    |
+| Argument | Type                     | Description |
+| -------- | ------------------------ | ----------- |
+| `query`  | <pre>Map<String, Object> | API request |
 
 <SinceBadge version="1.2.3"/>
 
-| Argument  | Type              | Description            |
-| --------- | ----------------- | ---------------------- |
-| `query` | <pre>Map<String, Object><br>or String<br>or RawJson<br>or RequestPayload<br>or Object</pre> | API request    |
+| Argument | Type                                                                                        | Description |
+| -------- | ------------------------------------------------------------------------------------------- | ----------- |
+| `query`  | <pre>Map<String, Object><br>or String<br>or RawJson<br>or RequestPayload<br>or Object</pre> | API request |
 
 ::: info
 Calling query with a `String` or `RawJson` makes no differences, and will be interpreted as raw json strings.
@@ -74,15 +74,17 @@ This will avoid the deserialization + reserialization slowdown
 All properties necessary for the Kuzzle API can be added in the query object.
 The following properties are the most common.
 
-| Property     | Type              | Description                              |
-| ------------ | ----------------- | ---------------------------------------- |
-| `controller` | <pre>String</pre> | Controller name (mandatory)              |
-| `action`     | <pre>String</pre> | Action name (mandatory)                  |
+| Property     | Type                                                      | Description                              |
+| ------------ | --------------------------------------------------------- | ---------------------------------------- |
+| `controller` | <pre>String</pre>                                         | Controller name (mandatory)              |
+| `action`     | <pre>String</pre>                                         | Action name (mandatory)                  |
 | `body`       | <pre>Map<String, Object><br>or RawJson<br>or Object</pre> | Query body for this action               |
-| `index`      | <pre>String</pre> | Index name for this action               |
-| `collection` | <pre>String</pre> | Collection name for this action          |
-| `_id`        | <pre>String</pre> | id for this action                       |
+| `index`      | <pre>String</pre>                                         | Index name for this action               |
+| `collection` | <pre>String</pre>                                         | Collection name for this action          |
+| `_id`        | <pre>String</pre>                                         | id for this action                       |
 | `volatile`   | <pre>Map<String, Object><br>or RawJson<br>or Object</pre> | Additional information to send to Kuzzle |
+| `headers`    | <pre>Map<String, Object></pre>                            | Optionnal headers to send (HTTP Only)    |
+
 
 ## Returns
 
@@ -112,15 +114,15 @@ fun query(query: Any): CompletableFuture<Response>
 
 <br/>
 
-| Argument  | Type              | Description            |
-| --------- | ----------------- | ---------------------- |
-| `query` | <pre>Map<String?, Any?> | API request    |
+| Argument | Type                    | Description |
+| -------- | ----------------------- | ----------- |
+| `query`  | <pre>Map<String?, Any?> | API request |
 
 <SinceBadge version="1.2.3"/>
 
-| Argument  | Type              | Description            |
-| --------- | ----------------- | ---------------------- |
-| `query` | <pre>Map<String?, Any?><br>or RawJson<br>or String<br>or RequestPayload<br>or Any</pre> | API request    |
+| Argument | Type                                                                                    | Description |
+| -------- | --------------------------------------------------------------------------------------- | ----------- |
+| `query`  | <pre>Map<String?, Any?><br>or RawJson<br>or String<br>or RequestPayload<br>or Any</pre> | API request |
 
 ::: info
 Calling query with a `String` or `RawJson` makes no differences, and will be interpreted as raw json strings.
@@ -140,15 +142,16 @@ This will avoid the deserialization + reserialization slowdown
 All properties necessary for the Kuzzle API can be added in the query object.
 The following properties are the most common.
 
-| Property     | Type              | Description                              |
-| ------------ | ----------------- | ---------------------------------------- |
-| `controller` | <pre>String</pre> | Controller name (mandatory)              |
-| `action`     | <pre>String</pre> | Action name (mandatory)                  |
-| `body`       | <pre>Map<String, Object><br>or RawJson<br>or Any</pre> | Query body for this action               |
-| `index`      | <pre>String</pre> | Index name for this action               |
-| `collection` | <pre>String</pre> | Collection name for this action          |
-| `_id`        | <pre>String</pre> | id for this action                       |
-| `volatile`   | <pre>Map<String, Object><br>or RawJson<br>or Any</pre> | Additional information to send to Kuzzle |
+| Property     | Type                                                 | Description                              |
+| ------------ | ---------------------------------------------------- | ---------------------------------------- |
+| `controller` | <pre>String</pre>                                    | Controller name (mandatory)              |
+| `action`     | <pre>String</pre>                                    | Action name (mandatory)                  |
+| `body`       | <pre>Map<String, Any?><br>or RawJson<br>or Any</pre> | Query body for this action               |
+| `index`      | <pre>String</pre>                                    | Index name for this action               |
+| `collection` | <pre>String</pre>                                    | Collection name for this action          |
+| `_id`        | <pre>String</pre>                                    | id for this action                       |
+| `volatile`   | <pre>Map<String, Any?><br>or RawJson<br>or Any</pre> | Additional information to send to Kuzzle |
+| `headers`    | <pre>Map<String, Any?></pre>                         | Optionnal headers to send (HTTP Only)    |
 
 ## Returns
 

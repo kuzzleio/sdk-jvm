@@ -9,6 +9,7 @@ import io.kuzzle.sdk.controllers.RealtimeController
 import io.kuzzle.sdk.controllers.ServerController
 import io.kuzzle.sdk.coreClasses.RequestPayload
 import io.kuzzle.sdk.coreClasses.exceptions.ApiErrorException
+import io.kuzzle.sdk.coreClasses.exceptions.InvalidJSON
 import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
 import io.kuzzle.sdk.coreClasses.exceptions.NotConnectedException
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
@@ -50,22 +51,34 @@ open class Kuzzle {
         collectionController = CollectionController(this)
         bulkController = BulkController(this)
         // @TODO Create enums for events
-        protocol.addListener<MessageReceivedEvent>(::onMessageReceived)
-        protocol.addListener<NetworkStateChangeEvent>(::onNetworkStateChange)
-        protocol.addListener<RequestErrorEvent>(::onRequestError)
+        protocol.addListener(::onMessageReceived)
+        protocol.addListener(::onNetworkStateChange)
+        protocol.addListener(::onRequestError)
     }
 
     private fun onRequestError(event: RequestErrorEvent) {
-        if (event.requestId != null && queries[event.requestId] != null) {
-            queries[event.requestId]?.completeExceptionally(event.exception)
-            queries.remove(event.requestId)
+        if (event.requestId != null && queries[event.requestId!!] != null) {
+            queries[event.requestId!!]?.completeExceptionally(event.exception)
+            queries.remove(event.requestId!!)
         }
     }
 
     private fun onMessageReceived(event: MessageReceivedEvent) {
         val message = event.message
+        val jsonObject: Map<String?, Any?>
+        try {
+            jsonObject = JsonSerializer.deserialize(message) as Map<String?, Any?>
+        } catch (e: Exception) {
+            if (event.requestId != null) {
+                queries[event.requestId]?.completeExceptionally(InvalidJSON(event.message ?: "null"))
+                queries.remove(event.requestId)
+            } else {
+                protocol.trigger(UnhandledResponseEvent(message))
+            }
+            return
+        }
         val response = Response().apply {
-            fromMap(JsonSerializer.deserialize(message) as Map<String?, Any?>)
+            fromMap(jsonObject)
         }
 
         val requestId = event.requestId ?: response.room ?: response.requestId
@@ -90,6 +103,7 @@ open class Kuzzle {
         }
 
         queries[requestId]?.completeExceptionally(ApiErrorException(response))
+        queries.remove(requestId)
         protocol.trigger(TokenExpiredEvent())
     }
 

@@ -30,8 +30,8 @@ class ApiErrorException : KuzzleException {
     constructor(response: Response) :
         super(response.error?.message, response.status) {
             if (response.error != null) {
-                this.stack = response.error?.stack
-                this.id = response.error?.id
+                this.stack = response.error!!.stack
+                this.id = response.error!!.id
             }
         }
 }

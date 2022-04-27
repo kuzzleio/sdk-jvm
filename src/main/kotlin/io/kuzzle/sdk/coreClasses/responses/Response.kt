@@ -5,7 +5,7 @@ import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.maps.Serializable
 
 class Response : Serializable {
-    var mapResponse: Map<String?, Any?>? = null
+    var mapResponse: KuzzleMap? = null
         private set
 
     var room: String? = null
@@ -80,14 +80,19 @@ class Response : Serializable {
      */
     var type: String? = null
 
+    /**
+     * Response headers
+     */
+    var headers: Map<String?, Any?>? = null
+
     override fun fromMap(map: Map<String?, Any?>?) {
         if (map == null) return
 
-        mapResponse = map
-
         val kuzzleMap = KuzzleMap(map)
+        mapResponse = kuzzleMap
+
         room = kuzzleMap.getString("room")
-        result = kuzzleMap.get("result")
+        result = kuzzleMap["result"]
         error = null
         if (kuzzleMap.isMap("error")) {
             error = ErrorResponse()
@@ -97,20 +102,21 @@ class Response : Serializable {
         if (requestId == null) {
             throw Exception(KuzzleExceptionCode.MISSING_REQUESTID.message)
         }
-        status = (kuzzleMap.optNumber("status", 0) as com.google.gson.internal.LazilyParsedNumber).toInt()
+        status = kuzzleMap.optNumber("status", 0)!!.toInt()
         controller = kuzzleMap.getString("controller")
         action = kuzzleMap.getString("action")
         index = kuzzleMap.getString("index")
         collection = kuzzleMap.getString("collection")
-        Volatile = kuzzleMap.optMap("volatile", HashMap())
+        Volatile = kuzzleMap.optMap("volatile", KuzzleMap())
         protocol = kuzzleMap.getString("protocol")
         scope = kuzzleMap.getString("scope")
         state = kuzzleMap.getString("state")
         timestamp = when (kuzzleMap.getNumber("timestamp")) {
             null -> null
-            else -> (kuzzleMap.getNumber("timestamp") as com.google.gson.internal.LazilyParsedNumber).toLong()
+            else -> kuzzleMap.getNumber("timestamp")!!.toLong()
         }
         type = kuzzleMap.getString("type")
+        headers = kuzzleMap.getMap("headers")
     }
 
     override fun toMap(): Map<String?, Any?> {
@@ -131,6 +137,7 @@ class Response : Serializable {
         map.put("status", status)
         timestamp?.let { map.put("timestamp", it) }
         type?.let { map.put("type", it) }
+        headers?.let { map.put("headers", it) }
 
         return map
     }

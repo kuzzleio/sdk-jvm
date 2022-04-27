@@ -8,6 +8,7 @@ import io.ktor.client.features.json.JsonFeature
 import io.ktor.http.ContentType
 import io.ktor.http.fullPath
 import io.ktor.http.headersOf
+import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.protocol.ProtocolState
 import io.kuzzle.sdk.protocol.WebSocket
 import org.junit.Assert.assertEquals
@@ -62,7 +63,7 @@ class WebSocketTests {
 
     @Test
     fun sendTest() {
-        val query = HashMap<String?, Any?>().apply {
+        val query = KuzzleMap().apply {
             put("controller", "server")
             put("action", "now")
         }

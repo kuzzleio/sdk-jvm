@@ -6,6 +6,7 @@ import io.kuzzle.sdk.coreClasses.lang.Lang
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.responses.Response
 import io.kuzzle.sdk.events.LoginAttemptEvent
+import io.kuzzle.sdk.events.LogoutAttemptEvent
 import java.util.concurrent.CompletableFuture
 
 class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
@@ -164,7 +165,10 @@ class AuthController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             put("controller", "auth")
             put("action", "logout")
         }
-        return kuzzle.query(query)
+        return kuzzle.query(query).thenApplyAsync { response ->
+            kuzzle.protocol.trigger(LogoutAttemptEvent())
+            response
+        }
     }
 
     @JvmOverloads

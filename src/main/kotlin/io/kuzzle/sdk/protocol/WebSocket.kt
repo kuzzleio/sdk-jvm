@@ -13,6 +13,7 @@ import io.ktor.http.cio.websocket.close
 import io.ktor.http.cio.websocket.readBytes
 import io.ktor.http.cio.websocket.readText
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
+import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.events.MessageReceivedEvent
 import io.kuzzle.sdk.events.NetworkStateChangeEvent
 import kotlinx.coroutines.GlobalScope
@@ -221,7 +222,7 @@ open class WebSocket : AbstractProtocol {
         }
     }
 
-    override fun send(payload: Map<String?, Any?>) {
+    override fun send(payload: KuzzleMap) {
         queue.add(JsonSerializer.serialize(payload))
     }
 }
