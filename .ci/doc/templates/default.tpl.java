@@ -1,5 +1,5 @@
 import io.kuzzle.sdk.Kuzzle;
-import io.kuzzle.sdk.protocol.WebSocket;
+import io.kuzzle.sdk.protocol.*;
 import io.kuzzle.sdk.coreClasses.responses.Response;
 import io.kuzzle.sdk.coreClasses.SearchResult;
 import io.kuzzle.sdk.coreClasses.lang.Lang;
@@ -10,7 +10,13 @@ public class SnippetTest {
 
   public static void main(String[] argv) {
     try {
-      kuzzle = new Kuzzle(new WebSocket("kuzzle"));
+      AbstractProtocol protocol;
+      if (System.getenv("SNIPPET_PROTOCOL") != null && System.getenv("SNIPPET_PROTOCOL").equals("http")) {
+        protocol = new Http("kuzzle");
+      } else {
+        protocol = new WebSocket("kuzzle");
+      }
+      kuzzle = new Kuzzle(protocol);
       kuzzle.connect();
       [snippet-code]
       System.out.println("Success");

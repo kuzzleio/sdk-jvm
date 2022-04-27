@@ -12,19 +12,20 @@ order: 0
 
 ## Properties
 
-| Property | Type | Description |
-|--- |--- |--- |
-| `action` | <pre>String</pre> | Executed Kuzzle API controller's action |
-| `collection` | <pre>String</pre> | Impacted collection |
-| `controller` | <pre>String</pre> | Executed Kuzzle API controller |
-| `error` | <pre>[ErrorResponse](/sdk/jvm/1/core-classes/error-response)</pre> | Error object (null if the request finished successfully) |
-| `index` | <pre>String</pre> | Impacted index |
-| `protocol` | <pre>String</pre> | Network protocol at the origin of the real-time notification |
-| `requestId` | <pre>String</pre> | Request unique identifier |
-| `result` | <pre>Object</pre> | Response payload (depends on the executed API action) |
-| `room` | <pre>String</pre> | Room identifier (realtime only) |
-| `scope` | <pre>String</pre> | Document scope ("in" or "out", realtime only) |
-| `state` | <pre>String</pre> | Document state (realtime only) |
-| `status` | <pre>int</pre> | Response status, following HTTP status codes |
-| `timestamp` | <pre>Long</pre> | Notification timestamp (UTC) |
-| `volatile` | <pre>Map<String, Object></pre> | Volatile data |
+| Property     | Type                                                               | Description                                                  |
+| ------------ | ------------------------------------------------------------------ | ------------------------------------------------------------ |
+| `action`     | <pre>String</pre>                                                  | Executed Kuzzle API controller's action                      |
+| `collection` | <pre>String</pre>                                                  | Impacted collection                                          |
+| `controller` | <pre>String</pre>                                                  | Executed Kuzzle API controller                               |
+| `error`      | <pre>[ErrorResponse](/sdk/jvm/1/core-classes/error-response)</pre> | Error object (null if the request finished successfully)     |
+| `headers`    | <pre>Map<String, Object></pre>                                     | Headers returned in the response                             |
+| `index`      | <pre>String</pre>                                                  | Impacted index                                               |
+| `protocol`   | <pre>String</pre>                                                  | Network protocol at the origin of the real-time notification |
+| `requestId`  | <pre>String</pre>                                                  | Request unique identifier                                    |
+| `result`     | <pre>Object</pre>                                                  | Response payload (depends on the executed API action)        |
+| `room`       | <pre>String</pre>                                                  | Room identifier (realtime only)                              |
+| `scope`      | <pre>String</pre>                                                  | Document scope ("in" or "out", realtime only)                |
+| `state`      | <pre>String</pre>                                                  | Document state (realtime only)                               |
+| `status`     | <pre>int</pre>                                                     | Response status, following HTTP status codes                 |
+| `timestamp`  | <pre>Long</pre>                                                    | Notification timestamp (UTC)                                 |
+| `volatile`   | <pre>Map<String, Object></pre>                                     | Volatile data                                                |

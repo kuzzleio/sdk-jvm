@@ -12,25 +12,27 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile 'io.ktor:ktor-client-websockets:1.5.2'
-    compile 'io.ktor:ktor-client-okhttp:1.5.2'
-    compile 'io.ktor:ktor-client-cio:1.5.2'
-    compile 'io.ktor:ktor-client-json:1.5.2'
-    compile 'io.ktor:ktor-client-gson:1.5.2'
-    compile 'io.ktor:ktor-client-serialization:1.5.2'
-    compile 'com.google.code.gson:gson:2.8.5'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+  testImplementation group: 'junit', name: 'junit', version: '4.12'
+  implementation 'io.ktor:ktor-client-core:1.6.8'
+  implementation 'io.ktor:ktor-client-websockets:1.6.8'
+  implementation 'io.ktor:ktor-client-okhttp:1.6.8'
+  implementation 'io.ktor:ktor-client-cio:1.6.8'
+  implementation 'io.ktor:ktor-client-json:1.6.8'
+  implementation 'io.ktor:ktor-client-gson:1.6.8'
+  implementation 'io.ktor:ktor-client-serialization:1.6.8'
+  implementation 'com.google.code.gson:gson:2.9.0'
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 jar {
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
   manifest {
     attributes(
-      'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+      'Class-Path': configurations.runtimeClasspath.collect { it.getName() }.join(' '),
       'Main-Class': 'SnippetTest'
     )
   }
   from {
-    configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
   }
 }

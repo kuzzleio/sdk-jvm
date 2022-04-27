@@ -17,7 +17,7 @@ The complete SDK documentation is available [here](https://docs.kuzzle.io/sdk/jv
 
 ## Protocol used
 
-The JVM SDK implements the websocket protocol.
+The JVM SDK implements the websocket protocol and http protocol.
 
 ### Build jar
 
@@ -33,11 +33,17 @@ You can then find the jars file in build/libs/
 
 ## Installation
 
-### Bintray repository
+### Compatibility Matrix
 
-The SDK is available for both x86 and amd64 architectures on bintray:
+| SDK Version  | Ktor Version | Gradle Version | Java Version |
+| :----------: | :----------: | :------------: | :----------: |
+| **< 1.3.0**  |  **1.5.2**   |    **6.1**     |  **JDK-8**   |
+| **>= 1.3.0** |  **1.6.8**   |    **7.4**     |  **JDK-11**  |
 
-https://bintray.com/kuzzle/maven
+| SDK Version  | Kuzzle Version |
+| :----------: | :------------: |
+| **< 1.3.0**  |  **2.x.x**     |
+| **>= 1.3.0** |  **Websocket: 2.x.x**<br>**HTTP: >=2.18.1**  |
 
 ### Maven
 
@@ -45,7 +51,7 @@ https://bintray.com/kuzzle/maven
 <dependency>
   <groupId>io.kuzzle</groupId>
   <artifactId>sdk-jvm</artifactId>
-  <version>1.2.3</version>
+  <version>1.3.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -54,19 +60,19 @@ https://bintray.com/kuzzle/maven
 ### Gradle
 
 ```groovy
-compile 'io.kuzzle:sdk-jvm:1.2.3'
+compile 'io.kuzzle:sdk-jvm:1.3.0'
 ```
 
 For amd64:
 
 ```groovy
-compile 'io.kuzzle:sdk-jvm:1.2.3'
+compile 'io.kuzzle:sdk-jvm:1.3.0'
 ```
 
 ### Ivy
 
 ```html
-<dependency org='io.kuzzle' name='sdk-jvm' rev='1.2.3'>
+<dependency org='io.kuzzle' name='sdk-jvm' rev='1.3.0'>
   <artifact name='sdk-jvm' ext='pom' ></artifact>
 </dependency>
 ```
@@ -91,11 +97,12 @@ configurations {
 If you are using the thin jar, make sure to add the following dependencies:
 
 ```groovy
-    implementation("io.ktor:ktor-client-websockets:1.5.2")
-    implementation("io.ktor:ktor-client-okhttp:1.5.2")
-    implementation("io.ktor:ktor-client-cio:1.5.2")
-    implementation("io.ktor:ktor-client-json:1.5.2")
-    implementation("io.ktor:ktor-client-gson:1.5.2")
-    implementation("io.ktor:ktor-client-serialization:1.5.2")
-    implementation("com.google.code.gson:gson:2.8.5")
+    implementation("io.ktor:ktor-client-core:1.6.8")
+    implementation("io.ktor:ktor-client-websockets:1.6.8")
+    implementation("io.ktor:ktor-client-okhttp:1.6.8")
+    implementation("io.ktor:ktor-client-cio:1.6.8")
+    implementation("io.ktor:ktor-client-json:1.6.8")
+    implementation("io.ktor:ktor-client-gson:1.6.8")
+    implementation("io.ktor:ktor-client-serialization:1.6.8")
+    implementation("com.google.code.gson:gson:2.9.0")
 ```

@@ -1,16 +1,17 @@
 import org.gradle.jvm.tasks.Jar
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.Date
 import org.gradle.api.publish.maven.MavenPom
 import org.jetbrains.kotlin.gradle.dsl.Coroutines
 import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
     `java-library`
     `maven-publish`
     signing
-    kotlin("jvm") version "1.3.61"
+    jacoco
+    kotlin("jvm") version "1.6.10"
 }
 
 val artifactName = "sdk-jvm"
@@ -34,22 +35,29 @@ val pomDeveloperId = "kuzzleio"
 val pomDeveloperName = "kuzzle"
 
 group = "io.kuzzle.sdk"
-version = "1.2.3"
-val ktorVersion = "1.5.2"
+version = "1.3.0"
+val ktorVersion = "1.6.8"
 
 repositories {
     mavenCentral()
 }
 
+configurations {
+    register("cucumberRuntime") {
+        extendsFrom(testImplementation.get())
+    }
+}
+
 dependencies {
     implementation(kotlin("stdlib"))
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-websockets:$ktorVersion")
     implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
     implementation("io.ktor:ktor-client-json:$ktorVersion")
     implementation("io.ktor:ktor-client-gson:$ktorVersion")
     implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-    implementation("com.google.code.gson:gson:2.8.5")
+    implementation("com.google.code.gson:gson:2.9.0")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
     testImplementation("io.mockk:mockk:1.8.13")
@@ -58,7 +66,13 @@ dependencies {
     testImplementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock-js:1.3.1")
     testImplementation("io.ktor:ktor-client-mock-native:1.3.1")
+    testImplementation("org.mock-server:mockserver-netty:5.3.0")
+    testImplementation("io.cucumber:cucumber-java8:7.0.0")
+    testImplementation("io.cucumber:cucumber-junit:7.0.0")
+}
 
+java {
+    withSourcesJar()
 }
 
 application {
@@ -70,24 +84,19 @@ tasks.withType<Jar> {
 }
 
 tasks {
-  register("fatJar", Jar::class.java) {
-    archiveFileName.set("${artifactName}-${artifactVersion}.jar")
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    manifest {
-      attributes("Main-Class" to application.mainClassName)
+    register<Jar>("fatJar") {
+        archiveFileName.set("${artifactName}-${artifactVersion}.jar")
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        manifest {
+            attributes("Main-Class" to application.mainClassName)
+        }
+        from(configurations.runtimeClasspath.get()
+                .onEach { println("Add from dependencies: ${it.name}") }
+                .map { if (it.isDirectory) it else zipTree(it) })
+        val sourcesMain = sourceSets.main.get()
+        sourcesMain.allSource.forEach { println("Add from sources: ${it.name}") }
+        from(sourcesMain.output)
     }
-    from(configurations.runtimeClasspath.get()
-        .onEach { println("Add from dependencies: ${it.name}") }
-        .map { if (it.isDirectory) it else zipTree(it) })
-    val sourcesMain = sourceSets.main.get()
-    sourcesMain.allSource.forEach { println("Add from sources: ${it.name}") }
-    from(sourcesMain.output)
-  }
-}
-
-tasks.register<Jar>("sourcesJar") {
-    from(sourceSets.main.get().allJava)
-    archiveClassifier.set("sources")
 }
 
 tasks.register<Jar>("javadocJar") {
@@ -112,7 +121,7 @@ publishing {
             version = "${artifactVersion}-without-dependencies"
             artifact(tasks["sourcesJar"])
             artifact(tasks["javadocJar"])
-            
+
             from(components["java"])
             pom.withXml {
                 asNode().apply {

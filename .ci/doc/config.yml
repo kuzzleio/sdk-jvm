@@ -1,9 +1,11 @@
 ---
-
 snippets:
   mount: /mnt
   path: 'doc/**/snippets/*.test.yml'
   templates: /mnt/.ci/doc/templates
+  protocols:
+    - http
+    - websocket
 
 runners:
   default: java
@@ -15,4 +17,4 @@ runners:
       cmd: cd /mnt && ./gradlew jar
     run:
       before: timeout 600 bash -c 'until stat /tmp/runner_is_ready && curl -f -s -o /dev/null http://kuzzle:7512/_now; do sleep 1; done'
-      cmd: /mnt/.ci/doc/test-snippet.sh {{ snippet.source }}
+      cmd: SNIPPET_PROTOCOL="{{ snippet.protocol }}" /mnt/.ci/doc/test-snippet.sh {{ snippet.source }}

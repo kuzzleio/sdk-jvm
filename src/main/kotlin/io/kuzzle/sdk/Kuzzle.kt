@@ -9,11 +9,13 @@ import io.kuzzle.sdk.controllers.RealtimeController
 import io.kuzzle.sdk.controllers.ServerController
 import io.kuzzle.sdk.coreClasses.RequestPayload
 import io.kuzzle.sdk.coreClasses.exceptions.ApiErrorException
+import io.kuzzle.sdk.coreClasses.exceptions.InvalidJSON
 import io.kuzzle.sdk.coreClasses.exceptions.KuzzleExceptionCode
 import io.kuzzle.sdk.coreClasses.exceptions.NotConnectedException
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.responses.Response
+import io.kuzzle.sdk.events.*
 import io.kuzzle.sdk.protocol.AbstractProtocol
 import io.kuzzle.sdk.protocol.ProtocolState
 import java.util.UUID
@@ -49,42 +51,64 @@ open class Kuzzle {
         collectionController = CollectionController(this)
         bulkController = BulkController(this)
         // @TODO Create enums for events
-        protocol.addListener("messageReceived", ::onMessageReceived)
-        protocol.addListener("networkStateChange", ::onNetworkStateChange)
+        protocol.addListener(::onMessageReceived)
+        protocol.addListener(::onNetworkStateChange)
+        protocol.addListener(::onRequestError)
     }
 
-    private fun onMessageReceived(message: String?) {
+    private fun onRequestError(event: RequestErrorEvent) {
+        if (event.requestId != null && queries[event.requestId!!] != null) {
+            queries[event.requestId!!]?.completeExceptionally(event.exception)
+            queries.remove(event.requestId!!)
+        }
+    }
+
+    private fun onMessageReceived(event: MessageReceivedEvent) {
+        val message = event.message
+        val jsonObject: Map<String?, Any?>
+        try {
+            jsonObject = JsonSerializer.deserialize(message) as Map<String?, Any?>
+        } catch (e: Exception) {
+            if (event.requestId != null) {
+                queries[event.requestId]?.completeExceptionally(InvalidJSON(event.message ?: "null"))
+                queries.remove(event.requestId)
+            } else {
+                protocol.trigger(UnhandledResponseEvent(message))
+            }
+            return
+        }
         val response = Response().apply {
-            fromMap(JsonSerializer.deserialize(message) as Map<String?, Any?>)
+            fromMap(jsonObject)
         }
 
-        val requestId = response.room ?: response.requestId
+        val requestId = event.requestId ?: response.room ?: response.requestId
 
-        if (queries.size == 0 || (queries.size != 0 && (requestId == null || queries[requestId] == null))) {
-            protocol.trigger("unhandledResponse", message)
+        if (queries.size == 0 || requestId == null || queries[requestId] == null) {
+            protocol.trigger(UnhandledResponseEvent(message))
             return
         }
 
         if (response.error == null) {
-            queries[response.requestId]?.complete(response)
-            queries.remove(response.requestId)
+            queries[requestId]?.complete(response)
+            queries.remove(requestId)
             return
         }
 
         if (response.error?.id == null ||
             response.error?.id != "security.token.expired"
         ) {
-            queries[response.requestId]?.completeExceptionally(ApiErrorException(response))
-            queries.remove(response.requestId)
+            queries[requestId]?.completeExceptionally(ApiErrorException(response))
+            queries.remove(requestId)
             return
         }
 
-        queries[response.requestId]?.completeExceptionally(ApiErrorException(response))
-        protocol.trigger("tokenExpired")
+        queries[requestId]?.completeExceptionally(ApiErrorException(response))
+        queries.remove(requestId)
+        protocol.trigger(TokenExpiredEvent())
     }
 
-    private fun onNetworkStateChange(state: String?) {
-        if (state == ProtocolState.OPEN.toString() && autoResubscribe) {
+    private fun onNetworkStateChange(event: NetworkStateChangeEvent) {
+        if (event.state == ProtocolState.OPEN && autoResubscribe) {
             realtimeController.renewSubscriptions()
         }
     }
