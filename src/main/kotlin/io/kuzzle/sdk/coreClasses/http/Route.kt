@@ -81,11 +81,11 @@ class Route {
                     if (verb == "GET") {
                         var bodyMap = KuzzleMap()
                         var body = request["body"]
-                        if(body != null) {
+                        if (body != null) {
                             if (body is RawJson) {
                                 body = JsonSerializer.deserialize(body.rawJson)
                             }
-                            bodyMap = KuzzleMap.from(body  as Map<String?, Any?>)
+                            bodyMap = KuzzleMap.from(body as Map<String?, Any?>)
                         }
                         queryArgs.putAll(bodyMap)
                     }

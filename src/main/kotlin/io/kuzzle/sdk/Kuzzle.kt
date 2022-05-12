@@ -80,7 +80,7 @@ open class Kuzzle {
 
         // If the message is empty, we take the requestId of the event,
         // to avoid error in fromMap function.
-        if(! jsonObject.containsKey("requestId") && event.requestId != null) {
+        if (! jsonObject.containsKey("requestId") && event.requestId != null) {
             jsonObject = jsonObject.plus("requestId" to event.requestId)
         }
 

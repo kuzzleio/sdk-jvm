@@ -8,7 +8,7 @@ import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 object JsonSerializer {
     private var gson: Gson? = null
     fun deserialize(rawJson: String?): Map<*, *> {
-        return if(rawJson == null || rawJson.isBlank()) {
+        return if (rawJson == null || rawJson.isBlank()) {
             KuzzleMap()
         } else {
             gson!!.fromJson(rawJson, Map::class.java)
