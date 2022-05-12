@@ -1,6 +1,8 @@
 package io.kuzzle.sdk.coreClasses.http
 
 import io.kuzzle.sdk.coreClasses.exceptions.MissingURLParamException
+import io.kuzzle.sdk.coreClasses.json.JsonSerializer
+import io.kuzzle.sdk.coreClasses.json.RawJson
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.serializer.StringSerializer
 import java.net.URLEncoder
@@ -63,7 +65,6 @@ class Route {
      */
     fun buildRequest(request: KuzzleMap): HttpRequest {
         val headers = request.optMap("headers", KuzzleMap())
-
         val queryArgs = KuzzleMap()
         for (key: String? in request.keys) {
             // Skip if a key or value is null
@@ -78,7 +79,15 @@ class Route {
                 "headers" -> headers.putAll(request.optMap("headers", KuzzleMap()))
                 "body" -> {
                     if (verb == "GET") {
-                        queryArgs.putAll(request.optMap("body", KuzzleMap()))
+                        var bodyMap = KuzzleMap()
+                        var body = request["body"]
+                        if(body != null) {
+                            if (body is RawJson) {
+                                body = JsonSerializer.deserialize(body.rawJson)
+                            }
+                            bodyMap = KuzzleMap.from(body  as Map<String?, Any?>)
+                        }
+                        queryArgs.putAll(bodyMap)
                     }
                 }
                 else -> {
@@ -88,7 +97,6 @@ class Route {
                 }
             }
         }
-
         /**
          * Build the query string
          */
@@ -113,7 +121,7 @@ class Route {
             return HttpRequest(
                 verb,
                 if (queryArgs.isEmpty()) staticURL else "$staticURL?$queryString",
-                if (verb != "GET") request.optMap("body", KuzzleMap()) else null,
+                if (verb != "GET") getBody(request) else null,
                 headers
             )
         }
@@ -138,9 +146,18 @@ class Route {
         return HttpRequest(
             verb,
             if (queryArgs.isEmpty()) urlBuilder.toString() else "$urlBuilder?$queryString",
-            if (verb != "GET") request.optMap("body", KuzzleMap()) else null,
+            if (verb != "GET") getBody(request) else null,
             headers
         )
+    }
+
+    private fun getBody(request: KuzzleMap): KuzzleMap {
+        val body = request["body"]
+        return if (body == null) {
+            KuzzleMap()
+        } else {
+            KuzzleMap.from(body as Map<String?, Any?>)
+        }
     }
 
     companion object {

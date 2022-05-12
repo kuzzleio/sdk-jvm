@@ -65,7 +65,7 @@ open class Kuzzle {
 
     private fun onMessageReceived(event: MessageReceivedEvent) {
         val message = event.message
-        val jsonObject: Map<String?, Any?>
+        var jsonObject: Map<String?, Any?>
         try {
             jsonObject = JsonSerializer.deserialize(message) as Map<String?, Any?>
         } catch (e: Exception) {
@@ -77,6 +77,13 @@ open class Kuzzle {
             }
             return
         }
+
+        // If the message is empty, we take the requestId of the event,
+        // to avoid error in fromMap function.
+        if(! jsonObject.containsKey("requestId") && event.requestId != null) {
+            jsonObject = jsonObject.plus("requestId" to event.requestId)
+        }
+
         val response = Response().apply {
             fromMap(jsonObject)
         }
