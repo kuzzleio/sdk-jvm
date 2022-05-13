@@ -79,15 +79,13 @@ class Route {
                 "headers" -> headers.putAll(request.optMap("headers", KuzzleMap()))
                 "body" -> {
                     if (verb == "GET") {
-                        var bodyMap = KuzzleMap()
                         var body = request["body"]
                         if (body != null) {
-                            if (body is RawJson) {
-                                body = JsonSerializer.deserialize(body.rawJson)
+                            if (body !is Map<*, *>) {
+                                body = JsonSerializer.deserialize(JsonSerializer.serialize(body))
                             }
-                            bodyMap = KuzzleMap.from(body as Map<String?, Any?>)
+                            queryArgs.putAll(body as Map<String?, Any?>)
                         }
-                        queryArgs.putAll(bodyMap)
                     }
                 }
                 else -> {
@@ -152,11 +150,17 @@ class Route {
     }
 
     private fun getBody(request: KuzzleMap): KuzzleMap {
-        val body = request["body"]
-        return if (body == null) {
-            KuzzleMap()
-        } else {
-            KuzzleMap.from(body as Map<String?, Any?>)
+        return when (val body = request["body"]) {
+            null -> {
+                KuzzleMap()
+            }
+            // If it's not a map, it can be a RawJson or Serializable object.
+            !is Map<*, *> -> {
+                KuzzleMap.from(JsonSerializer.deserialize(JsonSerializer.serialize(body)) as Map<String?, Any?>)
+            }
+            else -> {
+                KuzzleMap.from(body as Map<String?, Any?>)
+            }
         }
     }
 
