@@ -2,7 +2,6 @@ package io.kuzzle.sdk.coreClasses.http
 
 import io.kuzzle.sdk.coreClasses.exceptions.MissingURLParamException
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
-import io.kuzzle.sdk.coreClasses.json.RawJson
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.serializer.StringSerializer
 import java.net.URLEncoder
