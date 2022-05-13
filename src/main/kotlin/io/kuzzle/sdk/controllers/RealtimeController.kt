@@ -25,7 +25,7 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     )
 
     init {
-        kuzzle.protocol.addListener<UnhandledResponseEvent>() {
+        kuzzle.protocol.addListener<UnhandledResponseEvent> {
             val response = Response().apply {
                 fromMap(JsonSerializer.deserialize(it.message) as Map<String?, Any?>)
             }
@@ -50,7 +50,7 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             }
         }
 
-        kuzzle.protocol.addListener<NetworkStateChangeEvent>() {
+        kuzzle.protocol.addListener<NetworkStateChangeEvent> {
             if (it.state == ProtocolState.CLOSE) {
                 currentSubscriptions.clear()
             }

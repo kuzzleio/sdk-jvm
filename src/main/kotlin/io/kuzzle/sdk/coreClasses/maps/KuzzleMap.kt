@@ -9,7 +9,7 @@ class KuzzleMap : HashMap<String?, Any?> {
     /**
      * Create a new instance of CustomMap
      */
-    constructor() : super() {}
+    constructor() : super()
 
     /**
      * Create a new instance of CustomMap from a Map<String></String>,
