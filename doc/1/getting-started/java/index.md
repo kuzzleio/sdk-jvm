@@ -61,7 +61,7 @@ To build the project, add the following lines:
 <dependency>
   <groupId>io.kuzzle</groupId>
   <artifactId>sdk-jvm</artifactId>
-  <version>1.3.0</version>
+  <version>1.3.1</version>
   <type>pom</type>
 </dependency>
 ```
@@ -70,14 +70,14 @@ To build the project, add the following lines:
 
 ```groovy
 dependencies {
-  compile 'io.kuzzle:sdk-jvm:1.3.0'
+  compile 'io.kuzzle:sdk-jvm:1.3.1'
 }
 ```
 
 ### Ivy
 
 ```html
-<dependency org='io.kuzzle' name='sdk-jvm' rev='1.3.0'>
+<dependency org='io.kuzzle' name='sdk-jvm' rev='1.3.1'>
   <artifact name='sdk-jvm' ext='pom' ></artifact>
 </dependency>
 ```

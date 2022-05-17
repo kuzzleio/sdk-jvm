@@ -16,7 +16,7 @@ plugins {
 
 val artifactName = "sdk-jvm"
 val artifactGroup = "io.kuzzle"
-val artifactVersion = "1.3.0"
+val artifactVersion = "1.3.1"
 
 val pomUrl = "https://github.com/kuzzleio/sdk-jvm"
 val pomScmUrl = "https://github.com/kuzzleio/sdk-jvm"
@@ -35,7 +35,7 @@ val pomDeveloperId = "kuzzleio"
 val pomDeveloperName = "kuzzle"
 
 group = "io.kuzzle.sdk"
-version = "1.3.0"
+version = "1.3.1"
 val ktorVersion = "1.6.8"
 
 repositories {
