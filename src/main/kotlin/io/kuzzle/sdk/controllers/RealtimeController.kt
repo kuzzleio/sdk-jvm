@@ -1,12 +1,10 @@
 package io.kuzzle.sdk.controllers
 
 import io.kuzzle.sdk.Kuzzle
-import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.responses.Response
 import io.kuzzle.sdk.events.NetworkStateChangeEvent
 import io.kuzzle.sdk.events.RoomMessageEvent
-import io.kuzzle.sdk.events.TokenExpiredEvent
 import io.kuzzle.sdk.events.UnhandledResponseEvent
 import io.kuzzle.sdk.handlers.NotificationHandler
 import io.kuzzle.sdk.protocol.ProtocolState
