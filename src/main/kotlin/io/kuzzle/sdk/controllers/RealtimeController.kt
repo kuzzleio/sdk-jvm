@@ -1,11 +1,10 @@
 package io.kuzzle.sdk.controllers
 
 import io.kuzzle.sdk.Kuzzle
-import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.coreClasses.responses.Response
 import io.kuzzle.sdk.events.NetworkStateChangeEvent
-import io.kuzzle.sdk.events.TokenExpiredEvent
+import io.kuzzle.sdk.events.RoomMessageEvent
 import io.kuzzle.sdk.events.UnhandledResponseEvent
 import io.kuzzle.sdk.handlers.NotificationHandler
 import io.kuzzle.sdk.protocol.ProtocolState
@@ -25,28 +24,20 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     )
 
     init {
-        kuzzle.protocol.addListener<UnhandledResponseEvent> {
-            val response = Response().apply {
-                fromMap(JsonSerializer.deserialize(it.message) as Map<String?, Any?>)
-            }
+        kuzzle.protocol.addListener<RoomMessageEvent> { event ->
+            val response: Response = event.response
+            var sdkInstanceId = response.Volatile?.get("sdkInstanceId")?.toString()
 
-            if (response.error != null && response.error!!.id.equals("security.token.expired")) {
-                kuzzle.protocol.trigger(TokenExpiredEvent())
-            } else {
-                var sdkInstanceId = ""
-                if (response.Volatile != null) {
-                    sdkInstanceId = response.Volatile!!["sdkInstanceId"].toString()
-                }
-
-                val subs: ArrayList<Subscription>? = currentSubscriptions[response.room]
-                if (subs != null) {
-                    val instanceId = sdkInstanceId
-                    subs.forEach {
-                        if (instanceId == kuzzle.instanceId && it.subscribeToSelf || instanceId != kuzzle.instanceId) {
-                            it.handler(response)
-                        }
+            val subscriptions: ArrayList<Subscription>? = currentSubscriptions[response.room]
+            if (subscriptions != null) {
+                val instanceId = sdkInstanceId
+                subscriptions.forEach {
+                    if (instanceId == kuzzle.instanceId && it.subscribeToSelf || instanceId != kuzzle.instanceId) {
+                        it.handler(response)
                     }
                 }
+            } else {
+                kuzzle.protocol.trigger(UnhandledResponseEvent(response))
             }
         }
 
