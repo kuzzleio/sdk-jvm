@@ -96,7 +96,7 @@ open class Kuzzle {
             protocol.trigger(TokenExpiredEvent())
         }
 
-        if (queries.size == 0 || requestId == null || queries[requestId] == null) {
+        if (queries.isEmpty() || requestId == null || queries[requestId] == null) {
             if (response.error != null) {
                 protocol.trigger(UnhandledExceptionEvent(ApiErrorException(response)))
                 return

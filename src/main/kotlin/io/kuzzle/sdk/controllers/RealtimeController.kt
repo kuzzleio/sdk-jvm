@@ -24,17 +24,14 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     )
 
     init {
-        kuzzle.protocol.addListener<RoomMessageEvent> {
-            val response = it.response
-            var sdkInstanceId = ""
-            if (response.Volatile != null) {
-                sdkInstanceId = response.Volatile!!["sdkInstanceId"].toString()
-            }
+        kuzzle.protocol.addListener<RoomMessageEvent> {event ->
+            val response: Response = event.response
+            var sdkInstanceId = response.Volatile?.get("sdkInstanceId")?.toString();
 
-            val subs: ArrayList<Subscription>? = currentSubscriptions[response.room]
-            if (subs != null) {
+            val subscriptions: ArrayList<Subscription>? = currentSubscriptions[response.room]
+            if (subscriptions != null) {
                 val instanceId = sdkInstanceId
-                subs.forEach {
+                subscriptions.forEach {
                     if (instanceId == kuzzle.instanceId && it.subscribeToSelf || instanceId != kuzzle.instanceId) {
                         it.handler(response)
                     }
