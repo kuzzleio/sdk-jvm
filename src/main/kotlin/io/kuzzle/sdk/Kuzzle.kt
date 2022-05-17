@@ -60,6 +60,8 @@ open class Kuzzle {
         if (event.requestId != null && queries[event.requestId!!] != null) {
             queries[event.requestId!!]?.completeExceptionally(event.exception)
             queries.remove(event.requestId!!)
+        } else {
+            protocol.trigger(UnhandledExceptionEvent(event.exception))
         }
     }
 
@@ -73,7 +75,7 @@ open class Kuzzle {
                 queries[event.requestId]?.completeExceptionally(InvalidJSON(event.message ?: "null"))
                 queries.remove(event.requestId)
             } else {
-                protocol.trigger(UnhandledResponseEvent(message))
+                protocol.trigger(UnhandledExceptionEvent(InvalidJSON(event.message ?: "null")))
             }
             return
         }
@@ -90,28 +92,26 @@ open class Kuzzle {
 
         val requestId = event.requestId ?: response.room ?: response.requestId
 
+        if (response.error?.id == "security.token.expired") {
+            protocol.trigger(TokenExpiredEvent())
+        }
+
         if (queries.size == 0 || requestId == null || queries[requestId] == null) {
-            protocol.trigger(UnhandledResponseEvent(message))
+            if (response.error != null) {
+                protocol.trigger(UnhandledExceptionEvent(ApiErrorException(response)))
+                return
+            }
+            protocol.trigger(RoomMessageEvent(response))
             return
         }
 
-        if (response.error == null) {
-            queries[requestId]?.complete(response)
-            queries.remove(requestId)
-            return
-        }
-
-        if (response.error?.id == null ||
-            response.error?.id != "security.token.expired"
-        ) {
+        if (response.error != null) {
             queries[requestId]?.completeExceptionally(ApiErrorException(response))
-            queries.remove(requestId)
-            return
+        } else {
+            queries[requestId]?.complete(response)
         }
 
-        queries[requestId]?.completeExceptionally(ApiErrorException(response))
         queries.remove(requestId)
-        protocol.trigger(TokenExpiredEvent())
     }
 
     private fun onNetworkStateChange(event: NetworkStateChangeEvent) {
