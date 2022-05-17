@@ -24,9 +24,9 @@ class RealtimeController(kuzzle: Kuzzle) : BaseController(kuzzle) {
     )
 
     init {
-        kuzzle.protocol.addListener<RoomMessageEvent> {event ->
+        kuzzle.protocol.addListener<RoomMessageEvent> { event ->
             val response: Response = event.response
-            var sdkInstanceId = response.Volatile?.get("sdkInstanceId")?.toString();
+            var sdkInstanceId = response.Volatile?.get("sdkInstanceId")?.toString()
 
             val subscriptions: ArrayList<Subscription>? = currentSubscriptions[response.room]
             if (subscriptions != null) {
