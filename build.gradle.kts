@@ -16,7 +16,7 @@ plugins {
 
 val artifactName = "sdk-jvm"
 val artifactGroup = "io.kuzzle"
-val artifactVersion = "1.3.1"
+val artifactVersion = "1.3.2"
 
 val pomUrl = "https://github.com/kuzzleio/sdk-jvm"
 val pomScmUrl = "https://github.com/kuzzleio/sdk-jvm"
@@ -61,11 +61,11 @@ dependencies {
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
     testImplementation("io.mockk:mockk:1.8.13")
-    testImplementation("io.ktor:ktor-client-mock:1.3.1")
+    testImplementation("io.ktor:ktor-client-mock:1.3.2")
     testImplementation("io.ktor:ktor-client-mock-jvm:$ktorVersion")
     testImplementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
-    testImplementation("io.ktor:ktor-client-mock-js:1.3.1")
-    testImplementation("io.ktor:ktor-client-mock-native:1.3.1")
+    testImplementation("io.ktor:ktor-client-mock-js:1.3.2")
+    testImplementation("io.ktor:ktor-client-mock-native:1.3.2")
     testImplementation("org.mock-server:mockserver-netty:5.3.0")
     testImplementation("io.cucumber:cucumber-java8:7.0.0")
     testImplementation("io.cucumber:cucumber-junit:7.0.0")
