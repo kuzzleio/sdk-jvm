@@ -130,9 +130,9 @@ open class WebSocket : AbstractProtocol {
                 for (frame in incoming) {
                     when (frame) {
                         // @TODO Create enums for events
-                        is Frame.Text -> super.trigger(MessageReceivedEvent(frame.readText(), null))
+                        is Frame.Text -> super.trigger(MessageReceivedEvent(frame.readText()))
                         // @TODO Create enums for events
-                        is Frame.Binary -> super.trigger(MessageReceivedEvent(frame.readBytes().toString(), null))
+                        is Frame.Binary -> super.trigger(MessageReceivedEvent(frame.readBytes().toString()))
                         is Frame.Close -> TODO()
                         is Frame.Ping -> TODO()
                         is Frame.Pong -> TODO()
