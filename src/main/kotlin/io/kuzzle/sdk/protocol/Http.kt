@@ -5,6 +5,7 @@ import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.util.*
 import io.kuzzle.sdk.coreClasses.exceptions.*
 import io.kuzzle.sdk.coreClasses.http.Route
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
@@ -222,7 +223,7 @@ open class Http : AbstractProtocol {
                     this.body = JsonSerializer.serialize(payload)
                 }
                 // trigger messageReceived
-                super.trigger(MessageReceivedEvent(response.receive(), payload["requestId"] as String?))
+                super.trigger(MessageReceivedEvent(response.receive(), payload["requestId"] as String?, response.headers.toMap()))
             } catch (e: Exception) {
                 super.trigger(RequestErrorEvent(e, payload["requestId"] as String?))
             } finally {
@@ -253,7 +254,7 @@ open class Http : AbstractProtocol {
                     this.body = if (requestInfo.body != null) JsonSerializer.serialize(requestInfo.body) else ""
                 }
                 // trigger messageReceived
-                super.trigger(MessageReceivedEvent(response.receive(), payload["requestId"] as String?))
+                super.trigger(MessageReceivedEvent(response.receive(), payload["requestId"] as String?, response.headers.toMap()))
             } catch (e: Exception) {
                 super.trigger(RequestErrorEvent(e, payload["requestId"] as String?))
             } finally {
@@ -303,20 +304,19 @@ open class Http : AbstractProtocol {
 
         val route = this.routes["$controller:$action"]
 
-        if (route == null) {
-            super.trigger(RequestErrorEvent(URLNotFoundException(controller, action), payload["requestId"] as String?))
-            return
+        if (route != null) {
+            try {
+                val requestInfo = route.buildRequest(KuzzleMap.from(payload))
+                queryHTTPEndpoint(payload, requestInfo)
+                return
+            } catch (e: MissingURLParamException) {
+                // Fallback to query
+            }
         }
-
-        try {
-            val requestInfo = route.buildRequest(KuzzleMap.from(payload))
-            queryHTTPEndpoint(payload, requestInfo)
-        } catch (e: MissingURLParamException) {
-            /**
-             * Fallback if we could not find a matching route with the given parameters
-             * Try to make the request using directly using /_query endpoint
-             */
-            query(payload)
-        }
+        /**
+         * Fallback if we could not find a matching route with the given parameters
+         * Try to make the request using directly using /_query endpoint
+         */
+        query(payload)
     }
 }
