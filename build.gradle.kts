@@ -11,7 +11,7 @@ plugins {
     `maven-publish`
     signing
     jacoco
-    kotlin("jvm") version "1.6.10"
+        kotlin("jvm") version "1.6.10"
 }
 
 val artifactName = "sdk-jvm"
@@ -36,7 +36,7 @@ val pomDeveloperName = "kuzzle"
 
 group = "io.kuzzle.sdk"
 version = "1.3.2"
-val ktorVersion = "1.6.8"
+val ktorVersion = "2.0.3"
 
 repositories {
     mavenCentral()
@@ -56,19 +56,20 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
     implementation("io.ktor:ktor-client-json:$ktorVersion")
     implementation("io.ktor:ktor-client-gson:$ktorVersion")
-    implementation("io.ktor:ktor-client-serialization:$ktorVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-gson:$ktorVersion")
     implementation("com.google.code.gson:gson:2.9.0")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
-    testImplementation("io.mockk:mockk:1.8.13")
-    testImplementation("io.ktor:ktor-client-mock:1.3.2")
+    testImplementation("io.mockk:mockk:1.12.4")
+    testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("io.ktor:ktor-client-mock-jvm:$ktorVersion")
     testImplementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
-    testImplementation("io.ktor:ktor-client-mock-js:1.3.2")
-    testImplementation("io.ktor:ktor-client-mock-native:1.3.2")
+    testImplementation("io.ktor:ktor-client-mock-js:1.3.1")
+    testImplementation("io.ktor:ktor-client-mock-native:1.3.1")
     testImplementation("org.mock-server:mockserver-netty:5.3.0")
-    testImplementation("io.cucumber:cucumber-java8:7.0.0")
-    testImplementation("io.cucumber:cucumber-junit:7.0.0")
+    testImplementation("io.cucumber:cucumber-java8:7.3.3")
+    testImplementation("io.cucumber:cucumber-junit:7.3.3")
 }
 
 java {
@@ -81,6 +82,12 @@ application {
 
 tasks.withType<Jar> {
     archiveFileName.set("${artifactName}-${artifactVersion}-without-dependencies.jar")
+}
+
+tasks.withType<Test> {
+    this.testLogging {
+        this.showStandardStreams = true
+    }
 }
 
 tasks {

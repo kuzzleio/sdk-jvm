@@ -1,17 +1,11 @@
 package io.kuzzle.sdk.protocol
 
 import io.ktor.client.HttpClient
-import io.ktor.client.features.json.GsonSerializer
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.websocket.DefaultClientWebSocketSession
-import io.ktor.client.features.websocket.WebSockets
-import io.ktor.client.features.websocket.ws
-import io.ktor.client.features.websocket.wss
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.websocket.*
 import io.ktor.http.ContentType
-import io.ktor.http.cio.websocket.Frame
-import io.ktor.http.cio.websocket.close
-import io.ktor.http.cio.websocket.readBytes
-import io.ktor.http.cio.websocket.readText
+import io.ktor.serialization.gson.*
+import io.ktor.websocket.*
 import io.kuzzle.sdk.coreClasses.json.JsonSerializer
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.events.MessageReceivedEvent
@@ -88,9 +82,8 @@ open class WebSocket : AbstractProtocol {
     protected open fun createHTTPClient(): HttpClient {
         return HttpClient {
             install(WebSockets)
-            install(JsonFeature) {
-                serializer = GsonSerializer()
-                acceptContentTypes += ContentType("application", "json")
+            install(ContentNegotiation) {
+                gson()
             }
         }
     }
