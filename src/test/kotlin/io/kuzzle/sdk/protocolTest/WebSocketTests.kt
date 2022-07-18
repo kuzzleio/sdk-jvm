@@ -3,11 +3,11 @@ package io.kuzzle.sdk.protocolTest
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.websocket.*
+import io.ktor.client.features.json.GsonSerializer
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.http.ContentType
 import io.ktor.http.fullPath
 import io.ktor.http.headersOf
-import io.ktor.serialization.gson.*
 import io.kuzzle.sdk.coreClasses.maps.KuzzleMap
 import io.kuzzle.sdk.protocol.ProtocolState
 import io.kuzzle.sdk.protocol.WebSocket
@@ -29,8 +29,9 @@ class WebSocketTests {
     fun setup() {
         socket = MockedSocket("localhost")
         socket?.mockedClient = HttpClient(MockEngine) {
-            install(ContentNegotiation) {
-                gson()
+            install(JsonFeature) {
+                serializer = GsonSerializer()
+                acceptContentTypes += ContentType("application", "json")
             }
             engine {
                 addHandler { request ->
@@ -39,6 +40,7 @@ class WebSocketTests {
                             val responseHeaders = headersOf("Content-Type" to listOf("application/json"))
                             respond("{}", headers = responseHeaders)
                         }
+
                         else -> error("Unhandled ${request.url.fullPath}")
                     }
                 }

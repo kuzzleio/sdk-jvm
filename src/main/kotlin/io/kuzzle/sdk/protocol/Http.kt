@@ -134,7 +134,7 @@ open class Http : AbstractProtocol {
             try {
                 var response: HttpResponse = client.get("$uri/_publicApi") {
                     this.header("content-type", "application/json")
-                    this.setBody("{}")
+                    this.body = "{}"
                 }
 
                 if (response.status.value != 200) {
@@ -142,7 +142,7 @@ open class Http : AbstractProtocol {
                     return@launch
                 }
 
-                val responseJson = JsonSerializer.deserialize(response.body()) as Map<String?, Any?>
+                val responseJson = JsonSerializer.deserialize(response.receive()) as Map<String?, Any?>
 
                 buildRoutes(responseJson["result"] as Map<String?, Any?>)
                 useBuiltRoutes = true
@@ -171,7 +171,7 @@ open class Http : AbstractProtocol {
             try {
                 val response: HttpResponse = client.post("$uri/_query") {
                     this.header("content-type", "application/json")
-                    this.setBody("{}")
+                    this.body = "{}"
                 }
                 if (response.status.value == 401 || response.status.value == 403) {
                     wait.completeExceptionally(java.lang.Exception("You must have permission on the _query route."))
@@ -220,10 +220,16 @@ open class Http : AbstractProtocol {
                         }
                     }
                     this.header("content-type", "application/json")
-                    this.setBody("JsonSerializer.serialize(payload)")
+                    this.body = JsonSerializer.serialize(payload)
                 }
                 // trigger messageReceived
-                super.trigger(MessageReceivedEvent(response.body(), payload["requestId"] as String?, response.headers.toMap()))
+                super.trigger(
+                    MessageReceivedEvent(
+                        response.receive(),
+                        payload["requestId"] as String?,
+                        response.headers.toMap()
+                    )
+                )
             } catch (e: Exception) {
                 super.trigger(RequestErrorEvent(e, payload["requestId"] as String?))
             } finally {
@@ -251,10 +257,16 @@ open class Http : AbstractProtocol {
                         this.header(entry.key.toString(), StringSerializer.serialize(entry.value!!))
                     }
                     this.header("content-type", "application/json")
-                    this.setBody(if (requestInfo.body != null) JsonSerializer.serialize(requestInfo.body) else "")
+                    this.body = if (requestInfo.body != null) JsonSerializer.serialize(requestInfo.body) else ""
                 }
                 // trigger messageReceived
-                super.trigger(MessageReceivedEvent(response.body(), payload["requestId"] as String?, response.headers.toMap()))
+                super.trigger(
+                    MessageReceivedEvent(
+                        response.receive(),
+                        payload["requestId"] as String?,
+                        response.headers.toMap()
+                    )
+                )
             } catch (e: Exception) {
                 super.trigger(RequestErrorEvent(e, payload["requestId"] as String?))
             } finally {

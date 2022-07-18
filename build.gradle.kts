@@ -1,9 +1,5 @@
 import org.gradle.jvm.tasks.Jar
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.util.Date
-import org.gradle.api.publish.maven.MavenPom
-import org.jetbrains.kotlin.gradle.dsl.Coroutines
-import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     application
@@ -11,12 +7,14 @@ plugins {
     `maven-publish`
     signing
     jacoco
-        kotlin("jvm") version "1.6.10"
+    kotlin("jvm") version "1.6.10"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("org.jetbrains.dokka") version "1.7.10"
 }
 
 val artifactName = "sdk-jvm"
 val artifactGroup = "io.kuzzle"
-val artifactVersion = "1.3.2"
+val artifactVersion = "1.3.3"
 
 val pomUrl = "https://github.com/kuzzleio/sdk-jvm"
 val pomScmUrl = "https://github.com/kuzzleio/sdk-jvm"
@@ -35,8 +33,8 @@ val pomDeveloperId = "kuzzleio"
 val pomDeveloperName = "kuzzle"
 
 group = "io.kuzzle.sdk"
-version = "1.3.2"
-val ktorVersion = "2.0.3"
+version = "1.3.3"
+val ktorVersion = "1.3.2-1.4.0-rc"
 
 repositories {
     mavenCentral()
@@ -56,8 +54,7 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
     implementation("io.ktor:ktor-client-json:$ktorVersion")
     implementation("io.ktor:ktor-client-gson:$ktorVersion")
-    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-gson:$ktorVersion")
+    implementation("io.ktor:ktor-client-serialization:$ktorVersion")
     implementation("com.google.code.gson:gson:2.9.0")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
@@ -72,16 +69,13 @@ dependencies {
     testImplementation("io.cucumber:cucumber-junit:7.3.3")
 }
 
-java {
-    withSourcesJar()
-}
-
 application {
-    mainClassName = "io.kuzzle.sdk.protocol"
+    mainClass.set("io.kuzzle.sdk.protocol")
 }
 
-tasks.withType<Jar> {
-    archiveFileName.set("${artifactName}-${artifactVersion}-without-dependencies.jar")
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 tasks.withType<Test> {
@@ -90,25 +84,18 @@ tasks.withType<Test> {
     }
 }
 
-tasks {
-    register<Jar>("fatJar") {
-        archiveFileName.set("${artifactName}-${artifactVersion}.jar")
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        manifest {
-            attributes("Main-Class" to application.mainClassName)
-        }
-        from(configurations.runtimeClasspath.get()
-                .onEach { println("Add from dependencies: ${it.name}") }
-                .map { if (it.isDirectory) it else zipTree(it) })
-        val sourcesMain = sourceSets.main.get()
-        sourcesMain.allSource.forEach { println("Add from sources: ${it.name}") }
-        from(sourcesMain.output)
-    }
+val javadocJar = tasks.named<Jar>("javadocJar") {
+    from(tasks.named("dokkaJavadoc"))
 }
 
-tasks.register<Jar>("javadocJar") {
-    from(tasks.javadoc)
-    archiveClassifier.set("javadoc")
+tasks {
+    named<ShadowJar>("shadowJar") {
+        archiveClassifier.set("with-dependencies")
+        archiveBaseName.set(artifactName)
+        manifest {
+            attributes(mapOf("Main-Class" to application.mainClass.get()))
+        }
+    }
 }
 
 publishing {
@@ -122,41 +109,13 @@ publishing {
         }
     }
     publications {
-        create<MavenPublication>("kuzzle-sdk-jvm-thin") {
-            groupId = artifactGroup
-            artifactId = artifactName
-            version = "${artifactVersion}-without-dependencies"
-            artifact(tasks["sourcesJar"])
-            artifact(tasks["javadocJar"])
-
-            from(components["java"])
-            pom.withXml {
-                asNode().apply {
-                    appendNode("description", pomDesc)
-                    appendNode("name", rootProject.name)
-                    appendNode("url", pomUrl)
-                    appendNode("licenses").appendNode("license").apply {
-                        appendNode("name", pomLicenseName)
-                        appendNode("url", pomLicenseUrl)
-                        appendNode("distribution", pomLicenseDist)
-                    }
-                    appendNode("developers").appendNode("developer").apply {
-                        appendNode("id", pomDeveloperId)
-                        appendNode("name", pomDeveloperName)
-                    }
-                    appendNode("scm").apply {
-                        appendNode("url", pomScmUrl)
-                        appendNode("connection", pomScmConnection)
-                    }
-                }
-            }
-        }
-        create<MavenPublication>("kuzzle-sdk-jvm-fat") {
+        create<MavenPublication>("kuzzle-sdk-jvm") {
             groupId = artifactGroup
             artifactId = artifactName
             version = artifactVersion
-            artifact(tasks["fatJar"])
+            artifact(tasks["jar"])
             artifact(tasks["sourcesJar"])
+            artifact(tasks["shadowJar"])
             artifact(tasks["javadocJar"])
 
             pom.withXml {
@@ -185,6 +144,5 @@ publishing {
 
 signing {
     useInMemoryPgpKeys(System.getenv("MAVEN_CENTRAL_GPG"), System.getenv("MAVEN_CENTRAL_GPG_PASSWORD"))
-    sign(publishing.publications["kuzzle-sdk-jvm-thin"])
-    sign(publishing.publications["kuzzle-sdk-jvm-fat"])
+    sign(publishing.publications["kuzzle-sdk-jvm"])
 }
