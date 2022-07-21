@@ -34,7 +34,7 @@ val pomDeveloperName = "kuzzle"
 
 group = "io.kuzzle.sdk"
 version = "1.3.2"
-val ktorVersion = "1.3.2-1.4.0-rc"
+val ktorVersion = "1.6.8"
 
 repositories {
     mavenCentral()
@@ -88,9 +88,13 @@ val javadocJar = tasks.named<Jar>("javadocJar") {
     from(tasks.named("dokkaJavadoc"))
 }
 
+tasks.named<Jar>("jar") {
+    archiveClassifier.set("without-dependencies")
+}
+
 tasks {
     named<ShadowJar>("shadowJar") {
-        archiveClassifier.set("with-dependencies")
+        archiveClassifier.set("")
         archiveBaseName.set(artifactName)
         manifest {
             attributes(mapOf("Main-Class" to application.mainClass.get()))
