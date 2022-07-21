@@ -32,6 +32,33 @@ class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
             .thenApplyAsync { response -> (response.result as Map<String?, Any?>)["deleted"] as Int }
     }
 
+    @JvmOverloads
+    fun updateByQuery(
+        index: String,
+        collection: String,
+        searchQuery: Map<String, Any?>,
+        changesQuery: Map<String, Any?>,
+        waitForRefresh: Boolean? = null
+    ): CompletableFuture<Int> {
+        val query = KuzzleMap().apply {
+            put("index", index)
+            put("collection", collection)
+            put("controller", "bulk")
+            put("action", "updateByQuery")
+            put(
+                "body",
+                HashMap<String, Any?>().apply {
+                    put("query", searchQuery)
+                    put("changes", changesQuery)
+                }
+            )
+            put("waitForRefresh", waitForRefresh)
+        }
+        return kuzzle
+            .query(query)
+            .thenApplyAsync { response -> (response.result as Map<String?, Any?>)["deleted"] as Int }
+    }
+
     fun importData(
         index: String,
         collection: String,
