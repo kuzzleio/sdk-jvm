@@ -50,7 +50,7 @@ An Int containing the number of updated documents.
 
 ## Usage
 
-<<< ./snippets/delete-by-query-java.java
+<<< ./snippets/update-by-query-java.java
 
 :::
 ::: tab Kotlin
