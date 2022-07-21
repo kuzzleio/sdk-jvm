@@ -83,7 +83,7 @@ An Int containing the number of updated documents.
 
 ## Usage
 
-<<< ./snippets/delete-by-query-kotlin.kt
+<<< ./snippets/update-by-query-kotlin.kt
 
 :::
 ::::
