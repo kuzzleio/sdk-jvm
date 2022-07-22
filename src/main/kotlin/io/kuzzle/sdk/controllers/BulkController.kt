@@ -56,7 +56,7 @@ class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         }
         return kuzzle
             .query(query)
-            .thenApplyAsync { response -> (response.result as Map<String?, Any?>)["deleted"] as Int }
+            .thenApplyAsync { response -> (response.result as Map<String?, Any?>)["updated"] as Int }
     }
 
     fun importData(
