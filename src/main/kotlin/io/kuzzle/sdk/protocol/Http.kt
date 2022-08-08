@@ -223,7 +223,13 @@ open class Http : AbstractProtocol {
                     this.body = JsonSerializer.serialize(payload)
                 }
                 // trigger messageReceived
-                super.trigger(MessageReceivedEvent(response.receive(), payload["requestId"] as String?, response.headers.toMap()))
+                super.trigger(
+                    MessageReceivedEvent(
+                        response.receive(),
+                        payload["requestId"] as String?,
+                        response.headers.toMap()
+                    )
+                )
             } catch (e: Exception) {
                 super.trigger(RequestErrorEvent(e, payload["requestId"] as String?))
             } finally {
@@ -254,7 +260,13 @@ open class Http : AbstractProtocol {
                     this.body = if (requestInfo.body != null) JsonSerializer.serialize(requestInfo.body) else ""
                 }
                 // trigger messageReceived
-                super.trigger(MessageReceivedEvent(response.receive(), payload["requestId"] as String?, response.headers.toMap()))
+                super.trigger(
+                    MessageReceivedEvent(
+                        response.receive(),
+                        payload["requestId"] as String?,
+                        response.headers.toMap()
+                    )
+                )
             } catch (e: Exception) {
                 super.trigger(RequestErrorEvent(e, payload["requestId"] as String?))
             } finally {

@@ -40,6 +40,7 @@ class WebSocketTests {
                             val responseHeaders = headersOf("Content-Type" to listOf("application/json"))
                             respond("{}", headers = responseHeaders)
                         }
+
                         else -> error("Unhandled ${request.url.fullPath}")
                     }
                 }
