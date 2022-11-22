@@ -93,6 +93,9 @@ class Response : Serializable {
 
         room = kuzzleMap.getString("room")
         result = kuzzleMap["result"]
+        if (result == null && kuzzleMap.containsKey("results")) {
+            result = KuzzleMap(mapOf("results" to kuzzleMap["results"]))
+        }
         error = null
         if (kuzzleMap.isMap("error")) {
             error = ErrorResponse()
