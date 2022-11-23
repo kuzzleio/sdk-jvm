@@ -226,7 +226,8 @@ open class Http : AbstractProtocol {
                 super.trigger(
                     MessageReceivedEvent(
                         response.receive(),
-                        payload["requestId"] as String?,
+                        payload,
+                        response.status.value,
                         response.headers.toMap()
                     )
                 )
@@ -263,7 +264,8 @@ open class Http : AbstractProtocol {
                 super.trigger(
                     MessageReceivedEvent(
                         response.receive(),
-                        payload["requestId"] as String?,
+                        payload,
+                        response.status.value,
                         response.headers.toMap()
                     )
                 )

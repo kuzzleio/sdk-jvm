@@ -68,33 +68,48 @@ open class Kuzzle {
     private fun onMessageReceived(event: MessageReceivedEvent) {
         val message = event.message
         var jsonObject: Map<String?, Any?>
+        val eventRequestId = event.payload["requestId"] as String?
         try {
             jsonObject = JsonSerializer.deserialize(message) as Map<String?, Any?>
         } catch (e: Exception) {
-            if (event.requestId != null) {
-                queries[event.requestId]?.completeExceptionally(InvalidJSON(event.message ?: "null"))
-                queries.remove(event.requestId)
+            if (eventRequestId != null) {
+                queries[eventRequestId]?.completeExceptionally(InvalidJSON(event.message ?: "null"))
+                queries.remove(eventRequestId)
             } else {
                 protocol.trigger(UnhandledExceptionEvent(InvalidJSON(event.message ?: "null")))
             }
             return
         }
-
-        if (! jsonObject.containsKey("headers") && event.headers != null) {
-            jsonObject = jsonObject.plus("headers" to event.headers)
-        }
+        val response = Response()
 
         // If the message is empty, we take the requestId of the event,
         // to avoid error in fromMap function.
-        if (! jsonObject.containsKey("requestId") && event.requestId != null) {
-            jsonObject = jsonObject.plus("requestId" to event.requestId)
+        if (! jsonObject.containsKey("requestId") && eventRequestId != null) {
+            response.result = jsonObject
+            response.requestId = eventRequestId
+            response.status = event.status
+            if(event.headers != null) {
+                response.headers = event.headers as Map<String?, Any?>
+            }
+            response.controller = event.payload["controller"] as String?
+            response.action = event.payload["action"] as String?
+            response.Volatile = event.payload["volatile"] as Map<String?, Any?>?
+            response.index = event.payload["index"] as String?
+            response.collection = event.payload["collection"] as String?
+            response.timestamp = event.payload["timestamp"] as Long?
+            response.type = event.payload["type"] as String?
+            response.scope = event.payload["scope"] as String?
+            response.state = event.payload["state"] as String?
+        } else {
+            if (! jsonObject.containsKey("headers") && event.headers != null) {
+                jsonObject = jsonObject.plus("headers" to event.headers)
+            }
+            response.apply {
+                fromMap(jsonObject)
+            }
         }
 
-        val response = Response().apply {
-            fromMap(jsonObject)
-        }
-
-        val requestId = event.requestId ?: response.room ?: response.requestId
+        val requestId = eventRequestId ?: response.room ?: response.requestId
 
         if (response.error?.id == "security.token.expired") {
             protocol.trigger(TokenExpiredEvent())
