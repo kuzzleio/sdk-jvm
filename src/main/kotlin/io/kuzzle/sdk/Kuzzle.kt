@@ -90,16 +90,18 @@ open class Kuzzle {
             response.status = event.status
             if(event.headers != null) {
                 response.headers = event.headers as Map<String?, Any?>
+                if(response.headers!!.containsKey("X-Kuzzle-Volatile")) {
+                    response.Volatile = response.headers!!["X-Kuzzle-Volatile"] as Map<String?, Any?>?
+                }
+            }
+
+            if (response.Volatile == null){
+                response.Volatile = event.payload["volatile"] as Map<String?, Any?>?
             }
             response.controller = event.payload["controller"] as String?
             response.action = event.payload["action"] as String?
-            response.Volatile = event.payload["volatile"] as Map<String?, Any?>?
             response.index = event.payload["index"] as String?
             response.collection = event.payload["collection"] as String?
-            response.timestamp = event.payload["timestamp"] as Long?
-            response.type = event.payload["type"] as String?
-            response.scope = event.payload["scope"] as String?
-            response.state = event.payload["state"] as String?
         } else {
             if (! jsonObject.containsKey("headers") && event.headers != null) {
                 jsonObject = jsonObject.plus("headers" to event.headers)
