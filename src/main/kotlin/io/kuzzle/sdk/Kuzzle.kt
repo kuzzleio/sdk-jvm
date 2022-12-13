@@ -88,14 +88,14 @@ open class Kuzzle {
             response.result = jsonObject
             response.requestId = eventRequestId
             response.status = event.status
-            if(event.headers != null) {
+            if (event.headers != null) {
                 response.headers = event.headers as Map<String?, Any?>
-                if(response.headers!!.containsKey("X-Kuzzle-Volatile")) {
+                if (response.headers!!.containsKey("X-Kuzzle-Volatile")) {
                     response.Volatile = response.headers!!["X-Kuzzle-Volatile"] as Map<String?, Any?>?
                 }
             }
 
-            if (response.Volatile == null){
+            if (response.Volatile == null) {
                 response.Volatile = event.payload["volatile"] as Map<String?, Any?>?
             }
             response.controller = event.payload["controller"] as String?
