@@ -1,1 +1,1 @@
-val kuzzle: Kuzzle = Kuzzle(WebSocket("kuzzle"))
+val sdk: Kuzzle = Kuzzle(WebSocket("kuzzle"))

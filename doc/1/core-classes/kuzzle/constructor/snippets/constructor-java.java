@@ -1,1 +1,1 @@
-Kuzzle kuzzle = new Kuzzle(new WebSocket("kuzzle"));
+Kuzzle sdk = new Kuzzle(new WebSocket("kuzzle"));
