@@ -33,7 +33,7 @@ val pomDeveloperId = "kuzzleio"
 val pomDeveloperName = "kuzzle"
 
 group = "io.kuzzle.sdk"
-version = "1.3.2"
+version = "1.3.3"
 val ktorVersion = "1.6.8"
 
 repositories {
