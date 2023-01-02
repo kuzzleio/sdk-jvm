@@ -7,6 +7,7 @@ public class SnippetTest {
 
   public static void main(String[] args) {
 
+    // @start
     try {
       // Creates a WebSocket connection.
       // Replace "kuzzle" with
@@ -72,5 +73,6 @@ public class SnippetTest {
 
     // Disconnects the SDK.
     kuzzle.disconnect();
+    // @end
   }
 }
