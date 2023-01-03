@@ -20,33 +20,33 @@ Kuzzle uses the [ElasticSearch Query DSL](https://www.elastic.co/guide/en/elasti
 public CompletableFuture<Int> updateByQuery(
   String index,
   String collection,
-  Map<String, Object> searchQuery,
-  Map<String, Object> changesQuery,
+  Map<String, Any?> searchQuery,
+  Map<String, Any?> changes,
   Boolean waitForRefresh
 ) throws NotConnectedException, InternalException
 
 public CompletableFuture<Int> updateByQuery(
   String index,
   String collection,
-  Map<String, Object> searchQuery,
-  Map<String, Object> changesQuery,
+  Map<String, Any?> searchQuery,
+  Map<String, Any?> changes,
 ) throws NotConnectedException, InternalException
 ```
 
 <br/>
 
-| Argument         | Type                           | Description                                                                    |
-|------------------|--------------------------------|--------------------------------------------------------------------------------|
-| `index`          | <pre>String</pre>              | Index name                                                                     |
-| `collection`     | <pre>String</pre>              | Collection name                                                                |
-| `searchQuery`    | <pre>Map<String, Object></pre> | JSON representing the query to match                                           |
-| `changesQuery`   | <pre>Map<String, Object></pre> | JSON representing the query of the changes to apply                            |
+| Argument         | Type                           | Description                                                                |
+|------------------|--------------------------------|----------------------------------------------------------------------------|
+| `index`          | <pre>String</pre>              | Index name                                                                 |
+| `collection`     | <pre>String</pre>              | Collection name                                                            |
+| `searchQuery`    | <pre>Map<String, Any?></pre> | JSON representing the query to match                                       |
+| `changes`        | <pre>Map<String, Any?></pre> | JSON representing the changes to apply                            |
 | `waitForRefresh` | <pre>Bool</pre><br>(`false`)   | If set to true, Kuzzle will not respond until the delete documents are indexed |
 
 
 ## Return
 
-An Int containing the number of updated documents.
+An `Int` containing the number of updated documents.
 
 ## Usage
 
@@ -68,12 +68,12 @@ fun updateByQuery(
 
 <br/>
 
-| Argument     | Type                                 | Description                             |
-| ------------ | ------------------------------------ | --------------------------------------- |
-| `index`      | <pre>String</pre>        | Index name                              |
-| `collection` | <pre>String</pre>        | Collection name                         |
-| `searchQuery`      | <pre>Map<String, Any?></pre>        | JSON representing the query to match |
-| `changesQuery`   | <pre>Map<String, Any?></pre>        | JSON representing the query of the changes to apply                            |
+| Argument         | Type                                 | Description                             |
+|------------------| ------------------------------------ | --------------------------------------- |
+| `index`          | <pre>String</pre>        | Index name                              |
+| `collection`     | <pre>String</pre>        | Collection name                         |
+| `searchQuery`    | <pre>Map<String, Any?></pre>        | JSON representing the query to match |
+| `changes`        | <pre>Map<String, Any?></pre>        | JSON representing the changes to apply                            |
 | `waitForRefresh` | <pre>Boolean</pre><br>(`false`)  | If set to true, Kuzzle will not respond until the delete documents are indexed |
 
 

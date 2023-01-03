@@ -37,7 +37,7 @@ class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
         index: String,
         collection: String,
         searchQuery: Map<String, Any?>,
-        changesQuery: Map<String, Any?>,
+        changes: Map<String, Any?>,
         waitForRefresh: Boolean? = null
     ): CompletableFuture<Int> {
         val query = KuzzleMap().apply {
@@ -49,7 +49,7 @@ class BulkController(kuzzle: Kuzzle) : BaseController(kuzzle) {
                 "body",
                 HashMap<String, Any?>().apply {
                     put("query", searchQuery)
-                    put("changes", changesQuery)
+                    put("changes", changes)
                 }
             )
             put("waitForRefresh", waitForRefresh)
