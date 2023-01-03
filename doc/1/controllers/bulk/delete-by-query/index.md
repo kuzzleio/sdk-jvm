@@ -33,12 +33,12 @@ public CompletableFuture<Int> deleteByQuery(
 
 <br/>
 
-| Argument     | Type                           | Description                             |
-| ------------ |--------------------------------| --------------------------------------- |
-| `index`      | <pre>String</pre>              | Index name                              |
-| `collection` | <pre>String</pre>              | Collection name                         |
-| `searchQuery`      | <pre>Map<String, Object></pre> | JSON representing the query to match |
-| `waitForRefresh` | <pre>Bool</pre><br>(`false`)   | If set to true, Kuzzle will not respond until the delete documents are indexed |
+| Argument     | Type                         | Description                             |
+| ------------ |------------------------------| --------------------------------------- |
+| `index`      | <pre>String</pre>            | Index name                              |
+| `collection` | <pre>String</pre>            | Collection name                         |
+| `searchQuery`      | <pre>Map<String, Any?></pre> | JSON representing the query to match |
+| `waitForRefresh` | <pre>Bool</pre><br>(`false`) | If set to true, Kuzzle will not respond until the delete documents are indexed |
 
 
 ## Return
