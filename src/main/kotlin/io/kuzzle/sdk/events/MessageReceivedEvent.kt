@@ -8,8 +8,8 @@ data class MessageReceivedEvent(
     var status: Int = 200,
     var headers: Headers? = null
 ) {
-    fun getHeadersMap() : Map<String, String> {
-        if(headers == null) {
+    fun getHeadersMap(): Map<String, String> {
+        if (headers == null) {
             return emptyMap()
         }
         return headers!!.entries().associate { it.key to it.value.first() }
