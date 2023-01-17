@@ -89,7 +89,7 @@ open class Kuzzle {
             response.requestId = eventRequestId
             response.status = event.status
             if (event.headers != null) {
-                response.headers = event.headers as Map<String?, Any?>
+                response.headers = event.getHeadersMap() as Map<String?, Any?>?
                 if (response.headers!!.containsKey("X-Kuzzle-Volatile")) {
                     response.Volatile = response.headers!!["X-Kuzzle-Volatile"] as Map<String?, Any?>?
                 }
@@ -103,11 +103,13 @@ open class Kuzzle {
             response.index = event.payload["index"] as String?
             response.collection = event.payload["collection"] as String?
         } else {
-            if (! jsonObject.containsKey("headers") && event.headers != null) {
-                jsonObject = jsonObject.plus("headers" to event.headers)
+            val jsonObjectEventHeaders = jsonObject.toMutableMap()
+            if (event.headers != null) {
+                jsonObjectEventHeaders["headers"] = event.getHeadersMap()
             }
+
             response.apply {
-                fromMap(jsonObject)
+                fromMap(jsonObjectEventHeaders)
             }
         }
 
