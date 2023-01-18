@@ -228,7 +228,7 @@ open class Http : AbstractProtocol {
                         response.receive(),
                         payload,
                         response.status.value,
-                        response.headers.toMap()
+                        response.headers
                     )
                 )
             } catch (e: Exception) {
@@ -266,7 +266,7 @@ open class Http : AbstractProtocol {
                         response.receive(),
                         payload,
                         response.status.value,
-                        response.headers.toMap()
+                        response.headers
                     )
                 )
             } catch (e: Exception) {
