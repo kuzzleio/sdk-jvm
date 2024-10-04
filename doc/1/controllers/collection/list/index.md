@@ -22,10 +22,9 @@ public CompletableFuture<Map<String, Object>> list(
       final String index) throws NotConnectedException, InternalException
 ```
 
-
-| Arguments | Type                   | Description   |
-| --------- | ---------------------- | ------------- |
-| `index`   | <pre>String</pre>      | Index name    |
+| Arguments | Type     | Description |
+| --------- | -------- | ----------- |
+| `index`   | `String` | Index name  |
 
 ## Returns
 
@@ -33,21 +32,21 @@ Returns a `Map<String, Object>` containing the following properties:
 
 | Property      | Type                | Description                                                        |
 | ------------- | ------------------- | ------------------------------------------------------------------ |
-| `type`        | <pre>String</pre>   | Types of returned collections <br/>(`all`, `realtime` or `stored`) |
-| `collections` | <pre>ArrayList<Object></pre> | List of collections                                                |
-| `from`        | <pre>Integer</pre>   | Offset of the first result                                         |
-| `size`        | <pre>Integer</pre>   | Maximum number of returned results                                 |
+| `type`        | `String`            | Types of returned collections <br/>(`all`, `realtime` or `stored`) |
+| `collections` | `ArrayList<Object>` | List of collections                                                |
+| `from`        | `Integer`           | Offset of the first result                                         |
+| `size`        | `Integer`           | Maximum number of returned results                                 |
 
 Each object in the `collections` array contains the following properties:
 
-| Property | Type              | Description                              |
-| -------- | ----------------- | ---------------------------------------- |
-| `name`   | <pre>String</pre> | Collection name                          |
-| `type`   | <pre>String</pre> | Collection type (`realtime` or `stored`) |
+| Property | Type     | Description                              |
+| -------- | -------- | ---------------------------------------- |
+| `name`   | `String` | Collection name                          |
+| `type`   | `String` | Collection type (`realtime` or `stored`) |
 
 ## Usage
 
-<<< ./snippets/list-java.java
+\<\<\< ./snippets/list-java.java
 
 :::
 ::: tab Kotlin
@@ -58,10 +57,9 @@ Each object in the `collections` array contains the following properties:
 fun list(index: String): CompletableFuture<Map<String, Any?>>
 ```
 
-
-| Arguments | Type                   | Description   |
-| --------- | ---------------------- | ------------- |
-| `index`   | <pre>String</pre>      | Index name    |
+| Arguments | Type     | Description |
+| --------- | -------- | ----------- |
+| `index`   | `String` | Index name  |
 
 ## Returns
 
@@ -69,21 +67,21 @@ Returns a `Map<String, Any?>` containing the following properties:
 
 | Property      | Type                | Description                                                        |
 | ------------- | ------------------- | ------------------------------------------------------------------ |
-| `type`        | <pre>String</pre>   | Types of returned collections <br/>(`all`, `realtime` or `stored`) |
-| `collections` | <pre>ArrayList<Object></pre> | List of collections                                                |
-| `from`        | <pre>Int</pre>   | Offset of the first result                                         |
-| `size`        | <pre>Int</pre>   | Maximum number of returned results                                 |
+| `type`        | `String`            | Types of returned collections <br/>(`all`, `realtime` or `stored`) |
+| `collections` | `ArrayList<Object>` | List of collections                                                |
+| `from`        | `Int`               | Offset of the first result                                         |
+| `size`        | `Int`               | Maximum number of returned results                                 |
 
 Each object in the `collections` array contains the following properties:
 
-| Property | Type              | Description                              |
-| -------- | ----------------- | ---------------------------------------- |
-| `name`   | <pre>String</pre> | Collection name                          |
-| `type`   | <pre>String</pre> | Collection type (`realtime` or `stored`) |
+| Property | Type     | Description                              |
+| -------- | -------- | ---------------------------------------- |
+| `name`   | `String` | Collection name                          |
+| `type`   | `String` | Collection type (`realtime` or `stored`) |
 
 ## Usage
 
-<<< ./snippets/list-kotlin.kt
+\<\<\< ./snippets/list-kotlin.kt
 
 :::
 ::::
