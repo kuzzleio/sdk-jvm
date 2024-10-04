@@ -27,11 +27,11 @@ When the validation specification is not formatted correctly, a detailed error m
 
 <br/>
 
-| Arguments        | Type                                         | Description                |
-| ---------------- | -------------------------------------------- | -------------------------- |
-| `index`          | <pre>String</pre>                            | Index name                 |
-| `collection`     | <pre>String</pre>                            | Collection name            |
-| `specifications` | <pre>Map<String, Object></pre> | Specifications to validate |
+| Arguments        | Type                  | Description                |
+| ---------------- | --------------------- | -------------------------- |
+| `index`          | `String`              | Index name                 |
+| `collection`     | `String`              | Collection name            |
+| `specifications` | `Map<String, Object>` | Specifications to validate |
 
 ### specifications
 
@@ -45,15 +45,15 @@ Returns a `Map<String, Object>` which contains information about the specificati
 
 It contains the following properties:
 
-| Property      | Type                         | Description                  |
-| ------------- | ---------------------------- | ---------------------------- |
-| `valid`       | <pre>Boolean</pre>           | Specifications validity      |
-| `details`     | <pre>ArrayList<String></pre> | Specifications errors        |
-| `description` | <pre>String</pre>            | Global description of errors |
+| Property      | Type                | Description                  |
+| ------------- | ------------------- | ---------------------------- |
+| `valid`       | `Boolean`           | Specifications validity      |
+| `details`     | `ArrayList<String>` | Specifications errors        |
+| `description` | `String`            | Global description of errors |
 
 ## Usage
 
-<<< ./snippets/validate-specifications-java.java
+\<\<\< ./snippets/validate-specifications-java.java
 
 :::
 ::: tab Kotlin
@@ -70,11 +70,11 @@ fun validateSpecifications(
 
 <br/>
 
-| Arguments        | Type                                         | Description                |
-| ---------------- | -------------------------------------------- | -------------------------- |
-| `index`          | <pre>String</pre>                            | Index name                 |
-| `collection`     | <pre>String</pre>                            | Collection name            |
-| `specifications` | <pre>Map<String, Any?></pre> | Specifications to validate |
+| Arguments        | Type                | Description                |
+| ---------------- | ------------------- | -------------------------- |
+| `index`          | `String`            | Index name                 |
+| `collection`     | `String`            | Collection name            |
+| `specifications` | `Map<String, Any?>` | Specifications to validate |
 
 ### specifications
 
@@ -88,15 +88,15 @@ Returns a `Map<String, Any?>` which contains information about the specification
 
 It contains the following properties:
 
-| Property      | Type                         | Description                  |
-| ------------- | ---------------------------- | ---------------------------- |
-| `valid`       | <pre>Boolean</pre>           | Specifications validity      |
-| `details`     | <pre>ArrayList<String></pre> | Specifications errors        |
-| `description` | <pre>String</pre>            | Global description of errors
+| Property      | Type                | Description                  |
+| ------------- | ------------------- | ---------------------------- |
+| `valid`       | `Boolean`           | Specifications validity      |
+| `details`     | `ArrayList<String>` | Specifications errors        |
+| `description` | `String`            | Global description of errors |
 
 ## Usage
 
-<<< ./snippets/validate-specifications-kotlin.kt
+\<\<\< ./snippets/validate-specifications-kotlin.kt
 
 :::
 ::::
